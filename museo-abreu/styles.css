@@ -241,3 +241,6 @@ table.compare thead th:last-child { background: var(--accent); }
 .tier-price { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; }
 .tier ul { padding-left: 1.1rem; font-size: .9rem; color: var(--ink-2); }
 .tier .btn { width: 100%; }
+a.choice { display: block; text-decoration: none; color: inherit; }
+.ext-note { display: inline-block; margin-top: .4rem; font-size: .8rem; font-weight: 600; color: var(--accent); }
+.btn.wa { background: #1f7a4d; border-color: #1f7a4d; color: #fff; }

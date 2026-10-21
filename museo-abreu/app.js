@@ -336,11 +336,15 @@ function bookingWizard() {
   let body = '';
   switch (bk.step) {
     case 0:
-      body = `<h2 tabindex="-1">${t('chooseExp')}</h2><div class="grid two">${EXPERIENCES.filter(e => !e.cat || e.cat === 'tour').map(e => `
-        <button type="button" class="choice" data-action="exp" data-id="${e.id}" aria-pressed="${bk.exp === e.id}">
-          <span class="price">${e.price ? usd(e.price) + ' <small class="muted">' + (e.perLabel ? L(e.perLabel) : t('perPerson')) + '</small>' : t('onRequest')}</span>
-          <h3>${L(e.name)}</h3><p class="muted">${L(e.desc)}</p>
-        </button>`).join('')}</div>
+      body = `<h2 tabindex="-1">${t('chooseExp')}</h2><div class="grid two">${EXPERIENCES.filter(e => !e.cat || e.cat === 'tour').map(e => {
+        const inner = `<span class="price">${e.price ? usd(e.price) + ' <small class="muted">' + (e.perLabel ? L(e.perLabel) : t('perPerson')) + '</small>' : t('onRequest')}</span>
+          <h3>${L(e.name)}</h3><p class="muted">${L(e.desc)}</p>`;
+        const ext = bookingLink(e.id);
+        return ext
+          ? `<a class="choice" href="${ext}" target="_blank" rel="noopener">${inner}<span class="ext-note">${t('bookOn', { provider: BOOKING.provider })} ↗</span></a>`
+          : `<button type="button" class="choice" data-action="exp" data-id="${e.id}" aria-pressed="${bk.exp === e.id}">${inner}</button>`;
+      }).join('')}</div>
+        ${whatsappLink(t('waTour')) ? `<p style="margin-top:1rem"><a class="btn wa" href="${whatsappLink(t('waTour'))}" target="_blank" rel="noopener">${t('bookWhatsApp')}</a></p>` : ''}
         <p class="muted" style="margin-top:.8rem">* ${t('illustrative')}</p>`;
       break;
     case 1: {

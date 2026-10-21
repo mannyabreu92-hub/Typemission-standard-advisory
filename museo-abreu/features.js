@@ -66,6 +66,9 @@ Object.assign(I18N.es, {
   priceTbc: 'Entrada por confirmar', notifyMe: 'Avísame', notifySet: 'Te avisaremos cuando abran las entradas (simulación).',
   nextAnnual: 'Próximo evento anual',
   officialSite: 'Sitio oficial',
+  bookOn: 'Reservar en {provider}', buyOn: 'Comprar {price} en {provider}', bookWhatsApp: 'Reservar por WhatsApp',
+  buyWhatsApp: 'Comprar {price} por WhatsApp', waTour: 'Hola, quiero reservar una visita al Museo Abreu.',
+  waClass: 'Hola, quiero reservar: {name}.', waTicket: 'Hola, quiero comprar {name} para {event}.',
   passesLabel: 'Pases', singleLabel: 'Entradas individuales', fromPrice: 'Desde {price} (aprox.)',
   vipFreePro: 'VIP All-Access gratis para miembros Pro, con hasta 3 invitados', getProPass: 'Obtener mi {name} gratis',
   includedInPass: 'Incluido en tu pase VIP', includedInPro: 'Incluido con Pro (obtén tu VIP All-Access)',
@@ -133,6 +136,9 @@ Object.assign(I18N.en, {
   priceTbc: 'Ticket price to be confirmed', notifyMe: 'Notify me', notifySet: 'We will let you know when tickets open (simulated).',
   nextAnnual: 'Next yearly event',
   officialSite: 'Official site',
+  bookOn: 'Book on {provider}', buyOn: 'Buy {price} on {provider}', bookWhatsApp: 'Book via WhatsApp',
+  buyWhatsApp: 'Buy {price} via WhatsApp', waTour: 'Hello, I would like to book a visit to Museo Abreu.',
+  waClass: 'Hello, I would like to book: {name}.', waTicket: 'Hello, I would like to buy {name} for {event}.',
   passesLabel: 'Passes', singleLabel: 'Single tickets', fromPrice: 'From {price} (approx.)',
   vipFreePro: 'VIP All-Access free for Pro members, with up to 3 guests', getProPass: 'Get my free {name}',
   includedInPass: 'Included in your VIP pass', includedInPro: 'Included with Pro (get your VIP All-Access)',
@@ -288,7 +294,10 @@ function pageClasses() {
     <section class="section"><h2>${t('classesSection')}</h2><div class="grid two">${classes.map(c => `
       <div class="card"><span class="price" style="float:right;font-weight:600">${usd(c.price)} <small class="muted">${t('perPerson')}</small></span>
         <h3>${L(c.name)}</h3><p class="muted">${L(c.desc)}</p>
-        <div class="btn-row"><button class="btn primary" data-action="bookClass" data-id="${c.id}">${t('bookClass')}</button></div></div>`).join('')}</div>
+        <div class="btn-row">${bookingLink(c.id)
+          ? `<a class="btn primary" href="${bookingLink(c.id)}" target="_blank" rel="noopener">${t('bookClass')} ↗</a>`
+          : `<button class="btn primary" data-action="bookClass" data-id="${c.id}">${t('bookClass')}</button>`}
+          ${whatsappLink(t('waClass', { name: L(c.name) })) ? `<a class="btn wa" href="${whatsappLink(t('waClass', { name: L(c.name) }))}" target="_blank" rel="noopener">WhatsApp</a>` : ''}</div></div>`).join('')}</div>
       <p class="muted" style="margin-top:.8rem">* ${t('illustrative')}</p></section>
     <section class="section"><h2>${t('clubsSection')}</h2><div class="grid two">${CLUBS.map(c => `
       <div class="card"><span style="float:right;font-weight:600">${usd(c.price)} <small class="muted">${t('perMonth')}</small></span>
@@ -338,7 +347,13 @@ function tierBlock(ev, tier, passes) {
       <small class="muted">${t('guestsHelp')}</small></label>
       <button class="btn primary" data-action="getPass" data-id="${ev.id}" data-tier="${tier.id}">${t('getProPass', { name: L(tier.name) })}</button></div>`;
   else if (isPro() && tier.id !== 'dinner') action = `<p class="status ok">${proHasVip ? t('includedInPass') : t('includedInPro')}</p>`;
-  else action = `<button class="btn ${tier.proFree ? 'primary' : ''}" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}">${t('buyTicket', { price: usd(tier.price) })}</button>`;
+  else {
+    const ext = bookingLink('gabangi-' + tier.id);
+    const wa = whatsappLink(t('waTicket', { name: L(tier.name), event: eventTitle(ev) }));
+    action = ext ? `<a class="btn ${tier.proFree ? 'primary' : ''}" href="${ext}" target="_blank" rel="noopener">${t('buyOn', { price: usd(tier.price), provider: BOOKING.provider })} ↗</a>`
+      : wa ? `<a class="btn wa" href="${wa}" target="_blank" rel="noopener">${t('buyWhatsApp', { price: usd(tier.price) })}</a>`
+      : `<button class="btn ${tier.proFree ? 'primary' : ''}" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}">${t('buyTicket', { price: usd(tier.price) })}</button>`;
+  }
   return `<div class="tier ${tier.proFree ? 'tier-vip' : ''}">
     <div class="tier-head"><strong>${L(tier.name)}</strong><span class="tier-price">${usd(tier.price)}</span></div>
     <span class="chip">${L(tier.tag)}</span>${tier.proFree ? ` <span class="status ok">${t('freeForPro')}</span>` : ''}
