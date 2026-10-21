@@ -103,14 +103,38 @@ const TIMELINE = [
   { y: '2026', es: 'Publica Ecce Homo: El arte salvó mi vida.', en: 'Publishes Ecce Homo: Art Saved My Life.' },
 ];
 
+// Major exhibitions as listed on oscarabreu.com (Biography page).
 const EXHIBITIONS = [
-  { y: 2004, t: 'Huellas: la invención de lo visible', p: 'Museo del Hombre Dominicano, Santo Domingo' },
-  { y: 2005, t: 'Conexión Cósmica', p: 'Palacio Consistorial, Santiago' },
-  { y: 2006, t: 'Castigo de la memoria', p: 'Joe Hintersteiner Gallery, New York' },
-  { y: 2019, t: 'La forma del pensamiento', p: 'Colegio Dominicano de Artistas Plásticos, Santo Domingo' },
-  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Museo Abreu, Bávaro' },
-  { y: 2023, t: 'Por el Amor de Dios', p: 'Eden Roc Cap Cana' },
+  { y: 1996, t: 'El mal de las drogas', p: 'Riverside Arts Center, Illinois' },
+  { y: 1999, t: 'Mira a través de mis ojos', p: 'Casa Dominicana, Chicago' },
+  { y: 1999, t: 'Resaca de la existencia', p: 'Truman College, Chicago' },
+  { y: 2004, t: 'Huellas: La invención de lo visible', p: 'Museo del Hombre Dominicano, Santo Domingo' },
+  { y: 2005, t: 'La forma de la música', p: 'Sofitel Nicolás de Ovando, Santo Domingo' },
+  { y: 2005, t: 'Acontecimientos del espíritu', p: 'Galerías Prinardi, Puerto Rico' },
+  { y: 2005, t: 'Comportamiento de la memoria', p: 'Alianza Art Gallery, New York' },
+  { y: 2006, t: 'Punishment of Memory', p: 'Joe Hintersteiner Gallery, New York' },
+  { y: 2006, t: 'Detachment of the Ego', p: 'Marwen Foundation, Chicago / Alianza Art Gallery, New York' },
+  { y: 2006, t: 'Generaciones', p: 'Ozamarte Centro de Arte Contemporáneo, Santo Domingo' },
+  { y: 2009, t: 'Ironically Absurd', p: 'Alliance Française, Santo Domingo' },
+  { y: 2009, t: 'Agitación de la memoria', p: 'Centro Abreu, Santo Domingo' },
+  { y: 2019, t: 'La forma del pensamiento', p: 'CODAP, Santo Domingo' },
+  { y: 2019, t: 'Razonamiento de la Identidad', p: 'Altos de Chavón Gallery, Casa de Campo' },
+  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Abreu Museum, Punta Cana' },
+  { y: 2024, t: 'Luxura', p: 'Abreu Museum, Punta Cana' },
 ];
+
+// Official biography from oscarabreu.com (English version, transcribed from
+// screenshots supplied by the family). The Spanish version is pending.
+const BIO_SITE = {
+  source: 'oscarabreu.com',
+  intro: 'Oscar Abreu (San Juan de la Maguana, Dominican Republic, 1978) has been regarded since 2021 as the most highly valued living artist in the Dominican Republic, after one of his works reached a record price of USD 200,000. With more than three decades of practice, Abreu has developed his own language: Psycho-Expressionism, inspired by Freudian psychoanalysis and focused on exploring memory, identity, and the human psyche through layers of color, collage, symbols, and textures.',
+  circuit: 'These exhibitions have consolidated his presence in New York, Chicago, Puerto Rico, Santo Domingo, and Punta Cana, positioning his work within a diverse international circuit.',
+  recognition: [
+    'His work has been analyzed by influential critics such as Candido Geron, Abil Peralta Agüero (Memoria del Psico-Expresionismo, 2018), Odalís G. Pérez, Fernando Morbán Laucer, Laura Gil, Gamal Michelen, and Marianne de Tolentino, who have emphasized the originality, expressive power, and psychological depth of his proposal.',
+    'In parallel with his artistic production, Abreu has developed significant work as a cultural organizer. In 2000 he founded Artep Magazine; in 2014 he created ARTFORO —which became an international fair—; and in 2021 he inaugurated the Abreu Museum, a space dedicated to consecrating contemporary Dominican art.',
+  ],
+  legacy: 'With boldness and originality, Oscar Abreu has turned Psycho-Expressionism into a visual and philosophical movement that goes beyond painting. Exhibited in museums and private collections across the United States, the Caribbean and Europe, his work stands as a landmark of contemporary Dominican art and a cultural bridge between the Dominican Republic and its global diaspora.',
+};
 
 // Critics quoted in the front matter of ECCE HOMO (English edition).
 const QUOTES = [

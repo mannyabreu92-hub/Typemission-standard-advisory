@@ -173,9 +173,11 @@ function pageArtist() {
       </div>
       <div>
         <h2>${t('bioShort')}</h2>
-        <p>${t('bioPlaceholder')}</p>
+        ${lang === 'en'
+          ? `<p>${esc(BIO_SITE.intro)}</p><p class="muted" style="margin-top:1rem">Source: ${BIO_SITE.source}</p>`
+          : `<p>${t('bioPlaceholder')}</p>
         <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioLongText')}</p></details>
-        <p class="muted" style="margin-top:1rem">${t('sourceNote')}</p>
+        <p class="muted" style="margin-top:1rem">${t('sourceNote')}</p>`}
       </div>
     </section>
     <section class="section grid two">
@@ -186,8 +188,20 @@ function pageArtist() {
       <div>
         <h2>${t('exhibitions')}</h2>
         <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${e.p} · ${e.y}</span></li>`).join('')}</ul>
+        <p lang="en" style="margin-top:.5rem">${esc(BIO_SITE.circuit)}</p>
       </div>
     </section>
+    <section class="section grid two">
+      <div lang="en">
+        <h2>${t('recognitionTitle')}</h2>
+        ${BIO_SITE.recognition.map(p => `<p>${esc(p)}</p>`).join('')}
+      </div>
+      <div lang="en">
+        <h2>${t('legacyTitle')}</h2>
+        <p>${esc(BIO_SITE.legacy)}</p>
+      </div>
+    </section>
+    ${lang !== 'en' ? `<p class="muted wrap" style="margin-top:-1.5rem">${t('siteNote')}</p>` : ''}
     <section class="section">
       <h2>${t('quotesTitle')}</h2>
       <div class="grid two">${QUOTES.map(q => `<figure class="card quote"><blockquote lang="en">“${q.q}”</blockquote>
