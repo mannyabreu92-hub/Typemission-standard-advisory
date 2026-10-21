@@ -57,15 +57,15 @@ const SCHEDULE = {
 };
 SCHEDULE.combo = SCHEDULE.vip;
 
+// Works shown on oscarabreu.com. Images are cropped from phone screenshots for
+// now; replace them with the original files. Year, technique and size pending.
 const WORKS = [
-  { id: 'w1', seed: 11, title: { es: 'Obra I', en: 'Work I' } },
-  { id: 'w2', seed: 23, title: { es: 'Obra II', en: 'Work II' } },
-  { id: 'w3', seed: 37, title: { es: 'Obra III', en: 'Work III' } },
-  { id: 'w4', seed: 41, title: { es: 'Obra IV', en: 'Work IV' } },
-  { id: 'w5', seed: 59, title: { es: 'Obra V', en: 'Work V' } },
-  { id: 'w6', seed: 67, title: { es: 'Obra VI', en: 'Work VI' } },
-  { id: 'w7', seed: 73, title: { es: 'Obra VII', en: 'Work VII' } },
-  { id: 'w8', seed: 89, title: { es: 'Obra VIII', en: 'Work VIII' } },
+  { id: 'escaping-being', seed: 11, img: 'img/escaping-being.jpg', title: { es: 'The Escaping Being', en: 'The Escaping Being' } },
+  { id: 'passion', seed: 23, img: 'img/passion.jpg', title: { es: 'Passion', en: 'Passion' } },
+  { id: 'petrichor', seed: 37, img: 'img/petrichor.jpg', title: { es: 'Petrichor', en: 'Petrichor' } },
+  { id: 'resilience', seed: 41, img: 'img/resilience.jpg', title: { es: 'Resilience', en: 'Resilience' } },
+  { id: 'limerence', seed: 59, img: 'img/limerence.jpg', title: { es: 'Limerence', en: 'Limerence' } },
+  { id: 'echoes-of-memory', seed: 67, img: 'img/echoes-of-memory.jpg', title: { es: 'Echoes of Memory', en: 'Echoes of Memory' } },
 ];
 
 const EDITIONS = [

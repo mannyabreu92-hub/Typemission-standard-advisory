@@ -114,7 +114,7 @@ function go(hash) {
 function pageHome() {
   return `
   <section class="hero">
-    <div class="hero-art">${artSVG(23, '')}</div>
+    <div class="hero-art"><img src="img/escaping-being.jpg" alt=""></div>
     <div class="hero-inner">
       <p class="eyebrow">${t('homeEyebrow')}</p>
       <h1>${t('homeTitle')}</h1>
@@ -152,9 +152,13 @@ function pageHome() {
   </div>`;
 }
 
+const workImg = w => w.img
+  ? `<img src="${w.img}" alt="${esc(L(w.title))}, Oscar Abreu" loading="lazy">`
+  : artSVG(w.seed, L(w.title));
+
 function workCard(w) {
   return `<button type="button" class="work" data-action="work" data-id="${w.id}">
-    <div class="art">${artSVG(w.seed, L(w.title))}</div>
+    <div class="art">${workImg(w)}</div>
     <div class="meta"><strong>${L(w.title)}</strong><span class="muted">${t('year')}: ${t('pending')}</span></div>
   </button>`;
 }
@@ -220,7 +224,7 @@ function openWork(id) {
   const dlg = document.createElement('dialog');
   dlg.setAttribute('aria-label', L(w.title));
   dlg.innerHTML = `<div class="dlg-body">
-    <div class="dlg-art">${artSVG(w.seed, L(w.title))}</div>
+    <div class="dlg-art">${workImg(w)}</div>
     <h3 style="margin-top:1rem">${L(w.title)}</h3>
     <dl class="specs">
       <dt>${t('year')}</dt><dd>${pend()}</dd>
@@ -281,7 +285,7 @@ function pagePsico() {
     </section>
     <section class="section">
       <h2>${t('guidedGallery')}</h2>
-      <div class="grid four">${WORKS.slice(4).map(workCard).join('')}</div>
+      <div class="grid four">${WORKS.slice(2).map(workCard).join('')}</div>
     </section>
   </div>`;
 }
