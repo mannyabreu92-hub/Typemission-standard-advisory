@@ -61,6 +61,10 @@ Object.assign(I18N.es, {
   accMembership: 'Mi membresía', accPasses: 'Mis pases de eventos', accBids: 'Mis pujas', accRequests: 'Mis solicitudes',
   noPasses: 'Aún no tienes pases.', notPro: 'No eres miembro Pro.',
   howManyCouples: '¿Cuántas parejas asistirán?',
+  annualTitle: 'Eventos anuales', annualLead: 'Los celebramos cada año. Márcalos en tu calendario.',
+  everyYear: 'Cada año', nameTbc: 'Nombre por confirmar', today: '¡Es hoy!', inNDays: 'faltan {n} días',
+  priceTbc: 'Entrada por confirmar', notifyMe: 'Avísame', notifySet: 'Te avisaremos cuando abran las entradas (simulación).',
+  nextAnnual: 'Próximo evento anual', daysLabel: 'días', nth: '{n}.º aniversario',
 });
 
 Object.assign(I18N.en, {
@@ -119,6 +123,10 @@ Object.assign(I18N.en, {
   accMembership: 'My membership', accPasses: 'My event passes', accBids: 'My bids', accRequests: 'My requests',
   noPasses: 'You have no passes yet.', notPro: 'You are not a Pro member.',
   howManyCouples: 'How many couples are coming?',
+  annualTitle: 'Yearly events', annualLead: 'We celebrate them every year. Save the dates.',
+  everyYear: 'Every year', nameTbc: 'Name to be confirmed', today: 'It\u2019s today!', inNDays: '{n} days to go',
+  priceTbc: 'Ticket price to be confirmed', notifyMe: 'Notify me', notifySet: 'We will let you know when tickets open (simulated).',
+  nextAnnual: 'Next yearly event', daysLabel: 'days', nth: '{n}th anniversary',
 });
 
 /* ---------- Data ---------- */
@@ -157,7 +165,23 @@ const CLUBS = [
     desc: { es: 'Charlas, visitas a talleres y lectura de obras con artistas invitados.', en: 'Talks, studio visits and readings of works with guest artists.' } },
 ];
 
+// Yearly museum events (month, day). Their next date is computed automatically.
+const ANNUAL_EVENTS = [
+  { id: 'anniversary', annual: { m: 11, d: 17 }, since: 2021, vip: true, price: null, time: '19:00',
+    name: { es: 'Aniversario del Museo Abreu', en: 'Museo Abreu anniversary' },
+    desc: { es: 'Celebramos la apertura del museo, inaugurado el 17 de noviembre de 2021 con la retrospectiva Memoria del Psico-Expresionismo.',
+      en: 'We celebrate the opening of the museum, inaugurated on November 17, 2021 with the retrospective Memoria del Psico-Expresionismo.' } },
+  { id: 'june-13', annual: { m: 6, d: 13 }, vip: true, price: null, time: '19:00', pendingName: true,
+    name: { es: 'Evento anual del 13 de junio', en: 'June 13 annual event' },
+    desc: { es: 'Celebración anual del museo. Nombre y programa por confirmar.', en: 'Annual museum celebration. Name and programme to be confirmed.' } },
+  { id: 'art-gabangi', annual: { m: 7, d: 6 }, vip: true, price: null, time: '18:00',
+    name: { es: 'ART GABANGI', en: 'ART GABANGI' },
+    desc: { es: 'Encuentro anual de artistas, críticos, coleccionistas y público en el Museo Abreu: exposiciones, conferencias, talleres y mercado del arte.',
+      en: 'Annual gathering of artists, critics, collectors and visitors at Museo Abreu: exhibitions, lectures, workshops and the art market.' } },
+];
+
 const EVENTS = [
+  ...ANNUAL_EVENTS,
   { id: 'book-launch', vip: true, price: 40, inDays: 10, time: '19:00',
     name: { es: 'Presentación del libro Ecce Homo', en: 'Ecce Homo book presentation' },
     desc: { es: 'Oscar Abreu presenta su autobiografía y firma ejemplares.', en: 'Oscar Abreu presents his autobiography and signs copies.' } },
@@ -199,12 +223,25 @@ let collectionTab = 'new';
 
 /* ---------- Pages ---------- */
 
+function nextAnnualEvent() {
+  return ANNUAL_EVENTS.slice().sort((a, b) => eventDate(a).localeCompare(eventDate(b))).at(0);
+}
+
 function homeExtras() {
+  const ev = nextAnnualEvent();
+  const d = eventDate(ev), n = daysUntil(d);
+  const promo = `<section class="section"><a class="promo" href="#/eventos">
+    <span class="promo-count"><strong>${n}</strong><small>${t('daysLabel')}</small></span>
+    <span class="promo-text"><span class="eyebrow">${t('nextAnnual')}</span>
+      <strong class="promo-title">${eventTitle(ev)}</strong>
+      <span>${fmtDate(d)} · ${t('freeForPro')}</span>
+      <span class="promo-all">${ANNUAL_EVENTS.map(a => `${String(a.annual.d)}/${String(a.annual.m)}`).join(' · ')} · ${t('everyYear')}</span></span>
+  </a></section>`;
   const tiles = [
     ['#/clases', 'moreClasses', 'moreClassesText'], ['#/eventos', 'moreEvents', 'moreEventsText'],
     ['#/coleccion', 'moreCollection', 'moreCollectionText'], ['#/pro', 'morePro', 'moreProText'],
   ];
-  return `<section class="section"><h2>${t('moreTitle')}</h2><div class="grid four">${tiles.map(([h, a, b]) =>
+  return promo + `<section class="section"><h2>${t('moreTitle')}</h2><div class="grid four">${tiles.map(([h, a, b]) =>
     `<a class="card" href="${h}" style="text-decoration:none"><h3>${t(a)}</h3><p class="muted">${t(b)}</p></a>`).join('')}</div></section>`;
 }
 
@@ -233,7 +270,17 @@ function pageClasses() {
   </div>`;
 }
 
-const eventDate = ev => addDays(todayPC(), ev.inDays);
+function nextAnnual(a) {
+  const today = todayPC();
+  const y = Number(today.slice(0, 4));
+  const iso = yr => `${yr}-${String(a.m).padStart(2, '0')}-${String(a.d).padStart(2, '0')}`;
+  return iso(y) >= today ? iso(y) : iso(y + 1);
+}
+const eventDate = ev => (ev.annual ? nextAnnual(ev.annual) : addDays(todayPC(), ev.inDays));
+const daysUntil = iso => Math.round((Date.parse(iso) - Date.parse(todayPC())) / 864e5);
+const eventTitle = ev => ev.id === 'art-gabangi' ? `ART GABANGI ${eventDate(ev).slice(0, 4)}`
+  : ev.since ? `${L(ev.name)} · ${t('nth', { n: Number(eventDate(ev).slice(0, 4)) - ev.since })}` : L(ev.name);
+const sortedEvents = () => EVENTS.slice().sort((a, b) => eventDate(a).localeCompare(eventDate(b)));
 
 function pageEvents() {
   const passes = fx.get('passes', []);
@@ -243,14 +290,22 @@ function pageEvents() {
       <p class="lead" style="margin-top:.8rem">${t('eventsLead')}</p>
       <p class="muted" style="margin-top:.5rem">${t('examplesNote')}</p>
     </section>
-    <section class="section"><div class="grid two">${EVENTS.map(ev => {
+    <section class="section"><h2>${t('annualTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('annualLead')}</p>
+      <div class="grid two">${sortedEvents().filter(ev => ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>
+    <section class="section"><h2>${t('moreEvents')}</h2><div class="grid two">${sortedEvents().filter(ev => !ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>
+  </div>`;
+}
+
+function eventCard(ev, passes) {
+  {
       const pass = passes.find(p => p.event === ev.id);
-      return `<article class="card event">
-        <div class="chips" style="margin:0 0 .5rem">${ev.vip ? `<span class="chip vip">${t('vipEvent')}</span>` : ''}<span class="chip">${t('example')}</span></div>
-        <h3>${L(ev.name)}</h3>
-        <p class="muted">${fmtDate(eventDate(ev))} · ${ev.time} (UTC−4)</p>
+      const d = eventDate(ev), n = daysUntil(d);
+      return `<article class="card event ${ev.annual ? 'annual' : ''}">
+        <div class="chips" style="margin:0 0 .5rem">${ev.vip ? `<span class="chip vip">${t('vipEvent')}</span>` : ''}${ev.annual ? `<span class="chip annual-chip">${t('everyYear')}</span>` : `<span class="chip">${t('example')}</span>`}${ev.pendingName ? `<span class="pending">${t('nameTbc')}</span>` : ''}</div>
+        <h3>${eventTitle(ev)}</h3>
+        <p class="muted">${fmtDate(d)} · ${ev.time} (UTC−4)${ev.annual ? ` · <strong>${n === 0 ? t('today') : t('inNDays', { n })}</strong>` : ''}</p>
         <p style="margin-top:.4rem">${L(ev.desc)}</p>
-        <p style="margin-top:.6rem"><strong>${usd(ev.price)}</strong> · <span class="status ok">${t('freeForPro')}</span></p>
+        <p style="margin-top:.6rem"><strong>${ev.price ? usd(ev.price) : t('priceTbc')}</strong> · <span class="status ok">${t('freeForPro')}</span></p>
         ${pass ? `<div style="margin-top:.8rem">${passHTML(pass)}</div>` : isPro() ? `
           <div class="event-form" style="margin-top:.8rem">
             ${ev.vip ? `<label class="field"><span>${t('guests')}</span>
@@ -259,16 +314,16 @@ function pageEvents() {
             <button class="btn primary" data-action="getPass" data-id="${ev.id}">${t('getPass')}</button>
           </div>` : `
           <div class="btn-row"><a class="btn primary" href="#/pro">${t('becomePro')}</a>
-          <button class="btn" data-action="buyEvent" data-id="${ev.id}">${t('buyTicket', { price: usd(ev.price) })}</button></div>`}
+          ${ev.price ? `<button class="btn" data-action="buyEvent" data-id="${ev.id}">${t('buyTicket', { price: usd(ev.price) })}</button>`
+            : `<button class="btn" data-action="notifyEvent" data-id="${ev.id}">${t('notifyMe')}</button>`}</div>`}
       </article>`;
-    }).join('')}</div></section>
-  </div>`;
+  }
 }
 
 function passHTML(p) {
   const ev = EVENTS.find(e => e.id === p.event);
   return `<div class="ticket" style="max-width:320px">
-    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">${p.member ? 'Pro' : 'Museo Abreu'}</p><h3>${L(ev.name)}</h3></div>
+    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">${p.member ? 'Pro' : 'Museo Abreu'}</p><h3>${eventTitle(ev)}</h3></div>
     <div class="ticket-body"><div class="qr" data-qr="${p.code}"></div><p class="code">${p.code}</p>
       <p class="muted" style="text-align:center">${fmtDate(p.date)} · ${ev.time} · ${t('passFor', { n: 1 + p.guests })}</p></div></div>`;
 }
@@ -438,6 +493,12 @@ const EXTRA_ACTIONS = {
     route();
   },
   ctab: el => { collectionTab = el.dataset.id; route(); },
+  notifyEvent: el => {
+    const list = fx.get('eventAlerts', []);
+    if (!list.includes(el.dataset.id)) list.push(el.dataset.id);
+    fx.set('eventAlerts', list);
+    toast(t('notifySet'));
+  },
   bid: el => {
     if (!isPro()) return;
     const bids = fx.get('bids', []);

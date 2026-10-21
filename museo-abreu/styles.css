@@ -221,3 +221,13 @@ table.compare thead th:last-child { background: var(--accent); }
 .member-card .ticket-head { background: linear-gradient(135deg, var(--ink), #3b2416); }
 .daily blockquote { font-family: var(--serif); font-size: 1.3rem; line-height: 1.55; max-width: 62ch; border-left: 3px solid var(--accent); padding-left: 1rem; }
 .event-form .field select { max-width: 8rem; }
+.event.annual { border: 2px solid var(--accent); }
+.chip.annual-chip { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.promo { display: flex; gap: 1.2rem; align-items: center; text-decoration: none; background: var(--ink); color: var(--paper); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
+.promo-count { flex: 0 0 auto; display: grid; place-items: center; width: 5.5rem; height: 5.5rem; border-radius: 50%; background: var(--accent); color: #fff; line-height: 1; text-align: center; }
+.promo-count strong { font-family: var(--serif); font-size: 2.2rem; }
+.promo-count small { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; }
+.promo-text { display: grid; gap: .2rem; min-width: 0; }
+.promo-text .eyebrow { color: #f59e6b; margin: 0; }
+.promo-title { font-family: var(--serif); font-size: 1.6rem; line-height: 1.15; }
+.promo-all { font-size: .8rem; color: #d6cbbb; }
