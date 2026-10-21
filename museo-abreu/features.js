@@ -65,10 +65,10 @@ Object.assign(I18N.es, {
   everyYear: 'Cada año', nameTbc: 'Nombre por confirmar', today: '¡Es hoy!', inNDays: 'faltan {n} días',
   priceTbc: 'Entrada por confirmar', notifyMe: 'Avísame', notifySet: 'Te avisaremos cuando abran las entradas (simulación).',
   nextAnnual: 'Próximo evento anual',
-  passesLabel: 'Pases', singleLabel: 'Entradas individuales', fromPrice: 'Desde {price}',
+  passesLabel: 'Pases', singleLabel: 'Entradas individuales', fromPrice: 'Desde {price} (aprox.)',
   vipFreePro: 'VIP All-Access gratis para miembros Pro, con hasta 3 invitados', getProPass: 'Obtener mi {name} gratis',
   includedInPass: 'Incluido en tu pase VIP', includedInPro: 'Incluido con Pro (obtén tu VIP All-Access)',
-  gabangiSource: 'Entradas y horarios según gabangi.com (edición 2026).', daysLabel: 'días', nth: '{n}.º aniversario',
+  gabangiSource: 'Precios aproximados, basados en la edición 2026 (gabangi.com); pueden cambiar para la próxima edición.', daysLabel: 'días', nth: '{n}.º aniversario',
 });
 
 Object.assign(I18N.en, {
@@ -131,10 +131,10 @@ Object.assign(I18N.en, {
   everyYear: 'Every year', nameTbc: 'Name to be confirmed', today: 'It\u2019s today!', inNDays: '{n} days to go',
   priceTbc: 'Ticket price to be confirmed', notifyMe: 'Notify me', notifySet: 'We will let you know when tickets open (simulated).',
   nextAnnual: 'Next yearly event',
-  passesLabel: 'Passes', singleLabel: 'Single tickets', fromPrice: 'From {price}',
+  passesLabel: 'Passes', singleLabel: 'Single tickets', fromPrice: 'From {price} (approx.)',
   vipFreePro: 'VIP All-Access free for Pro members, with up to 3 guests', getProPass: 'Get my free {name}',
   includedInPass: 'Included in your VIP pass', includedInPro: 'Included with Pro (get your VIP All-Access)',
-  gabangiSource: 'Tickets and times as published on gabangi.com (2026 edition).', daysLabel: 'days', nth: '{n}th anniversary',
+  gabangiSource: 'Approximate prices, based on the 2026 edition (gabangi.com); they may change for the next edition.', daysLabel: 'days', nth: '{n}th anniversary',
 });
 
 /* ---------- Data ---------- */
