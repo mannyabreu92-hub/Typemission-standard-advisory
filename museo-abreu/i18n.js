@@ -50,6 +50,7 @@ const I18N = {
     layersHelp: 'Desliza para retirar capas de esta obra de ejemplo.',
     layer: 'Capa',
     questionsTitle: 'Preguntas para mirar',
+    manifestoEyebrow: 'Manifiesto', manifestoNote: 'versión en español pendiente',
     q1: '¿Qué observas?', q2: '¿Qué emoción te provoca?', q3: '¿Cómo cambia tu lectura al descubrir otra capa?',
     guidedGallery: 'Galería comentada',
 
@@ -184,6 +185,7 @@ const I18N = {
     layersHelp: 'Slide to peel back the layers of this example work.',
     layer: 'Layer',
     questionsTitle: 'Questions for looking',
+    manifestoEyebrow: 'Manifesto', manifestoNote: '',
     q1: 'What do you notice?', q2: 'What emotion does it stir in you?', q3: 'How does your reading change when you uncover another layer?',
     guidedGallery: 'Guided gallery',
 

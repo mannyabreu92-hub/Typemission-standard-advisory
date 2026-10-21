@@ -255,6 +255,12 @@ function pagePsico() {
         <input id="layer-range" class="range" type="range" min="0" max="2" step="1" value="0" data-action="layers" aria-valuetext="${t('layer')} 1/3">
       </div>
     </section>
+    <section class="section manifesto">
+      <p class="eyebrow">${t('manifestoEyebrow')}</p>
+      <h2 lang="en">${MANIFESTO.title}</h2>
+      <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${MANIFESTO.source}${lang !== 'en' ? ' · ' + t('manifestoNote') : ''}</p>
+      <div lang="en">${MANIFESTO.en.map(p => `<p>${esc(p)}</p>`).join('')}</div>
+    </section>
     <section class="section">
       <h2>${t('questionsTitle')}</h2>
       <ol class="questions"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li></ol>

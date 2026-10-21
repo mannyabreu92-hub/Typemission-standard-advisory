@@ -188,3 +188,6 @@ dialog::backdrop { background: rgba(22, 18, 15, .6); }
 
 .quote blockquote { font-family: var(--serif); font-size: 1.25rem; line-height: 1.45; }
 .quote figcaption { margin-top: .7rem; font-size: .88rem; }
+
+.manifesto div[lang] { max-width: 62ch; font-family: var(--serif); font-size: 1.22rem; line-height: 1.6; }
+.manifesto div[lang] p:nth-last-child(-n+3) { font-style: italic; }
