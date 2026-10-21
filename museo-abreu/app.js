@@ -172,20 +172,27 @@ function pageArtist() {
         <div class="video-ph"><p>▶<br>${t('videoPending')}</p></div>
       </div>
       <div>
-        <h2>${t('bioShort')} <span class="pending">${t('pendingText')}</span></h2>
+        <h2>${t('bioShort')}</h2>
         <p>${t('bioPlaceholder')}</p>
-        <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioPlaceholder')}</p></details>
+        <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioLongText')}</p></details>
+        <p class="muted" style="margin-top:1rem">${t('sourceNote')}</p>
       </div>
     </section>
     <section class="section grid two">
       <div>
         <h2>${t('timeline')}</h2>
-        <ol class="timeline">${[1, 2, 3, 4].map(() => `<li><strong>${t('pending')}</strong><br><span class="muted">${t('timelinePlaceholder')}</span></li>`).join('')}</ol>
+        <ol class="timeline">${TIMELINE.map(e => `<li><strong>${e.y}</strong><br><span class="muted">${L(e)}</span></li>`).join('')}</ol>
       </div>
       <div>
         <h2>${t('exhibitions')}</h2>
-        <ul class="timeline">${[1, 2, 3].map(() => `<li><span class="muted">${t('timelinePlaceholder')}</span></li>`).join('')}</ul>
+        <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${e.p} · ${e.y}</span></li>`).join('')}</ul>
       </div>
+    </section>
+    <section class="section">
+      <h2>${t('quotesTitle')}</h2>
+      <div class="grid two">${QUOTES.map(q => `<figure class="card quote"><blockquote lang="en">“${q.q}”</blockquote>
+        <figcaption><strong>${q.a}</strong><br><span class="muted">${q.r}</span></figcaption></figure>`).join('')}</div>
+      ${lang !== 'en' ? `<p class="muted" style="margin-top:.8rem">${t('quotesNote')}</p>` : ''}
     </section>
     <section class="section">
       <h2>${t('catalog')}</h2>
@@ -233,6 +240,8 @@ function pagePsico() {
       <div>
         <h2>${t('psicoIntro')}</h2>
         <p>${t('psicoP1')}</p><p>${t('psicoP2')}</p>
+        <figure class="quote" style="margin:1.2rem 0"><blockquote lang="en">“The name was little more than an intuition written down by a teenager who wanted to move beyond the appearance of a face and draw closer to what a person might feel, remember, fear, or conceal.”</blockquote>
+          <figcaption class="muted">— Oscar Abreu · ${t('psicoQuoteNote')}</figcaption></figure>
         <p class="muted">${t('psicoP3')}</p>
       </div>
       <div>
@@ -541,20 +550,23 @@ const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l));
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
-  const readLang = owns(lang) ? lang : (purchases[0]?.lang || lang);
+  // Sample text exists only for the English edition so far.
+  const readLang = owns(lang) ? lang : (purchases[0]?.lang || (hasSample(lang) ? lang : 'en'));
   const last = reading.last;
   return `<div class="wrap">
     <section class="section book">
-      <div class="cover">${coverSVG(bookTitle)}</div>
+      <div class="cover">${coverSVG(bookTitle, t('bookSub'))}</div>
       <div>
         <p class="eyebrow">${t('libEyebrow')}</p>
         <h1>${bookTitle}</h1>
+        <p style="font-family:var(--serif);font-size:1.4rem;font-style:italic">${t('bookSub')} · ${t('bookSub2')}</p>
         <p class="muted" style="margin:.3rem 0 1rem">${t('bookBy')}</p>
-        <h3>${t('synopsis')} <span class="pending">${t('pendingText')}</span></h3>
+        <h3>${t('synopsis')}</h3>
         <p>${t('synopsisText')}</p>
+        <p class="muted" style="margin-top:.6rem">${t('credits')}</p>
         <div class="btn-row">
           ${last ? `<a class="btn primary" href="#/leer/${last.lang}/${last.ch}">${t('resume')}</a>` : ''}
-          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : t('readSample')}</a>
+          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : readLang !== lang ? t('readEnSample') : t('readSample')}</a>
         </div>
       </div>
     </section>
@@ -574,10 +586,14 @@ function pageLibrary() {
       </div>
       <div>
         <h2>${t('contents')}</h2>
-        <ol class="toc">${CHAPTERS.map((c, i) => canRead(readLang, i)
-          ? `<li><a href="#/leer/${readLang}/${i}"><span>${L(c.title)}</span><span class="muted">${c.free ? t('free') : ''}</span></a></li>`
-          : `<li><span><span>${L(c.title)}</span><span>🔒 ${t('locked')}</span></span></li>`).join('')}
-        </ol>
+        ${(() => {
+          const item = (c, i) => canRead(readLang, i)
+            ? `<li><a href="#/leer/${readLang}/${i}"><span>${chTitle(c, readLang)}</span><span class="muted">${c.free ? t('free') : ''}</span></a></li>`
+            : `<li><span><span>${chTitle(c, readLang)}</span><span>🔒</span></span></li>`;
+          return `<ol class="toc">${CHAPTERS.slice(0, 6).map(item).join('')}</ol>
+            <details style="margin-top:.5rem"><summary class="btn small" style="list-style:none">${t('fullToc', { n: CHAPTERS.length })}</summary>
+            <ol class="toc" style="margin-top:.5rem">${CHAPTERS.map(item).slice(6).join('')}</ol></details>`;
+        })()}
       </div>
     </section>
   </div>`;
@@ -608,12 +624,10 @@ function buyEdition(l) {
   dlg.showModal();
 }
 
-const FILLER = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus, posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla.',
-  'Vestibulum id ligula porta felis euismod semper. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur, maecenas faucibus mollis interdum.',
-  'Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Etiam porta sem malesuada magna mollis euismod, sed posuere consectetur est at lobortis.',
-  'Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo.',
-];
+const chTitle = (c, l) => c.title[l] ?? c.title.es;
+const sampleFor = (l, c) => (l === 'en' && SAMPLE_EN[c.key === 'ch1' ? 'ch1' : c.key]) || null;
+const hasSample = l => l === 'en';
+
 
 function pageReader(l = 'es', chStr = '0') {
   const ch = Math.min(Math.max(0, parseInt(chStr, 10) || 0), CHAPTERS.length - 1);
@@ -624,10 +638,14 @@ function pageReader(l = 'es', chStr = '0') {
   if (canRead(l, ch)) {
     reading.last = { lang: l, ch, at: new Date().toISOString() };
     save();
-    text = `<h2>${L(c.title)}</h2><p class="muted" style="font-family:var(--sans);font-size:.85rem">${t('chapterPlaceholder')}</p>
-      ${FILLER.concat(FILLER).map(p => `<p>${p}</p>`).join('')}`;
+    const paras = sampleFor(l, c);
+    text = `<h2>${chTitle(c, l)}</h2>` + (paras
+      ? paras.map(p => `<p>${esc(p)}</p>`).join('')
+      : c.free
+        ? `<div class="empty"><p>${t('samplePending')}</p><div class="btn-row" style="justify-content:center"><a class="btn dark" href="#/leer/en/${ch}">${t('readEnSample')}</a></div></div>`
+        : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`);
   } else {
-    text = `<h2>${L(c.title)}</h2><div class="empty">🔒<p>${t('lockedChapter')}</p>
+    text = `<h2>${chTitle(c, l)}</h2><div class="empty">🔒<p>${t('lockedChapter')}</p>
       <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t('buy', { price: usd(25) })}</button></div></div>`;
   }
   return `<div class="wrap reader">
@@ -670,9 +688,9 @@ function pageAccount() {
       </div>
       <div>
         <h2>${t('myReading')}</h2>
-        ${reading.last ? `<div class="card"><p class="muted">${t('lastRead')}</p><p><strong>${L(CHAPTERS[reading.last.ch].title)}</strong> · ${L(LANG_NAMES[reading.last.lang])}</p>
+        ${reading.last ? `<div class="card"><p class="muted">${t('lastRead')}</p><p><strong>${chTitle(CHAPTERS[reading.last.ch], reading.last.lang)}</strong> · ${L(LANG_NAMES[reading.last.lang])}</p>
           <div class="btn-row" style="margin-top:.6rem"><a class="btn small primary" href="#/leer/${reading.last.lang}/${reading.last.ch}">${t('resume')}</a></div></div>` : `<p class="empty">${t('noReading')}</p>`}
-        ${reading.bookmarks.length ? `<h3 style="margin-top:1rem">${t('bookmarks')}</h3><ul class="toc">${reading.bookmarks.map(b => `<li><a href="#/leer/${b.lang}/${b.ch}"><span>★ ${L(CHAPTERS[b.ch].title)}</span><span class="muted">${b.lang.toUpperCase()}</span></a></li>`).join('')}</ul>` : ''}
+        ${reading.bookmarks.length ? `<h3 style="margin-top:1rem">${t('bookmarks')}</h3><ul class="toc">${reading.bookmarks.map(b => `<li><a href="#/leer/${b.lang}/${b.ch}"><span>★ ${chTitle(CHAPTERS[b.ch], b.lang)}</span><span class="muted">${b.lang.toUpperCase()}</span></a></li>`).join('')}</ul>` : ''}
       </div>
     </section>
     <section class="section">

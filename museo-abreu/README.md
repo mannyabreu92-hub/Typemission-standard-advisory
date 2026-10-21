@@ -25,19 +25,28 @@ cd museo-abreu && python3 -m http.server 8000
 | Mi cuenta | `#/cuenta` | Tickets, purchases, reading progress, rating, support |
 | Personal | `#/personal` | Staff search by code/name, mark ticket as used, today's guests |
 
-## Placeholders — must be replaced before launch
+## Content sources
 
-- **Content:** biography, timeline, exhibitions, artwork photos/data, synopsis and book text are placeholders.
-  Artworks are generated abstract images. Nothing biographical has been invented; all of it needs the artist's approval.
-- **Prices and terms:** US$100 / 250 / 115 and US$25 per edition are the proposal's illustrative figures. Terms are a draft.
-- **Schedule:** sample sessions in `data.js`. The artist session runs on Saturdays only.
+- **Book:** *ECCE HOMO: Art Saved My Life — The Birth of Psycho-Expressionism* (© 2026 Oscar Abreu,
+  English translation by Reed Newhall). The app contains only the table of contents and the free sample
+  (Introduction and Chapter I, English) in `sample-en.js`. **The paid chapters are deliberately not in
+  the repository**: in production they must be served from the server only to readers who bought access.
+- **Biography, timeline, exhibitions, critics' quotes:** taken from the book's front matter and
+  Biographical Chronology. They still need the artist's final approval.
+
+## Still placeholder — replace before launch
+
+- Artwork photos and data (title, year, technique, dimensions); the welcome video.
+- Spanish edition text and Spanish chapter titles (the Spanish sample shows a "pending" note).
+- Prices (proposal's illustrative US$100 / 250 / 115, US$25 per edition), terms draft, sample schedule in `data.js`.
+- Address, hours, accessibility, contact details.
 - **Payments, accounts and access control are simulated** in the browser (localStorage).
-  The production version needs a server for: payment provider + webhook confirmation, seat holds and
-  concurrency, idempotent ticket creation, refunds, verified email accounts, server-side book access,
+  Production needs a server for: payment provider + webhook confirmation, seat holds and concurrency,
+  idempotent ticket creation, refunds, verified email accounts, server-side book access,
   transactional email, admin panel, and staff authentication.
 
 ## Files
 
-`index.html` shell · `styles.css` · `i18n.js` (ES/EN strings) · `data.js` (experiences, schedule,
-works, editions, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
+`index.html` shell · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
+works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).

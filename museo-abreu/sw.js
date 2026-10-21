@@ -1,6 +1,6 @@
 // Offline shell: the app opens without a connection (e.g. to show a ticket QR).
-const CACHE = 'museo-abreu-v1';
-const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'data.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
+const CACHE = 'museo-abreu-v2';
+const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'data.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
   'qrcode.js'];
 
 self.addEventListener('install', e => {

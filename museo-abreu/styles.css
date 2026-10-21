@@ -185,3 +185,6 @@ dialog::backdrop { background: rgba(22, 18, 15, .6); }
 .toast { position: fixed; left: 50%; bottom: 86px; transform: translate(-50%, 20px); background: var(--ink); color: var(--paper); padding: .65rem 1.1rem; border-radius: 999px; font-size: .9rem; opacity: 0; pointer-events: none; transition: all .3s ease; z-index: 200; max-width: calc(100vw - 32px); }
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.quote blockquote { font-family: var(--serif); font-size: 1.25rem; line-height: 1.45; }
+.quote figcaption { margin-top: .7rem; font-size: .88rem; }

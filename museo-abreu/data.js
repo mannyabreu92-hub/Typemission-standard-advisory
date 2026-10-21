@@ -76,14 +76,48 @@ const EDITIONS = [
   { lang: 'pt', price: 25, status: 'soon' },
 ];
 
+// Table of contents of ECCE HOMO. Introduction and Chapter I are the free sample.
+// Spanish chapter titles are pending the Spanish edition.
 const CHAPTERS = [
-  { free: true, title: { es: 'Prólogo', en: 'Prologue' } },
-  { free: true, title: { es: 'Capítulo 1', en: 'Chapter 1' } },
-  { title: { es: 'Capítulo 2', en: 'Chapter 2' } },
-  { title: { es: 'Capítulo 3', en: 'Chapter 3' } },
-  { title: { es: 'Capítulo 4', en: 'Chapter 4' } },
-  { title: { es: 'Capítulo 5', en: 'Chapter 5' } },
-  { title: { es: 'Epílogo', en: 'Epilogue' } },
+  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction' } },
+  ...TOC_EN.nums.map((n, i) => ({
+    key: 'ch' + (i + 1), free: i === 0,
+    title: { es: 'Capítulo ' + n, en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i] },
+  })),
+  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments' } },
+  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology' } },
+];
+
+// Selected milestones from the book's Biographical Chronology.
+const TIMELINE = [
+  { y: '1978', es: 'Nace el 6 de marzo en San Juan de la Maguana, República Dominicana.', en: 'Born on March 6 in San Juan de la Maguana, Dominican Republic.' },
+  { y: '1982', es: 'Con sus abuelos en Las Mulas dibuja sobre la tierra y modela figuras con barro tras la lluvia.', en: 'Living with his grandparents in Las Mulas, he draws on the earth and models figures from mud after the rain.' },
+  { y: '1990', es: 'A los doce años visita por primera vez el Museo del Prado, en España.', en: 'At twelve, he visits the Museo del Prado in Spain for the first time.' },
+  { y: '1994', es: 'Llega solo a Chicago a los dieciséis años. Ese verano nombra por primera vez el Psico-Expresionismo.', en: 'Arrives alone in Chicago at sixteen. That summer he first names Psycho-Expressionism.' },
+  { y: '2004', es: 'Huellas: la invención de lo visible, en el Museo del Hombre Dominicano.', en: 'Huellas: la invención de lo visible at the Museo del Hombre Dominicano.' },
+  { y: '2016', es: 'Un incendio destruye su estudio-residencia en Nueva York.', en: 'A fire destroys his studio-residence in New York.' },
+  { y: '2017', es: 'Crea el mural Todos somos inmigrantes durante ARTFORO en Nueva York.', en: 'Creates the mural Todos somos inmigrantes during ARTFORO in New York.' },
+  { y: '2021', es: 'El 17 de noviembre abre la primera fase del Museo Abreu en Bávaro con la retrospectiva Memoria del Psico-Expresionismo.', en: 'On November 17, the first phase of Museo Abreu opens in Bávaro with the retrospective Memoria del Psico-Expresionismo.' },
+  { y: '2023', es: 'El 12 de diciembre el museo se amplía a diez salas.', en: 'On December 12, the museum expands to ten galleries.' },
+  { y: '2025', es: 'Primera edición de ART GABANGI en el Museo Abreu.', en: 'First edition of ART GABANGI at Museo Abreu.' },
+  { y: '2026', es: 'Publica Ecce Homo: El arte salvó mi vida.', en: 'Publishes Ecce Homo: Art Saved My Life.' },
+];
+
+const EXHIBITIONS = [
+  { y: 2004, t: 'Huellas: la invención de lo visible', p: 'Museo del Hombre Dominicano, Santo Domingo' },
+  { y: 2005, t: 'Conexión Cósmica', p: 'Palacio Consistorial, Santiago' },
+  { y: 2006, t: 'Castigo de la memoria', p: 'Joe Hintersteiner Gallery, New York' },
+  { y: 2019, t: 'La forma del pensamiento', p: 'Colegio Dominicano de Artistas Plásticos, Santo Domingo' },
+  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Museo Abreu, Bávaro' },
+  { y: 2023, t: 'Por el Amor de Dios', p: 'Eden Roc Cap Cana' },
+];
+
+// Critics quoted in the front matter of ECCE HOMO (English edition).
+const QUOTES = [
+  { q: 'Oscar Abreu chooses the human figure as his visual alphabet, developing through its graphic deconstruction an intense form of painting that materializes as an outpouring of emotions.', a: 'Abil Peralta Agüero', r: 'Art critic and curator, 1998' },
+  { q: 'Between figuration and abstraction, Oscar Abreu searches for—and finds—a point at which the exploration of form opens the door to a conceptual balance between the two.', a: 'José Saldaña', r: 'Oscar Abreu: Psycho-Expressionism, 1998' },
+  { q: 'In Oscar Abreu’s work, the divide between the figurative and the abstract has disappeared.', a: 'Marianne de Tolentino', r: 'ADCA/AICA, 2016' },
+  { q: 'Oscar’s Psycho-Expressionism belongs to another moment; it is inherent in who he is.', a: 'Gamal Michelén', r: 'Oscar Abreu and Psycho-Expressionism, 2021' },
 ];
 
 const PALETTES = [
@@ -147,9 +181,10 @@ function artSVG(seed, label) {
   return `<svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${label || ''}">${artLayer(seed, 0)}${artLayer(seed, 1)}${artLayer(seed, 2)}</svg>`;
 }
 
-function coverSVG(title) {
+function coverSVG(title, sub) {
   return `<svg viewBox="0 0 400 600" role="img" aria-label="${title}">${artLayer(5, 0).replace('height="500"', 'height="600"')}${artLayer(5, 2)}
-    <rect y="430" width="400" height="170" fill="#16120f"/>
-    <text x="28" y="490" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="38" font-weight="600">${title}</text>
-    <text x="28" y="540" fill="#f59e6b" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`;
+    <rect y="400" width="400" height="200" fill="#16120f"/>
+    <text x="28" y="462" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="52" font-weight="600" letter-spacing="2">ECCE HOMO</text>
+    <text x="28" y="500" fill="#e9dfd0" font-family="Cormorant Garamond, serif" font-size="24" font-style="italic">${sub}</text>
+    <text x="28" y="556" fill="#f59e6b" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`;
 }
