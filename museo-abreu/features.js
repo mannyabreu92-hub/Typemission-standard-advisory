@@ -171,9 +171,10 @@ const ANNUAL_EVENTS = [
     name: { es: 'Aniversario del Museo Abreu', en: 'Museo Abreu anniversary' },
     desc: { es: 'Celebramos la apertura del museo, inaugurado el 17 de noviembre de 2021 con la retrospectiva Memoria del Psico-Expresionismo.',
       en: 'We celebrate the opening of the museum, inaugurated on November 17, 2021 with the retrospective Memoria del Psico-Expresionismo.' } },
-  { id: 'june-13', annual: { m: 6, d: 13 }, vip: true, price: null, time: '19:00', pendingName: true,
-    name: { es: 'Evento anual del 13 de junio', en: 'June 13 annual event' },
-    desc: { es: 'Celebración anual del museo. Nombre y programa por confirmar.', en: 'Annual museum celebration. Name and programme to be confirmed.' } },
+  { id: 'group-exhibition', annual: { m: 6, d: 13 }, vip: true, price: null, time: '19:00',
+    name: { es: 'Exposición colectiva', en: 'Group exhibition' },
+    desc: { es: 'Cada año el Museo Abreu reúne en una exposición colectiva a artistas dominicanos y obras de Oscar Abreu.',
+      en: 'Every year Museo Abreu brings together Dominican artists and works by Oscar Abreu in a group exhibition.' } },
   { id: 'art-gabangi', annual: { m: 7, d: 6 }, vip: true, price: null, time: '18:00',
     name: { es: 'ART GABANGI', en: 'ART GABANGI' },
     desc: { es: 'Encuentro anual de artistas, críticos, coleccionistas y público en el Museo Abreu: exposiciones, conferencias, talleres y mercado del arte.',
@@ -279,6 +280,7 @@ function nextAnnual(a) {
 const eventDate = ev => (ev.annual ? nextAnnual(ev.annual) : addDays(todayPC(), ev.inDays));
 const daysUntil = iso => Math.round((Date.parse(iso) - Date.parse(todayPC())) / 864e5);
 const eventTitle = ev => ev.id === 'art-gabangi' ? `ART GABANGI ${eventDate(ev).slice(0, 4)}`
+  : ev.id === 'group-exhibition' ? `${L(ev.name)} ${eventDate(ev).slice(0, 4)}`
   : ev.since ? `${L(ev.name)} · ${t('nth', { n: Number(eventDate(ev).slice(0, 4)) - ev.since })}` : L(ev.name);
 const sortedEvents = () => EVENTS.slice().sort((a, b) => eventDate(a).localeCompare(eventDate(b)));
 
