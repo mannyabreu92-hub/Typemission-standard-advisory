@@ -64,7 +64,11 @@ Object.assign(I18N.es, {
   annualTitle: 'Eventos anuales', annualLead: 'Los celebramos cada año. Márcalos en tu calendario.',
   everyYear: 'Cada año', nameTbc: 'Nombre por confirmar', today: '¡Es hoy!', inNDays: 'faltan {n} días',
   priceTbc: 'Entrada por confirmar', notifyMe: 'Avísame', notifySet: 'Te avisaremos cuando abran las entradas (simulación).',
-  nextAnnual: 'Próximo evento anual', daysLabel: 'días', nth: '{n}.º aniversario',
+  nextAnnual: 'Próximo evento anual',
+  passesLabel: 'Pases', singleLabel: 'Entradas individuales', fromPrice: 'Desde {price}',
+  vipFreePro: 'VIP All-Access gratis para miembros Pro, con hasta 3 invitados', getProPass: 'Obtener mi {name} gratis',
+  includedInPass: 'Incluido en tu pase VIP', includedInPro: 'Incluido con Pro (obtén tu VIP All-Access)',
+  gabangiSource: 'Entradas y horarios según gabangi.com (edición 2026).', daysLabel: 'días', nth: '{n}.º aniversario',
 });
 
 Object.assign(I18N.en, {
@@ -126,7 +130,11 @@ Object.assign(I18N.en, {
   annualTitle: 'Yearly events', annualLead: 'We celebrate them every year. Save the dates.',
   everyYear: 'Every year', nameTbc: 'Name to be confirmed', today: 'It\u2019s today!', inNDays: '{n} days to go',
   priceTbc: 'Ticket price to be confirmed', notifyMe: 'Notify me', notifySet: 'We will let you know when tickets open (simulated).',
-  nextAnnual: 'Next yearly event', daysLabel: 'days', nth: '{n}th anniversary',
+  nextAnnual: 'Next yearly event',
+  passesLabel: 'Passes', singleLabel: 'Single tickets', fromPrice: 'From {price}',
+  vipFreePro: 'VIP All-Access free for Pro members, with up to 3 guests', getProPass: 'Get my free {name}',
+  includedInPass: 'Included in your VIP pass', includedInPro: 'Included with Pro (get your VIP All-Access)',
+  gabangiSource: 'Tickets and times as published on gabangi.com (2026 edition).', daysLabel: 'days', nth: '{n}th anniversary',
 });
 
 /* ---------- Data ---------- */
@@ -175,7 +183,27 @@ const ANNUAL_EVENTS = [
     name: { es: 'Exposición colectiva', en: 'Group exhibition' },
     desc: { es: 'Cada año el Museo Abreu reúne en una exposición colectiva a artistas dominicanos y obras de Oscar Abreu.',
       en: 'Every year Museo Abreu brings together Dominican artists and works by Oscar Abreu in a group exhibition.' } },
-  { id: 'art-gabangi', annual: { m: 7, d: 6 }, vip: true, price: null, time: '18:00',
+  { id: 'art-gabangi', annual: { m: 7, d: 6 }, vip: true, price: null, time: '18:00', lastDay: 8, tiers: [
+    // Ticket options as published on gabangi.com for ART GABANGI 2026. "day" counts from July 6.
+    { id: 'festival', time: '10:00', group: 'pass', price: 50, day: 1, name: { es: 'Festival Pass', en: 'Festival Pass' },
+      tag: { es: '7 días · sin gala', en: '7 days · no gala' },
+      items: { es: ['Válido del 7 al 14 de julio', 'Acceso diario 10:00 a. m. – 8:00 p. m.', 'El 14 de julio la feria cierra a las 5:00 p. m.', 'No incluye la Gala Premier'],
+        en: ['Valid July 7–14', 'Daily access 10:00 AM – 8:00 PM', 'On July 14 the fair closes at 5:00 PM', 'Does not include the Gala Premier'] } },
+    { id: 'vip', time: '18:00', group: 'pass', price: 140, day: 0, proFree: true, name: { es: 'VIP All-Access', en: 'VIP All-Access' },
+      tag: { es: 'Gala + 7 días', en: 'Gala + 7 days' },
+      items: { es: ['Incluye la Gala Premier del 6 de julio', 'Puertas 6:00 p. m. · evento principal 8:00 p. m.', 'Incluye el Festival Pass (7 al 14 de julio)'],
+        en: ['Includes the Gala Premier on July 6', 'Doors 6:00 PM · main event 8:00 PM', 'Includes the Festival Pass (July 7–14)'] } },
+    { id: 'dinner', time: '19:00', group: 'pass', price: 200, day: 8, name: { es: 'Cena de Subasta y Premios', en: 'Auction & Awards Dinner' },
+      tag: { es: '14 de julio · cena incluida', en: 'July 14 · dinner included' },
+      items: { es: ['Obras en exhibición del 6 al 14 de julio', 'La cena comienza a las 7:00 p. m.', 'Subasta en vivo durante la cena', 'Premio Artista del Año', 'Reconocimiento a líderes políticos, sociales y culturales'],
+        en: ['Works on view July 6–14', 'Dinner starts 7:00 PM', 'Live auction during dinner', 'Artist of the Year Award', 'Recognition of political, social and cultural leaders'] } },
+    { id: 'gala', time: '18:00', group: 'single', price: 100, day: 0, name: { es: 'Gala Premier', en: 'Gala Premier' },
+      tag: { es: '6 de julio', en: 'July 6' },
+      items: { es: ['Puertas 6:00 p. m.', 'Evento principal 8:00 p. m.', 'Celebración de apertura'], en: ['Doors open 6:00 PM', 'Main event starts 8:00 PM', 'Opening celebration'] } },
+    { id: 'regular', time: '10:00', group: 'single', price: 10, day: 1, name: { es: 'Día regular', en: 'Regular Day' },
+      tag: { es: '7 al 14 de julio', en: 'July 7–14' },
+      items: { es: ['Acceso diario 10:00 a. m. – 8:00 p. m.', 'El 14 de julio cierra a las 5:00 p. m.'], en: ['Daily access 10:00 AM – 8:00 PM', 'July 14 closes 5:00 PM'] } },
+  ],
     name: { es: 'ART GABANGI', en: 'ART GABANGI' },
     desc: { es: 'Encuentro anual de artistas, críticos, coleccionistas y público en el Museo Abreu: exposiciones, conferencias, talleres y mercado del arte.',
       en: 'Annual gathering of artists, critics, collectors and visitors at Museo Abreu: exhibitions, lectures, workshops and the art market.' } },
@@ -298,7 +326,40 @@ function pageEvents() {
   </div>`;
 }
 
+function tierBlock(ev, tier, passes) {
+  const pass = passes.find(p => p.event === ev.id && p.tier === tier.id);
+  const proHasVip = isPro() && passes.some(p => p.event === ev.id && p.tier === 'vip');
+  let action;
+  if (pass) action = passHTML(pass);
+  else if (isPro() && tier.proFree) action = `<div class="event-form"><label class="field"><span>${t('guests')}</span>
+      <select id="g-${ev.id}-${tier.id}">${[0, 1, 2, 3].map(n => `<option value="${n}">${n}</option>`).join('')}</select>
+      <small class="muted">${t('guestsHelp')}</small></label>
+      <button class="btn primary" data-action="getPass" data-id="${ev.id}" data-tier="${tier.id}">${t('getProPass', { name: L(tier.name) })}</button></div>`;
+  else if (isPro() && tier.id !== 'dinner') action = `<p class="status ok">${proHasVip ? t('includedInPass') : t('includedInPro')}</p>`;
+  else action = `<button class="btn ${tier.proFree ? 'primary' : ''}" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}">${t('buyTicket', { price: usd(tier.price) })}</button>`;
+  return `<div class="tier ${tier.proFree ? 'tier-vip' : ''}">
+    <div class="tier-head"><strong>${L(tier.name)}</strong><span class="tier-price">${usd(tier.price)}</span></div>
+    <span class="chip">${L(tier.tag)}</span>${tier.proFree ? ` <span class="status ok">${t('freeForPro')}</span>` : ''}
+    <ul>${tier.items[lang].map(i => `<li>${i}</li>`).join('')}</ul>
+    ${action}
+  </div>`;
+}
+
 function eventCard(ev, passes) {
+  if (ev.tiers) {
+    const d = eventDate(ev), n = daysUntil(d), end = addDays(d, ev.lastDay);
+    const group = g => ev.tiers.filter(x => x.group === g).map(x => tierBlock(ev, x, passes)).join('');
+    return `<article class="card event annual event-wide">
+      <div class="chips" style="margin:0 0 .5rem"><span class="chip vip">${t('vipEvent')}</span><span class="chip annual-chip">${t('everyYear')}</span></div>
+      <h3>${eventTitle(ev)}</h3>
+      <p class="muted">${fmtDate(d, { day: 'numeric', month: 'long' })} – ${fmtDate(end, { day: 'numeric', month: 'long', year: 'numeric' })} · Punta Cana · <strong>${n === 0 ? t('today') : t('inNDays', { n })}</strong></p>
+      <p style="margin-top:.4rem">${L(ev.desc)}</p>
+      <p style="margin-top:.6rem"><strong>${t('fromPrice', { price: usd(Math.min(...ev.tiers.map(x => x.price))) })}</strong> · ${t('vipFreePro')}</p>
+      <h4 class="tier-group">${t('passesLabel')}</h4><div class="tiers">${group('pass')}</div>
+      <h4 class="tier-group">${t('singleLabel')}</h4><div class="tiers">${group('single')}</div>
+      <p class="muted" style="margin-top:.8rem">${t('gabangiSource')}</p>
+    </article>`;
+  }
   {
       const pass = passes.find(p => p.event === ev.id);
       const d = eventDate(ev), n = daysUntil(d);
@@ -324,10 +385,11 @@ function eventCard(ev, passes) {
 
 function passHTML(p) {
   const ev = EVENTS.find(e => e.id === p.event);
+  const tier = p.tier && ev.tiers ? ev.tiers.find(x => x.id === p.tier) : null;
   return `<div class="ticket" style="max-width:320px">
-    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">${p.member ? 'Pro' : 'Museo Abreu'}</p><h3>${eventTitle(ev)}</h3></div>
+    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">${p.member ? 'Pro' : 'Museo Abreu'}</p><h3>${eventTitle(ev)}${tier ? ` · ${L(tier.name)}` : ''}</h3></div>
     <div class="ticket-body"><div class="qr" data-qr="${p.code}"></div><p class="code">${p.code}</p>
-      <p class="muted" style="text-align:center">${fmtDate(p.date)} · ${ev.time} · ${t('passFor', { n: 1 + p.guests })}</p></div></div>`;
+      <p class="muted" style="text-align:center">${fmtDate(p.date)} · ${(tier && tier.time) || ev.time} · ${t('passFor', { n: 1 + p.guests })}</p></div></div>`;
 }
 
 function workById(id) { return WORKS.find(w => w.id === id); }
@@ -476,20 +538,22 @@ const EXTRA_ACTIONS = {
   },
   getPass: el => {
     const ev = EVENTS.find(e => e.id === el.dataset.id);
+    const tier = el.dataset.tier ? ev.tiers.find(x => x.id === el.dataset.tier) : null;
     const passes = fx.get('passes', []);
-    if (passes.some(p => p.event === ev.id)) return toast(t('alreadyRegistered'));
-    const sel = document.getElementById('g-' + ev.id);
+    if (passes.some(p => p.event === ev.id && (p.tier || null) === (tier ? tier.id : null))) return toast(t('alreadyRegistered'));
+    const sel = document.getElementById('g-' + ev.id + (tier ? '-' + tier.id : ''));
     const guests = ev.vip && sel ? Math.min(3, Number(sel.value) || 0) : 0;
-    passes.push({ code: newCode().replace('MA-', 'EV-'), event: ev.id, date: eventDate(ev), guests, member: true, paid: 0 });
+    passes.push({ code: newCode().replace('MA-', 'EV-'), event: ev.id, tier: tier ? tier.id : null, date: tier ? addDays(eventDate(ev), tier.day) : eventDate(ev), guests, member: true, paid: 0 });
     fx.set('passes', passes);
     toast(t('passReady'));
     route();
   },
   buyEvent: el => {
     const ev = EVENTS.find(e => e.id === el.dataset.id);
+    const tier = el.dataset.tier ? ev.tiers.find(x => x.id === el.dataset.tier) : null;
     const passes = fx.get('passes', []);
-    if (passes.some(p => p.event === ev.id)) return toast(t('alreadyRegistered'));
-    passes.push({ code: newCode().replace('MA-', 'EV-'), event: ev.id, date: eventDate(ev), guests: 0, member: false, paid: ev.price });
+    if (passes.some(p => p.event === ev.id && (p.tier || null) === (tier ? tier.id : null))) return toast(t('alreadyRegistered'));
+    passes.push({ code: newCode().replace('MA-', 'EV-'), event: ev.id, tier: tier ? tier.id : null, date: tier ? addDays(eventDate(ev), tier.day) : eventDate(ev), guests: 0, member: isPro(), paid: tier ? tier.price : ev.price });
     fx.set('passes', passes);
     toast(t('passReady'));
     route();

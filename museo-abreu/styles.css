@@ -231,3 +231,13 @@ table.compare thead th:last-child { background: var(--accent); }
 .promo-text .eyebrow { color: #f59e6b; margin: 0; }
 .promo-title { font-family: var(--serif); font-size: 1.6rem; line-height: 1.15; }
 .promo-all { font-size: .8rem; color: #d6cbbb; }
+.event-wide { grid-column: 1 / -1; }
+.tier-group { font-family: var(--sans); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 1.2rem 0 .6rem; }
+.tiers { display: grid; gap: .8rem; }
+@media (min-width: 720px) { .tiers { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); } }
+.tier { border: 1px solid var(--line); border-radius: 12px; padding: .9rem 1rem; background: var(--paper); display: grid; gap: .5rem; align-content: start; }
+.tier-vip { border: 2px solid var(--accent); background: var(--accent-soft); }
+.tier-head { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; }
+.tier-price { font-family: var(--serif); font-size: 1.5rem; font-weight: 600; }
+.tier ul { padding-left: 1.1rem; font-size: .9rem; color: var(--ink-2); }
+.tier .btn { width: 100%; }
