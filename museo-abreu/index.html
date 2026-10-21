@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Museo Abreu · Art Experiences</title>
+<meta name="description" content="Descubre a Oscar Abreu y el Psico-Expresionismo, reserva tu VIP Tour en Bávaro, Punta Cana, y lee El arte salvó mi vida.">
+<meta name="theme-color" content="#16120f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+<div class="demo-banner" role="note" data-i18n="demoBanner">Prototipo · pagos simulados · contenidos pendientes de aprobación del artista</div>
+
+<header class="topbar">
+  <a href="#/" class="brand" aria-label="Museo Abreu">
+    <span class="brand-name">Museo Abreu</span>
+    <span class="brand-desc">Art Experiences</span>
+  </a>
+  <nav class="main-nav" aria-label="Principal">
+    <a href="#/" data-route="" data-i18n="navHome">Inicio</a>
+    <a href="#/artista" data-route="artista">Oscar Abreu</a>
+    <a href="#/psico" data-route="psico" data-i18n="navPsico">Psico-Expresionismo</a>
+    <a href="#/visita" data-route="visita" data-i18n="navVisit">Visita y VIP Tour</a>
+    <a href="#/biblioteca" data-route="biblioteca" data-i18n="navLibrary">Biblioteca</a>
+    <a href="#/cuenta" data-route="cuenta" data-i18n="navAccount">Mi cuenta</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Idioma / Language">
+    <button type="button" data-lang="es" lang="es">ES</button>
+    <button type="button" data-lang="en" lang="en">EN</button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<nav class="tabbar" aria-label="Principal (móvil)">
+  <a href="#/" data-route=""><span class="ti">◐</span><span data-i18n="navHome">Inicio</span></a>
+  <a href="#/artista" data-route="artista"><span class="ti">✦</span><span>Oscar</span></a>
+  <a href="#/visita" data-route="visita"><span class="ti">◇</span><span data-i18n="tabVisit">Reservar</span></a>
+  <a href="#/biblioteca" data-route="biblioteca"><span class="ti">❒</span><span data-i18n="tabLibrary">Libro</span></a>
+  <a href="#/cuenta" data-route="cuenta"><span class="ti">○</span><span data-i18n="tabAccount">Cuenta</span></a>
+</nav>
+
+<footer class="footer">
+  <p><strong>Museo Abreu</strong> · Bávaro, Punta Cana · República Dominicana</p>
+  <p><a href="#/psico" data-i18n="navPsico">Psico-Expresionismo</a> · <a href="#/personal" data-i18n="navStaff">Acceso personal</a></p>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script src="qrcode.js"></script>
+<script src="i18n.js"></script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,830 @@
+// Museo Abreu — prototype single-page app.
+// All persistence is local to the browser (localStorage). In production, tickets,
+// purchases and reading access live on the server and are checked there.
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('ma.' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('ma.' + k, JSON.stringify(v)); } catch { /* private mode: keep in memory only */ } },
+};
+
+let lang = store.get('lang', (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en');
+let tickets = store.get('tickets', []);
+let purchases = store.get('purchases', []);
+let reading = store.get('reading', { fontSize: 1.15, last: null, bookmarks: [] });
+let profile = store.get('profile', { name: '', email: '' });
+let bk = freshBooking();
+let holdTimer = null;
+
+const main = document.getElementById('main');
+const $ = (s, el = document) => el.querySelector(s);
+
+function t(key, vars) {
+  let s = (I18N[lang] && I18N[lang][key]) ?? I18N.es[key] ?? key;
+  if (vars) for (const k in vars) s = s.replace('{' + k + '}', vars[k]);
+  return s;
+}
+const L = obj => obj[lang] ?? obj.es;
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const usd = n => 'US$' + n.toLocaleString('en-US');
+const pend = () => `<span class="pending">${t('pending')}</span>`;
+const save = () => { store.set('tickets', tickets); store.set('purchases', purchases); store.set('reading', reading); store.set('profile', profile); };
+
+function toast(msg) {
+  const el = $('.toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast.h);
+  toast.h = setTimeout(() => el.classList.remove('show'), 3200);
+}
+
+/* ---------- Dates in Punta Cana local time ---------- */
+
+function todayPC() {
+  const p = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  return p; // YYYY-MM-DD
+}
+function addDays(iso, n) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d + n, 12)).toISOString().slice(0, 10);
+}
+function dow(iso) { const [y, m, d] = iso.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay(); }
+function fmtDate(iso, opts = { weekday: 'long', day: 'numeric', month: 'long' }) {
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Intl.DateTimeFormat(lang === 'es' ? 'es-DO' : 'en-US', { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
+}
+
+/* ---------- Availability ---------- */
+
+function hash(s) { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
+
+// VIP and combo share the same physical tour, so they share capacity.
+const poolOf = expId => (expId === 'combo' ? 'vip' : expId);
+
+function sessionsFor(expId, iso) {
+  if (dow(iso) === 1) return []; // closed Mondays
+  const exp = EXPERIENCES.find(e => e.id === expId);
+  return (SCHEDULE[expId] || [])
+    .filter(s => !s.days || s.days.includes(dow(iso)))
+    .map(s => {
+      const pool = poolOf(expId);
+      const h = hash(pool + iso + s.time);
+      const seeded = h % 9 === 0 ? exp.capacity : h % (exp.capacity - 2);
+      const booked = tickets.filter(tk => poolOf(tk.exp) === pool && tk.date === iso && tk.time === s.time && tk.status !== 'refunded')
+        .reduce((a, tk) => a + tk.qty, 0);
+      return { ...s, left: Math.max(0, exp.capacity - seeded - booked) };
+    });
+}
+
+/* ---------- Router ---------- */
+
+const routes = {
+  '': pageHome, artista: pageArtist, psico: pagePsico, visita: pageVisit,
+  biblioteca: pageLibrary, leer: pageReader, cuenta: pageAccount, personal: pageStaff,
+};
+
+function route() {
+  const parts = location.hash.replace(/^#\/?/, '').split('/');
+  const name = routes[parts[0]] ? parts[0] : '';
+  clearInterval(holdTimer);
+  main.innerHTML = routes[name](...parts.slice(1));
+  document.querySelectorAll('[data-route]').forEach(a => {
+    a.classList.toggle('active', a.dataset.route === name);
+    if (a.dataset.route === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+  });
+  afterRender(name);
+}
+
+function afterRender(name) {
+  renderQRs();
+  if (name === 'visita' && bk.step === 4) startHoldTimer();
+  if (name === 'leer') {
+    const txt = $('.reader-text');
+    if (txt) txt.style.fontSize = reading.fontSize + 'rem';
+  }
+}
+
+function go(hash) {
+  if (location.hash === hash) route(); else location.hash = hash;
+  window.scrollTo(0, 0);
+  main.focus({ preventScroll: true });
+}
+
+/* ---------- Pages ---------- */
+
+function pageHome() {
+  return `
+  <section class="hero">
+    <div class="hero-art">${artSVG(23, '')}</div>
+    <div class="hero-inner">
+      <p class="eyebrow">${t('homeEyebrow')}</p>
+      <h1>${t('homeTitle')}</h1>
+      <p class="lead" style="margin-top:1rem">${t('homeLead')}</p>
+      <div class="btn-row">
+        <a class="btn primary" href="#/visita">${t('ctaTour')}</a>
+        <a class="btn" href="#/biblioteca">${t('ctaBook')}</a>
+      </div>
+    </div>
+  </section>
+  <div class="wrap">
+    <section class="section grid three">
+      <a class="card" href="#/artista" style="text-decoration:none"><p class="eyebrow">01</p><h3>${t('homeDiscover')}</h3><p class="muted">${t('homeDiscoverText')}</p></a>
+      <a class="card" href="#/visita" style="text-decoration:none"><p class="eyebrow">02</p><h3>${t('homeReserve')}</h3><p class="muted">${t('homeReserveText')}</p></a>
+      <a class="card" href="#/biblioteca" style="text-decoration:none"><p class="eyebrow">03</p><h3>${t('homeRead')}</h3><p class="muted">${t('homeReadText')}</p></a>
+    </section>
+    <section class="section">
+      <p class="eyebrow">${t('navPsico')}</p>
+      <div class="grid two" style="align-items:center">
+        <div>
+          <h2>${t('layersTitle')}</h2>
+          <p class="lead">${t('psicoLead')}</p>
+          <div class="btn-row"><a class="btn" href="#/psico">${t('psicoIntro')} →</a></div>
+        </div>
+        <div class="layers" style="justify-self:center;width:100%">${artSVG(41, t('layersTitle'))}</div>
+      </div>
+    </section>
+    <section class="section">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem">
+        <h2>${t('homeWorks')}</h2><a href="#/artista">${t('seeAll')}</a>
+      </div>
+      <div class="grid four">${WORKS.slice(0, 4).map(workCard).join('')}</div>
+      <p class="muted" style="margin-top:1rem">${t('homeNoAccount')}</p>
+    </section>
+  </div>`;
+}
+
+function workCard(w) {
+  return `<button type="button" class="work" data-action="work" data-id="${w.id}">
+    <div class="art">${artSVG(w.seed, L(w.title))}</div>
+    <div class="meta"><strong>${L(w.title)}</strong><span class="muted">${t('year')}: ${t('pending')}</span></div>
+  </button>`;
+}
+
+function pageArtist() {
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('artistEyebrow')}</p>
+      <h1>Oscar Abreu</h1>
+      <p class="lead" style="margin-top:.8rem">${t('artistLead')}</p>
+    </section>
+    <section class="section grid two">
+      <div>
+        <h2>${t('welcomeVideo')}</h2>
+        <div class="video-ph"><p>▶<br>${t('videoPending')}</p></div>
+      </div>
+      <div>
+        <h2>${t('bioShort')} <span class="pending">${t('pendingText')}</span></h2>
+        <p>${t('bioPlaceholder')}</p>
+        <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioPlaceholder')}</p></details>
+      </div>
+    </section>
+    <section class="section grid two">
+      <div>
+        <h2>${t('timeline')}</h2>
+        <ol class="timeline">${[1, 2, 3, 4].map(() => `<li><strong>${t('pending')}</strong><br><span class="muted">${t('timelinePlaceholder')}</span></li>`).join('')}</ol>
+      </div>
+      <div>
+        <h2>${t('exhibitions')}</h2>
+        <ul class="timeline">${[1, 2, 3].map(() => `<li><span class="muted">${t('timelinePlaceholder')}</span></li>`).join('')}</ul>
+      </div>
+    </section>
+    <section class="section">
+      <h2>${t('catalog')}</h2>
+      <div class="grid four">${WORKS.map(workCard).join('')}</div>
+    </section>
+  </div>`;
+}
+
+function openWork(id) {
+  const w = WORKS.find(x => x.id === id);
+  const dlg = document.createElement('dialog');
+  dlg.setAttribute('aria-label', L(w.title));
+  dlg.innerHTML = `<div class="dlg-body">
+    <div class="dlg-art">${artSVG(w.seed, L(w.title))}</div>
+    <h3 style="margin-top:1rem">${L(w.title)}</h3>
+    <dl class="specs">
+      <dt>${t('year')}</dt><dd>${pend()}</dd>
+      <dt>${t('technique')}</dt><dd>${pend()}</dd>
+      <dt>${t('dimensions')}</dt><dd>${pend()}</dd>
+      <dt>${t('artistNote')}</dt><dd>${pend()}</dd>
+    </dl>
+    <div class="btn-row">
+      <button class="btn dark small" data-dlg="acquire">${t('acquire')}</button>
+      <button class="btn small" data-dlg="close">${t('close')}</button>
+    </div></div>`;
+  document.body.appendChild(dlg);
+  dlg.addEventListener('click', e => {
+    const b = e.target.closest('[data-dlg]');
+    if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
+    if (b && b.dataset.dlg === 'acquire') { dlg.close(); toast(t('acquireSent')); }
+  });
+  dlg.addEventListener('close', () => dlg.remove());
+  dlg.showModal();
+}
+
+function pagePsico() {
+  const seed = 59;
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('psicoEyebrow')}</p>
+      <h1>${t('navPsico')}</h1>
+      <p class="lead" style="margin-top:.8rem">${t('psicoLead')}</p>
+    </section>
+    <section class="section grid two">
+      <div>
+        <h2>${t('psicoIntro')}</h2>
+        <p>${t('psicoP1')}</p><p>${t('psicoP2')}</p>
+        <p class="muted">${t('psicoP3')}</p>
+      </div>
+      <div>
+        <h2>${t('layersTitle')}</h2>
+        <div class="layers" id="layers">
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="${PALETTES[seed % 4][3]}"/>${artLayer(seed, 2)}</svg>
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" data-layer="1">${artLayer(seed, 1)}</svg>
+          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" data-layer="0">${artLayer(seed, 0)}</svg>
+        </div>
+        <label for="layer-range" class="muted" style="display:block;margin-top:.8rem">${t('layersHelp')}</label>
+        <input id="layer-range" class="range" type="range" min="0" max="2" step="1" value="0" data-action="layers" aria-valuetext="${t('layer')} 1/3">
+      </div>
+    </section>
+    <section class="section">
+      <h2>${t('questionsTitle')}</h2>
+      <ol class="questions"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li></ol>
+    </section>
+    <section class="section">
+      <h2>${t('guidedGallery')}</h2>
+      <div class="grid four">${WORKS.slice(4).map(workCard).join('')}</div>
+    </section>
+  </div>`;
+}
+
+/* ---------- Booking ---------- */
+
+function freshBooking() {
+  return { step: 0, exp: null, date: null, time: null, glang: null, qty: 1, terms: false, mkt: false, holdUntil: 0, error: '', ticket: null };
+}
+
+function pageVisit() {
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('visitEyebrow')}</p>
+      <h1>${t('visitTitle')}</h1>
+      <p class="muted" style="margin-top:.6rem">${t('localTime')}</p>
+    </section>
+    <section class="section" id="wizard">${bookingWizard()}</section>
+    <section class="section">
+      <h2>${t('practical')}</h2>
+      <div class="card">
+        <dl class="specs">
+          <dt>${t('location')}</dt><dd>Bávaro, Punta Cana ${pend()} · <a href="https://www.google.com/maps/search/?api=1&query=Museo+Abreu+B%C3%A1varo+Punta+Cana" target="_blank" rel="noopener">${t('mapOpen')}</a></dd>
+          <dt>${t('hours')}</dt><dd>${t('hoursVal')}</dd>
+          <dt>${t('duration')}</dt><dd>${t('durationVal')}</dd>
+          <dt>${t('languages')}</dt><dd>${t('languagesVal')}</dd>
+          <dt>${t('accessibility')}</dt><dd>${pend()}</dd>
+          <dt>${t('arrival')}</dt><dd>${pend()}</dd>
+          <dt>${t('transport')}</dt><dd>${t('transportVal')}</dd>
+          <dt>${t('contact')}</dt><dd>${pend()}</dd>
+        </dl>
+      </div>
+    </section>
+  </div>`;
+}
+
+function stepsBar() {
+  const names = ['stepExp', 'stepDate', 'stepPeople', 'stepReview', 'stepPay', 'stepTicket'];
+  return `<ol class="steps">${names.map((n, i) => `<li class="${i < bk.step ? 'done' : i === bk.step ? 'current' : ''}" ${i === bk.step ? 'aria-current="step"' : ''}>${t(n)}</li>`).join('')}</ol>`;
+}
+
+function bookingWizard() {
+  const exp = EXPERIENCES.find(e => e.id === bk.exp);
+  const err = bk.error ? `<p class="status bad" role="alert" style="margin-bottom:1rem">${bk.error}</p>` : '';
+  if (bk.exp === 'private') return privateForm();
+  let body = '';
+  switch (bk.step) {
+    case 0:
+      body = `<h2 tabindex="-1">${t('chooseExp')}</h2><div class="grid two">${EXPERIENCES.map(e => `
+        <button type="button" class="choice" data-action="exp" data-id="${e.id}" aria-pressed="${bk.exp === e.id}">
+          <span class="price">${e.price ? usd(e.price) + ' <small class="muted">' + t('perPerson') + '</small>' : t('onRequest')}</span>
+          <h3>${L(e.name)}</h3><p class="muted">${L(e.desc)}</p>
+        </button>`).join('')}</div>
+        <p class="muted" style="margin-top:.8rem">* ${t('illustrative')}</p>`;
+      break;
+    case 1: {
+      const start = todayPC();
+      const days = Array.from({ length: 21 }, (_, i) => addDays(start, i + 1));
+      if (!bk.date) bk.date = days.find(d => sessionsFor(bk.exp, d).length) || days[0];
+      const sessions = sessionsFor(bk.exp, bk.date);
+      body = `<h2 tabindex="-1">${t('chooseDate')}</h2><p class="muted">${L(exp.name)}</p>
+        <div class="dates" role="group" aria-label="${t('date')}" style="margin-top:.8rem">${days.map(d => {
+          const open = sessionsFor(bk.exp, d).length > 0;
+          return `<button type="button" class="date" data-action="date" data-d="${d}" aria-pressed="${bk.date === d}" ${open ? '' : 'disabled'} aria-label="${fmtDate(d)}${open ? '' : ' — ' + t('closed')}">
+            <small>${fmtDate(d, { weekday: 'short' })}</small><strong>${d.slice(8)}</strong><small>${fmtDate(d, { month: 'short' })}</small></button>`;
+        }).join('')}</div>
+        <h3 style="margin:1.2rem 0 .6rem">${fmtDate(bk.date)}</h3>
+        <div class="grid two">${sessions.length ? sessions.map(s => s.langs.map(gl => {
+          const sel = bk.time === s.time && bk.glang === gl;
+          return `<button type="button" class="choice" data-action="session" data-time="${s.time}" data-gl="${gl}" aria-pressed="${sel}" ${s.left ? '' : 'disabled'}>
+            <span class="price">${s.left ? t('spotsLeft', { n: s.left }) : t('soldOut')}</span>
+            <strong style="font-size:1.2rem">${s.time}</strong> · ${t('guideLang')}: ${L(LANG_NAMES[gl])}
+            ${bk.exp === 'artist' ? `<div class="chips"><span class="chip">✓ ${t('artistConfirmed')}</span></div>` : ''}
+          </button>`;
+        }).join('')).join('') : `<p class="muted">${t('noSessions')}</p>`}</div>
+        <div class="btn-row"><button class="btn" data-action="back">${t('back')}</button>
+        <button class="btn primary" data-action="next" ${bk.time ? '' : 'disabled'}>${t('continue')}</button></div>`;
+      break;
+    }
+    case 2: {
+      const s = sessionsFor(bk.exp, bk.date).find(x => x.time === bk.time);
+      const max = Math.min(s ? s.left : 0, exp.capacity);
+      bk.qty = Math.min(Math.max(1, bk.qty), Math.max(1, max));
+      body = `<h2 tabindex="-1">${t('howMany')}</h2>
+        <div class="stepper" style="margin:1rem 0">
+          <button type="button" data-action="qty" data-d="-1" aria-label="−1" ${bk.qty <= 1 ? 'disabled' : ''}>−</button>
+          <output aria-live="polite">${bk.qty}</output>
+          <button type="button" data-action="qty" data-d="1" aria-label="+1" ${bk.qty >= max ? 'disabled' : ''}>+</button>
+        </div>
+        <p class="muted">${t('maxSpots', { n: max })}</p>
+        <div class="btn-row"><button class="btn" data-action="back">${t('back')}</button>
+        <button class="btn primary" data-action="next">${t('continue')}</button></div>`;
+      break;
+    }
+    case 3:
+      body = `<h2 tabindex="-1">${t('review')}</h2>
+        <div class="grid two" style="margin-top:1rem">
+          <div class="card">${summary(exp)}</div>
+          <div>
+            <div class="field"><label for="f-name">${t('name')}</label><input id="f-name" autocomplete="name" value="${esc(profile.name)}" data-bind="name" required></div>
+            <div class="field"><label for="f-email">${t('email')}</label><input id="f-email" type="email" autocomplete="email" value="${esc(profile.email)}" data-bind="email" required></div>
+            <div class="terms"><strong>${t('termsTitle')}</strong><ul><li>${t('terms1')}</li><li>${t('terms2')}</li><li>${t('terms3')}</li><li>${t('terms4')}</li></ul></div>
+            <label class="check"><input type="checkbox" data-bind="terms" ${bk.terms ? 'checked' : ''}> ${t('acceptTerms')}</label>
+            <label class="check"><input type="checkbox" data-bind="mkt" ${bk.mkt ? 'checked' : ''}> ${t('marketing')}</label>
+          </div>
+        </div>
+        <div class="btn-row"><button class="btn" data-action="back">${t('back')}</button>
+        <button class="btn primary" data-action="toPay" ${canPay() ? '' : 'disabled'}>${t('continue')}</button></div>`;
+      break;
+    case 4:
+      body = `<h2 tabindex="-1">${t('payTitle')}</h2>
+        <div class="grid two" style="margin-top:1rem">
+          <div class="card">${summary(exp)}</div>
+          <div>
+            <p class="status ok" id="hold" aria-live="polite"></p>
+            <p class="muted" style="margin:.8rem 0">${t('payDemo')}</p>
+            <div class="btn-row" style="margin-top:.5rem">
+              <button class="btn primary" data-action="pay">${t('paySim', { amount: usd(exp.price * bk.qty) })}</button>
+              <button class="btn small" data-action="payFail">${t('payFail')}</button>
+            </div>
+            <div class="btn-row"><button class="btn small" data-action="back">${t('back')}</button></div>
+          </div>
+        </div>`;
+      break;
+    case 5: {
+      const tk = bk.ticket;
+      body = `<h2 tabindex="-1">${t('confirmed')}</h2>
+        <p class="muted" style="margin-bottom:1rem">${t('confirmedText', { email: esc(tk.email) })}</p>
+        ${ticketHTML(tk)}
+        <div class="btn-row">
+          <button class="btn" data-action="ics" data-code="${tk.code}">${t('addCal')}</button>
+          <a class="btn dark" href="#/cuenta">${t('viewAccount')}</a>
+        </div>`;
+      break;
+    }
+  }
+  return stepsBar() + err + body;
+}
+
+function summary(exp) {
+  return `<h3>${L(exp.name)}</h3>
+    <div class="summary" style="margin-top:.6rem">
+      <span class="muted">${t('date')}</span><span>${fmtDate(bk.date)}</span>
+      <span class="muted">${t('time')}</span><span>${bk.time} (UTC−4)</span>
+      <span class="muted">${t('guide')}</span><span>${L(LANG_NAMES[bk.glang])}</span>
+      <span class="muted">${t('attendees')}</span><span>${bk.qty} × ${usd(exp.price)}</span>
+      <span class="total">${t('total')}</span><span class="total">${usd(exp.price * bk.qty)}</span>
+    </div>
+    ${exp.includesBook ? `<p class="muted" style="margin-top:.6rem">📖 ${t('combo')}</p>` : ''}
+    <p class="muted" style="margin-top:.4rem">${t('currency')} · ${t('illustrative')}</p>`;
+}
+
+function canPay() { return bk.terms && profile.name.trim() && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(profile.email); }
+
+function privateForm() {
+  return `<h2 tabindex="-1">${t('privateTitle')}</h2>
+    <p class="muted" style="margin-bottom:1rem">${t('privateText')}</p>
+    <form class="card" data-form="private" style="max-width:560px">
+      <div class="field"><label for="p-name">${t('name')}</label><input id="p-name" required autocomplete="name" value="${esc(profile.name)}"></div>
+      <div class="field"><label for="p-email">${t('email')}</label><input id="p-email" type="email" required autocomplete="email" value="${esc(profile.email)}"></div>
+      <div class="grid two">
+        <div class="field"><label for="p-size">${t('groupSize')}</label><input id="p-size" type="number" min="1" max="60" value="4" required></div>
+        <div class="field"><label for="p-date">${t('preferredDate')}</label><input id="p-date" type="date" min="${addDays(todayPC(), 1)}" required></div>
+      </div>
+      <div class="field"><label for="p-msg">${t('message')}</label><textarea id="p-msg" rows="3"></textarea></div>
+      <div class="btn-row"><button type="button" class="btn" data-action="back">${t('back')}</button><button class="btn primary">${t('sendRequest')}</button></div>
+    </form>`;
+}
+
+function rerenderWizard(focus = true) {
+  clearInterval(holdTimer);
+  const w = $('#wizard');
+  w.innerHTML = bookingWizard();
+  renderQRs();
+  if (bk.step === 4) startHoldTimer();
+  if (focus) {
+    const h = $('h2', w);
+    h.focus({ preventScroll: true });
+    w.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+}
+
+function startHoldTimer() {
+  const tick = () => {
+    const el = $('#hold');
+    if (!el) return clearInterval(holdTimer);
+    const ms = bk.holdUntil - Date.now();
+    if (ms <= 0) {
+      clearInterval(holdTimer);
+      Object.assign(bk, { step: 1, time: null, glang: null, error: t('holdExpired') });
+      return rerenderWizard();
+    }
+    const m = Math.floor(ms / 60000), s = Math.floor(ms / 1000) % 60;
+    el.textContent = '⏱ ' + t('holdTimer', { t: `${m}:${String(s).padStart(2, '0')}` });
+  };
+  tick();
+  holdTimer = setInterval(tick, 1000);
+}
+
+function newCode() {
+  const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const r = crypto.getRandomValues(new Uint8Array(8));
+  return 'MA-' + Array.from(r, b => a[b % a.length]).join('').replace(/(.{4})/, '$1-');
+}
+
+function completePayment() {
+  // Idempotent: a repeated confirmation for the same booking must not create a second ticket.
+  if (bk.ticket) return;
+  const exp = EXPERIENCES.find(e => e.id === bk.exp);
+  const s = sessionsFor(bk.exp, bk.date).find(x => x.time === bk.time);
+  if (!s || s.left < bk.qty) {
+    Object.assign(bk, { step: 1, time: null, glang: null, error: t('soldOut') });
+    return rerenderWizard();
+  }
+  const tk = {
+    code: newCode(), exp: bk.exp, date: bk.date, time: bk.time, glang: bk.glang, qty: bk.qty,
+    name: profile.name.trim(), email: profile.email.trim(), total: exp.price * bk.qty,
+    status: 'valid', created: new Date().toISOString(), terms: 'v0.1', marketing: bk.mkt, rating: 0,
+  };
+  tickets.push(tk);
+  if (exp.includesBook) {
+    const ed = ['es', 'en'].includes(bk.glang) ? bk.glang : lang;
+    if (!owns(ed)) purchases.push({ lang: ed, price: 0, source: 'combo', ref: tk.code, date: tk.created });
+  }
+  save();
+  Object.assign(bk, { step: 5, ticket: tk, error: '' });
+  rerenderWizard();
+}
+
+function ticketHTML(tk) {
+  const exp = EXPERIENCES.find(e => e.id === tk.exp);
+  const st = { valid: ['ok', 'statusValid'], used: ['used', 'statusUsed'], refunded: ['bad', 'statusRefunded'] }[tk.status];
+  return `<article class="ticket">
+    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">Museo Abreu</p><h3>${L(exp.name)}</h3></div>
+    <div class="ticket-body">
+      <div class="qr" data-qr="${tk.code}"></div>
+      <p class="code">${tk.code}</p>
+      <div class="summary">
+        <span class="muted">${t('date')}</span><span>${fmtDate(tk.date)}</span>
+        <span class="muted">${t('time')}</span><span>${tk.time} (UTC−4)</span>
+        <span class="muted">${t('guide')}</span><span>${L(LANG_NAMES[tk.glang])}</span>
+        <span class="muted">${t('attendees')}</span><span>${tk.qty} · ${esc(tk.name)}</span>
+      </div>
+      <p><span class="status ${st[0]}">${t(st[1])}</span></p>
+    </div>
+  </article>`;
+}
+
+function renderQRs() {
+  document.querySelectorAll('[data-qr]').forEach(el => {
+    if (el.firstChild) return;
+    try {
+      const qr = qrcode(0, 'M');
+      qr.addData(el.dataset.qr);
+      qr.make();
+      el.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true, alt: 'QR ' + el.dataset.qr });
+    } catch {
+      el.innerHTML = `<p class="code" style="padding-top:70px">${el.dataset.qr}</p>`;
+    }
+  });
+}
+
+function downloadICS(code) {
+  const tk = tickets.find(x => x.code === code);
+  const exp = EXPERIENCES.find(e => e.id === tk.exp);
+  const start = tk.date.replace(/-/g, '') + 'T' + tk.time.replace(':', '') + '00';
+  const [h, m] = tk.time.split(':').map(Number);
+  const endMin = h * 60 + m + exp.minutes;
+  const end = tk.date.replace(/-/g, '') + 'T' + String(Math.floor(endMin / 60)).padStart(2, '0') + String(endMin % 60).padStart(2, '0') + '00';
+  const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Museo Abreu//ES', 'BEGIN:VEVENT',
+    'UID:' + code + '@museoabreu', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z',
+    'DTSTART;TZID=' + TZ + ':' + start, 'DTEND;TZID=' + TZ + ':' + end,
+    'SUMMARY:' + L(exp.name) + ' · Museo Abreu', 'LOCATION:Museo Abreu\\, Bávaro\\, Punta Cana',
+    'DESCRIPTION:' + code, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+  a.download = 'museo-abreu-' + code + '.ics';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+/* ---------- Library & reader ---------- */
+
+const owns = l => purchases.some(p => p.lang === l && !p.refunded);
+const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l));
+
+function pageLibrary() {
+  const bookTitle = t('bookTitle');
+  const readLang = owns(lang) ? lang : (purchases[0]?.lang || lang);
+  const last = reading.last;
+  return `<div class="wrap">
+    <section class="section book">
+      <div class="cover">${coverSVG(bookTitle)}</div>
+      <div>
+        <p class="eyebrow">${t('libEyebrow')}</p>
+        <h1>${bookTitle}</h1>
+        <p class="muted" style="margin:.3rem 0 1rem">${t('bookBy')}</p>
+        <h3>${t('synopsis')} <span class="pending">${t('pendingText')}</span></h3>
+        <p>${t('synopsisText')}</p>
+        <div class="btn-row">
+          ${last ? `<a class="btn primary" href="#/leer/${last.lang}/${last.ch}">${t('resume')}</a>` : ''}
+          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : t('readSample')}</a>
+        </div>
+      </div>
+    </section>
+    <section class="section grid two">
+      <div>
+        <h2>${t('editions')}</h2>
+        <p class="muted" style="margin-bottom:.8rem">${t('oneTime')}</p>
+        <div class="editions">${EDITIONS.map(ed => `
+          <div class="edition">
+            <div><strong>${L(LANG_NAMES[ed.lang])}</strong><br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span></div>
+            ${owns(ed.lang) ? `<a class="btn small dark" href="#/leer/${ed.lang}/0">${t('owned')} · ${t('read')}</a>`
+              : ed.status === 'available' ? `<button class="btn small primary" data-action="buy" data-l="${ed.lang}">${t('buy', { price: usd(ed.price) })}</button>`
+              : `<span class="chip">${t('comingSoon')}</span>`}
+          </div>`).join('')}
+        </div>
+        <p class="muted" style="margin-top:.6rem">* ${t('illustrative')}</p>
+      </div>
+      <div>
+        <h2>${t('contents')}</h2>
+        <ol class="toc">${CHAPTERS.map((c, i) => canRead(readLang, i)
+          ? `<li><a href="#/leer/${readLang}/${i}"><span>${L(c.title)}</span><span class="muted">${c.free ? t('free') : ''}</span></a></li>`
+          : `<li><span><span>${L(c.title)}</span><span>🔒 ${t('locked')}</span></span></li>`).join('')}
+        </ol>
+      </div>
+    </section>
+  </div>`;
+}
+
+function buyEdition(l) {
+  const finish = email => {
+    profile.email = email;
+    purchases.push({ lang: l, price: EDITIONS.find(e => e.lang === l).price, source: 'direct', date: new Date().toISOString() });
+    save();
+    toast(t('bought'));
+    route();
+  };
+  const dlg = document.createElement('dialog');
+  dlg.innerHTML = `<form method="dialog" class="dlg-body">
+    <h3>${t('buy', { price: usd(EDITIONS.find(e => e.lang === l).price) })} · ${L(LANG_NAMES[l])}</h3>
+    <p class="muted" style="margin:.5rem 0 1rem">${t('buyNeedsEmail')}</p>
+    <div class="field"><label for="b-email">${t('email')}</label><input id="b-email" type="email" required autocomplete="email" value="${esc(profile.email)}"></div>
+    <p class="muted">${t('currency')} · ${t('oneTime')}</p>
+    <div class="btn-row"><button class="btn primary" value="ok">${t('paySim', { amount: usd(EDITIONS.find(e => e.lang === l).price) })}</button>
+    <button class="btn" value="cancel" formnovalidate>${t('close')}</button></div></form>`;
+  document.body.appendChild(dlg);
+  dlg.addEventListener('close', () => {
+    const email = $('#b-email', dlg).value.trim();
+    if (dlg.returnValue === 'ok' && email) finish(email);
+    dlg.remove();
+  });
+  dlg.showModal();
+}
+
+const FILLER = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus, posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla.',
+  'Vestibulum id ligula porta felis euismod semper. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur, maecenas faucibus mollis interdum.',
+  'Nullam quis risus eget urna mollis ornare vel eu leo. Curabitur blandit tempus porttitor. Etiam porta sem malesuada magna mollis euismod, sed posuere consectetur est at lobortis.',
+  'Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Fusce dapibus, tellus ac cursus commodo.',
+];
+
+function pageReader(l = 'es', chStr = '0') {
+  const ch = Math.min(Math.max(0, parseInt(chStr, 10) || 0), CHAPTERS.length - 1);
+  if (!LANG_NAMES[l]) l = 'es';
+  const c = CHAPTERS[ch];
+  const marked = reading.bookmarks.some(b => b.lang === l && b.ch === ch);
+  let text;
+  if (canRead(l, ch)) {
+    reading.last = { lang: l, ch, at: new Date().toISOString() };
+    save();
+    text = `<h2>${L(c.title)}</h2><p class="muted" style="font-family:var(--sans);font-size:.85rem">${t('chapterPlaceholder')}</p>
+      ${FILLER.concat(FILLER).map(p => `<p>${p}</p>`).join('')}`;
+  } else {
+    text = `<h2>${L(c.title)}</h2><div class="empty">🔒<p>${t('lockedChapter')}</p>
+      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t('buy', { price: usd(25) })}</button></div></div>`;
+  }
+  return `<div class="wrap reader">
+    <div class="reader-bar">
+      <a href="#/biblioteca" class="btn small">← ${t('backToLib')}</a>
+      <span class="muted">${t('bookTitle')} · ${L(LANG_NAMES[l])}</span>
+      <div style="display:flex;gap:.3rem" role="group" aria-label="${t('fontSize')}">
+        <button class="btn small" data-action="font" data-d="-0.1" aria-label="${t('fontSize')} −">A−</button>
+        <button class="btn small" data-action="font" data-d="0.1" aria-label="${t('fontSize')} +">A+</button>
+        <button class="btn small" data-action="bookmark" data-l="${l}" data-ch="${ch}" aria-pressed="${marked}">${marked ? '★' : '☆'} ${t('bookmark')}</button>
+      </div>
+    </div>
+    <article class="reader-text" lang="${l}">${text}</article>
+    <nav class="reader-nav">
+      ${ch > 0 ? `<a class="btn small" href="#/leer/${l}/${ch - 1}">← ${t('prev')}</a>` : '<span></span>'}
+      ${ch < CHAPTERS.length - 1 ? `<a class="btn small dark" href="#/leer/${l}/${ch + 1}">${t('next')} →</a>` : ''}
+    </nav>
+  </div>`;
+}
+
+/* ---------- Account ---------- */
+
+function pageAccount() {
+  const mine = tickets.slice().reverse();
+  return `<div class="wrap">
+    <section class="section"><h1>${t('accTitle')}</h1><p class="lead" style="margin-top:.6rem">${t('accLead')}</p></section>
+    <section class="section">
+      <h2>${t('myTickets')}</h2>
+      ${mine.length ? `<div class="grid three">${mine.map(tk => `<div>${ticketHTML(tk)}
+        <div class="btn-row" style="margin-top:.6rem"><button class="btn small" data-action="ics" data-code="${tk.code}">${t('addCal')}</button></div>
+        ${tk.status === 'used' ? `<div class="card" style="margin-top:.6rem"><strong>${t('rateTitle')}</strong>
+          <div role="group" aria-label="${t('rateTitle')}">${[1, 2, 3, 4, 5].map(n => `<button class="btn small" style="border:0;padding:.2rem;font-size:1.3rem" data-action="rate" data-code="${tk.code}" data-n="${n}" aria-label="${n}/5">${n <= tk.rating ? '★' : '☆'}</button>`).join('')}</div></div>` : ''}
+      </div>`).join('')}</div>` : `<p class="empty">${t('noTickets')} <a href="#/visita">${t('ctaTour')}</a></p>`}
+    </section>
+    <section class="section grid two">
+      <div>
+        <h2>${t('myPurchases')}</h2>
+        ${purchases.length ? `<div class="editions">${purchases.map(p => `<div class="edition"><div><strong>${t('bookTitle')}</strong><br><span class="muted">${L(LANG_NAMES[p.lang])} · ${p.source === 'combo' ? EXPERIENCES[2].name[lang] : usd(p.price)}</span></div>
+          <a class="btn small dark" href="#/leer/${p.lang}/0">${t('read')}</a></div>`).join('')}</div>` : `<p class="empty">${t('noPurchases')}</p>`}
+      </div>
+      <div>
+        <h2>${t('myReading')}</h2>
+        ${reading.last ? `<div class="card"><p class="muted">${t('lastRead')}</p><p><strong>${L(CHAPTERS[reading.last.ch].title)}</strong> · ${L(LANG_NAMES[reading.last.lang])}</p>
+          <div class="btn-row" style="margin-top:.6rem"><a class="btn small primary" href="#/leer/${reading.last.lang}/${reading.last.ch}">${t('resume')}</a></div></div>` : `<p class="empty">${t('noReading')}</p>`}
+        ${reading.bookmarks.length ? `<h3 style="margin-top:1rem">${t('bookmarks')}</h3><ul class="toc">${reading.bookmarks.map(b => `<li><a href="#/leer/${b.lang}/${b.ch}"><span>★ ${L(CHAPTERS[b.ch].title)}</span><span class="muted">${b.lang.toUpperCase()}</span></a></li>`).join('')}</ul>` : ''}
+      </div>
+    </section>
+    <section class="section">
+      <h2>${t('support')}</h2><p>${t('supportText')}</p>
+      <div class="btn-row"><a class="btn" href="mailto:?subject=Museo%20Abreu">${t('contactSupport')}</a>
+      <button class="btn small" data-action="reset">${t('resetDemo')}</button></div>
+    </section>
+  </div>`;
+}
+
+/* ---------- Staff ---------- */
+
+function pageStaff() {
+  const today = todayPC();
+  const todays = tickets.filter(tk => tk.date === today);
+  return `<div class="wrap">
+    <section class="section"><h1>${t('staffTitle')}</h1><p class="lead" style="margin-top:.6rem">${t('staffLead')}</p>
+      <p class="muted" style="margin-top:.4rem">${t('staffNote')}</p></section>
+    <section class="section">
+      <form data-form="staff" style="display:flex;gap:.5rem;max-width:520px">
+        <label for="s-q" class="skip">${t('search')}</label>
+        <input id="s-q" class="field" style="flex:1;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;background:var(--card);margin:0" placeholder="${t('searchPh')}" autocomplete="off">
+        <button class="btn dark">${t('search')}</button>
+      </form>
+      <div id="staff-results" aria-live="polite" style="margin-top:1rem"></div>
+    </section>
+    <section class="section">
+      <h2>${t('attendeesToday')} · ${fmtDate(today)}</h2>
+      ${todays.length ? staffList(todays) : `<p class="empty">${t('noTickets')}</p>`}
+    </section>
+  </div>`;
+}
+
+function staffList(list) {
+  return `<div class="editions">${list.map(tk => `<div class="edition">
+    <div><strong>${tk.code}</strong> · ${esc(tk.name)}<br><span class="muted">${fmtDate(tk.date, { day: 'numeric', month: 'short' })} ${tk.time} · ${L(EXPERIENCES.find(e => e.id === tk.exp).name)} · ${tk.qty} · ${tk.glang.toUpperCase()}</span></div>
+    ${tk.status === 'valid' ? `<button class="btn small primary" data-action="use" data-code="${tk.code}">${t('markUsed')}</button>` : `<span class="status used">${t('statusUsed')}</span>`}
+  </div>`).join('')}</div>`;
+}
+
+/* ---------- Events ---------- */
+
+const actions = {
+  work: el => openWork(el.dataset.id),
+  exp: el => { Object.assign(bk, freshBooking(), { exp: el.dataset.id, step: el.dataset.id === 'private' ? 0 : 1 }); rerenderWizard(); },
+  date: el => { Object.assign(bk, { date: el.dataset.d, time: null, glang: null, error: '' }); rerenderWizard(false); },
+  session: el => { Object.assign(bk, { time: el.dataset.time, glang: el.dataset.gl, error: '' }); rerenderWizard(false); },
+  qty: el => { bk.qty += Number(el.dataset.d); rerenderWizard(false); },
+  next: () => { bk.step++; bk.error = ''; rerenderWizard(); },
+  back: () => {
+    if (bk.exp === 'private' || bk.step <= 1) Object.assign(bk, freshBooking());
+    else bk.step--;
+    bk.error = '';
+    rerenderWizard();
+  },
+  toPay: () => { if (!canPay()) return; save(); bk.step = 4; bk.holdUntil = Date.now() + 10 * 60 * 1000; rerenderWizard(); },
+  pay: el => { el.disabled = true; completePayment(); },
+  payFail: () => { bk.error = t('payFailed'); bk.step = 3; rerenderWizard(); },
+  ics: el => downloadICS(el.dataset.code),
+  buy: el => buyEdition(el.dataset.l),
+  font: el => {
+    reading.fontSize = Math.min(1.8, Math.max(.9, +(reading.fontSize + Number(el.dataset.d)).toFixed(2)));
+    $('.reader-text').style.fontSize = reading.fontSize + 'rem';
+    save();
+  },
+  bookmark: el => {
+    const l = el.dataset.l, ch = Number(el.dataset.ch);
+    const i = reading.bookmarks.findIndex(b => b.lang === l && b.ch === ch);
+    if (i >= 0) reading.bookmarks.splice(i, 1); else reading.bookmarks.push({ lang: l, ch });
+    save();
+    toast(i >= 0 ? t('removeBookmark') : t('bookmarked'));
+    route();
+  },
+  rate: el => { const tk = tickets.find(x => x.code === el.dataset.code); tk.rating = Number(el.dataset.n); save(); toast(t('rateThanks')); route(); },
+  use: el => {
+    const tk = tickets.find(x => x.code === el.dataset.code);
+    if (tk.status !== 'valid') return toast(t('alreadyUsed'));
+    tk.status = 'used';
+    save();
+    route();
+  },
+  reset: () => {
+    ['tickets', 'purchases', 'reading', 'profile'].forEach(k => { try { localStorage.removeItem('ma.' + k); } catch { /* ignore */ } });
+    tickets = []; purchases = []; reading = { fontSize: 1.15, last: null, bookmarks: [] }; profile = { name: '', email: '' };
+    bk = freshBooking();
+    route();
+  },
+};
+
+main.addEventListener('click', e => {
+  const el = e.target.closest('[data-action]');
+  if (el && el.tagName !== 'INPUT' && actions[el.dataset.action]) actions[el.dataset.action](el);
+});
+
+main.addEventListener('input', e => {
+  const el = e.target;
+  if (el.dataset.action === 'layers') {
+    const v = Number(el.value);
+    $('[data-layer="0"]').style.opacity = v >= 1 ? 0 : 1;
+    $('[data-layer="1"]').style.opacity = v >= 2 ? 0 : 1;
+    el.setAttribute('aria-valuetext', `${t('layer')} ${v + 1}/3`);
+  }
+  if (el.dataset.bind) {
+    if (el.type === 'checkbox') bk[el.dataset.bind] = el.checked;
+    else profile[el.dataset.bind] = el.value;
+    const btn = $('[data-action="toPay"]');
+    if (btn) btn.disabled = !canPay();
+  }
+});
+
+main.addEventListener('submit', e => {
+  const form = e.target;
+  if (form.dataset.form === 'private') {
+    e.preventDefault();
+    profile.name = $('#p-name').value; profile.email = $('#p-email').value; save();
+    toast(t('requestSent'));
+    bk = freshBooking();
+    rerenderWizard();
+  }
+  if (form.dataset.form === 'staff') {
+    e.preventDefault();
+    const q = $('#s-q').value.trim().toLowerCase();
+    const found = q ? tickets.filter(tk => tk.code.toLowerCase().includes(q) || tk.name.toLowerCase().includes(q)) : [];
+    $('#staff-results').innerHTML = found.length ? staffList(found) : `<p class="status bad">${t('notFound')}</p>`;
+  }
+});
+
+/* ---------- Language ---------- */
+
+function setLang(l) {
+  lang = l;
+  store.set('lang', l);
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === l));
+  // Re-render in place; the booking in progress is kept.
+  const y = window.scrollY;
+  route();
+  window.scrollTo(0, y);
+}
+document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+window.addEventListener('hashchange', e => {
+  if (location.hash === '#main') { // skip link: keep the current page
+    history.replaceState(null, '', e.oldURL.includes('#') ? e.oldURL.slice(e.oldURL.indexOf('#')) : '#/');
+    return main.focus();
+  }
+  route();
+  window.scrollTo(0, 0);
+});
+setLang(lang);
+
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
