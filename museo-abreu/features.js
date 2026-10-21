@@ -65,6 +65,7 @@ Object.assign(I18N.es, {
   everyYear: 'Cada año', nameTbc: 'Nombre por confirmar', today: '¡Es hoy!', inNDays: 'faltan {n} días',
   priceTbc: 'Entrada por confirmar', notifyMe: 'Avísame', notifySet: 'Te avisaremos cuando abran las entradas (simulación).',
   nextAnnual: 'Próximo evento anual',
+  officialSite: 'Sitio oficial',
   passesLabel: 'Pases', singleLabel: 'Entradas individuales', fromPrice: 'Desde {price} (aprox.)',
   vipFreePro: 'VIP All-Access gratis para miembros Pro, con hasta 3 invitados', getProPass: 'Obtener mi {name} gratis',
   includedInPass: 'Incluido en tu pase VIP', includedInPro: 'Incluido con Pro (obtén tu VIP All-Access)',
@@ -131,6 +132,7 @@ Object.assign(I18N.en, {
   everyYear: 'Every year', nameTbc: 'Name to be confirmed', today: 'It\u2019s today!', inNDays: '{n} days to go',
   priceTbc: 'Ticket price to be confirmed', notifyMe: 'Notify me', notifySet: 'We will let you know when tickets open (simulated).',
   nextAnnual: 'Next yearly event',
+  officialSite: 'Official site',
   passesLabel: 'Passes', singleLabel: 'Single tickets', fromPrice: 'From {price} (approx.)',
   vipFreePro: 'VIP All-Access free for Pro members, with up to 3 guests', getProPass: 'Get my free {name}',
   includedInPass: 'Included in your VIP pass', includedInPro: 'Included with Pro (get your VIP All-Access)',
@@ -357,6 +359,7 @@ function eventCard(ev, passes) {
       <p style="margin-top:.6rem"><strong>${t('fromPrice', { price: usd(Math.min(...ev.tiers.map(x => x.price))) })}</strong> · ${t('vipFreePro')}</p>
       <h4 class="tier-group">${t('passesLabel')}</h4><div class="tiers">${group('pass')}</div>
       <h4 class="tier-group">${t('singleLabel')}</h4><div class="tiers">${group('single')}</div>
+      <div class="btn-row"><a class="btn dark" href="https://gabangi.com" target="_blank" rel="noopener">${t('officialSite')} · gabangi.com ↗</a></div>
       <p class="muted" style="margin-top:.8rem">${t('gabangiSource')}</p>
     </article>`;
   }
