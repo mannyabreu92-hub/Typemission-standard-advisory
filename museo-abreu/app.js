@@ -58,7 +58,7 @@ function fmtDate(iso, opts = { weekday: 'long', day: 'numeric', month: 'long' })
 function hash(s) { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; }
 
 // VIP and combo share the same physical tour, so they share capacity.
-const poolOf = expId => (expId === 'combo' ? 'vip' : expId);
+const poolOf = expId => (expId === 'combo' || expId === 'couple' ? 'vip' : expId);
 
 function sessionsFor(expId, iso) {
   if (dow(iso) === 1) return []; // closed Mondays
@@ -70,7 +70,7 @@ function sessionsFor(expId, iso) {
       const h = hash(pool + iso + s.time);
       const seeded = h % 9 === 0 ? exp.capacity : h % (exp.capacity - 2);
       const booked = tickets.filter(tk => poolOf(tk.exp) === pool && tk.date === iso && tk.time === s.time && tk.status !== 'refunded')
-        .reduce((a, tk) => a + tk.qty, 0);
+        .reduce((a, tk) => a + (tk.seats || tk.qty), 0);
       return { ...s, left: Math.max(0, exp.capacity - seeded - booked) };
     });
 }
@@ -81,6 +81,7 @@ const routes = {
   '': pageHome, artista: pageArtist, psico: pagePsico, visita: pageVisit,
   biblioteca: pageLibrary, leer: pageReader, cuenta: pageAccount, personal: pageStaff,
 };
+if (typeof EXTRA_ROUTES !== 'undefined') Object.assign(routes, EXTRA_ROUTES);
 
 function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/');
@@ -142,6 +143,7 @@ function pageHome() {
         <div class="layers" style="justify-self:center;width:100%">${artSVG(41, t('layersTitle'))}</div>
       </div>
     </section>
+    ${typeof homeExtras === 'function' ? homeExtras() : ''}
     <section class="section">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem">
         <h2>${t('homeWorks')}</h2><a href="#/artista">${t('seeAll')}</a>
@@ -334,9 +336,9 @@ function bookingWizard() {
   let body = '';
   switch (bk.step) {
     case 0:
-      body = `<h2 tabindex="-1">${t('chooseExp')}</h2><div class="grid two">${EXPERIENCES.map(e => `
+      body = `<h2 tabindex="-1">${t('chooseExp')}</h2><div class="grid two">${EXPERIENCES.filter(e => !e.cat || e.cat === 'tour').map(e => `
         <button type="button" class="choice" data-action="exp" data-id="${e.id}" aria-pressed="${bk.exp === e.id}">
-          <span class="price">${e.price ? usd(e.price) + ' <small class="muted">' + t('perPerson') + '</small>' : t('onRequest')}</span>
+          <span class="price">${e.price ? usd(e.price) + ' <small class="muted">' + (e.perLabel ? L(e.perLabel) : t('perPerson')) + '</small>' : t('onRequest')}</span>
           <h3>${L(e.name)}</h3><p class="muted">${L(e.desc)}</p>
         </button>`).join('')}</div>
         <p class="muted" style="margin-top:.8rem">* ${t('illustrative')}</p>`;
@@ -367,9 +369,10 @@ function bookingWizard() {
     }
     case 2: {
       const s = sessionsFor(bk.exp, bk.date).find(x => x.time === bk.time);
-      const max = Math.min(s ? s.left : 0, exp.capacity);
+      const per = exp.seatsPer || 1;
+      const max = Math.floor(Math.min(s ? s.left : 0, exp.capacity) / per);
       bk.qty = Math.min(Math.max(1, bk.qty), Math.max(1, max));
-      body = `<h2 tabindex="-1">${t('howMany')}</h2>
+      body = `<h2 tabindex="-1">${t(per === 2 ? 'howManyCouples' : 'howMany')}</h2>
         <div class="stepper" style="margin:1rem 0">
           <button type="button" data-action="qty" data-d="-1" aria-label="−1" ${bk.qty <= 1 ? 'disabled' : ''}>−</button>
           <output aria-live="polite">${bk.qty}</output>
@@ -496,12 +499,13 @@ function completePayment() {
   if (bk.ticket) return;
   const exp = EXPERIENCES.find(e => e.id === bk.exp);
   const s = sessionsFor(bk.exp, bk.date).find(x => x.time === bk.time);
-  if (!s || s.left < bk.qty) {
+  const seats = bk.qty * (exp.seatsPer || 1);
+  if (!s || s.left < seats) {
     Object.assign(bk, { step: 1, time: null, glang: null, error: t('soldOut') });
     return rerenderWizard();
   }
   const tk = {
-    code: newCode(), exp: bk.exp, date: bk.date, time: bk.time, glang: bk.glang, qty: bk.qty,
+    code: newCode(), exp: bk.exp, date: bk.date, time: bk.time, glang: bk.glang, qty: bk.qty, seats,
     name: profile.name.trim(), email: profile.email.trim(), total: exp.price * bk.qty,
     status: 'valid', created: new Date().toISOString(), terms: 'v0.1', marketing: bk.mkt, rating: 0,
   };
@@ -570,7 +574,7 @@ function downloadICS(code) {
 /* ---------- Library & reader ---------- */
 
 const owns = l => purchases.some(p => p.lang === l && !p.refunded);
-const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l));
+const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typeof isPro === 'function' && isPro()));
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
@@ -594,6 +598,7 @@ function pageLibrary() {
         </div>
       </div>
     </section>
+    ${typeof dailyReading === 'function' ? dailyReading() : ''}
     <section class="section grid two">
       <div>
         <h2>${t('editions')}</h2>
@@ -670,7 +675,7 @@ function pageReader(l = 'es', chStr = '0') {
         : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`);
   } else {
     text = `<h2>${chTitle(c, l)}</h2><div class="empty">🔒<p>${t('lockedChapter')}</p>
-      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t('buy', { price: usd(25) })}</button></div></div>`;
+      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t('buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 60) })}</button></div></div>`;
   }
   return `<div class="wrap reader">
     <div class="reader-bar">
@@ -696,6 +701,7 @@ function pageAccount() {
   const mine = tickets.slice().reverse();
   return `<div class="wrap">
     <section class="section"><h1>${t('accTitle')}</h1><p class="lead" style="margin-top:.6rem">${t('accLead')}</p></section>
+    ${typeof accountExtras === 'function' ? accountExtras() : ''}
     <section class="section">
       <h2>${t('myTickets')}</h2>
       ${mine.length ? `<div class="grid three">${mine.map(tk => `<div>${ticketHTML(tk)}
@@ -797,12 +803,13 @@ const actions = {
     route();
   },
   reset: () => {
-    ['tickets', 'purchases', 'reading', 'profile'].forEach(k => { try { localStorage.removeItem('ma.' + k); } catch { /* ignore */ } });
+    ['tickets', 'purchases', 'reading', 'profile', 'member', 'passes', 'bids', 'clubs', 'sponsorships', 'privateRequests'].forEach(k => { try { localStorage.removeItem('ma.' + k); } catch { /* ignore */ } });
     tickets = []; purchases = []; reading = { fontSize: 1.15, last: null, bookmarks: [] }; profile = { name: '', email: '' };
     bk = freshBooking();
     route();
   },
 };
+if (typeof EXTRA_ACTIONS !== 'undefined') Object.assign(actions, EXTRA_ACTIONS);
 
 main.addEventListener('click', e => {
   const el = e.target.closest('[data-action]');
@@ -827,6 +834,10 @@ main.addEventListener('input', e => {
 
 main.addEventListener('submit', e => {
   const form = e.target;
+  if (typeof EXTRA_FORMS !== 'undefined' && EXTRA_FORMS[form.dataset.form]) {
+    e.preventDefault();
+    return EXTRA_FORMS[form.dataset.form](form);
+  }
   if (form.dataset.form === 'private') {
     e.preventDefault();
     profile.name = $('#p-name').value; profile.email = $('#p-email').value; save();
