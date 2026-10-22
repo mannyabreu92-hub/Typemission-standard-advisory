@@ -57,16 +57,28 @@ const SCHEDULE = {
 };
 SCHEDULE.combo = SCHEDULE.vip;
 
-// Works shown on oscarabreu.com. Images are cropped from phone screenshots for
-// now; replace them with the original files. Year, technique and size pending.
+// Technical data as published on oscarabreu.com. The miniatures series
+// (oscarabreu.com/museo) and the manifesto works (oscarabreu.com/statement,
+// /manifiesto/2.html) each share one spec.
+const SPEC_MINI = { es: ['2021', 'Técnica mixta sobre MDF', '8 × 8 in (20.32 × 20.32 cm)'], en: ['2021', 'Mixed media on MDF', '8 × 8 in (20.32 × 20.32 cm)'],
+  series: { es: 'Serie miniaturas del Psico Expresionismo', en: 'Psycho-Expressionism Miniatures Series' } };
+const SPEC_PAPER = { es: ['2019', 'Técnica mixta sobre papel', '24 × 24 pulgadas'], en: ['2019', 'Mixed media on paper', '24 × 24 in'] };
+
+// Works shown on oscarabreu.com, with the original image files from the site.
+// "sold" follows the miniatures page (sold: 1, 9, 14, 17, 18).
 const WORKS = [
-  { id: 'escaping-being', seed: 11, img: 'img/escaping-being.jpg', title: { es: 'The Escaping Being', en: 'The Escaping Being' } },
-  { id: 'passion', seed: 23, img: 'img/passion.jpg', title: { es: 'Passion', en: 'Passion' } },
-  { id: 'petrichor', seed: 37, img: 'img/petrichor.jpg', title: { es: 'Petrichor', en: 'Petrichor' } },
-  { id: 'resilience', seed: 41, img: 'img/resilience.jpg', title: { es: 'Resilience', en: 'Resilience' } },
-  { id: 'limerence', seed: 59, img: 'img/limerence.jpg', title: { es: 'Limerence', en: 'Limerence' } },
-  { id: 'echoes-of-memory', seed: 67, img: 'img/echoes-of-memory.jpg', title: { es: 'Echoes of Memory', en: 'Echoes of Memory' } },
+  { id: 'escaping-being', seed: 11, img: 'img/escaping-being.jpg', spec: SPEC_PAPER, title: { es: 'El Ser que se Escapa', en: 'The Escaping Being' } },
+  { id: 'passion', seed: 23, img: 'img/passion.jpg', spec: SPEC_MINI, sold: true, title: { es: 'Pasión', en: 'Passion' } },
+  { id: 'petrichor', seed: 37, img: 'img/petrichor.jpg', spec: SPEC_MINI, title: { es: 'Petricor', en: 'Petrichor' } },
+  { id: 'resilience', seed: 41, img: 'img/resilience.jpg', spec: SPEC_MINI, title: { es: 'Resiliencia', en: 'Resilience' } },
+  { id: 'limerence', seed: 59, img: 'img/limerence.jpg', spec: SPEC_MINI, title: { es: 'Limerencia', en: 'Limerence' } },
+  // Shown on the Biography page; no technical data published for it.
+  { id: 'echoes-of-memory', seed: 67, img: 'img/echoes-of-memory.jpg', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory' } },
+  { id: 'time-on-my-face', seed: 71, img: 'img/time-on-my-face.jpg', spec: SPEC_PAPER, title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face' } },
 ];
+
+// oscarabreu.com/paintings: 36 works published by number only (no titles or data).
+const PAINTINGS = Array.from({ length: 36 }, (_, i) => ({ n: i + 1, img: `img/paintings/${i + 1}.jpg` }));
 
 const EDITIONS = [
   { lang: 'es', price: 25, status: 'available' },
@@ -103,7 +115,8 @@ const TIMELINE = [
   { y: '2026', es: 'Publica Ecce Homo: El arte salvó mi vida.', en: 'Publishes Ecce Homo: Art Saved My Life.' },
 ];
 
-// Major exhibitions as listed on oscarabreu.com (Biography page).
+// Major exhibitions as listed on oscarabreu.com (Biography page); `pes` is the
+// Spanish place name where it differs.
 const EXHIBITIONS = [
   { y: 1996, t: 'El mal de las drogas', p: 'Riverside Arts Center, Illinois' },
   { y: 1999, t: 'Mira a través de mis ojos', p: 'Casa Dominicana, Chicago' },
@@ -111,29 +124,40 @@ const EXHIBITIONS = [
   { y: 2004, t: 'Huellas: La invención de lo visible', p: 'Museo del Hombre Dominicano, Santo Domingo' },
   { y: 2005, t: 'La forma de la música', p: 'Sofitel Nicolás de Ovando, Santo Domingo' },
   { y: 2005, t: 'Acontecimientos del espíritu', p: 'Galerías Prinardi, Puerto Rico' },
-  { y: 2005, t: 'Comportamiento de la memoria', p: 'Alianza Art Gallery, New York' },
-  { y: 2006, t: 'Punishment of Memory', p: 'Joe Hintersteiner Gallery, New York' },
-  { y: 2006, t: 'Detachment of the Ego', p: 'Marwen Foundation, Chicago / Alianza Art Gallery, New York' },
+  { y: 2005, t: 'Comportamiento de la memoria', p: 'Alianza Art Gallery, New York', pes: 'Alianza Art Gallery, Nueva York' },
+  { y: 2006, t: 'Punishment of Memory', p: 'Joe Hintersteiner Gallery, New York', pes: 'Joe Hintersteiner Gallery, Nueva York' },
+  { y: 2006, t: 'Detachment of the Ego', p: 'Marwen Foundation, Chicago / Alianza Art Gallery, New York', pes: 'Marwen Foundation, Chicago / Alianza Art Gallery, Nueva York' },
   { y: 2006, t: 'Generaciones', p: 'Ozamarte Centro de Arte Contemporáneo, Santo Domingo' },
-  { y: 2009, t: 'Ironically Absurd', p: 'Alliance Française, Santo Domingo' },
+  { y: 2009, t: 'Ironically Absurd', p: 'Alliance Française, Santo Domingo', pes: 'Alianza Francesa, Santo Domingo' },
   { y: 2009, t: 'Agitación de la memoria', p: 'Centro Abreu, Santo Domingo' },
   { y: 2019, t: 'La forma del pensamiento', p: 'CODAP, Santo Domingo' },
-  { y: 2019, t: 'Razonamiento de la Identidad', p: 'Altos de Chavón Gallery, Casa de Campo' },
-  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Abreu Museum, Punta Cana' },
-  { y: 2024, t: 'Luxura', p: 'Abreu Museum, Punta Cana' },
+  { y: 2019, t: 'Razonamiento de la Identidad', p: 'Altos de Chavón Gallery, Casa de Campo', pes: 'Galería Altos de Chavón, Casa de Campo' },
+  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Abreu Museum, Punta Cana', pes: 'Museo Abreu, Punta Cana' },
+  { y: 2024, t: 'Luxura', p: 'Abreu Museum, Punta Cana', pes: 'Museo Abreu, Punta Cana' },
 ];
 
-// Official biography from oscarabreu.com (English version, transcribed from
-// screenshots supplied by the family). The Spanish version is pending.
+// Official biography from oscarabreu.com/biography, Spanish and English
+// versions as published (critics' links removed).
 const BIO_SITE = {
   source: 'oscarabreu.com',
-  intro: 'Oscar Abreu (San Juan de la Maguana, Dominican Republic, 1978) has been regarded since 2021 as the most highly valued living artist in the Dominican Republic, after one of his works reached a record price of USD 200,000. With more than three decades of practice, Abreu has developed his own language: Psycho-Expressionism, inspired by Freudian psychoanalysis and focused on exploring memory, identity, and the human psyche through layers of color, collage, symbols, and textures.',
-  circuit: 'These exhibitions have consolidated his presence in New York, Chicago, Puerto Rico, Santo Domingo, and Punta Cana, positioning his work within a diverse international circuit.',
-  recognition: [
-    'His work has been analyzed by influential critics such as Candido Geron, Abil Peralta Agüero (Memoria del Psico-Expresionismo, 2018), Odalís G. Pérez, Fernando Morbán Laucer, Laura Gil, Gamal Michelen, and Marianne de Tolentino, who have emphasized the originality, expressive power, and psychological depth of his proposal.',
-    'In parallel with his artistic production, Abreu has developed significant work as a cultural organizer. In 2000 he founded Artep Magazine; in 2014 he created ARTFORO —which became an international fair—; and in 2021 he inaugurated the Abreu Museum, a space dedicated to consecrating contemporary Dominican art.',
-  ],
-  legacy: 'With boldness and originality, Oscar Abreu has turned Psycho-Expressionism into a visual and philosophical movement that goes beyond painting. Exhibited in museums and private collections across the United States, the Caribbean and Europe, his work stands as a landmark of contemporary Dominican art and a cultural bridge between the Dominican Republic and its global diaspora.',
+  en: {
+    intro: 'Oscar Abreu (San Juan de la Maguana, Dominican Republic, 1978) has been regarded since 2021 as the most highly valued living artist in the Dominican Republic, after one of his works reached a record price of USD 200,000. With more than three decades of practice, Abreu has developed his own language: Psycho-Expressionism, inspired by Freudian psychoanalysis and focused on exploring memory, identity, and the human psyche through layers of color, collage, symbols, and textures.',
+    circuit: 'These exhibitions have consolidated his presence in New York, Chicago, Puerto Rico, Santo Domingo, and Punta Cana, positioning his work within a diverse international circuit.',
+    recognition: [
+      'His work has been analyzed by influential critics such as Candido Geron, Abil Peralta Agüero (Memoria del Psico-Expresionismo, 2018), Odalís G. Pérez, Fernando Morbán Laucer, Laura Gil, Gamal Michelen, and Marianne de Tolentino, who have emphasized the originality, expressive power, and psychological depth of his proposal.',
+      'In parallel with his artistic production, Abreu has developed significant work as a cultural organizer. In 2000 he founded Artep Magazine; in 2014 he created ARTFORO —which became an international fair—; and in 2021 he inaugurated the Abreu Museum, a space dedicated to consecrating contemporary Dominican art.',
+    ],
+    legacy: 'With boldness and originality, Oscar Abreu has turned Psycho-Expressionism into a visual and philosophical movement that goes beyond painting. Exhibited in museums and private collections across the United States, the Caribbean and Europe, his work stands as a landmark of contemporary Dominican art and a cultural bridge between the Dominican Republic and its global diaspora.',
+  },
+  es: {
+    intro: 'Oscar Abreu (San Juan de la Maguana, República Dominicana, 1978) es considerado desde 2021 el artista vivo más cotizado de la República Dominicana, tras alcanzar un récord de 200,000 dólares por una de sus obras. Con más de tres décadas de trayectoria, Abreu ha desarrollado un lenguaje propio: el Psico-Expresionismo, inspirado en el psicoanálisis freudiano y centrado en la exploración de la memoria, la identidad y la psicología humana mediante capas de color, collages, símbolos y texturas.',
+    circuit: 'Estas exposiciones han consolidado su proyección en Nueva York, Chicago, Puerto Rico, Santo Domingo y Punta Cana, posicionando su obra en un circuito internacional diverso.',
+    recognition: [
+      'Su obra ha sido objeto de análisis por influyentes críticos como Candido Geron, Abil Peralta Agüero (Memoria del Psico-Expresionismo, 2018), Odalís G. Pérez, Fernando Morbán Laucer, Laura Gil, Gamal Michelen y Marianne de Tolentino, quienes han subrayado la originalidad, la fuerza expresiva y el trasfondo psicológico de su propuesta.',
+      'Paralelamente a su producción artística, Abreu ha desarrollado una importante labor como gestor cultural. En 2000 fundó la revista Artep Magazine, en 2014 creó ARTFORO —convertida en feria internacional— y en 2021 inauguró el Museo Abreu, un espacio dedicado a consagrar el arte contemporáneo dominicano.',
+    ],
+    legacy: 'Con valentía y originalidad, Oscar Abreu ha convertido el Psico-Expresionismo en un movimiento visual y filosófico que va más allá de la pintura. Su obra, exhibida en museos y colecciones privadas en Estados Unidos, el Caribe y Europa, constituye un referente del arte dominicano contemporáneo y un puente cultural entre la República Dominicana y la diáspora internacional.',
+  },
 };
 
 // Critics quoted in the front matter of ECCE HOMO (English edition).
@@ -213,11 +237,24 @@ function coverSVG(title, sub) {
     <text x="28" y="556" fill="#f59e6b" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`;
 }
 
-// Manifesto as published on oscarabreu.com (English version, transcribed from
-// screenshots supplied by the family). The Spanish version is pending.
+// Manifestos as published on oscarabreu.com (/statement and /manifiesto/2.html),
+// in the artist's own Spanish and English versions. `work` is the image that
+// opens each one on the site.
 const MANIFESTO = {
-  title: 'The Urgency to Create: Art as Revelation',
-  source: 'oscarabreu.com',
+  title: { es: 'La urgencia de crear: el arte como revelación', en: 'The Urgency to Create: Art as Revelation' },
+  source: 'oscarabreu.com', work: 'escaping-being',
+  es: [
+    'No fui yo quien eligió al arte; fue el arte quien me eligió. Me atravesó como médium, como campo de batalla, como refugio. Desde la infancia sentí una energía indomable que no encontraba contención en lo visible. Una urgencia interior que exigía transformar lo intangible en imagen, lo reprimido en forma. Ese impulso fue —y sigue siendo— el motor vital de mi existencia.',
+    'Este manifiesto no es una autobiografía tradicional ni un catálogo de obras. Es un mapa emocional. Cada palabra responde a una imagen, y cada imagen es el eco de una experiencia vivida que necesitó ser transfigurada. En ese acto de creación encontré sentido en el caos, música en la fractura, y belleza en lo crudo, en lo no decorativo. Como escribió Jung: “Quien mira hacia dentro, despierta.” Ese despertar no calma: conmociona. Y es ahí donde nace lo auténtico.',
+    'El Psico-Expresionismo que propongo no es una técnica ni una corriente: es una forma de estar en el mundo. Una ética expresiva asumida desde la vulnerabilidad y la lucidez. No busco representar lo que vemos, sino lo que sentimos. Mi lenguaje visual se compone de manchas, silencios, quiebres y gestos; entre lo espontáneo y lo deliberado se abre una grieta por donde se asoma el alma.',
+    'Aunque mi obra nace desde lo autobiográfico, su vocación es expandirse hacia lo colectivo. No se queda en la confesión íntima: busca resonancia universal. En cada pieza hay dolor, pero también asombro. Hay deseo, pero también contemplación. Y por encima de todo, hay verdad. No una verdad objetiva, sino una verdad encarnada: emocional, simbólica, profundamente humana.',
+    'Este manifiesto es también una ofrenda. A quienes me formaron, a los símbolos que me acompañan, y a quienes buscan en el arte un lenguaje cuando la palabra no alcanza. Más que una trayectoria artística, lo que aquí comparto es una forma de resistir al olvido, de transformar la herida en memoria y la memoria en signo.',
+    'No escribí este libro para complacer. Lo hice para conmover. Para abrir preguntas. Para agitar lo que creíamos dormido. El arte que me interesa no adorna: interpela. No explica: sugiere. No consuela: despierta.',
+    'Quien cruce esta puerta no encontrará respuestas cerradas. Pero quizá —entre estas palabras y estas formas— encuentre un reflejo de sí mismo.',
+    'Porque el arte —cuando es verdadero— no habla desde afuera.',
+    'Habla desde el abismo.',
+    'Y nos revela.',
+  ],
   en: [
     'I did not choose art; art chose me. It cut through me as a medium, a battleground, a refuge. Since childhood I felt an untamable energy that found no containment in the visible. An inner urgency pressing to turn the intangible into image, the repressed into form. That impulse was—and remains—the vital engine of my existence.',
     'This manifesto is not a traditional autobiography nor a catalogue of works. It is an emotional map. Each word answers an image, and each image echoes a lived experience that needed to be transfigured. In that act of creation I found meaning in chaos, music in fracture, and beauty in what is raw and non-decorative. As Jung wrote: “Who looks outside, dreams; who looks inside, awakes.” That awakening does not soothe—it shocks. And there, the authentic is born.',
@@ -229,5 +266,64 @@ const MANIFESTO = {
     'Because art—when it is true—does not speak from the outside.',
     'It speaks from the abyss.',
     'And it reveals us.',
+  ],
+};
+
+const MANIFESTO2 = {
+  title: { es: 'El trazo como origen', en: 'The Stroke as Origin' },
+  source: 'oscarabreu.com', work: 'time-on-my-face',
+  es: [
+    'Tenía apenas tres años. No sabía escribir, pero ya dibujaba. Un palo en la mano. La tierra como lienzo.',
+    'El patio polvoriento de casa de mis abuelos, en San Juan de la Maguana —al sur de la República Dominicana— era, sin saberlo, mi primer taller.',
+    'Pasaba horas trazando figuras sobre el suelo húmedo, abstraído, concentrado, como si en cada línea se me fuera algo del alma.',
+    'Nadie me lo enseñó. Nadie me lo pidió. Pero yo dibujaba. Porque lo necesitaba.',
+    '«El alma se alimenta de símbolos» — Carl G. Jung',
+    'Más adelante, mis libretas escolares terminaron cubiertas de dibujos: márgenes llenos, páginas saturadas. No era entretenimiento: era forma de existir.',
+    'Un impulso que me brotaba del cuerpo sin explicación. Como si intentara comunicarme con algo más antiguo, más profundo que yo.',
+    'Mi familia materna, sin formación académica, no sabía qué hacer con eso. Les parecía curioso, incluso gracioso. Me dejaban solo con mis líneas y mis mundos inventados.',
+    'Pero para mí no era un juego: era afirmación. Era urgencia. Era respirar con la mano.',
+    'Recuerdo una habitación especial en casa de mi abuela: la habitación de los santos. Sobre una mesa, un vaso con agua, vírgenes, oraciones, incienso.',
+    'Había una imagen que me hipnotizaba: San Miguel Arcángel, espada en mano, aplastando al diablo con firmeza celestial. Yo intentaba copiarla una y otra vez.',
+    'No me interesaban los detalles religiosos. Lo que me impactaba era la lucha: ese combate silencioso entre luz y oscuridad, esa tensión grabada en el gesto del arcángel.',
+    '«Uno no se ilumina imaginando figuras de luz, sino haciendo consciente la oscuridad» — Carl G. Jung',
+    'Sin saberlo, ya estaba representando una batalla interna. Estaba dibujando mis sombras: mi miedo, mi deseo, mi culpa.',
+    'Esa imagen se volvió símbolo. Y los símbolos, con los años, se convirtieron en mi idioma.',
+    'Cada trazo en la tierra, cada dibujo en papel, era una forma primitiva de hacer memoria. De darle cuerpo a lo que no podía nombrar. Un lenguaje secreto de gestos, colores y silencios.',
+    'Años después entendería que ese era el germen de mi Psico-Expresionismo: una práctica nacida del aislamiento, la intuición y el deseo de mirar hacia adentro.',
+    '«Conocer tu propia oscuridad es el mejor método para enfrentar la oscuridad de otras personas» — Carl G. Jung',
+    'No escribo este libro para contar anécdotas. Lo escribo porque el arte me salvó. Porque cuando no sabía quién era, el arte me sostuvo.',
+    'Cuando todo se quebraba, el arte era la grieta por donde volvía a entrar la luz.',
+    'El Psico-Expresionismo no es una teoría que diseñé: es una forma de respirar. De resistir. De comprender la experiencia humana desde sus capas más invisibles.',
+    'Es mi forma de vivir y de compartir mi verdad.',
+    'Este libro no es académico ni una autobiografía convencional: es un manifiesto emocional, una cartografía simbólica.',
+    'Escribo para trazar el camino recorrido y para ofrecer un mapa a quien necesite reencontrarse con su memoria.',
+    'Quiero que estas páginas funcionen como una llave, una invitación, una grieta luminosa por donde otros puedan asomarse a sí mismos.',
+  ],
+  en: [
+    'I was barely three years old. I couldn’t write yet, but I was already drawing. A stick in my hand. The earth as canvas.',
+    'The dusty patio at my grandparents’ home in San Juan de la Maguana—south of the Dominican Republic—was, without my knowing, my first studio.',
+    'I spent hours tracing figures on the damp ground, absorbed and focused, as if each line carried away a piece of my soul.',
+    'No one taught me. No one asked me. But I drew—because I needed to.',
+    '“The soul feeds on symbols.” — Carl G. Jung',
+    'Later, my school notebooks ended up covered in drawings: margins filled, pages saturated. It wasn’t entertainment—it was a way of existing.',
+    'An impulse welling up from the body without explanation, as if I were trying to speak with something older and deeper than myself.',
+    'My mother’s family, without academic training, didn’t know what to do with it. They found it curious, even funny. They left me alone with my lines and invented worlds.',
+    'But for me it wasn’t a game: it was affirmation. Urgency. Breathing with the hand.',
+    'I remember a special room in my grandmother’s house: the room of the saints. On a table, a glass of water, images of virgins, prayers, incense.',
+    'There was one image that hypnotized me: Saint Michael the Archangel, sword in hand, crushing the devil with celestial resolve. I tried to copy it over and over.',
+    'I wasn’t interested in religious detail. What struck me was the struggle—the silent combat between light and darkness, the tension engraved in the archangel’s gesture.',
+    '“One does not become enlightened by imagining figures of light, but by making the darkness conscious.” — Carl G. Jung',
+    'Unknowingly, I was already depicting an inner battle—drawing my shadows: fear, desire, guilt.',
+    'That image became a symbol. And symbols, over the years, became my language.',
+    'Each line on earth, each drawing on paper, was a primitive way of making memory—giving body to what I could not name—a secret language of gestures, colors, and silences.',
+    'Years later I would understand this was the seed of my Psycho-Expressionism: a practice born of isolation, intuition, and the deep urge to look inward.',
+    '“Knowing your own darkness is the best method for dealing with the darkness of other people.” — Carl G. Jung',
+    'I’m not writing this book to tell anecdotes. I write it because art saved me. When I didn’t know who I was, art held me.',
+    'When everything broke, art was the crack through which the light entered again.',
+    'Psycho-Expressionism is not a theory I designed—it is a way to breathe. To resist. To grasp human experience in its most invisible layers.',
+    'It is my way of living and sharing my truth.',
+    'This book is neither academic nor a conventional autobiography: it is an emotional manifesto, a symbolic cartography.',
+    'I write to trace the path traveled and to offer a map to anyone who needs to rediscover their memory.',
+    'May these pages work as a key, an invitation—a luminous fissure through which others might glimpse themselves.',
   ],
 };

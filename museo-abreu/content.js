@@ -1,0 +1,181 @@
+// Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
+// the Paintings gallery (#/pinturas) and the ART GABANGI page (#/gabangi).
+// Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
+
+Object.assign(I18N.es, {
+  paintingsEyebrow: 'Obra', paintingsTitle: 'Pinturas',
+  paintingsLead: 'Las pinturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
+  paintingsNote: 'oscarabreu.com publica estas obras solo con su número; título, año, técnica y medidas están pendientes.',
+  paintingN: 'Pintura {n}', waPainting: 'Hola, me interesa la pintura n.º {n} de Oscar Abreu (oscarabreu.com/paintings).',
+  prev: 'Anterior', next: 'Siguiente',
+  gabangiMore: 'Programa y artistas', gabangiEyebrow: 'Feria de arte · Punta Cana',
+  gabangiLead: 'ART GABANGI 2026 · Punta Cana · 6–14 de julio. Gala de apertura, feria abierta al público, subasta y premios.',
+  gabangiEdition: 'Datos de la edición 2026 publicados en gabangi.com. Las fechas de la próxima edición aún no se han anunciado.',
+  gabangiArtists: 'Artistas', gabangiQuotesNote: 'Palabras de Oscar Abreu sobre cada artista, tal como aparecen (en inglés) en gabangi.com.',
+  gabangiProgram: 'Programa', gabangiTickets: 'Entradas', gabangiTeam: 'Equipo',
+  gabangiTeamLead: 'ART GABANGI está dirigido por un equipo internacional con responsabilidad directa sobre la dirección ejecutiva, las operaciones curatoriales y el desarrollo de mercado en las Américas y Europa.',
+  gabangiContact: 'Contactos en gabangi.com',
+  gabangiExhibit: 'Exponer en ART GABANGI', gabangiExhibitLead: 'Espacios de exposición para artistas, galerías e instituciones. Todas las solicitudes se revisan con criterios curatoriales y de producción.',
+  gabangiApply: 'Solicitar espacio', gabangiSponsor: 'Patrocinar', gabangiSponsorLead: 'Paquetes de patrocinio desde US$3,000, con presencia en el Catálogo Oficial de la Feria.',
+  space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
+});
+
+Object.assign(I18N.en, {
+  paintingsEyebrow: 'Work', paintingsTitle: 'Paintings',
+  paintingsLead: 'The paintings Oscar Abreu publishes on oscarabreu.com, identified by number.',
+  paintingsNote: 'oscarabreu.com publishes these works by number only; title, year, technique and size are pending.',
+  paintingN: 'Painting {n}', waPainting: 'Hello, I am interested in painting no. {n} by Oscar Abreu (oscarabreu.com/paintings).',
+  prev: 'Previous', next: 'Next',
+  gabangiMore: 'Programme and artists', gabangiEyebrow: 'Art fair · Punta Cana',
+  gabangiLead: 'ART GABANGI 2026 · Punta Cana · July 6–14. Opening gala, public fair, auction and awards.',
+  gabangiEdition: 'Details of the 2026 edition as published on gabangi.com. Dates for the next edition have not been announced yet.',
+  gabangiArtists: 'Artists', gabangiQuotesNote: 'Oscar Abreu’s words on each artist, as published on gabangi.com.',
+  gabangiProgram: 'Programme', gabangiTickets: 'Tickets', gabangiTeam: 'Team',
+  gabangiTeamLead: 'ART GABANGI is led by an international team with direct responsibility for executive direction, curatorial operations, and market development across the Americas and Europe.',
+  gabangiContact: 'Contacts on gabangi.com',
+  gabangiExhibit: 'Exhibit at ART GABANGI', gabangiExhibitLead: 'Exhibition spaces for artists, galleries and institutions. All applications are reviewed under curatorial and production criteria.',
+  gabangiApply: 'Apply to exhibit', gabangiSponsor: 'Become a sponsor', gabangiSponsorLead: 'Sponsorship packages from US$3,000, with placement in the Official Fair Catalog.',
+  space: 'Space', size: 'Size (ft)', price: 'Price',
+});
+
+/* ---------- Data (gabangi.com, ART GABANGI 2026) ---------- */
+
+const GABANGI = {
+  artists: [
+    { name: 'Engel Segura', img: 'img/gabangi/engel-segura.jpg',
+      quote: 'In the work of Engel Segura, painting becomes a territory of tension and silence, where the image does not seek to please but to confront.' },
+    { name: 'Héctor Reynoso', img: 'img/gabangi/hector-reynoso.jpg',
+      quote: 'Héctor Reynoso constructs a surreal universe in which the Caribbean subconscious unfolds through symbols and psychological tension.' },
+    { name: 'Carlos Santiago', img: 'img/gabangi/carlos-santiago.jpg',
+      quote: 'Carlos Santiago advances a disciplined pictorial language where form and emotion negotiate in silence.' },
+  ],
+  // "Key Dates" on gabangi.com/sponsor, with details from /tickets.
+  program: [
+    { date: { es: '6 de julio', en: 'July 6' }, name: 'Gala Premier',
+      items: { es: ['Puertas 6:00 p. m.', 'Evento principal 8:00 p. m.', 'Celebración de apertura'],
+        en: ['Doors 6:00 PM', 'Main event 8:00 PM', 'Opening celebration'] } },
+    { date: { es: '7–14 de julio', en: 'July 7–14' }, name: { es: 'Feria abierta al público', en: 'Public Fair' },
+      items: { es: ['10:00 a. m. – 8:00 p. m.', 'El 14 de julio cierra a las 5:00 p. m.'],
+        en: ['10:00 AM – 8:00 PM', 'July 14 closes 5:00 PM'] } },
+    { date: { es: '14 de julio', en: 'July 14' }, name: { es: 'Cena de Subasta y Premios', en: 'Auction & Awards Dinner' },
+      items: { es: ['Cena 7:00 p. m.', 'Subasta en vivo durante la cena', 'Premio Artista del Año', 'Reconocimiento a líderes políticos, sociales y culturales'],
+        en: ['Dinner 7:00 PM', 'Live auction during dinner', 'Artist of the Year Award', 'Recognition of political, social & cultural leaders'] } },
+  ],
+  team: [
+    { name: 'Oscar Abreu', role: { es: 'Director Ejecutivo · CEO', en: 'Executive Director · CEO' } },
+    { name: 'Reed Newhall', role: { es: 'Director de Operaciones Curatoriales en EE. UU.', en: 'Director of U.S. Curatorial Operations' } },
+    { name: 'Thomas Rehberger', role: { es: 'Representante de Ventas para Europa', en: 'European Sales Representative' } },
+    { name: 'Karima Boutaleb', role: { es: 'Representante Curatorial Internacional', en: 'International Curatorial Representative' } },
+  ],
+  // gabangi.com/apply, "Exhibition Spaces & Pricing" (USD).
+  spaces: [
+    ['Compact Booth', '5 × 10', 2800], ['Standard Booth', '10 × 10', 5000], ['Extended Booth', '15 × 15', 8500],
+    ['Panoramic Booth', '10 × 20', 9500], ['Signature Pavilion', '20 × 20', 15000],
+  ],
+};
+
+/* ---------- Pages ---------- */
+
+function pagePaintings() {
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('paintingsEyebrow')}</p><h1>${t('paintingsTitle')}</h1>
+      <p class="lead" style="margin-top:.8rem">${t('paintingsLead')}</p>
+      <p class="muted" style="margin-top:.5rem">${t('paintingsNote')}</p>
+    </section>
+    <section class="section">
+      <div class="paintings">${PAINTINGS.map(p => `<button type="button" class="painting" data-action="painting" data-n="${p.n}" aria-label="${t('paintingN', { n: p.n })}">
+        <img src="${p.img}" alt="" loading="lazy"><span>${p.n}</span></button>`).join('')}</div>
+      <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://oscarabreu.com/paintings" target="_blank" rel="noopener">oscarabreu.com/paintings ↗</a></p>
+    </section>
+  </div>`;
+}
+
+// Lightbox with previous/next, swipe and arrow keys.
+function openPainting(n) {
+  const dlg = document.createElement('dialog');
+  const show = k => {
+    n = (k + PAINTINGS.length - 1) % PAINTINGS.length + 1;
+    dlg.setAttribute('aria-label', t('paintingN', { n }));
+    dlg.innerHTML = `<div class="dlg-body">
+      <div class="dlg-art"><img src="${PAINTINGS[n - 1].img}" alt="${t('paintingN', { n })}, Oscar Abreu"></div>
+      <h3 style="margin-top:1rem">${t('paintingN', { n })} <span class="muted">· ${n}/${PAINTINGS.length}</span></h3>
+      <p class="muted">${t('paintingsNote')}</p>
+      <div class="btn-row">
+        <button class="btn small" data-dlg="prev" aria-label="${t('prev')}">←</button>
+        <button class="btn small" data-dlg="next" aria-label="${t('next')}">→</button>
+        <button class="btn dark small" data-dlg="acquire">${t('acquire')}</button>
+        <button class="btn small" data-dlg="close">${t('close')}</button>
+      </div></div>`;
+  };
+  show(n);
+  document.body.appendChild(dlg);
+  dlg.addEventListener('click', e => {
+    const b = e.target.closest('[data-dlg]');
+    if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
+    else if (b && b.dataset.dlg === 'prev') show(n - 1);
+    else if (b && b.dataset.dlg === 'next') show(n + 1);
+    else if (b && b.dataset.dlg === 'acquire') { dlg.close(); if (!(BOOKING.live && openWhatsApp(t('waPainting', { n })))) toast(t('acquireSent')); }
+  });
+  dlg.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') show(n - 1);
+    if (e.key === 'ArrowRight') show(n + 1);
+  });
+  let x0 = null;
+  dlg.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+  dlg.addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 40) show(dx < 0 ? n + 1 : n - 1);
+  }, { passive: true });
+  dlg.addEventListener('close', () => dlg.remove());
+  dlg.showModal();
+}
+
+function pageGabangi() {
+  const ev = EVENTS.find(e => e.id === 'art-gabangi');
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('gabangiEyebrow')}</p><h1>ART GABANGI</h1>
+      <p class="lead" style="margin-top:.8rem">${t('gabangiLead')}</p>
+      <p class="muted" style="margin-top:.5rem">${t('gabangiEdition')}</p>
+    </section>
+    <section class="section">
+      <h2>${t('gabangiArtists')}</h2>
+      <div class="grid three">${GABANGI.artists.map(a => `<figure class="card gb-artist">
+        <div class="art-frame"><img src="${a.img}" alt="${esc(a.name)}" loading="lazy"></div>
+        <figcaption><h3>${a.name}</h3><blockquote lang="en">“${esc(a.quote)}”</blockquote><p class="muted">— Oscar Abreu</p></figcaption></figure>`).join('')}</div>
+      <p class="muted" style="margin-top:.8rem">${t('gabangiQuotesNote')}</p>
+    </section>
+    <section class="section">
+      <h2>${t('gabangiProgram')}</h2>
+      <ol class="timeline">${GABANGI.program.map(p => `<li><strong>${L(p.date)}</strong> · ${typeof p.name === 'string' ? p.name : L(p.name)}<br>
+        <span class="muted">${L(p.items).join(' · ')}</span></li>`).join('')}</ol>
+    </section>
+    <section class="section">
+      <h2>${t('gabangiTickets')}</h2>
+      <div class="grid">${eventCard(ev, fx.get('passes', []))}</div>
+    </section>
+    <section class="section grid two">
+      <div>
+        <h2>${t('gabangiExhibit')}</h2>
+        <p class="muted" style="margin-bottom:.8rem">${t('gabangiExhibitLead')}</p>
+        <table class="gb-spaces"><thead><tr><th>${t('space')}</th><th>${t('size')}</th><th>${t('price')}</th></tr></thead>
+          <tbody>${GABANGI.spaces.map(([s, d, p]) => `<tr><td lang="en">${s}</td><td>${d}</td><td>${usd(p)}</td></tr>`).join('')}</tbody></table>
+        <div class="btn-row"><a class="btn" href="https://gabangi.com/apply/" target="_blank" rel="noopener">${t('gabangiApply')} ↗</a></div>
+        <p style="margin-top:1.2rem">${t('gabangiSponsorLead')}</p>
+        <div class="btn-row"><a class="btn" href="https://gabangi.com/sponsor/" target="_blank" rel="noopener">${t('gabangiSponsor')} ↗</a></div>
+      </div>
+      <div>
+        <h2 class="gb-team">${t('gabangiTeam')}</h2>
+        <p class="muted" style="margin-bottom:.8rem">${t('gabangiTeamLead')}</p>
+        <ul class="timeline">${GABANGI.team.map(m => `<li><strong>${m.name}</strong><br><span class="muted">${L(m.role)}</span></li>`).join('')}</ul>
+        <div class="btn-row"><a class="btn" href="https://gabangi.com/contact/" target="_blank" rel="noopener">${t('gabangiContact')} ↗</a></div>
+      </div>
+    </section>
+  </div>`;
+}
+
+Object.assign(EXTRA_ROUTES, { pinturas: pagePaintings, gabangi: pageGabangi });
+Object.assign(EXTRA_ACTIONS, { painting: el => openPainting(Number(el.dataset.n)) });

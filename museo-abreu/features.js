@@ -233,9 +233,9 @@ const EVENTS = [
     desc: { es: 'El artista habla sobre el Psico-Expresionismo y responde preguntas.', en: 'The artist talks about Psycho-Expressionism and answers questions.' } },
 ];
 
+// Passion is not listed: oscarabreu.com marks it as sold.
 const COLLECTION = [
   { work: 'escaping-being', status: 'new' },
-  { work: 'passion', status: 'available' },
   { work: 'limerence', status: 'available' },
   { work: 'petrichor', status: 'sale' },
 ];
@@ -374,7 +374,7 @@ function eventCard(ev, passes) {
       <p style="margin-top:.6rem"><strong>${t('fromPrice', { price: usd(Math.min(...ev.tiers.map(x => x.price))) })}</strong> · ${t('vipFreePro')}</p>
       <h4 class="tier-group">${t('passesLabel')}</h4><div class="tiers">${group('pass')}</div>
       <h4 class="tier-group">${t('singleLabel')}</h4><div class="tiers">${group('single')}</div>
-      <div class="btn-row"><a class="btn dark" href="https://gabangi.com" target="_blank" rel="noopener">${t('officialSite')} · gabangi.com ↗</a></div>
+      <div class="btn-row">${location.hash.startsWith('#/gabangi') ? '' : `<a class="btn primary" href="#/gabangi">${t('gabangiMore')}</a>`}<a class="btn dark" href="https://gabangi.com" target="_blank" rel="noopener">${t('officialSite')} · gabangi.com ↗</a></div>
       <p class="muted" style="margin-top:.8rem">${t('gabangiSource')}</p>
     </article>`;
   }
@@ -466,7 +466,7 @@ function pageCollection() {
           <div class="field"><label for="pm-int">${t('interest')}</label><select id="pm-int"><option>${t('intBuy')}</option><option>${t('intCommission')}</option><option>${t('intCollection')}</option></select></div>
           <div class="field"><label for="pm-budget">${t('budget')}</label><select id="pm-budget">${BUDGETS.map(b => `<option>${b}</option>`).join('')}</select></div>
         </div>
-        <div class="field"><label for="pm-work">${t('collectionTitle')}</label><select id="pm-work"><option value="">—</option>${WORKS.map(w => `<option value="${w.id}">${L(w.title)}</option>`).join('')}</select></div>
+        <div class="field"><label for="pm-work">${t('collectionTitle')}</label><select id="pm-work"><option value="">—</option>${WORKS.filter(w => !w.sold).map(w => `<option value="${w.id}">${L(w.title)}</option>`).join('')}</select></div>
         <div class="field"><label for="pm-date">${t('preferredDate')}</label><input id="pm-date" type="date" min="${addDays(todayPC(), 1)}"></div>
         <div class="field"><label for="pm-msg">${t('message')}</label><textarea id="pm-msg" rows="3"></textarea></div>
         <div class="btn-row"><button class="btn primary">${t('sendPrivate')}</button></div>

@@ -161,7 +161,7 @@ const workImg = w => w.img
 function workCard(w) {
   return `<button type="button" class="work" data-action="work" data-id="${w.id}">
     <div class="art">${workImg(w)}</div>
-    <div class="meta"><strong>${L(w.title)}</strong><span class="muted">${t('year')}: ${t('pending')}</span></div>
+    <div class="meta"><strong>${L(w.title)}</strong><span class="muted">${t('year')}: ${w.spec ? L(w.spec)[0] : t('pending')}</span>${w.sold ? ` <span class="chip sold">${t('sold')}</span>` : ''}</div>
   </button>`;
 }
 
@@ -179,11 +179,10 @@ function pageArtist() {
       </div>
       <div>
         <h2>${t('bioShort')}</h2>
-        ${lang === 'en'
-          ? `<p>${esc(BIO_SITE.intro)}</p><p class="muted" style="margin-top:1rem">Source: ${BIO_SITE.source}</p>`
-          : `<p>${t('bioPlaceholder')}</p>
-        <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioLongText')}</p></details>
-        <p class="muted" style="margin-top:1rem">${t('sourceNote')}</p>`}
+        <p>${esc(L(BIO_SITE).intro)}</p>
+        <p class="muted" style="margin-top:.6rem">${t('sourceLabel')}: ${BIO_SITE.source}</p>
+        <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioPlaceholder')}</p><p>${t('bioLongText')}</p>
+        <p class="muted">${t('sourceNote')}</p></details>
       </div>
     </section>
     <section class="section grid two">
@@ -193,21 +192,20 @@ function pageArtist() {
       </div>
       <div>
         <h2>${t('exhibitions')}</h2>
-        <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${e.p} · ${e.y}</span></li>`).join('')}</ul>
-        <p lang="en" style="margin-top:.5rem">${esc(BIO_SITE.circuit)}</p>
+        <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${lang === 'es' && e.pes ? e.pes : e.p} · ${e.y}</span></li>`).join('')}</ul>
+        <p style="margin-top:.5rem">${esc(L(BIO_SITE).circuit)}</p>
       </div>
     </section>
     <section class="section grid two">
-      <div lang="en">
+      <div>
         <h2>${t('recognitionTitle')}</h2>
-        ${BIO_SITE.recognition.map(p => `<p>${esc(p)}</p>`).join('')}
+        ${L(BIO_SITE).recognition.map(p => `<p>${esc(p)}</p>`).join('')}
       </div>
-      <div lang="en">
+      <div>
         <h2>${t('legacyTitle')}</h2>
-        <p>${esc(BIO_SITE.legacy)}</p>
+        <p>${esc(L(BIO_SITE).legacy)}</p>
       </div>
     </section>
-    ${lang !== 'en' ? `<p class="muted wrap" style="margin-top:-1.5rem">${t('siteNote')}</p>` : ''}
     <section class="section">
       <h2>${t('quotesTitle')}</h2>
       <div class="grid two">${QUOTES.map(q => `<figure class="card quote"><blockquote lang="en">“${q.q}”</blockquote>
@@ -217,6 +215,7 @@ function pageArtist() {
     <section class="section">
       <h2>${t('catalog')}</h2>
       <div class="grid four">${WORKS.map(workCard).join('')}</div>
+      <div class="btn-row"><a class="btn dark" href="#/pinturas">${t('paintingsCta', { n: PAINTINGS.length })}</a></div>
     </section>
   </div>`;
 }
@@ -228,21 +227,23 @@ function openWork(id) {
   dlg.innerHTML = `<div class="dlg-body">
     <div class="dlg-art">${workImg(w)}</div>
     <h3 style="margin-top:1rem">${L(w.title)}</h3>
+    ${w.sold ? `<p><span class="chip sold">${t('sold')}</span></p>` : ''}
     <dl class="specs">
-      <dt>${t('year')}</dt><dd>${pend()}</dd>
-      <dt>${t('technique')}</dt><dd>${pend()}</dd>
-      <dt>${t('dimensions')}</dt><dd>${pend()}</dd>
-      <dt>${t('artistNote')}</dt><dd>${pend()}</dd>
+      ${w.spec && w.spec.series ? `<dt>${t('series')}</dt><dd>${L(w.spec.series)}</dd>` : ''}
+      <dt>${t('year')}</dt><dd>${w.spec ? L(w.spec)[0] : pend()}</dd>
+      <dt>${t('technique')}</dt><dd>${w.spec ? L(w.spec)[1] : pend()}</dd>
+      <dt>${t('dimensions')}</dt><dd>${w.spec ? L(w.spec)[2] : pend()}</dd>
     </dl>
+    ${w.spec ? `<p class="muted">${t('sourceLabel')}: oscarabreu.com</p>` : ''}
     <div class="btn-row">
-      <button class="btn dark small" data-dlg="acquire">${t('acquire')}</button>
+      <button class="btn dark small" data-dlg="acquire">${w.sold ? t('askSimilar') : t('acquire')}</button>
       <button class="btn small" data-dlg="close">${t('close')}</button>
     </div></div>`;
   document.body.appendChild(dlg);
   dlg.addEventListener('click', e => {
     const b = e.target.closest('[data-dlg]');
     if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
-    if (b && b.dataset.dlg === 'acquire') { dlg.close(); if (!(BOOKING.live && openWhatsApp(t('waWork', { title: L(w.title) })))) toast(t('acquireSent')); }
+    if (b && b.dataset.dlg === 'acquire') { dlg.close(); if (!(BOOKING.live && openWhatsApp(t(w.sold ? 'waSimilar' : 'waWork', { title: L(w.title) })))) toast(t('acquireSent')); }
   });
   dlg.addEventListener('close', () => dlg.remove());
   dlg.showModal();
@@ -275,12 +276,8 @@ function pagePsico() {
         <input id="layer-range" class="range" type="range" min="0" max="2" step="1" value="0" data-action="layers" aria-valuetext="${t('layer')} 1/3">
       </div>
     </section>
-    <section class="section manifesto">
-      <p class="eyebrow">${t('manifestoEyebrow')}</p>
-      <h2 lang="en">${MANIFESTO.title}</h2>
-      <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${MANIFESTO.source}${lang !== 'en' ? ' · ' + t('manifestoNote') : ''}</p>
-      <div lang="en">${MANIFESTO.en.map(p => `<p>${esc(p)}</p>`).join('')}</div>
-    </section>
+    ${manifestoSection(MANIFESTO, false)}
+    ${manifestoSection(MANIFESTO2, true)}
     <section class="section">
       <h2>${t('questionsTitle')}</h2>
       <ol class="questions"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li></ol>
@@ -290,6 +287,23 @@ function pagePsico() {
       <div class="grid four">${WORKS.slice(2).map(workCard).join('')}</div>
     </section>
   </div>`;
+}
+
+// A manifesto opens with its artwork, as on oscarabreu.com. Lines that are
+// quotations (Jung) are set as pull quotes. `fold` shows the opening and keeps
+// the rest behind "keep reading".
+function manifestoSection(m, fold) {
+  const w = WORKS.find(x => x.id === m.work);
+  const para = p => /^[«“]/.test(p) ? `<blockquote class="m-quote">${esc(p)}</blockquote>` : `<p>${esc(p)}</p>`;
+  const paras = L(m), cut = fold ? 5 : paras.length;
+  return `<section class="section manifesto${fold ? ' m-fold' : ''}">
+      <p class="eyebrow">${t('manifestoEyebrow')}</p>
+      <h2>${L(m.title)}</h2>
+      <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${m.source}</p>
+      <button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${L(w.title)}${w.spec ? ` · ${L(w.spec)[0]}` : ''}</span></button>
+      ${paras.slice(0, cut).map(para).join('')}
+      ${cut < paras.length ? `<details class="m-more"><summary>${t('keepReading')}</summary>${paras.slice(cut).map(para).join('')}</details>` : ''}
+    </section>`;
 }
 
 /* ---------- Booking ---------- */
