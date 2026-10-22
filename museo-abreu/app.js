@@ -257,14 +257,19 @@ function openWork(id) {
     </dl>
     ${w.spec ? `<p class="muted">${t('sourceLabel')}: oscarabreu.com</p>` : ''}
     <div class="btn-row">
-      <button class="btn dark small" data-dlg="acquire">${w.sold ? t('askSimilar') : t('acquire')}</button>
+      <button class="btn dark small" data-dlg="acquire">${w.sold ? t('askSimilar') : circleStatus() === 'member' ? t('ciInterest') : t('ciRequestCta')}</button>
       <button class="btn small" data-dlg="close">${t('close')}</button>
     </div></div>`;
   document.body.appendChild(dlg);
   dlg.addEventListener('click', e => {
     const b = e.target.closest('[data-dlg]');
     if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
-    if (b && b.dataset.dlg === 'acquire') { dlg.close(); if (!(BOOKING.live && openWhatsApp(t(w.sold ? 'waSimilar' : 'waWork', { title: L(w.title) })))) toast(t('acquireSent')); }
+    if (b && b.dataset.dlg === 'acquire') {
+      dlg.close();
+      if (w.sold) { if (!(BOOKING.live && openWhatsApp(t('waSimilar', { title: L(w.title) })))) toast(t('ciInterestSent')); }
+      else if (circleStatus() === 'member') actions.circleInterest({ dataset: { work: w.id } });
+      else actions.circleRequest({ dataset: { work: w.id } });
+    }
   });
   dlg.addEventListener('close', () => dlg.remove());
   dlg.showModal();

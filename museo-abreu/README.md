@@ -99,6 +99,20 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
   opens WhatsApp **+1 (809) 840-9588** with the message written. Paste Bókun links there when
   the account exists (see `BOOKING-SETUP.md`).
 
+## Círculo de Coleccionistas (`#/coleccion`)
+
+Works are acquired by introduction, not bought from a list:
+- **No prices anywhere.** A museum advisor discloses availability and price privately.
+- Visitors **request an introduction** (name, email, phone, city, how they found the work, interest, optional
+  work and referral). In live mode the request opens WhatsApp with the message written; the museum reviews it and
+  answers there. Until Phase 2 accounts exist, approval happens outside the app.
+- Approved members see new works first, can register interest in a work, request a private viewing, video call
+  or dinner with the artist, and ask for an invitation to private evenings.
+- Discounts and open auctions are removed; auctions are by invitation only. Pro benefits no longer include
+  collecting perks.
+- Demo mode only (`live: false`): buttons to simulate approval and reset the request.
+- No advisor name, response time or extra services are stated; add them when the museum confirms them.
+
 ## Quality checks (22 Oct 2026)
 
 - Accessibility: axe-core (WCAG 2 A/AA + best practice) on 18 pages × ES/EN: no violations.
@@ -126,10 +140,10 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
 - Nov 17 anniversary and June 13 group exhibition: ticket prices and times.
 - Museum hours (WhatsApp profile says "by appointment only"), address, accessibility.
 - Spanish edition text of Ecce Homo; editorial notes to remove before chapters V, XIV, XVI.
-- Phase 2: server for real payments, accounts, book access, auctions and admin panel.
+- Phase 2: server for real payments, accounts (Collectors' Circle approval), book access, invitation auctions and admin panel.
 
 ## Files
 
-`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, collection, Pro, daily reading) · `manifestos.js` (manifestos 3–23: titles and images) · `manifestos-text.js` (their text, loaded on demand) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
+`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, Collectors' Circle, Pro, daily reading) · `manifestos.js` (manifestos 3–23: titles and images) · `manifestos-text.js` (their text, loaded on demand) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN/FR strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
 works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).

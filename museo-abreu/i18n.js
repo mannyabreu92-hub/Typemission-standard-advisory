@@ -40,7 +40,6 @@ const I18N = {
     timelinePlaceholder: 'Hito de la trayectoria — pendiente de verificación',
     exhibitions: 'Exposiciones destacadas',
     catalog: 'Catálogo seleccionado',
-    acquire: 'Consultar adquisición', acquireSent: 'Consulta enviada al equipo del museo (simulación).',
     year: 'Año', technique: 'Técnica', dimensions: 'Dimensiones', artistNote: 'Comentario del artista', close: 'Cerrar',
 
     psicoEyebrow: 'Movimiento',
@@ -180,7 +179,6 @@ const I18N = {
     timelinePlaceholder: 'Career milestone — pending verification',
     exhibitions: 'Featured exhibitions',
     catalog: 'Selected catalogue',
-    acquire: 'Acquisition enquiry', acquireSent: 'Enquiry sent to the museum team (simulated).',
     year: 'Year', technique: 'Technique', dimensions: 'Dimensions', artistNote: 'Artist’s comment', close: 'Close',
 
     psicoEyebrow: 'Movement',
@@ -334,8 +332,7 @@ const I18N = {
     timelinePlaceholder: 'Étape de carrière — en attente de vérification',
     exhibitions: 'Expositions marquantes',
     catalog: 'Catalogue choisi',
-    acquire: 'Demande d’acquisition',
-    acquireSent: 'Demande envoyée à l’équipe du musée (simulation).',
+    
     year: 'Année',
     technique: 'Technique',
     dimensions: 'Dimensions',

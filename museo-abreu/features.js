@@ -1,6 +1,6 @@
 // Membership and community features: classes and clubs, events with member
-// passes, the collection (new works, offers, auctions), private meetings with
-// the artist, Pro membership and the daily reading. Loaded after data.js and
+// passes, the Collectors' Circle (works by introduction, private viewings and
+// evenings, no prices or offers), Pro membership and the daily reading. Loaded after data.js and
 // before app.js; app.js merges EXTRA_ROUTES, EXTRA_ACTIONS and EXTRA_FORMS.
 // Everything is simulated in the browser; prices marked illustrative or
 // example are not approved figures.
@@ -8,12 +8,12 @@
 Object.assign(I18N.es, {
   navClasses: 'Clases', navEvents: 'Eventos', navCollection: 'Colección', navPro: 'Pro', tabCollection: 'Colección',
   example: 'Ejemplo', examplesNote: 'Fechas y valores de ejemplo; no son datos reales.',
-  proOnly: 'Exclusivo Pro', becomePro: 'Hazte Pro', youArePro: 'Eres miembro Pro',
+  becomePro: 'Hazte Pro', youArePro: 'Eres miembro Pro',
   moreTitle: 'Vive más el Museo Abreu',
   moreClasses: 'Clases y clubes', moreClassesText: 'Pinta y esculpe con la técnica del Psico-Expresionismo.',
   moreEvents: 'Eventos', moreEventsText: 'Inauguraciones, presentaciones del libro y noches de coleccionistas.',
-  moreCollection: 'Colección y subastas', moreCollectionText: 'Obras de Oscar Abreu: nuevas, disponibles, ofertas y subastas.',
-  morePro: 'Membresía Pro', moreProText: 'Entrada gratis a eventos, 3 invitados en eventos VIP, subastas y más.',
+  moreCollection: 'Círculo de Coleccionistas', moreCollectionText: 'Las obras de Oscar Abreu, por presentación privada.',
+  morePro: 'Membresía Pro', moreProText: 'Entrada gratis a eventos, 3 invitados en eventos VIP, lectura diaria y más.',
 
   classesEyebrow: 'Aprende', classesTitle: 'Clases y clubes',
   classesLead: 'Talleres en el museo para aprender los procesos del Psico-Expresionismo: capas, raspados, rasgados y materia.',
@@ -30,35 +30,28 @@ Object.assign(I18N.es, {
   getPass: 'Obtener mi pase', buyTicket: 'Comprar entrada {price} (simulación)', passReady: 'Tu pase está listo. Muestra el código QR en la entrada.',
   passFor: 'Pase para {n} persona(s)', alreadyRegistered: 'Ya tienes pase para este evento.',
 
-  collectionEyebrow: 'Obras de Oscar Abreu', collectionTitle: 'Colección',
-  collectionLead: 'Busca exclusivamente obras de Oscar Abreu: nuevas, disponibles, en oferta y en subasta.',
-  tabNew: 'Nuevas', tabAvailable: 'Disponibles', tabSale: 'Ofertas', tabAuctions: 'Subastas',
-  priceOnRequest: 'Precio a consultar', memberOffer: 'Oferta para miembros Pro', requestInfo: 'Solicitar información',
-  earlyAccess: 'Acceso anticipado Pro', lockedText: 'Hazte Pro para ver las obras nuevas, las ofertas y participar en subastas.',
-  currentBid: 'Puja actual', startingBid: 'Puja inicial', endsIn: 'Termina en {n} días', bidBtn: 'Pujar {amount} (simulación)',
-  youLead: 'Tu puja es la más alta', bidPlaced: 'Puja registrada (simulación): {amount}.',
-  auctionNote: 'Valores de ejemplo para la demostración; no son precios reales de las obras.',
+  
+  
+  
+  
 
-  privateTitle2: 'Reunión o cena privada con el artista',
-  privateLead2: 'Para coleccionistas y compradores serios. El equipo del museo evalúa cada solicitud y confirma fecha y formato.',
-  meetType: 'Tipo de encuentro', meetMeeting: 'Reunión privada en el museo', meetDinner: 'Cena privada con Oscar Abreu',
-  interest: 'Interés', intBuy: 'Adquirir una obra', intCommission: 'Encargar una obra', intCollection: 'Colección o inversión',
-  budget: 'Presupuesto aproximado', phone: 'Teléfono o WhatsApp', sendPrivate: 'Enviar solicitud',
-  privateSent: 'Solicitud enviada (simulación). El museo te contactará para confirmar.',
+  
+  
+  phone: 'Teléfono o WhatsApp', 
 
   proEyebrow: 'Membresía', proTitle: 'Miembro Pro',
-  proLead: 'La forma más cercana de vivir la obra de Oscar Abreu: eventos, coleccionismo, lectura diaria y experiencias exclusivas.',
+  proLead: 'La forma más cercana de vivir la obra de Oscar Abreu: eventos, lectura diaria y experiencias exclusivas.',
   proPrice: 'Precio de la membresía: por definir', joinPro: 'Hacerme Pro (simulación)', leavePro: 'Cancelar membresía (demo)',
   joinedPro: '¡Bienvenido! Ya eres miembro Pro (simulación).', memberPass: 'Pase de miembro', memberPassHelp: 'Muéstralo en la entrada de cualquier evento del museo.',
-  compare: 'Qué incluye', featureCol: 'Beneficio', freeCol: 'Usuario', proCol: 'Pro', onRequest2: 'Bajo solicitud', priority: 'Prioridad',
+  compare: 'Qué incluye', featureCol: 'Beneficio', freeCol: 'Usuario', proCol: 'Pro', 
   b1: 'Explorar el museo, la obra y el manifiesto', b2: 'Lectura del día (fragmento del libro)', b3: 'Sesión completa del libro cada día',
-  b4: 'Entrada gratis a eventos del museo con QR', b5: 'Hasta 3 invitados gratis en cada evento VIP', b6: 'Acceso anticipado a obras nuevas',
-  b7: 'Ofertas exclusivas en obras', b8: 'Participar en subastas', b9: 'Prioridad en clases y clubes', b10: 'Reunión o cena privada con el artista',
+  b4: 'Entrada gratis a eventos del museo con QR', b5: 'Hasta 3 invitados gratis en cada evento VIP', 
+  b9: 'Prioridad en clases y clubes', 
 
   dailyTitle: 'Lectura del día', dailyFull: 'Sesión completa de hoy: {ch}', dailyProCta: 'Hazte Pro para la sesión completa diaria del libro.',
   dailyNote: 'Fragmento de Ecce Homo (edición en inglés).',
 
-  accMembership: 'Mi membresía', accPasses: 'Mis pases de eventos', accBids: 'Mis pujas', accRequests: 'Mis solicitudes',
+  accMembership: 'Mi membresía', accPasses: 'Mis pases de eventos', 
   noPasses: 'Aún no tienes pases.', notPro: 'No eres miembro Pro.',
   howManyCouples: '¿Cuántas parejas asistirán?',
   annualTitle: 'Eventos anuales', annualLead: 'Los celebramos cada año. Márcalos en tu calendario.',
@@ -78,12 +71,12 @@ Object.assign(I18N.es, {
 Object.assign(I18N.en, {
   navClasses: 'Classes', navEvents: 'Events', navCollection: 'Collection', navPro: 'Pro', tabCollection: 'Collection',
   example: 'Example', examplesNote: 'Example dates and values; not real data.',
-  proOnly: 'Pro only', becomePro: 'Become Pro', youArePro: 'You are a Pro member',
+  becomePro: 'Become Pro', youArePro: 'You are a Pro member',
   moreTitle: 'More of Museo Abreu',
   moreClasses: 'Classes and clubs', moreClassesText: 'Paint and sculpt with the Psycho-Expressionism technique.',
   moreEvents: 'Events', moreEventsText: 'Openings, book presentations and collectors’ nights.',
-  moreCollection: 'Collection and auctions', moreCollectionText: 'Works by Oscar Abreu: new, available, offers and auctions.',
-  morePro: 'Pro membership', moreProText: 'Free event entry, 3 guests at VIP events, auctions and more.',
+  moreCollection: 'Collectors’ Circle', moreCollectionText: 'The works of Oscar Abreu, by private introduction.',
+  morePro: 'Pro membership', moreProText: 'Free event entry, 3 guests at VIP events, daily reading and more.',
 
   classesEyebrow: 'Learn', classesTitle: 'Classes and clubs',
   classesLead: 'Workshops at the museum to learn the processes of Psycho-Expressionism: layers, scraping, tearing and matter.',
@@ -100,35 +93,28 @@ Object.assign(I18N.en, {
   getPass: 'Get my pass', buyTicket: 'Buy ticket {price} (simulated)', passReady: 'Your pass is ready. Show the QR code at the entrance.',
   passFor: 'Pass for {n} person(s)', alreadyRegistered: 'You already have a pass for this event.',
 
-  collectionEyebrow: 'Works by Oscar Abreu', collectionTitle: 'Collection',
-  collectionLead: 'Search exclusively for works by Oscar Abreu: new, available, on offer and at auction.',
-  tabNew: 'New', tabAvailable: 'Available', tabSale: 'Offers', tabAuctions: 'Auctions',
-  priceOnRequest: 'Price on request', memberOffer: 'Offer for Pro members', requestInfo: 'Request information',
-  earlyAccess: 'Pro early access', lockedText: 'Become Pro to see new works and offers, and to take part in auctions.',
-  currentBid: 'Current bid', startingBid: 'Starting bid', endsIn: 'Ends in {n} days', bidBtn: 'Bid {amount} (simulated)',
-  youLead: 'Your bid is the highest', bidPlaced: 'Bid recorded (simulated): {amount}.',
-  auctionNote: 'Example values for the demo; not real prices for these works.',
+  
+  
+  
+  
 
-  privateTitle2: 'Private meeting or dinner with the artist',
-  privateLead2: 'For collectors and serious buyers. The museum team reviews each request and confirms the date and format.',
-  meetType: 'Type of meeting', meetMeeting: 'Private meeting at the museum', meetDinner: 'Private dinner with Oscar Abreu',
-  interest: 'Interest', intBuy: 'Acquire a work', intCommission: 'Commission a work', intCollection: 'Collection or investment',
-  budget: 'Approximate budget', phone: 'Phone or WhatsApp', sendPrivate: 'Send request',
-  privateSent: 'Request sent (simulated). The museum will contact you to confirm.',
+  
+  
+  phone: 'Phone or WhatsApp', 
 
   proEyebrow: 'Membership', proTitle: 'Pro member',
-  proLead: 'The closest way to live Oscar Abreu’s work: events, collecting, daily reading and exclusive experiences.',
+  proLead: 'The closest way to live Oscar Abreu’s work: events, daily reading and exclusive experiences.',
   proPrice: 'Membership price: to be defined', joinPro: 'Become Pro (simulated)', leavePro: 'Cancel membership (demo)',
   joinedPro: 'Welcome! You are now a Pro member (simulated).', memberPass: 'Member pass', memberPassHelp: 'Show it at the entrance of any museum event.',
-  compare: 'What’s included', featureCol: 'Benefit', freeCol: 'User', proCol: 'Pro', onRequest2: 'On request', priority: 'Priority',
+  compare: 'What’s included', featureCol: 'Benefit', freeCol: 'User', proCol: 'Pro', 
   b1: 'Explore the museum, the work and the manifesto', b2: 'Daily reading (excerpt from the book)', b3: 'Full book session every day',
-  b4: 'Free entry to museum events with QR', b5: 'Up to 3 free guests at every VIP event', b6: 'Early access to new works',
-  b7: 'Exclusive offers on works', b8: 'Take part in auctions', b9: 'Priority in classes and clubs', b10: 'Private meeting or dinner with the artist',
+  b4: 'Free entry to museum events with QR', b5: 'Up to 3 free guests at every VIP event', 
+  b9: 'Priority in classes and clubs', 
 
   dailyTitle: 'Today’s reading', dailyFull: 'Today’s full session: {ch}', dailyProCta: 'Become Pro for the full daily book session.',
   dailyNote: 'Excerpt from Ecce Homo (English edition).',
 
-  accMembership: 'My membership', accPasses: 'My event passes', accBids: 'My bids', accRequests: 'My requests',
+  accMembership: 'My membership', accPasses: 'My event passes', 
   noPasses: 'You have no passes yet.', notPro: 'You are not a Pro member.',
   howManyCouples: 'How many couples are coming?',
   annualTitle: 'Yearly events', annualLead: 'We celebrate them every year. Save the dates.',
@@ -153,7 +139,6 @@ Object.assign(I18N.fr, {
   tabCollection: 'Collection',
   example: 'Exemple',
   examplesNote: 'Dates et montants d’exemple ; ce ne sont pas des données réelles.',
-  proOnly: 'Réservé aux membres Pro',
   becomePro: 'Devenir Pro',
   youArePro: 'Vous êtes membre Pro',
   moreTitle: 'Profitez davantage du Museo Abreu',
@@ -161,10 +146,10 @@ Object.assign(I18N.fr, {
   moreClassesText: 'Peignez et sculptez avec la technique du Psycho-Expressionnisme.',
   moreEvents: 'Événements',
   moreEventsText: 'Vernissages, présentations du livre et soirées de collectionneurs.',
-  moreCollection: 'Collection et enchères',
-  moreCollectionText: 'Œuvres d’Oscar Abreu : nouveautés, disponibles, offres et enchères.',
+  moreCollection: 'Cercle des collectionneurs',
+  moreCollectionText: 'Les œuvres d’Oscar Abreu, sur présentation privée.',
   morePro: 'Adhésion Pro',
-  moreProText: 'Entrée gratuite aux événements, 3 invités aux événements VIP, enchères et plus encore.',
+  moreProText: 'Entrée gratuite aux événements, 3 invités aux événements VIP, lecture quotidienne et plus encore.',
   classesEyebrow: 'Apprendre',
   classesTitle: 'Cours et clubs',
   classesLead: 'Ateliers au musée pour apprendre les procédés du Psycho-Expressionnisme : couches, grattage, déchirure et matière.',
@@ -192,41 +177,25 @@ Object.assign(I18N.fr, {
   passReady: 'Votre pass est prêt. Présentez le code QR à l’entrée.',
   passFor: 'Pass pour {n} personne(s)',
   alreadyRegistered: 'Vous avez déjà un pass pour cet événement.',
-  collectionEyebrow: 'Œuvres d’Oscar Abreu',
-  collectionTitle: 'Collection',
-  collectionLead: 'Recherchez exclusivement des œuvres d’Oscar Abreu : nouveautés, disponibles, en offre et aux enchères.',
-  tabNew: 'Nouveautés',
-  tabAvailable: 'Disponible',
-  tabSale: 'Offres',
-  tabAuctions: 'Enchères',
-  priceOnRequest: 'Prix sur demande',
-  memberOffer: 'Offre pour les membres Pro',
-  requestInfo: 'Demander des informations',
-  earlyAccess: 'Accès anticipé Pro',
-  lockedText: 'Devenez Pro pour voir les nouvelles œuvres et les offres, et participer aux enchères.',
-  currentBid: 'Enchère actuelle',
-  startingBid: 'Mise à prix',
-  endsIn: 'Se termine dans {n} jours',
-  bidBtn: 'Enchérir {amount} (simulation)',
-  youLead: 'Votre enchère est la plus haute',
-  bidPlaced: 'Enchère enregistrée (simulation) : {amount}.',
-  auctionNote: 'Montants d’exemple pour la démonstration ; ce ne sont pas les prix réels de ces œuvres.',
-  privateTitle2: 'Rencontre ou dîner privé avec l’artiste',
-  privateLead2: 'Pour les collectionneurs et acheteurs sérieux. L’équipe du musée étudie chaque demande et confirme la date et le format.',
-  meetType: 'Type de rencontre',
-  meetMeeting: 'Rencontre privée au musée',
-  meetDinner: 'Dîner privé avec Oscar Abreu',
-  interest: 'Intérêt',
-  intBuy: 'Acquérir une œuvre',
-  intCommission: 'Commander une œuvre',
-  intCollection: 'Collection ou investissement',
-  budget: 'Budget approximatif',
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   phone: 'Téléphone ou WhatsApp',
-  sendPrivate: 'Envoyer la demande',
-  privateSent: 'Demande envoyée (simulation). Le musée vous contactera pour confirmer.',
+  
   proEyebrow: 'Adhésion',
   proTitle: 'Membre Pro',
-  proLead: 'La façon la plus proche de vivre l’œuvre d’Oscar Abreu : événements, collection, lecture quotidienne et expériences exclusives.',
+  proLead: 'La façon la plus proche de vivre l’œuvre d’Oscar Abreu : événements, lecture quotidienne et expériences exclusives.',
   proPrice: 'Prix de l’adhésion : à définir',
   joinPro: 'Devenir Pro (simulation)',
   leavePro: 'Annuler l’adhésion (démo)',
@@ -237,26 +206,21 @@ Object.assign(I18N.fr, {
   featureCol: 'Avantage',
   freeCol: 'Utilisateur',
   proCol: 'Pro',
-  onRequest2: 'Sur demande',
-  priority: 'Priorité',
+  
   b1: 'Explorer le musée, l’œuvre et le manifeste',
   b2: 'Lecture du jour (extrait du livre)',
   b3: 'Séance complète du livre chaque jour',
   b4: 'Entrée gratuite aux événements du musée avec code QR',
   b5: 'Jusqu’à 3 invités gratuits à chaque événement VIP',
-  b6: 'Accès anticipé aux nouvelles œuvres',
-  b7: 'Offres exclusives sur les œuvres',
-  b8: 'Participer aux enchères',
+  
   b9: 'Priorité pour les cours et les clubs',
-  b10: 'Rencontre ou dîner privé avec l’artiste',
   dailyTitle: 'Lecture du jour',
   dailyFull: 'Séance complète du jour : {ch}',
   dailyProCta: 'Devenez Pro pour la séance quotidienne complète du livre.',
   dailyNote: 'Extrait d’Ecce Homo (édition anglaise).',
   accMembership: 'Mon adhésion',
   accPasses: 'Mes pass d’événements',
-  accBids: 'Mes enchères',
-  accRequests: 'Mes demandes',
+  
   noPasses: 'Vous n’avez pas encore de pass.',
   notPro: 'Vous n’êtes pas membre Pro.',
   howManyCouples: 'Combien de couples viennent ?',
@@ -288,6 +252,108 @@ Object.assign(I18N.fr, {
   gabangiSource: 'Prix approximatifs, basés sur l’édition 2026 (gabangi.com) ; ils peuvent changer pour la prochaine édition.',
   daysLabel: 'jours',
   nth: '{n}e anniversaire',
+});
+
+/* ---------- Collectors' Circle wording ---------- */
+
+Object.assign(I18N.es, {
+  ciEyebrow: 'Círculo de Coleccionistas', ciTitle: 'La obra de Oscar Abreu, por presentación',
+  ciLead: 'Cada obra es única y encuentra a su coleccionista a través de una conversación, no de un carrito de compra. El Círculo de Coleccionistas acompaña a cada persona en privado, desde el primer encuentro con una obra hasta que llega a su colección.',
+  ciHowTitle: 'Cómo funciona',
+  ciStep1T: 'Solicite una presentación', ciStep1D: 'Cuéntenos sobre usted y lo que le atrae de la obra. Su solicitud es confidencial.',
+  ciStep2T: 'Una conversación personal', ciStep2D: 'Un miembro del equipo del museo le contacta para conocerle y entender su colección.',
+  ciStep3T: 'Obras presentadas en privado', ciStep3D: 'Le presentamos obras en una visita privada al museo o por video, con todos sus detalles.',
+  ciWorksTitle: 'Obras disponibles por presentación', ciByIntro: 'Por presentación', ciNewWork: 'Obra nueva · Círculo',
+  ciNewForMembers: 'Las obras nuevas se presentan primero a los miembros del Círculo.',
+  ciRequestCta: 'Solicitar una presentación', ciFormTitle: 'Solicitud de presentación', ciFormLead: 'Cada solicitud se revisa personalmente.',
+  ciCity: 'Ciudad y país', ciSource: '¿Cómo conoció la obra de Oscar Abreu?',
+  ciSrcVisit: 'Visita al museo', ciSrcCollector: 'Recomendación de un coleccionista', ciSrcShow: 'Una exposición o feria', ciSrcPress: 'Prensa o redes sociales', ciSrcOther: 'Otro',
+  ciIntent: 'Su interés', ciIntFirst: 'Mi primera obra de Oscar Abreu', ciIntGrow: 'Ampliar mi colección', ciIntCommission: 'Un encargo', ciIntInstitution: 'Una institución o empresa',
+  ciWorkOpt: 'Una obra que le haya llamado la atención (opcional)', ciReferral: 'Le refiere (opcional)',
+  ciConfidential: 'Sus datos solo los ve el equipo del museo.', ciSubmit: 'Enviar solicitud',
+  ciPendingTitle: 'Su solicitud está en manos del equipo', ciPendingText: 'Gracias, {name}. Un miembro del equipo del Museo Abreu le contactará personalmente.',
+  ciSimApprove: 'Simular aprobación (demo)', ciResetDemo: 'Restablecer (demo)',
+  ciWelcome: 'Le damos la bienvenida al Círculo, {name}', ciMemberSince: 'Miembro desde el {date}',
+  ciAdvisorTitle: 'Su contacto en el museo', ciAdvisorText: 'Un miembro del equipo le acompaña en cada paso. Escríbale cuando lo desee.', ciWriteAdvisor: 'Escribir por WhatsApp',
+  ciInterest: 'Me interesa esta obra', ciInterested: 'Interés enviado', ciInterestSent: 'Su contacto en el museo le escribirá sobre esta obra (simulación).',
+  ciViewingTitle: 'Visita privada o cena con el artista', ciViewingLead: 'Reservado a los miembros del Círculo. El equipo confirma la fecha y el formato.',
+  ciViewingType: 'Formato', ciViewing: 'Visita privada al museo', ciVideo: 'Presentación por video', ciDinner: 'Cena privada con Oscar Abreu',
+  ciSendRequest: 'Enviar solicitud', ciViewingSent: 'Solicitud enviada (simulación). El equipo le confirmará la fecha.',
+  ciEveningsTitle: 'Veladas privadas', ciEveningsLead: 'Algunas obras se presentan en veladas de subasta privadas, solo por invitación.',
+  ciEveningsLocked: 'Las veladas privadas se comparten con los miembros del Círculo.', ciByInvitation: 'Por invitación',
+  ciRequestInvite: 'Solicitar invitación', ciInviteAsked: 'Invitación solicitada', ciInviteSent: 'Solicitud enviada (simulación). El equipo le confirmará la invitación.',
+  ciAccNone: 'Las obras de Oscar Abreu se adquieren por presentación.', ciAccPending: 'Su solicitud de presentación está en revisión.', ciAccMember: 'Usted es miembro del Círculo.', ciAccLink: 'Ver el Círculo',
+  waCircleRequest: 'Hola, solicito una presentación al Círculo de Coleccionistas del Museo Abreu. Nombre: {name}. Email: {email}. Teléfono: {phone}. Ciudad: {city}. Conocí la obra por: {source}. Interés: {intent}. Obra: {work}. Me refiere: {referral}. {msg}',
+  waCircleInterest: 'Hola, soy {name}, del Círculo de Coleccionistas. Me interesa la obra "{title}" de Oscar Abreu.',
+  waCircleViewing: 'Hola, soy {name}, del Círculo de Coleccionistas. Solicito: {type}. Obra: {work}. Fecha preferida: {date}. {msg}',
+  waCircleInvite: 'Hola, soy {name}, del Círculo de Coleccionistas. Solicito una invitación a la velada privada de "{title}".',
+  waCircleAdvisor: 'Hola, soy {name}, del Círculo de Coleccionistas del Museo Abreu.',
+});
+Object.assign(I18N.en, {
+  ciEyebrow: 'Collectors’ Circle', ciTitle: 'The work of Oscar Abreu, by introduction',
+  ciLead: 'Each work is one of a kind and finds its collector through a conversation, not a shopping cart. The Collectors’ Circle accompanies each person privately, from the first encounter with a work to its arrival in their collection.',
+  ciHowTitle: 'How it works',
+  ciStep1T: 'Request an introduction', ciStep1D: 'Tell us about yourself and what draws you to the work. Your request is confidential.',
+  ciStep2T: 'A personal conversation', ciStep2D: 'A member of the museum team contacts you to get to know you and your collection.',
+  ciStep3T: 'Works presented privately', ciStep3D: 'We present works to you at a private viewing at the museum or by video, with all their details.',
+  ciWorksTitle: 'Works available by introduction', ciByIntro: 'By introduction', ciNewWork: 'New work · Circle',
+  ciNewForMembers: 'New works are presented first to members of the Circle.',
+  ciRequestCta: 'Request an introduction', ciFormTitle: 'Introduction request', ciFormLead: 'Each request is reviewed personally.',
+  ciCity: 'City and country', ciSource: 'How did you come to know Oscar Abreu’s work?',
+  ciSrcVisit: 'A visit to the museum', ciSrcCollector: 'A collector’s recommendation', ciSrcShow: 'An exhibition or fair', ciSrcPress: 'Press or social media', ciSrcOther: 'Other',
+  ciIntent: 'Your interest', ciIntFirst: 'My first work by Oscar Abreu', ciIntGrow: 'Adding to my collection', ciIntCommission: 'A commission', ciIntInstitution: 'An institution or company',
+  ciWorkOpt: 'A work that caught your eye (optional)', ciReferral: 'Referred by (optional)',
+  ciConfidential: 'Only the museum team sees your details.', ciSubmit: 'Send request',
+  ciPendingTitle: 'Your request is with our team', ciPendingText: 'Thank you, {name}. A member of the Museo Abreu team will contact you personally.',
+  ciSimApprove: 'Simulate approval (demo)', ciResetDemo: 'Reset (demo)',
+  ciWelcome: 'Welcome to the Circle, {name}', ciMemberSince: 'Member since {date}',
+  ciAdvisorTitle: 'Your contact at the museum', ciAdvisorText: 'A member of the team accompanies you at every step. Write whenever you wish.', ciWriteAdvisor: 'Write on WhatsApp',
+  ciInterest: 'I’m interested in this work', ciInterested: 'Interest sent', ciInterestSent: 'Your contact at the museum will write to you about this work (simulated).',
+  ciViewingTitle: 'Private viewing or dinner with the artist', ciViewingLead: 'Reserved for Circle members. The team confirms the date and format.',
+  ciViewingType: 'Format', ciViewing: 'Private viewing at the museum', ciVideo: 'Presentation by video', ciDinner: 'Private dinner with Oscar Abreu',
+  ciSendRequest: 'Send request', ciViewingSent: 'Request sent (simulated). The team will confirm the date.',
+  ciEveningsTitle: 'Private evenings', ciEveningsLead: 'Some works are presented at private auction evenings, by invitation only.',
+  ciEveningsLocked: 'Private evenings are shared with members of the Circle.', ciByInvitation: 'By invitation',
+  ciRequestInvite: 'Request an invitation', ciInviteAsked: 'Invitation requested', ciInviteSent: 'Request sent (simulated). The team will confirm your invitation.',
+  ciAccNone: 'Works by Oscar Abreu are acquired by introduction.', ciAccPending: 'Your introduction request is under review.', ciAccMember: 'You are a member of the Circle.', ciAccLink: 'See the Circle',
+  waCircleRequest: 'Hello, I am requesting an introduction to the Museo Abreu Collectors’ Circle. Name: {name}. Email: {email}. Phone: {phone}. City: {city}. I came to know the work through: {source}. Interest: {intent}. Work: {work}. Referred by: {referral}. {msg}',
+  waCircleInterest: 'Hello, this is {name}, from the Collectors’ Circle. I am interested in the work "{title}" by Oscar Abreu.',
+  waCircleViewing: 'Hello, this is {name}, from the Collectors’ Circle. I would like: {type}. Work: {work}. Preferred date: {date}. {msg}',
+  waCircleInvite: 'Hello, this is {name}, from the Collectors’ Circle. I would like an invitation to the private evening for "{title}".',
+  waCircleAdvisor: 'Hello, this is {name}, from the Museo Abreu Collectors’ Circle.',
+});
+Object.assign(I18N.fr, {
+  ciEyebrow: 'Cercle des collectionneurs', ciTitle: 'L’œuvre d’Oscar Abreu, sur présentation',
+  ciLead: 'Chaque œuvre est unique et trouve son collectionneur au fil d’une conversation, pas d’un panier d’achat. Le Cercle des collectionneurs accompagne chacun en privé, de la première rencontre avec une œuvre jusqu’à son arrivée dans sa collection.',
+  ciHowTitle: 'Comment cela se passe',
+  ciStep1T: 'Demandez une présentation', ciStep1D: 'Parlez-nous de vous et de ce qui vous attire dans l’œuvre. Votre demande est confidentielle.',
+  ciStep2T: 'Une conversation personnelle', ciStep2D: 'Un membre de l’équipe du musée vous contacte pour faire votre connaissance et comprendre votre collection.',
+  ciStep3T: 'Des œuvres présentées en privé', ciStep3D: 'Nous vous présentons des œuvres lors d’une visite privée au musée ou par vidéo, avec tous leurs détails.',
+  ciWorksTitle: 'Œuvres disponibles sur présentation', ciByIntro: 'Sur présentation', ciNewWork: 'Nouvelle œuvre · Cercle',
+  ciNewForMembers: 'Les nouvelles œuvres sont présentées en priorité aux membres du Cercle.',
+  ciRequestCta: 'Demander une présentation', ciFormTitle: 'Demande de présentation', ciFormLead: 'Chaque demande est examinée personnellement.',
+  ciCity: 'Ville et pays', ciSource: 'Comment avez-vous découvert l’œuvre d’Oscar Abreu ?',
+  ciSrcVisit: 'Une visite au musée', ciSrcCollector: 'La recommandation d’un collectionneur', ciSrcShow: 'Une exposition ou une foire', ciSrcPress: 'La presse ou les réseaux sociaux', ciSrcOther: 'Autre',
+  ciIntent: 'Votre intérêt', ciIntFirst: 'Ma première œuvre d’Oscar Abreu', ciIntGrow: 'Enrichir ma collection', ciIntCommission: 'Une commande', ciIntInstitution: 'Une institution ou une entreprise',
+  ciWorkOpt: 'Une œuvre qui a retenu votre attention (facultatif)', ciReferral: 'Recommandé par (facultatif)',
+  ciConfidential: 'Seule l’équipe du musée voit vos informations.', ciSubmit: 'Envoyer la demande',
+  ciPendingTitle: 'Votre demande est entre les mains de l’équipe', ciPendingText: 'Merci, {name}. Un membre de l’équipe du Museo Abreu vous contactera personnellement.',
+  ciSimApprove: 'Simuler l’approbation (démo)', ciResetDemo: 'Réinitialiser (démo)',
+  ciWelcome: 'Bienvenue au Cercle, {name}', ciMemberSince: 'Membre depuis le {date}',
+  ciAdvisorTitle: 'Votre interlocuteur au musée', ciAdvisorText: 'Un membre de l’équipe vous accompagne à chaque étape. Écrivez-lui quand vous le souhaitez.', ciWriteAdvisor: 'Écrire sur WhatsApp',
+  ciInterest: 'Cette œuvre m’intéresse', ciInterested: 'Intérêt transmis', ciInterestSent: 'Votre interlocuteur au musée vous écrira au sujet de cette œuvre (simulation).',
+  ciViewingTitle: 'Visite privée ou dîner avec l’artiste', ciViewingLead: 'Réservé aux membres du Cercle. L’équipe confirme la date et le format.',
+  ciViewingType: 'Format', ciViewing: 'Visite privée au musée', ciVideo: 'Présentation par vidéo', ciDinner: 'Dîner privé avec Oscar Abreu',
+  ciSendRequest: 'Envoyer la demande', ciViewingSent: 'Demande envoyée (simulation). L’équipe vous confirmera la date.',
+  ciEveningsTitle: 'Soirées privées', ciEveningsLead: 'Certaines œuvres sont présentées lors de soirées de vente privées, uniquement sur invitation.',
+  ciEveningsLocked: 'Les soirées privées sont réservées aux membres du Cercle.', ciByInvitation: 'Sur invitation',
+  ciRequestInvite: 'Demander une invitation', ciInviteAsked: 'Invitation demandée', ciInviteSent: 'Demande envoyée (simulation). L’équipe vous confirmera l’invitation.',
+  ciAccNone: 'Les œuvres d’Oscar Abreu s’acquièrent sur présentation.', ciAccPending: 'Votre demande de présentation est en cours d’examen.', ciAccMember: 'Vous êtes membre du Cercle.', ciAccLink: 'Voir le Cercle',
+  waCircleRequest: 'Bonjour, je demande une présentation au Cercle des collectionneurs du Museo Abreu. Nom : {name}. E-mail : {email}. Téléphone : {phone}. Ville : {city}. J’ai découvert l’œuvre par : {source}. Intérêt : {intent}. Œuvre : {work}. Recommandé par : {referral}. {msg}',
+  waCircleInterest: 'Bonjour, ici {name}, du Cercle des collectionneurs. L’œuvre « {title} » d’Oscar Abreu m’intéresse.',
+  waCircleViewing: 'Bonjour, ici {name}, du Cercle des collectionneurs. Je souhaite : {type}. Œuvre : {work}. Date souhaitée : {date}. {msg}',
+  waCircleInvite: 'Bonjour, ici {name}, du Cercle des collectionneurs. Je souhaite une invitation à la soirée privée de « {title} ».',
+  waCircleAdvisor: 'Bonjour, ici {name}, du Cercle des collectionneurs du Museo Abreu.',
 });
 
 /* ---------- Data ---------- */
@@ -378,20 +444,17 @@ const EVENTS = [
     desc: { es: 'El artista habla sobre el Psico-Expresionismo y responde preguntas.', en: 'The artist talks about Psycho-Expressionism and answers questions.', fr: 'L’artiste parle du Psycho-Expressionnisme et répond aux questions.' } },
 ];
 
-// Passion is not listed: oscarabreu.com marks it as sold.
-const COLLECTION = [
-  { work: 'escaping-being', status: 'new' },
-  { work: 'limerence', status: 'available' },
-  { work: 'petrichor', status: 'sale' },
+// Collectors' Circle: works are acquired by introduction, never bought from the page, and
+// no price is shown; the museum shares it privately. isNew works are presented to Circle
+// members first. Passion is not listed: oscarabreu.com marks it as sold.
+const CIRCLE_WORKS = [
+  { work: 'escaping-being', isNew: true },
+  { work: 'limerence' },
+  { work: 'petrichor' },
 ];
 
-// Example values for the demo only.
-const AUCTIONS = [
-  { work: 'resilience', start: 8000, step: 500, inDays: 6 },
-  { work: 'echoes-of-memory', start: 12000, step: 1000, inDays: 12 },
-];
-
-const BUDGETS = ['US$10,000–25,000', 'US$25,000–50,000', 'US$50,000–100,000', 'US$100,000+'];
+// Works the museum may present at private auction evenings, by invitation (demo examples).
+const CIRCLE_EVENINGS = ['resilience', 'echoes-of-memory'];
 
 /* ---------- State ---------- */
 
@@ -401,7 +464,10 @@ const fx = {
 };
 const member = () => fx.get('member', null);
 const isPro = () => !!member();
-let collectionTab = 'new';
+// Circle status on this device: none → pending (request sent) → member (approved by the museum).
+// In the live app approval happens outside it, over WhatsApp; real member accounts are Phase 2.
+const circle = () => fx.get('circle', null);
+const circleStatus = () => (circle() && circle().status) || 'none';
 
 /* ---------- Pages ---------- */
 
@@ -557,73 +623,89 @@ function passHTML(p) {
 
 function workById(id) { return WORKS.find(w => w.id === id); }
 
+function circleWorkCard(c, status) {
+  const w = workById(c.work);
+  const asked = (circle() && circle().interests || []).includes(c.work);
+  const action = status === 'member'
+    ? (asked ? `<p class="status ok">${t('ciInterested')}</p>` : `<button class="btn primary" data-action="circleInterest" data-work="${c.work}">${t('ciInterest')}</button>`)
+    : status === 'pending' ? '' : `<button class="btn" data-action="circleRequest" data-work="${c.work}">${t('ciRequestCta')}</button>`;
+  return `<article class="card ci-work"><button type="button" class="art-frame ci-art" data-action="work" data-id="${w.id}" aria-label="${esc(L(w.title))}">${workImg(w)}</button>
+    <p class="ci-mark">${c.isNew ? t('ciNewWork') : t('ciByIntro')}</p>
+    <h2 class="h3">${L(w.title)}</h2>
+    <p class="muted">Oscar Abreu${w.spec ? ` · ${L(w.spec).join(' · ')}` : ''}</p>
+    <div class="btn-row">${action}</div></article>`;
+}
+
 function pageCollection() {
-  const tabs = [['new', 'tabNew'], ['available', 'tabAvailable'], ['sale', 'tabSale'], ['auctions', 'tabAuctions']]
-    .filter(([id]) => !(BOOKING.live && id === 'auctions'));
-  if (BOOKING.live && collectionTab === 'auctions') collectionTab = 'available';
-  const locked = !isPro() && collectionTab !== 'available';
-  let body;
-  if (collectionTab === 'auctions') {
-    const bids = fx.get('bids', []);
-    body = `<div class="grid two">${AUCTIONS.map(a => {
-      const w = workById(a.work);
-      const mine = bids.filter(b => b.work === a.work).map(b => b.amount);
-      const current = Math.max(a.start, ...mine);
-      const next = mine.length ? current + a.step : a.start;
-      return `<article class="card auction"><div class="art-frame">${workImg(w)}</div>
-        <h2 class="h3" style="margin-top:.8rem">${L(w.title)}</h2>
-        <div class="summary" style="margin-top:.4rem">
-          <span class="muted">${mine.length ? t('currentBid') : t('startingBid')}</span><span><strong>${usd(current)}</strong></span>
-          <span class="muted">${t('endsIn', { n: a.inDays })}</span><span>${mine.length ? `<span class="status ok">${t('youLead')}</span>` : ''}</span>
-        </div>
-        <div class="btn-row">${locked ? '' : `<button class="btn primary" data-action="bid" data-work="${a.work}" data-amount="${next}">${t('bidBtn', { amount: usd(next) })}</button>`}
-        <button class="btn" data-action="requestWork" data-work="${a.work}">${t('requestInfo')}</button></div></article>`;
-    }).join('')}</div><p class="muted" style="margin-top:.8rem">${t('auctionNote')}</p>`;
-  } else {
-    const items = COLLECTION.filter(c => c.status === collectionTab);
-    body = `<div class="grid two">${items.map(c => {
-      const w = workById(c.work);
-      const tag = c.status === 'new' ? t('earlyAccess') : c.status === 'sale' ? t('memberOffer') : '';
-      return `<article class="card"><div class="art-frame">${workImg(w)}</div>
-        ${tag ? `<span class="chip vip" style="margin-top:.8rem;display:inline-block">${tag}</span>` : ''}
-        <h2 class="h3" style="margin-top:.6rem">${L(w.title)}</h2><p class="muted">Oscar Abreu · ${t('priceOnRequest')}</p>
-        <div class="btn-row"><button class="btn primary" data-action="requestWork" data-work="${c.work}">${t('requestInfo')}</button></div></article>`;
-    }).join('')}</div>`;
-  }
-  return `<div class="wrap">
-    <section class="section">
-      <p class="eyebrow">${t('collectionEyebrow')}</p><h1>${t('collectionTitle')}</h1>
-      <p class="lead" style="margin-top:.8rem">${t('collectionLead')}</p>
-    </section>
-    <section class="section">
-      <div class="tabs" role="tablist">${tabs.map(([id, k]) => `<button role="tab" class="tab" data-action="ctab" data-id="${id}" aria-selected="${collectionTab === id}">${t(k)}${!isPro() && id !== 'available' ? ' 🔒' : ''}</button>`).join('')}</div>
-      <div class="${locked ? 'locked' : ''}" style="margin-top:1rem">${body}</div>
-      ${locked ? `<div class="card lock-card"><strong>${t('proOnly')}</strong><p>${t('lockedText')}</p><div class="btn-row"><a class="btn primary" href="#/pro">${t('becomePro')}</a></div></div>` : ''}
-    </section>
-    <section class="section" id="privado">
-      <h2>${t('privateTitle2')}</h2><p class="muted" style="margin-bottom:1rem">${t('privateLead2')}</p>
-      <form class="card" data-form="privateMeet" style="max-width:640px">
+  const status = circleStatus(), c = circle();
+  const works = CIRCLE_WORKS.filter(x => status === 'member' || !x.isNew);
+  const opt = (v, k) => `<option value="${v}">${t(k)}</option>`;
+  const steps = [1, 2, 3].map(n => `<li><span class="ci-num">${['I', 'II', 'III'][n - 1]}</span><div><h3>${t('ciStep' + n + 'T')}</h3><p class="muted">${t('ciStep' + n + 'D')}</p></div></li>`).join('');
+  const state = status === 'member'
+    ? `<div class="ci-panel"><p class="ci-kicker">${t('ciEyebrow')}</p><h2>${t('ciWelcome', { name: esc(c.name) })}</h2>
+        <p class="ci-since">${t('ciMemberSince', { date: fmtDate(c.since.slice(0, 10), { day: 'numeric', month: 'long', year: 'numeric' }) })}</p>
+        <div class="ci-advisor"><h3>${t('ciAdvisorTitle')}</h3><p>${t('ciAdvisorText')}</p>
+          <div class="btn-row"><button class="btn light" data-action="circleAdvisor">${t('ciWriteAdvisor')}</button></div></div>
+        ${BOOKING.live ? '' : `<button class="ci-reset" data-action="circleReset">${t('ciResetDemo')}</button>`}</div>`
+    : status === 'pending'
+    ? `<div class="ci-panel"><p class="ci-kicker">${t('ciEyebrow')}</p><h2>${t('ciPendingTitle')}</h2><p>${t('ciPendingText', { name: esc(c.name) })}</p>
+        ${BOOKING.live ? '' : `<div class="btn-row"><button class="btn light" data-action="circleApprove">${t('ciSimApprove')}</button></div>`}</div>`
+    : '';
+  const form = status !== 'none' ? '' : `<section class="section" id="circulo">
+      <h2>${t('ciFormTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('ciFormLead')}</p>
+      <form class="card ci-form" data-form="circleRequest" style="max-width:680px">
         <div class="grid two">
-          <div class="field"><label for="pm-name">${t('name')}</label><input id="pm-name" required autocomplete="name" value="${esc(profile.name)}"></div>
-          <div class="field"><label for="pm-email">${t('email')}</label><input id="pm-email" type="email" required autocomplete="email" value="${esc(profile.email)}"></div>
-          <div class="field"><label for="pm-phone">${t('phone')}</label><input id="pm-phone" type="tel" autocomplete="tel"></div>
-          <div class="field"><label for="pm-type">${t('meetType')}</label><select id="pm-type"><option value="meeting">${t('meetMeeting')}</option><option value="dinner">${t('meetDinner')}</option></select></div>
-          <div class="field"><label for="pm-int">${t('interest')}</label><select id="pm-int"><option>${t('intBuy')}</option><option>${t('intCommission')}</option><option>${t('intCollection')}</option></select></div>
-          <div class="field"><label for="pm-budget">${t('budget')}</label><select id="pm-budget">${BUDGETS.map(b => `<option>${b}</option>`).join('')}</select></div>
+          <div class="field"><label for="ci-name">${t('name')}</label><input id="ci-name" required autocomplete="name" value="${esc(profile.name)}"></div>
+          <div class="field"><label for="ci-email">${t('email')}</label><input id="ci-email" type="email" required autocomplete="email" value="${esc(profile.email)}"></div>
+          <div class="field"><label for="ci-phone">${t('phone')}</label><input id="ci-phone" type="tel" required autocomplete="tel"></div>
+          <div class="field"><label for="ci-city">${t('ciCity')}</label><input id="ci-city" autocomplete="address-level2"></div>
+          <div class="field"><label for="ci-source">${t('ciSource')}</label><select id="ci-source">${opt('visit', 'ciSrcVisit')}${opt('collector', 'ciSrcCollector')}${opt('show', 'ciSrcShow')}${opt('press', 'ciSrcPress')}${opt('other', 'ciSrcOther')}</select></div>
+          <div class="field"><label for="ci-intent">${t('ciIntent')}</label><select id="ci-intent">${opt('first', 'ciIntFirst')}${opt('grow', 'ciIntGrow')}${opt('commission', 'ciIntCommission')}${opt('institution', 'ciIntInstitution')}</select></div>
         </div>
-        <div class="field"><label for="pm-work">${t('collectionTitle')}</label><select id="pm-work"><option value="">—</option>${WORKS.filter(w => !w.sold).map(w => `<option value="${w.id}">${L(w.title)}</option>`).join('')}</select></div>
-        <div class="field"><label for="pm-date">${t('preferredDate')}</label><input id="pm-date" type="date" min="${addDays(todayPC(), 1)}"></div>
-        <div class="field"><label for="pm-msg">${t('message')}</label><textarea id="pm-msg" rows="3"></textarea></div>
-        <div class="btn-row"><button class="btn primary">${t('sendPrivate')}</button></div>
+        <div class="field"><label for="ci-work">${t('ciWorkOpt')}</label><select id="ci-work"><option value="">—</option>${WORKS.filter(w => !w.sold).map(w => `<option value="${w.id}">${L(w.title)}</option>`).join('')}</select></div>
+        <div class="field"><label for="ci-ref">${t('ciReferral')}</label><input id="ci-ref"></div>
+        <div class="field"><label for="ci-msg">${t('message')}</label><textarea id="ci-msg" rows="3"></textarea></div>
+        <p class="muted" style="font-size:.85rem">${t('ciConfidential')}</p>
+        <div class="btn-row"><button class="btn primary">${t('ciSubmit')}</button></div>
       </form>
+    </section>`;
+  const evenings = `<section class="section"><h2>${t('ciEveningsTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('ciEveningsLead')}</p>
+      ${status === 'member' ? `<div class="grid two">${CIRCLE_EVENINGS.map(id => { const w = workById(id); const asked = (c.invites || []).includes(id);
+        return `<article class="card ci-work"><div class="art-frame">${workImg(w)}</div><p class="ci-mark">${t('ciByInvitation')}</p><h3>${L(w.title)}</h3>
+          <div class="btn-row">${asked ? `<p class="status ok">${t('ciInviteAsked')}</p>` : `<button class="btn" data-action="circleInvite" data-work="${id}">${t('ciRequestInvite')}</button>`}</div></article>`; }).join('')}</div>`
+        : `<p class="ci-note">${t('ciEveningsLocked')}</p>`}</section>`;
+  const viewing = status !== 'member' ? '' : `<section class="section"><h2>${t('ciViewingTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('ciViewingLead')}</p>
+      <form class="card" data-form="circleViewing" style="max-width:640px">
+        <div class="grid two">
+          <div class="field"><label for="cv-type">${t('ciViewingType')}</label><select id="cv-type">${opt('viewing', 'ciViewing')}${opt('video', 'ciVideo')}${opt('dinner', 'ciDinner')}</select></div>
+          <div class="field"><label for="cv-date">${t('preferredDate')}</label><input id="cv-date" type="date" min="${addDays(todayPC(), 1)}"></div>
+        </div>
+        <div class="field"><label for="cv-work">${t('ciWorkOpt')}</label><select id="cv-work"><option value="">—</option>${WORKS.filter(w => !w.sold).map(w => `<option value="${w.id}">${L(w.title)}</option>`).join('')}</select></div>
+        <div class="field"><label for="cv-msg">${t('message')}</label><textarea id="cv-msg" rows="3"></textarea></div>
+        <div class="btn-row"><button class="btn primary">${t('ciSendRequest')}</button></div>
+      </form></section>`;
+  return `<div class="wrap">
+    <section class="section ci-hero">
+      <p class="eyebrow">${t('ciEyebrow')}</p><h1>${t('ciTitle')}</h1>
+      <p class="lead" style="margin-top:.8rem">${t('ciLead')}</p>
+      ${status === 'none' ? `<div class="btn-row"><button type="button" class="btn primary" data-action="circleRequest">${t('ciRequestCta')}</button></div>` : ''}
     </section>
+    ${state ? `<section class="section">${state}</section>` : ''}
+    ${status === 'member' ? '' : `<section class="section"><h2>${t('ciHowTitle')}</h2><ol class="ci-steps">${steps}</ol></section>`}
+    <section class="section"><h2>${t('ciWorksTitle')}</h2>
+      <div class="grid two" style="margin-top:1rem">${works.map(x => circleWorkCard(x, status)).join('')}</div>
+      ${status === 'member' ? '' : `<p class="ci-note" style="margin-top:1rem">${t('ciNewForMembers')}</p>`}
+    </section>
+    ${viewing}
+    ${evenings}
+    ${form}
   </div>`;
 }
 
 function pagePro() {
   const m = member();
-  const rows = [['b1', 1, 1], ['b2', 1, 1], ['b3', 0, 1], ['b4', 0, 1], ['b5', 0, 1], ['b6', 0, 1], ['b7', 0, 1], ['b8', 0, 1], ['b9', 0, 1], ['b10', 'req', 'prio']];
-  const cell = v => v === 1 ? '<span class="yes" aria-label="✓">✓</span>' : v === 0 ? '<span class="muted" aria-label="—">—</span>' : v === 'req' ? t('onRequest2') : t('priority');
+  const rows = [['b1', 1, 1], ['b2', 1, 1], ['b3', 0, 1], ['b4', 0, 1], ['b5', 0, 1], ['b9', 0, 1]];
+  const cell = v => v ? '<span class="yes" aria-label="✓">✓</span>' : '<span class="muted" aria-label="—">—</span>';
   return `<div class="wrap">
     <section class="section pro-hero">
       <p class="eyebrow">${t('proEyebrow')}</p><h1>${t('proTitle')}</h1>
@@ -632,7 +714,7 @@ function pagePro() {
       ${m ? `<p class="status ok" style="margin-top:.8rem">${t('youArePro')} · ${m.id}</p>` : `<div class="btn-row"><button class="btn primary" data-action="joinPro">${t('joinPro')}</button></div>`}
     </section>
     ${m ? `<section class="section"><h2>${t('memberPass')}</h2><p class="muted" style="margin-bottom:1rem">${t('memberPassHelp')}</p>${memberCard(m)}
-      <div class="btn-row"><a class="btn dark" href="#/eventos">${t('navEvents')}</a><a class="btn" href="#/coleccion">${t('navCollection')}</a><button class="btn small" data-action="leavePro">${t('leavePro')}</button></div></section>` : ''}
+      <div class="btn-row"><a class="btn dark" href="#/eventos">${t('navEvents')}</a><button class="btn small" data-action="leavePro">${t('leavePro')}</button></div></section>` : ''}
     <section class="section"><h2>${t('compare')}</h2>
       <div class="table-wrap"><table class="compare"><thead><tr><th>${t('featureCol')}</th><th>${t('freeCol')}</th><th>${t('proCol')}</th></tr></thead>
       <tbody>${rows.map(([k, a, b]) => `<tr><td>${t(k)}</td><td>${cell(a)}</td><td>${cell(b)}</td></tr>`).join('')}</tbody></table></div>
@@ -665,16 +747,14 @@ function dailyReading() {
 function accountExtras() {
   const m = member();
   const passes = fx.get('passes', []);
-  const bids = fx.get('bids', []);
-  const reqs = fx.get('privateRequests', []);
+  const status = circleStatus();
   return `<section class="section grid two">
     <div><h2>${t('accMembership')}</h2>${m ? memberCard(m) : `<p class="empty">${t('notPro')} <a href="#/pro">${t('becomePro')}</a></p>`}</div>
     <div><h2>${t('accPasses')}</h2>${passes.length ? `<div class="grid">${passes.map(passHTML).join('')}</div>` : `<p class="empty">${t('noPasses')}</p>`}</div>
   </section>
-  ${bids.length || reqs.length ? `<section class="section grid two">
-    <div><h2>${t('accBids')}</h2><ul class="toc">${bids.map(b => `<li><span><span>${L(workById(b.work).title)}</span><span>${usd(b.amount)}</span></span></li>`).join('') || '<li class="muted">—</li>'}</ul></div>
-    <div><h2>${t('accRequests')}</h2><ul class="toc">${reqs.map(r => `<li><span><span>${r.type === 'dinner' ? t('meetDinner') : t('meetMeeting')}</span><span class="muted">${r.date || ''}</span></span></li>`).join('') || '<li class="muted">—</li>'}</ul></div>
-  </section>` : ''}`;
+  <section class="section"><h2>${t('ciEyebrow')}</h2>
+    <p>${status === 'member' ? t('ciAccMember') : status === 'pending' ? t('ciAccPending') : t('ciAccNone')} <a href="#/coleccion">${t('ciAccLink')}</a></p>
+  </section>`;
 }
 
 /* ---------- Actions ---------- */
@@ -725,7 +805,6 @@ const EXTRA_ACTIONS = {
     toast(t('passReady'));
     route();
   },
-  ctab: el => { collectionTab = el.dataset.id; route(); },
   notifyEvent: el => {
     if (BOOKING.live) return openWhatsApp(t('waNotify', { event: eventTitle(EVENTS.find(e => e.id === el.dataset.id)) }));
     const list = fx.get('eventAlerts', []);
@@ -733,20 +812,34 @@ const EXTRA_ACTIONS = {
     fx.set('eventAlerts', list);
     toast(t('notifySet'));
   },
-  bid: el => {
-    if (!isPro()) return;
-    const bids = fx.get('bids', []);
-    bids.push({ work: el.dataset.work, amount: Number(el.dataset.amount), at: new Date().toISOString() });
-    fx.set('bids', bids);
-    toast(t('bidPlaced', { amount: usd(Number(el.dataset.amount)) }));
+  circleRequest: el => {
+    const go = () => {
+      const sel = document.getElementById('ci-work');
+      if (sel && el.dataset.work) sel.value = el.dataset.work;
+      const f = document.getElementById('circulo');
+      if (f) { f.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => document.getElementById('ci-name').focus({ preventScroll: true }), 400); }
+    };
+    if (location.hash.startsWith('#/coleccion')) go(); else { location.hash = '#/coleccion'; setTimeout(go, 150); }
+  },
+  circleInterest: el => {
+    const c = circle(), w = workById(el.dataset.work);
+    if (BOOKING.live) openWhatsApp(t('waCircleInterest', { name: c.name, title: L(w.title) }));
+    else toast(t('ciInterestSent'));
+    fx.set('circle', { ...c, interests: [...(c.interests || []), el.dataset.work] });
     route();
   },
-  requestWork: el => {
-    const sel = document.getElementById('pm-work');
-    if (sel) sel.value = el.dataset.work;
-    document.getElementById('privado').scrollIntoView({ behavior: 'smooth' });
-    setTimeout(() => document.getElementById('pm-name').focus({ preventScroll: true }), 400);
+  circleInvite: el => {
+    const c = circle(), w = workById(el.dataset.work);
+    if (BOOKING.live) openWhatsApp(t('waCircleInvite', { name: c.name, title: L(w.title) }));
+    else toast(t('ciInviteSent'));
+    fx.set('circle', { ...c, invites: [...(c.invites || []), el.dataset.work] });
+    route();
   },
+  circleAdvisor: () => {
+    if (!openWhatsApp(t('waCircleAdvisor', { name: circle().name }))) toast(t('ciAdvisorText'));
+  },
+  circleApprove: () => { fx.set('circle', { ...circle(), status: 'member', since: new Date().toISOString() }); route(); },
+  circleReset: () => { fx.set('circle', null); route(); },
   joinPro: () => {
     if (BOOKING.live) return openWhatsApp(t('waPro'));
     const name = profile.name.trim() || 'Miembro Pro';
@@ -758,18 +851,25 @@ const EXTRA_ACTIONS = {
 };
 
 const EXTRA_FORMS = {
-  privateMeet: () => {
-    const v = id => document.getElementById(id).value;
-    profile.name = v('pm-name'); profile.email = v('pm-email'); save();
+  circleRequest: () => {
+    const v = id => document.getElementById(id).value.trim();
+    const opt = id => { const el = document.getElementById(id); return el.options[el.selectedIndex].text; };
+    profile.name = v('ci-name'); profile.email = v('ci-email'); save();
     if (BOOKING.live) {
-      const w = v('pm-work') ? L(workById(v('pm-work')).title) : '—';
-      openWhatsApp(t('waPrivateMeet', { type: v('pm-type') === 'dinner' ? t('meetDinner') : t('meetMeeting'), interest: v('pm-int'), budget: v('pm-budget'),
-        work: w, date: v('pm-date') || '—', name: v('pm-name'), phone: v('pm-phone') || '—', msg: v('pm-msg') }));
+      openWhatsApp(t('waCircleRequest', { name: v('ci-name'), email: v('ci-email'), phone: v('ci-phone'), city: v('ci-city') || '—',
+        source: opt('ci-source'), intent: opt('ci-intent'), work: v('ci-work') ? L(workById(v('ci-work')).title) : '—', referral: v('ci-ref') || '—', msg: v('ci-msg') }));
     }
-    const reqs = fx.get('privateRequests', []);
-    reqs.push({ type: v('pm-type'), interest: v('pm-int'), budget: v('pm-budget'), work: v('pm-work'), date: v('pm-date'), phone: v('pm-phone'), message: v('pm-msg'), at: new Date().toISOString() });
-    fx.set('privateRequests', reqs);
-    toast(t('privateSent'));
+    fx.set('circle', { status: 'pending', name: v('ci-name'), email: v('ci-email'), phone: v('ci-phone'), city: v('ci-city'), source: v('ci-source'),
+      intent: v('ci-intent'), work: v('ci-work'), referral: v('ci-ref'), message: v('ci-msg'), at: new Date().toISOString() });
+    window.scrollTo(0, 0);
+    route();
+  },
+  circleViewing: () => {
+    const v = id => document.getElementById(id).value.trim();
+    const el = document.getElementById('cv-type'), type = el.options[el.selectedIndex].text, c = circle();
+    if (BOOKING.live) openWhatsApp(t('waCircleViewing', { name: c.name, type, work: v('cv-work') ? L(workById(v('cv-work')).title) : '—', date: v('cv-date') || '—', msg: v('cv-msg') }));
+    else toast(t('ciViewingSent'));
+    fx.set('circle', { ...c, viewings: [...(c.viewings || []), { type: v('cv-type'), work: v('cv-work'), date: v('cv-date'), message: v('cv-msg'), at: new Date().toISOString() }] });
     route();
   },
 };
@@ -782,13 +882,11 @@ Object.assign(I18N.es, {
   openWAagain: 'Abrir WhatsApp otra vez', couplesN: '{n} pareja(s)', peopleN: '{n} persona(s)',
   waBookMsg: 'Hola, quiero reservar: {exp} · {date} a las {time} · guía en {glang} · {qty} · Total aprox. {total}. Nombre: {name}. Email: {email}.',
   waBuyBook: 'Hola, quiero comprar el libro Ecce Homo de Oscar Abreu, edición en {lang} ({price}).',
-  waWork: 'Hola, me interesa la obra "{title}" de Oscar Abreu.',
   waPrivateTour: 'Hola, quiero un tour privado para {size} personas. Fecha preferida: {date}. Nombre: {name}. {msg}',
   waPro: 'Hola, quiero hacerme miembro Pro del Museo Abreu.',
   waClub: 'Hola, quiero unirme al {club} del Museo Abreu.',
   waSponsor: 'Hola, quiero patrocinar una clase de pintura con {amount}.',
   waNotify: 'Hola, avísenme cuando abran las entradas de {event}.',
-  waPrivateMeet: 'Hola, solicito una {type}. Interés: {interest}. Presupuesto: {budget}. Obra: {work}. Fecha preferida: {date}. Nombre: {name}. Teléfono: {phone}. {msg}',
 });
 Object.assign(I18N.en, {
   sendWhatsApp: 'Send booking via WhatsApp', requestedTitle: 'Request sent!',
@@ -796,13 +894,11 @@ Object.assign(I18N.en, {
   openWAagain: 'Open WhatsApp again', couplesN: '{n} couple(s)', peopleN: '{n} person(s)',
   waBookMsg: 'Hello, I would like to book: {exp} · {date} at {time} · guide in {glang} · {qty} · Approx. total {total}. Name: {name}. Email: {email}.',
   waBuyBook: 'Hello, I would like to buy the book Ecce Homo by Oscar Abreu, {lang} edition ({price}).',
-  waWork: 'Hello, I am interested in the work "{title}" by Oscar Abreu.',
   waPrivateTour: 'Hello, I would like a private tour for {size} people. Preferred date: {date}. Name: {name}. {msg}',
   waPro: 'Hello, I would like to become a Pro member of Museo Abreu.',
   waClub: 'Hello, I would like to join the Museo Abreu {club}.',
   waSponsor: 'Hello, I would like to sponsor a painting class with {amount}.',
   waNotify: 'Hello, please let me know when tickets open for {event}.',
-  waPrivateMeet: 'Hello, I am requesting a {type}. Interest: {interest}. Budget: {budget}. Work: {work}. Preferred date: {date}. Name: {name}. Phone: {phone}. {msg}',
 });
 Object.assign(I18N.fr, {
   sendWhatsApp: 'Envoyer la réservation par WhatsApp', requestedTitle: 'Demande envoyée !',
@@ -810,35 +906,33 @@ Object.assign(I18N.fr, {
   openWAagain: 'Rouvrir WhatsApp', couplesN: '{n} couple(s)', peopleN: '{n} personne(s)',
   waBookMsg: 'Bonjour, je souhaite réserver : {exp} · {date} à {time} · guide en {glang} · {qty} · Total env. {total}. Nom : {name}. E-mail : {email}.',
   waBuyBook: 'Bonjour, je souhaite acheter le livre Ecce Homo d’Oscar Abreu, édition en {lang} ({price}).',
-  waWork: 'Bonjour, l’œuvre « {title} » d’Oscar Abreu m’intéresse.',
   waPrivateTour: 'Bonjour, je souhaite une visite privée pour {size} personnes. Date souhaitée : {date}. Nom : {name}. {msg}',
   waPro: 'Bonjour, je souhaite devenir membre Pro du Museo Abreu.',
   waClub: 'Bonjour, je souhaite rejoindre le {club} du Museo Abreu.',
   waSponsor: 'Bonjour, je souhaite offrir un cours de peinture avec {amount}.',
   waNotify: 'Bonjour, prévenez-moi à l’ouverture de la billetterie de {event}.',
-  waPrivateMeet: 'Bonjour, je demande un(e) {type}. Intérêt : {interest}. Budget : {budget}. Œuvre : {work}. Date souhaitée : {date}. Nom : {name}. Téléphone : {phone}. {msg}',
 });
 
 if (BOOKING.live) {
   Object.assign(I18N.es, {
     illustrative: 'Precios sujetos a confirmación del museo', sponsorBtn: 'Aportar {amount} por WhatsApp',
     joinPro: 'Solicitar membresía Pro por WhatsApp', joinClub: 'Unirme por WhatsApp', notifyMe: 'Avísame por WhatsApp',
-    acquire: 'Consultar por WhatsApp', sendPrivate: 'Enviar por WhatsApp', sendRequest: 'Enviar por WhatsApp',
-    requestSent: 'Abrimos WhatsApp para enviar tu solicitud.', privateSent: 'Abrimos WhatsApp para enviar tu solicitud.',
-    buy: 'Comprar {price} por WhatsApp', lockedText: 'Hazte Pro para ver las obras nuevas y las ofertas exclusivas.',
+    sendRequest: 'Enviar por WhatsApp',
+    requestSent: 'Abrimos WhatsApp para enviar tu solicitud.', 
+    buy: 'Comprar {price} por WhatsApp', 
   });
   Object.assign(I18N.en, {
     illustrative: 'Prices subject to confirmation by the museum', sponsorBtn: 'Give {amount} via WhatsApp',
     joinPro: 'Request Pro membership via WhatsApp', joinClub: 'Join via WhatsApp', notifyMe: 'Notify me via WhatsApp',
-    acquire: 'Ask via WhatsApp', sendPrivate: 'Send via WhatsApp', sendRequest: 'Send via WhatsApp',
-    requestSent: 'We opened WhatsApp to send your request.', privateSent: 'We opened WhatsApp to send your request.',
-    buy: 'Buy {price} via WhatsApp', lockedText: 'Become Pro to see new works and exclusive offers.',
+    sendRequest: 'Send via WhatsApp',
+    requestSent: 'We opened WhatsApp to send your request.', 
+    buy: 'Buy {price} via WhatsApp', 
   });
   Object.assign(I18N.fr, {
     illustrative: 'Prix sous réserve de confirmation par le musée', sponsorBtn: 'Donner {amount} par WhatsApp',
     joinPro: 'Demander l’adhésion Pro par WhatsApp', joinClub: 'Rejoindre par WhatsApp', notifyMe: 'Me prévenir par WhatsApp',
-    acquire: 'Demander par WhatsApp', sendPrivate: 'Envoyer par WhatsApp', sendRequest: 'Envoyer par WhatsApp',
-    requestSent: 'Nous avons ouvert WhatsApp pour envoyer votre demande.', privateSent: 'Nous avons ouvert WhatsApp pour envoyer votre demande.',
-    buy: 'Acheter {price} par WhatsApp', lockedText: 'Devenez Pro pour voir les nouvelles œuvres et les offres exclusives.',
+    sendRequest: 'Envoyer par WhatsApp',
+    requestSent: 'Nous avons ouvert WhatsApp pour envoyer votre demande.', 
+    buy: 'Acheter {price} par WhatsApp', 
   });
 }

@@ -15,7 +15,6 @@ Object.assign(I18N.es, {
   photosTitle: 'Fotos', photosLead: 'Fotos de Oscar Abreu en inauguraciones y encuentros, publicadas en oscarabreu.com.',
   photosNote: 'oscarabreu.com publica estas fotos sin pie de foto, fecha ni nombres.', photosN: 'Foto {n}',
   paintingsN: 'Pintura {n}', drawingsN: 'Dibujo {n}', sculptureN: 'Escultura {n}',
-  waGallery: 'Hola, me interesa la obra "{name}" de Oscar Abreu ({site}).',
   prev: 'Anterior', next: 'Siguiente',
   gabangiMore: 'Programa y artistas', gabangiEyebrow: 'Feria de arte · Punta Cana',
   gabangiLead: 'ART GABANGI 2026 · Punta Cana · 6–14 de julio. Gala de apertura, feria abierta al público, subasta y premios.',
@@ -60,7 +59,6 @@ Object.assign(I18N.en, {
   photosTitle: 'Photos', photosLead: 'Photos of Oscar Abreu at openings and gatherings, published on oscarabreu.com.',
   photosNote: 'oscarabreu.com publishes these photos without captions, dates or names.', photosN: 'Photo {n}',
   paintingsN: 'Painting {n}', drawingsN: 'Drawing {n}', sculptureN: 'Sculpture {n}',
-  waGallery: 'Hello, I am interested in the work "{name}" by Oscar Abreu ({site}).',
   prev: 'Previous', next: 'Next',
   gabangiMore: 'Programme and artists', gabangiEyebrow: 'Art fair · Punta Cana',
   gabangiLead: 'ART GABANGI 2026 · Punta Cana · July 6–14. Opening gala, public fair, auction and awards.',
@@ -112,7 +110,6 @@ Object.assign(I18N.fr, {
   paintingsN: 'Peinture {n}',
   drawingsN: 'Dessin {n}',
   sculptureN: 'Sculpture {n}',
-  waGallery: 'Bonjour, l’œuvre « {name} » d’Oscar Abreu m’intéresse ({site}).',
   prev: 'Précédent',
   next: 'Suivant',
   gabangiMore: 'Programme et artistes',
@@ -351,7 +348,7 @@ function openGalleryItem(id, n) {
       <div class="btn-row">
         <button class="btn small" data-dlg="prev" aria-label="${t('prev')}">←</button>
         <button class="btn small" data-dlg="next" aria-label="${t('next')}">→</button>
-        ${g.photos ? '' : `<button class="btn dark small" data-dlg="acquire">${t('acquire')}</button>`}
+        ${g.photos ? '' : `<button class="btn dark small" data-dlg="acquire">${circleStatus() === 'member' ? t('ciInterest') : t('ciRequestCta')}</button>`}
         <button class="btn small" data-dlg="close">${t('close')}</button>
       </div></div>`;
   };
@@ -364,7 +361,8 @@ function openGalleryItem(id, n) {
     else if (b && b.dataset.dlg === 'next') show(n + 1);
     else if (b && b.dataset.dlg === 'acquire') {
       dlg.close();
-      if (!(BOOKING.live && openWhatsApp(t('waGallery', { name: t(g.key + 'N', { n }), site: g.site })))) toast(t('acquireSent'));
+      if (circleStatus() !== 'member') actions.circleRequest({ dataset: {} });
+      else if (!(BOOKING.live && openWhatsApp(t('waCircleInterest', { name: circle().name, title: `${t(g.key + 'N', { n })} (${g.site})` })))) toast(t('ciInterestSent'));
     }
   });
   dlg.addEventListener('keydown', e => {
