@@ -323,7 +323,7 @@ function homeHighlights() {
     <div class="grid four" style="margin-top:1rem">
       ${card('#/pinturas', PAINTINGS[5].img, t('navWork'), t('hlWork', { p: PAINTINGS.length, d: DRAWINGS.length, s: SCULPTURES.length, f: PHOTOS.length }))}
       ${card('#/manifiestos', 'img/escaping-being.jpg', t('navManifestos'), t('hlManifestos', { n: MANIFESTOS.length }))}
-      ${card('#/gabangi/2025', GB_2025.topTen[1].img, t('gbTopTen'), t('hlTopTen'))}
+      ${card('#/gabangi/2025', 'img/petrichor.jpg', t('gbTopTen'), t('hlTopTen'))}
       ${card('#/resenas', CONTACT.photo, t('hlPress'), t('hlReviews', { r: REVIEWS.items.length, p: BIBLIOGRAPHY.items.length }))}
     </div></section>`;
 }
