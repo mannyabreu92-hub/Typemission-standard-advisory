@@ -482,6 +482,9 @@ I18N.de = {
   "essayNote": "Essay, veröffentlicht auf oscarabreu.com/gamalmichelen.",
   "reviewsNote": "Auszüge, wie auf oscarabreu.com/reviews veröffentlicht.",
   "imagePending": "Bild auf oscarabreu.com nicht verfügbar",
+  "buyTickets": "Tickets kaufen",
+  "eventDetails": "Details ansehen",
+  "waTicketsFor": "Hallo, ich möchte Tickets für {event} ({date}) kaufen.",
 };
 TR.de = {
   "2019": "2019",

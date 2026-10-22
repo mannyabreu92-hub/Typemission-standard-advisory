@@ -482,6 +482,9 @@ I18N.it = {
   "essayNote": "Saggio pubblicato su oscarabreu.com/gamalmichelen.",
   "reviewsNote": "Estratti come pubblicati su oscarabreu.com/reviews.",
   "imagePending": "immagine non disponibile su oscarabreu.com",
+  "buyTickets": "Acquista i biglietti",
+  "eventDetails": "Vedi i dettagli",
+  "waTicketsFor": "Buongiorno, vorrei acquistare i biglietti per {event} ({date}).",
 };
 TR.it = {
   "2019": "2019",

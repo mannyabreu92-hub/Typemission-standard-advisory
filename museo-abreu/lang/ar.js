@@ -482,6 +482,9 @@ I18N.ar = {
   "essayNote": "مقال منشور على oscarabreu.com/gamalmichelen.",
   "reviewsNote": "مقتطفات كما نُشرت على oscarabreu.com/reviews.",
   "imagePending": "الصورة غير متاحة على oscarabreu.com",
+  "buyTickets": "اشترِ التذاكر",
+  "eventDetails": "عرض التفاصيل",
+  "waTicketsFor": "مرحبًا، أودّ شراء تذاكر لـ{event} ({date}).",
 };
 TR.ar = {
   "2019": "2019",

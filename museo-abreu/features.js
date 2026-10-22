@@ -58,6 +58,9 @@ Object.assign(I18N.es, {
   everyYear: 'Cada año', nameTbc: 'Nombre por confirmar', today: '¡Es hoy!', inNDays: 'faltan {n} días',
   priceTbc: 'Entrada por confirmar', notifyMe: 'Avísame', notifySet: 'Te avisaremos cuando abran las entradas (simulación).',
   nextAnnual: 'Próximo evento anual',
+  buyTickets: 'Comprar entradas',
+  eventDetails: 'Ver detalles',
+  waTicketsFor: 'Hola, quiero comprar entradas para {event} ({date}).',
   officialSite: 'Sitio oficial',
   bookOn: 'Reservar en {provider}', buyOn: 'Comprar {price} en {provider}', bookWhatsApp: 'Reservar por WhatsApp',
   buyWhatsApp: 'Comprar {price} por WhatsApp', waTour: 'Hola, quiero reservar una visita al Museo Abreu.',
@@ -121,6 +124,9 @@ Object.assign(I18N.en, {
   everyYear: 'Every year', nameTbc: 'Name to be confirmed', today: 'It\u2019s today!', inNDays: '{n} days to go',
   priceTbc: 'Ticket price to be confirmed', notifyMe: 'Notify me', notifySet: 'We will let you know when tickets open (simulated).',
   nextAnnual: 'Next yearly event',
+  buyTickets: 'Buy tickets',
+  eventDetails: 'See details',
+  waTicketsFor: 'Hello, I would like to buy tickets for {event} ({date}).',
   officialSite: 'Official site',
   bookOn: 'Book on {provider}', buyOn: 'Buy {price} on {provider}', bookWhatsApp: 'Book via WhatsApp',
   buyWhatsApp: 'Buy {price} via WhatsApp', waTour: 'Hello, I would like to book a visit to Museo Abreu.',
@@ -234,6 +240,9 @@ Object.assign(I18N.fr, {
   notifyMe: 'Me prévenir',
   notifySet: 'Nous vous préviendrons à l’ouverture de la billetterie (simulation).',
   nextAnnual: 'Prochain événement annuel',
+  buyTickets: 'Acheter des billets',
+  eventDetails: 'Voir les détails',
+  waTicketsFor: 'Bonjour, je souhaite acheter des billets pour {event} ({date}).',
   officialSite: 'Site officiel',
   bookOn: 'Réserver sur {provider}',
   buyOn: 'Acheter {price} sur {provider}',
@@ -478,13 +487,19 @@ function nextAnnualEvent() {
 function homeExtras() {
   const ev = nextAnnualEvent();
   const d = eventDate(ev), n = daysUntil(d);
-  const promo = `<section class="section"><a class="promo" href="#/eventos">
+  // Tickets: the event's booking link when there is one, else WhatsApp with the request written;
+  // ART GABANGI has several ticket types, so it goes to its tickets on the events page.
+  const ext = bookingLink(ev.id) || (ev.tiers ? '' : whatsappLink(t('waTicketsFor', { event: eventTitle(ev), date: fmtDate(d) })));
+  const buy = ext ? `<a class="btn primary" href="${ext}" target="_blank" rel="noopener">${t('buyTickets')}</a>`
+    : `<a class="btn primary" href="#/eventos">${t('buyTickets')}</a>`;
+  const promo = `<section class="section"><div class="promo">
     <span class="promo-count"><strong>${n}</strong><small>${t('daysLabel')}</small></span>
     <span class="promo-text"><span class="eyebrow">${t('nextAnnual')}</span>
-      <strong class="promo-title">${eventTitle(ev)}</strong>
+      <a class="promo-title" href="#/eventos">${eventTitle(ev)}</a>
       <span>${fmtDate(d)} · ${t('freeForPro')}</span>
-      <span class="promo-all">${ANNUAL_EVENTS.map(a => `${String(a.annual.d)}/${String(a.annual.m)}`).join(' · ')} · ${t('everyYear')}</span></span>
-  </a></section>`;
+      <span class="promo-all">${ANNUAL_EVENTS.map(a => `${String(a.annual.d)}/${String(a.annual.m)}`).join(' · ')} · ${t('everyYear')}</span>
+      <span class="btn-row promo-actions">${buy}<a class="btn light" href="#/eventos">${t('eventDetails')}</a></span></span>
+  </div></section>`;
   const tiles = [
     ['#/clases', 'moreClasses', 'moreClassesText'], ['#/eventos', 'moreEvents', 'moreEventsText'],
     ['#/coleccion', 'moreCollection', 'moreCollectionText'], ['#/pro', 'morePro', 'moreProText'],
