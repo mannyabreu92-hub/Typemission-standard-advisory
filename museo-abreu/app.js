@@ -144,7 +144,7 @@ function pageHome() {
           <p class="lead">${t('psicoLead')}</p>
           <div class="btn-row"><a class="btn" href="#/psico">${t('psicoIntro')} →</a></div>
         </div>
-        <div class="layers" style="justify-self:center;width:100%">${artSVG(41, t('layersTitle'))}</div>
+        <a class="layers" href="#/psico" style="justify-self:center;width:100%" aria-label="${t('layersTitle')}"><img src="${LAYER_WORKS[0].img}" alt="" loading="lazy"></a>
       </div>
     </section>
     ${typeof homeHighlights === 'function' ? homeHighlights() : ''}
@@ -262,7 +262,7 @@ function openWork(id) {
 }
 
 function pagePsico() {
-  const seed = 59;
+  const n = LAYER_WORKS.length;
   return `<div class="wrap">
     <section class="section">
       <p class="eyebrow">${t('psicoEyebrow')}</p>
@@ -279,13 +279,11 @@ function pagePsico() {
       </div>
       <div>
         <h2>${t('layersTitle')}</h2>
-        <div class="layers" id="layers">
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="400" height="500" fill="${PALETTES[seed % 4][3]}"/>${artLayer(seed, 2)}</svg>
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" data-layer="1">${artLayer(seed, 1)}</svg>
-          <svg viewBox="0 0 400 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true" data-layer="0">${artLayer(seed, 0)}</svg>
-        </div>
+        <div class="layers" id="layers">${LAYER_WORKS.map((w, i) =>
+          `<img src="${w.img}" alt="${t('layerAlt', { n: i + 1 })}" data-layer="${i}" style="z-index:${n - i}"${i > 1 ? ' loading="lazy"' : ''}>`).join('')}</div>
         <label for="layer-range" class="muted" style="display:block;margin-top:.8rem">${t('layersHelp')}</label>
-        <input id="layer-range" class="range" type="range" min="0" max="2" step="1" value="0" data-action="layers" aria-valuetext="${t('layer')} 1/3">
+        <input id="layer-range" class="range" type="range" min="0" max="${n - 1}" step="1" value="0" data-action="layers" aria-valuetext="${t('layer')} 1/${n}">
+        <p class="muted" style="margin-top:.4rem;font-size:.85rem">${t('layersNote')}</p>
       </div>
     </section>
     ${manifestoSection(MANIFESTOS[0])}
@@ -877,10 +875,10 @@ main.addEventListener('click', e => {
 main.addEventListener('input', e => {
   const el = e.target;
   if (el.dataset.action === 'layers') {
+    // Each step lifts one painting off the stack to show the next.
     const v = Number(el.value);
-    $('[data-layer="0"]').style.opacity = v >= 1 ? 0 : 1;
-    $('[data-layer="1"]').style.opacity = v >= 2 ? 0 : 1;
-    el.setAttribute('aria-valuetext', `${t('layer')} ${v + 1}/3`);
+    LAYER_WORKS.forEach((_, i) => { const l = $(`[data-layer="${i}"]`); if (l) l.style.opacity = v > i ? 0 : 1; });
+    el.setAttribute('aria-valuetext', `${t('layer')} ${v + 1}/${LAYER_WORKS.length}`);
   }
   if (el.dataset.bind) {
     if (el.type === 'checkbox') bk[el.dataset.bind] = el.checked;

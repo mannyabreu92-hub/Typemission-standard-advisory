@@ -19,7 +19,7 @@ cd museo-abreu && python3 -m http.server 8000
 |---|---|---|
 | Inicio | `#/` | CTAs for VIP Tour and the book; "Descubre a Oscar Abreu" highlights (work, manifestos, Top Ten, reviews) |
 | Oscar Abreu | `#/artista` | Bio, timeline, video, catalogue with artwork detail and acquisition enquiry |
-| Psico-Expresionismo | `#/psico` | 3-minute intro, interactive "discover another layer", first manifesto in full, list of all 23, guiding questions |
+| Psico-Expresionismo | `#/psico` | "Descubre otra capa": a slider that lifts six of Oscar Abreu's paintings off a stack (from the family's photos of the gallery's display cubes, straightened; titles pending);  3-minute intro, interactive "discover another layer", first manifesto in full, list of all 23, guiding questions |
 | Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
 | Pinturas · Dibujos · Escultura · Fotos | `#/pinturas`, `#/dibujos`, `#/escultura`, `#/fotos` | The numbered galleries from oscarabreu.com (36 paintings, 36 drawings, 12 sculptures, 36 photos), lightbox with swipe; WhatsApp enquiry on artworks only |
 | Reseñas | `#/resenas` | The 9 critics' excerpts from oscarabreu.com/reviews (ES/EN) |
@@ -97,6 +97,8 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
 ## Open items
 
 - Paintings, drawings and sculptures: titles, year, technique, size (the site publishes numbers only).
+- Titles and details of the six cube paintings in "Descubre otra capa" (`img/layers/`); better photos, taken
+  straight on without reflections, would improve them.
 - Full reviews for Marianne de Tolentino, Abil Peralta, Odalís G. Pérez, José Saldaña, Fernando Morbán Laucer
   and Myrna Guerrero (their pages on oscarabreu.com return 404).
 - Drawings 16, 17, 18 and 33 are smaller copies of 3, 2, 1 and 6 on oscarabreu.com.

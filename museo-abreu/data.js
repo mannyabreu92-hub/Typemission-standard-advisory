@@ -77,6 +77,11 @@ const WORKS = [
   { id: 'time-on-my-face', seed: 71, img: 'img/time-on-my-face.jpg', spec: SPEC_PAPER, title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face' } },
 ];
 
+// "Discover another layer": six paintings by Oscar Abreu on the display cubes at
+// the Abreu gallery, straightened from the family's photos. Titles pending (one
+// carries the word "Passion"; it is not the miniature "Pasión" in WORKS).
+const LAYER_WORKS = ['passion', 'orange', 'yellow', 'mint', 'blue', 'white-bars'].map(id => ({ id, img: `img/layers/${id}.jpg` }));
+
 // oscarabreu.com/paintings, /drawings and /sculpture: works published by number
 // only (no titles or data). Sculptures are files 37–48 on the site, shown as 1–12.
 // Drawings 16–18 and 33 repeat 3, 2, 1 and 6 on the site; kept as published.

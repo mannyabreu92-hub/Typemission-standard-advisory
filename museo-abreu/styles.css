@@ -113,6 +113,8 @@ dialog::backdrop { background: rgba(22, 18, 15, .6); }
 /* Psico layers */
 .layers { position: relative; aspect-ratio: 4 / 5; max-width: 420px; border-radius: var(--radius); overflow: hidden; background: var(--paper-2); }
 .layers svg { position: absolute; inset: 0; width: 100%; height: 100%; transition: opacity .6s ease, clip-path .8s ease; }
+.layers img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity .6s ease; }
+@media (prefers-reduced-motion: reduce) { .layers img { transition: none; } }
 .range { width: 100%; accent-color: var(--accent); margin-top: 1rem; }
 .questions { counter-reset: q; list-style: none; display: grid; gap: .7rem; }
 .questions li { counter-increment: q; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1rem 1rem 3.2rem; position: relative; font-family: var(--serif); font-size: 1.3rem; }
