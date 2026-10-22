@@ -34,19 +34,27 @@ cd museo-abreu && python3 -m http.server 8000
 - **Biography, timeline, exhibitions, critics' quotes:** taken from the book's front matter and
   Biographical Chronology. They still need the artist's final approval.
 
-## Still placeholder — replace before launch
+## Live site
 
-- Artwork photos and data (title, year, technique, dimensions); the welcome video.
-- Spanish edition text and Spanish chapter titles (the Spanish sample shows a "pending" note).
-- Prices (proposal's illustrative US$100 / 250 / 115, US$25 per edition), terms draft, sample schedule in `data.js`.
-- Address, hours, accessibility, contact details.
-- **Payments, accounts and access control are simulated** in the browser (localStorage).
-  Production needs a server for: payment provider + webhook confirmation, seat holds and concurrency,
-  idempotent ticket creation, refunds, verified email accounts, server-side book access,
-  transactional email, admin panel, and staff authentication.
+- **https://museo-abreu.vercel.app** (Vercel project `museo-abreu`, deployed from branch
+  `claude/new-app-build-37j8di`, root directory `museo-abreu`). Redeploy after each change.
+- `booking-config.js`: `live: true` hides all simulation; every booking, purchase and request
+  opens WhatsApp **+1 (809) 840-9588** with the message written. Paste Bókun links there when
+  the account exists (see `BOOKING-SETUP.md`).
+
+## Open items
+
+- Content from oscarabreu.com / gabangi.com (needs those domains allowed in the environment):
+  Spanish biography and manifesto, second manifesto "The Stroke as Origin", Paintings gallery.
+- Original artwork photos (current ones are cropped from screenshots) and year/technique/size.
+- Pro membership price; class, tour and club prices (several are illustrative).
+- Nov 17 anniversary and June 13 group exhibition: ticket prices and times.
+- Museum hours (WhatsApp profile says "by appointment only"), address, accessibility.
+- Spanish edition text of Ecce Homo; editorial notes to remove before chapters V, XIV, XVI.
+- Phase 2: server for real payments, accounts, book access, auctions and admin panel.
 
 ## Files
 
-`index.html` shell · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
+`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, collection, Pro, daily reading) · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
 works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).
