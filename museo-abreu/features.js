@@ -426,7 +426,7 @@ function pageCollection() {
       const current = Math.max(a.start, ...mine);
       const next = mine.length ? current + a.step : a.start;
       return `<article class="card auction"><div class="art-frame">${workImg(w)}</div>
-        <h3 style="margin-top:.8rem">${L(w.title)}</h3>
+        <h2 class="h3" style="margin-top:.8rem">${L(w.title)}</h2>
         <div class="summary" style="margin-top:.4rem">
           <span class="muted">${mine.length ? t('currentBid') : t('startingBid')}</span><span><strong>${usd(current)}</strong></span>
           <span class="muted">${t('endsIn', { n: a.inDays })}</span><span>${mine.length ? `<span class="status ok">${t('youLead')}</span>` : ''}</span>
@@ -441,7 +441,7 @@ function pageCollection() {
       const tag = c.status === 'new' ? t('earlyAccess') : c.status === 'sale' ? t('memberOffer') : '';
       return `<article class="card"><div class="art-frame">${workImg(w)}</div>
         ${tag ? `<span class="chip vip" style="margin-top:.8rem;display:inline-block">${tag}</span>` : ''}
-        <h3 style="margin-top:.6rem">${L(w.title)}</h3><p class="muted">Oscar Abreu · ${t('priceOnRequest')}</p>
+        <h2 class="h3" style="margin-top:.6rem">${L(w.title)}</h2><p class="muted">Oscar Abreu · ${t('priceOnRequest')}</p>
         <div class="btn-row"><button class="btn primary" data-action="requestWork" data-work="${c.work}">${t('requestInfo')}</button></div></article>`;
     }).join('')}</div>`;
   }

@@ -1,8 +1,9 @@
 // Offline shell: the app opens without a connection (e.g. to show a ticket QR).
-const CACHE = 'museo-abreu-v15';
-const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'data.js', 'manifestos.js', 'booking-config.js', 'features.js', 'gabangi.js', 'content.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
+const CACHE = 'museo-abreu-v16';
+const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'data.js', 'manifestos.js', 'manifestos-text.js', 'booking-config.js', 'features.js', 'gabangi.js', 'content.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
   'qrcode.js', 'img/escaping-being.jpg', 'img/passion.jpg', 'img/petrichor.jpg', 'img/resilience.jpg', 'img/limerence.jpg', 'img/echoes-of-memory.jpg',
-  'img/time-on-my-face.jpg'];
+  'img/time-on-my-face.jpg',
+  'img/escaping-being-800.jpg', 'img/icon-180.png', 'img/icon-192.png', 'img/icon-512.png', 'img/icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

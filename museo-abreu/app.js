@@ -99,7 +99,7 @@ function route() {
 function afterRender(name) {
   renderQRs();
   // Keep the current tab of the artist section menu in view on narrow screens.
-  const strip = $('.section-nav .tabs'), sel = strip && strip.querySelector('[aria-selected="true"]');
+  const strip = $('.section-nav .tabs'), sel = strip && strip.querySelector('[aria-current="page"]');
   if (sel) strip.scrollLeft = sel.offsetLeft - (strip.clientWidth - sel.clientWidth) / 2;
   if (name === 'visita' && bk.step === 4) startHoldTimer();
   if (name === 'leer') {
@@ -119,7 +119,7 @@ function go(hash) {
 function pageHome() {
   return `
   <section class="hero">
-    <div class="hero-art"><img src="img/escaping-being.jpg" alt=""></div>
+    <div class="hero-art"><img src="img/escaping-being.jpg" srcset="img/escaping-being-800.jpg 800w, img/escaping-being.jpg 1400w" sizes="(max-width: 700px) 100vw, 50vw" alt="" fetchpriority="high"></div>
     <div class="hero-inner">
       <p class="eyebrow">${t('homeEyebrow')}</p>
       <h1>${t('homeTitle')}</h1>
@@ -132,9 +132,9 @@ function pageHome() {
   </section>
   <div class="wrap">
     <section class="section grid three">
-      <a class="card" href="#/artista" style="text-decoration:none"><p class="eyebrow">01</p><h3>${t('homeDiscover')}</h3><p class="muted">${t('homeDiscoverText')}</p></a>
-      <a class="card" href="#/visita" style="text-decoration:none"><p class="eyebrow">02</p><h3>${t('homeReserve')}</h3><p class="muted">${t('homeReserveText')}</p></a>
-      <a class="card" href="#/biblioteca" style="text-decoration:none"><p class="eyebrow">03</p><h3>${t('homeRead')}</h3><p class="muted">${t('homeReadText')}</p></a>
+      <a class="card" href="#/artista" style="text-decoration:none"><p class="eyebrow">01</p><h2 class="h3">${t('homeDiscover')}</h2><p class="muted">${t('homeDiscoverText')}</p></a>
+      <a class="card" href="#/visita" style="text-decoration:none"><p class="eyebrow">02</p><h2 class="h3">${t('homeReserve')}</h2><p class="muted">${t('homeReserveText')}</p></a>
+      <a class="card" href="#/biblioteca" style="text-decoration:none"><p class="eyebrow">03</p><h2 class="h3">${t('homeRead')}</h2><p class="muted">${t('homeReadText')}</p></a>
     </section>
     <section class="section">
       <p class="eyebrow">${t('navPsico')}</p>
@@ -307,16 +307,17 @@ function pagePsico() {
 
 // A manifesto opens with its artwork, as on oscarabreu.com. Blocks are
 // paragraphs (strings), headings { h }, quotations { q } and lists { ul }.
-function manifestoSection(m) {
+function manifestoSection(m, own = false) {
   const w = findWork(m.work);
+  const hx = own ? 'h2' : 'h3';
   const body = L(m).map(b => typeof b === 'string' ? `<p>${esc(b)}</p>`
-    : b.h ? `<h3 class="m-h">${esc(b.h)}</h3>`
+    : b.h ? `<${hx} class="m-h">${esc(b.h)}</${hx}>`
     : b.q ? `<blockquote class="m-quote">${esc(b.q)}</blockquote>`
     : `<ul class="m-list">${b.ul.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('');
   const caption = `${L(w.title)}${w.spec ? ` · ${L(w.spec)[0]}` : ''}`;
   return `<section class="section manifesto${m.n === 1 ? ' m-coda' : ''}">
       <p class="eyebrow">${t('manifestoEyebrow')} ${m.n}/${MANIFESTOS.length}</p>
-      <h2>${L(m.title)}</h2>
+      ${own ? `<h1 class="m-title">${L(m.title)}</h1>` : `<h2>${L(m.title)}</h2>`}
       <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${m.source}</p>
       ${w.img ? `<button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${caption}</span></button>`
         : `<p class="m-work-missing">${caption} · ${t('imagePending')}</p>`}
@@ -358,7 +359,7 @@ function pageVisit() {
 
 function stepsBar() {
   const names = ['stepExp', 'stepDate', 'stepPeople', 'stepReview', 'stepPay', 'stepTicket'];
-  return `<ol class="steps">${names.map((n, i) => `<li class="${i < bk.step ? 'done' : i === bk.step ? 'current' : ''}" ${i === bk.step ? 'aria-current="step"' : ''}>${t(n)}</li>`).join('')}</ol>`;
+  return `<ol class="steps" tabindex="0" aria-label="${t('stepsLabel')}">${names.map((n, i) => `<li class="${i < bk.step ? 'done' : i === bk.step ? 'current' : ''}" ${i === bk.step ? 'aria-current="step"' : ''}>${t(n)}</li>`).join('')}</ol>`;
 }
 
 function bookingWizard() {
@@ -635,7 +636,7 @@ function pageLibrary() {
         <h1>${bookTitle}</h1>
         <p style="font-family:var(--serif);font-size:1.4rem;font-style:italic">${t('bookSub')} · ${t('bookSub2')}</p>
         <p class="muted" style="margin:.3rem 0 1rem">${t('bookBy')}</p>
-        <h3>${t('synopsis')}</h3>
+        <h2 class="h3">${t('synopsis')}</h2>
         <p>${t('synopsisText')}</p>
         <p class="muted" style="margin-top:.6rem">${t('credits')}</p>
         <div class="btn-row">

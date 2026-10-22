@@ -86,12 +86,24 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
   opens WhatsApp **+1 (809) 840-9588** with the message written. Paste Bókun links there when
   the account exists (see `BOOKING-SETUP.md`).
 
+## Quality checks (22 Oct 2026)
+
+- Accessibility: axe-core (WCAG 2 A/AA + best practice) on 18 pages × ES/EN: no violations.
+- Slow 4G (1.6 Mbps, 150 ms) from a local server without compression: home 558 KB, first paint ~1.0 s,
+  load ~3.4 s. Code is ~150 KB gzipped; the manifesto text (51 KB gzipped) loads only when a manifesto opens.
+- Offline: after one visit the app, tickets and all manifestos open without a connection.
+- Install: PNG icons 180/192/512 and a maskable 512 (`img/icon-*.png`), rendered from `icon.svg`.
+
 ## Open items
 
 - Paintings, drawings and sculptures: titles, year, technique, size (the site publishes numbers only).
 - Full reviews for Marianne de Tolentino, Abil Peralta, Odalís G. Pérez, José Saldaña, Fernando Morbán Laucer
   and Myrna Guerrero (their pages on oscarabreu.com return 404).
-- Drawings 16, 17, 18 and 33 are duplicates of 3, 2, 1 and 6 on oscarabreu.com.
+- Drawings 16, 17, 18 and 33 are smaller copies of 3, 2, 1 and 6 on oscarabreu.com.
+- Gamal Michelén's full review exists (oscarabreu.com/gamalmichelen/, linked from the biography) but is not on
+  the reviews page; it could be added.
+- Website fixes for the site owners: https://claude.ai/artifact/M65zq23L1QYti11tFVpqcL
+- Questions for the family (answers stored with the page): https://claude.ai/artifact/MaKd21KM2Z39nyuLCK37Ph
 - "Ecos de la memoria": year, technique, size (not published on the site).
 - Images of the works that open manifestos 16–23 (oscarabreu.com/gallery4/161…231.JPG return 404).
 - Spanish versions of the ART GABANGI artist quotes; ART GABANGI 2027 dates.
@@ -103,6 +115,6 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
 
 ## Files
 
-`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, collection, Pro, daily reading) · `manifestos.js` (manifestos 3–23) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
+`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, collection, Pro, daily reading) · `manifestos.js` (manifestos 3–23: titles and images) · `manifestos-text.js` (their text, loaded on demand) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
 works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).

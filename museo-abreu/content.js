@@ -38,6 +38,7 @@ Object.assign(I18N.es, {
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
   manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
   allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos',
+  loadingText: 'Cargando el texto…', manifestoOffline: 'No se pudo cargar el manifiesto. Revise su conexión.', stepsLabel: 'Pasos de la reserva',
   navExhibits: 'Exposiciones', exhibitsLead: 'Exposiciones principales de Oscar Abreu, de oscarabreu.com/biography, y el catálogo publicado en oscarabreu.com/exhibits.',
   catalogueTitle: 'Catálogo', catalogueDates: 'Fechas', catalogueFormat: 'Formato', catalogueEssays: 'Ensayos',
   catalogueQuote: 'Texto original en oscarabreu.com/exhibits (en inglés):',
@@ -82,6 +83,7 @@ Object.assign(I18N.en, {
   space: 'Space', size: 'Size (ft)', price: 'Price',
   manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
   allManifestos: 'All manifestos', navManifestos: 'Manifestos',
+  loadingText: 'Loading the text…', manifestoOffline: 'The manifesto could not be loaded. Check your connection.', stepsLabel: 'Booking steps',
   navExhibits: 'Exhibitions', exhibitsLead: 'Oscar Abreu’s major exhibitions, from oscarabreu.com/biography, and the catalogue published on oscarabreu.com/exhibits.',
   catalogueTitle: 'Catalogue', catalogueDates: 'Dates', catalogueFormat: 'Format', catalogueEssays: 'Essays',
   catalogueQuote: 'Original text on oscarabreu.com/exhibits:',
@@ -143,7 +145,8 @@ const GABANGI = {
   ],
 };
 
-// Manifestos 1–2 (data.js) are paragraph lists; 3–23 (manifestos.js) are blocks.
+// Manifestos 1–2 (data.js) are paragraph lists; 3–23 are blocks whose text
+// (manifestos-text.js) loads the first time one of them is opened.
 const paraBlocks = ps => ps.map(p => /^[«“]/.test(p) ? { q: p } : p);
 const MANIFESTOS = [
   { ...MANIFESTO, n: 1, es: paraBlocks(MANIFESTO.es), en: paraBlocks(MANIFESTO.en) },
@@ -161,8 +164,25 @@ function manifestoList() {
   }).join('')}</ol>`;
 }
 
+let manifestoTextLoad = null;
+function loadManifestoText() {
+  if (!manifestoTextLoad) manifestoTextLoad = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'manifestos-text.js';
+    s.onload = () => { for (const m of MANIFESTOS) Object.assign(m, MANIFESTO_TEXT[m.n]); resolve(); };
+    s.onerror = () => { manifestoTextLoad = null; s.remove(); reject(); };
+    document.head.appendChild(s);
+  });
+  return manifestoTextLoad;
+}
+
 function pageManifestos(nStr) {
   const n = Number(nStr), m = MANIFESTOS.find(x => x.n === n);
+  if (m && !m.es) {
+    loadManifestoText().then(() => { if (location.hash === '#/manifiestos/' + n) route(); }, () => toast(t('manifestoOffline')));
+    return `<div class="wrap"><section class="section"><p class="eyebrow">${t('manifestoEyebrow')} ${n}/${MANIFESTOS.length}</p>
+      <h1>${L(m.title)}</h1><p class="muted" style="margin-top:1rem">${t('loadingText')}</p></section></div>`;
+  }
   if (!m) return `<div class="wrap">
     <section class="section">
       <p class="eyebrow">${t('navPsico')}</p><h1>${t('manifestosTitle', { n: MANIFESTOS.length })}</h1>
@@ -172,7 +192,7 @@ function pageManifestos(nStr) {
   </div>`;
   const prev = MANIFESTOS.find(x => x.n === n - 1), next = MANIFESTOS.find(x => x.n === n + 1);
   return `<div class="wrap">
-    ${manifestoSection(m)}
+    ${manifestoSection(m, true)}
     <nav class="m-nav" aria-label="${t('allManifestos')}">
       ${prev ? `<a class="btn" href="#/manifiestos/${prev.n}">← ${prev.n}. ${L(prev.title)}</a>` : '<span></span>'}
       ${next ? `<a class="btn" href="#/manifiestos/${next.n}">${next.n}. ${L(next.title)} →</a>` : '<span></span>'}
@@ -189,7 +209,7 @@ const ROUTE_SECTION = Object.fromEntries(SECTION_TABS.flatMap(([k, , also = []])
 function sectionNav(name) {
   if (ROUTE_SECTION[name] !== 'artista') return '';
   return `<nav class="section-nav" aria-label="Oscar Abreu"><div class="wrap tabs">${SECTION_TABS.map(([k, label, also = []]) =>
-    `<a class="tab" href="#/${k}" aria-selected="${k === name || also.includes(name)}">${label === 'Oscar Abreu' ? label : t(label)}</a>`).join('')}</div></nav>`;
+    `<a class="tab" href="#/${k}"${k === name || also.includes(name) ? ' aria-current="page"' : ''}>${label === 'Oscar Abreu' ? label : t(label)}</a>`).join('')}</div></nav>`;
 }
 
 function homeHighlights() {
@@ -216,8 +236,8 @@ function pageGallery(id) {
   return `<div class="wrap">
     <section class="section">
       <p class="eyebrow">${g.photos ? 'Oscar Abreu' : t('paintingsEyebrow')}</p><h1>${t(g.key + 'Title')}</h1>
-      <div class="tabs gallery-tabs" role="tablist" style="margin-top:1rem">${Object.entries(GALLERIES).map(([k, x]) =>
-        `<a role="tab" class="tab" href="#/${k}" aria-selected="${k === id}">${t(x.key + 'Title')} · ${x.items.length}</a>`).join('')}</div>
+      <nav class="tabs gallery-tabs" aria-label="${t('navWork')}" style="margin-top:1rem">${Object.entries(GALLERIES).map(([k, x]) =>
+        `<a class="tab" href="#/${k}"${k === id ? ' aria-current="page"' : ''}>${t(x.key + 'Title')} · ${x.items.length}</a>`).join('')}</nav>
       <p class="lead" style="margin-top:1rem">${t(g.key + 'Lead')}</p>
       <p class="muted" style="margin-top:.5rem">${t(g.photos ? 'photosNote' : 'galleryNote')}</p>
     </section>
@@ -301,7 +321,7 @@ function pageBibliography() {
     <section class="section">
       <div class="grid two">${BIBLIOGRAPHY.items.map(b => `<article class="card press">
         <p class="eyebrow" style="margin:0 0 .3rem">${b.outlet}${b.date ? ` · <time datetime="${b.date}">${fmtDate(b.date, { day: 'numeric', month: 'short', year: 'numeric' })}</time>` : ''}</p>
-        <h3 lang="es">${esc(b.title)}</h3>
+        <h2 class="h3" lang="es">${esc(b.title)}</h2>
         <p style="margin-top:.4rem">${esc(L(b))}</p>
         <a class="press-link" href="${b.url}" target="_blank" rel="noopener">${t('readArticle', { outlet: b.outlet })} ↗</a>
       </article>`).join('')}</div>
@@ -368,8 +388,8 @@ const rich = s => esc(s).replace(/&lt;(\/?)(em|strong)&gt;/g, '<$1$2>');
 const richParas = ps => ps.map(p => `<p>${rich(p)}</p>`).join('');
 
 const GB_TABS = [['', 'ART GABANGI 2026'], ['fundador', 'gbTabFounder'], ['club', 'gbTabClub'], ['revista', 'gbTabEssay'], ['2025', 'gbTab2025']];
-const gbTabs = sub => `<div class="tabs gallery-tabs" role="tablist" style="margin-top:1rem">${GB_TABS.map(([k, label]) =>
-  `<a role="tab" class="tab" href="#/gabangi${k ? '/' + k : ''}" aria-selected="${k === (sub || '')}">${k ? t(label) : label}</a>`).join('')}</div>`;
+const gbTabs = sub => `<nav class="tabs gallery-tabs" aria-label="GABANGI" style="margin-top:1rem">${GB_TABS.map(([k, label]) =>
+  `<a class="tab" href="#/gabangi${k ? '/' + k : ''}"${k === (sub || '') ? ' aria-current="page"' : ''}>${k ? t(label) : label}</a>`).join('')}</nav>`;
 
 function pageGabangiSub(sub) {
   const head = (title, eyebrow) => `<section class="section"><p class="eyebrow">${eyebrow || 'GABANGI'}</p><h1>${title}</h1>${gbTabs(sub)}</section>`;
