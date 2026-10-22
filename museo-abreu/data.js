@@ -373,6 +373,18 @@ const REVIEWS = {
   ],
 };
 
+// oscarabreu.com/exhibits (a 2008 page): one catalogue, as published. Its
+// gallery (/exhibits/VII/, 48 images) holds the same files as paintings 1–36
+// and sculptures 1–12, so the app links to those galleries instead.
+const CATALOGUE = {
+  img: 'img/exhibits/huellas-catalogue.jpg', title: 'Huellas “La invención de lo visible”',
+  venue: 'Museo del Hombre Dominicano', year: 2004,
+  text: 'Published on the occasion of the exhibitions “Huellas “La invención de lo visible”” at Museo del Hombre Dominicano, Dominican Republic, (November 4-20, 2004). Softcover. 64 pgs. with essay by Marianne de Tolentino, Odalís G. Perez, Abil Peralta Aguero',
+  dates: { es: '4–20 de noviembre de 2004', en: 'November 4–20, 2004' },
+  format: { es: 'Tapa blanda · 64 páginas', en: 'Softcover · 64 pages' },
+  essays: 'Marianne de Tolentino, Odalís G. Perez, Abil Peralta Aguero',
+};
+
 // oscarabreu.com/contact as published (the Instagram handle is spelled
 // "aertist" on the site; kept as is). Portrait from the same page.
 const CONTACT = {

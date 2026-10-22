@@ -296,3 +296,9 @@ table.gb-spaces thead th { background: var(--ink); color: var(--paper); }
 .contact-list { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: .6rem; }
 .contact-list li { display: grid; grid-template-columns: 6.5rem 1fr; gap: .5rem; align-items: baseline; }
 .contact-list a { font-weight: 600; word-break: break-word; }
+
+/* Exhibitions catalogue (oscarabreu.com/exhibits) */
+.catalogue { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; align-items: start; }
+.catalogue img { width: 110px; height: auto; border-radius: 8px; display: block; }
+.catalogue h3 { font-size: 1.2rem; line-height: 1.25; }
+.catalogue .specs { margin-top: .6rem; }

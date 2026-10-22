@@ -1,7 +1,7 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
 // the Paintings, Drawings, Sculpture and Photos galleries (#/pinturas, #/dibujos,
 // #/escultura, #/fotos), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa),
-// contact (#/contacto) and
+// exhibitions (#/exposiciones), contact (#/contacto) and
 // the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
@@ -28,6 +28,10 @@ Object.assign(I18N.es, {
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
   manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
   allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos',
+  navExhibits: 'Exposiciones', exhibitsLead: 'Exposiciones principales de Oscar Abreu, de oscarabreu.com/biography, y el catálogo publicado en oscarabreu.com/exhibits.',
+  catalogueTitle: 'Catálogo', catalogueDates: 'Fechas', catalogueFormat: 'Formato', catalogueEssays: 'Ensayos',
+  catalogueQuote: 'Texto original en oscarabreu.com/exhibits (en inglés):',
+  catalogueWorks: 'En oscarabreu.com, este catálogo enlaza a una galería de 48 imágenes: son las mismas 36 pinturas y 12 esculturas de las secciones Pinturas y Escultura.',
   navContact: 'Contacto', contactLead: 'Contacto de Oscar Abreu, tal como aparece en oscarabreu.com.',
   navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
   navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
@@ -56,6 +60,10 @@ Object.assign(I18N.en, {
   space: 'Space', size: 'Size (ft)', price: 'Price',
   manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
   allManifestos: 'All manifestos', navManifestos: 'Manifestos',
+  navExhibits: 'Exhibitions', exhibitsLead: 'Oscar Abreu’s major exhibitions, from oscarabreu.com/biography, and the catalogue published on oscarabreu.com/exhibits.',
+  catalogueTitle: 'Catalogue', catalogueDates: 'Dates', catalogueFormat: 'Format', catalogueEssays: 'Essays',
+  catalogueQuote: 'Original text on oscarabreu.com/exhibits:',
+  catalogueWorks: 'On oscarabreu.com, this catalogue links to a gallery of 48 images: the same 36 paintings and 12 sculptures as in the Paintings and Sculpture sections.',
   navContact: 'Contact', contactLead: 'Oscar Abreu’s contact details, as published on oscarabreu.com.',
   navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
   navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
@@ -242,6 +250,40 @@ function pageBibliography() {
   </div>`;
 }
 
+function pageExhibits() {
+  const c = CATALOGUE;
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">Oscar Abreu</p><h1>${t('navExhibits')}</h1>
+      <p class="lead" style="margin-top:.8rem">${t('exhibitsLead')}</p>
+    </section>
+    <section class="section">
+      <h2>${t('catalogueTitle')}</h2>
+      <article class="card catalogue">
+        <img src="${c.img}" alt="${esc(c.title)}">
+        <div>
+          <h3>${c.title}</h3>
+          <p class="muted">${c.venue} · ${c.year}</p>
+          <dl class="specs">
+            <dt>${t('catalogueDates')}</dt><dd>${L(c.dates)}</dd>
+            <dt>${t('catalogueFormat')}</dt><dd>${L(c.format)}</dd>
+            <dt>${t('catalogueEssays')}</dt><dd>${c.essays}</dd>
+          </dl>
+        </div>
+      </article>
+      <p class="muted" style="margin-top:.8rem">${t('catalogueQuote')}</p>
+      <blockquote class="m-quote" lang="en">${esc(c.text)}</blockquote>
+      <p>${t('catalogueWorks')}</p>
+      <div class="btn-row"><a class="btn" href="#/pinturas">${t('paintingsTitle')} · ${PAINTINGS.length}</a><a class="btn" href="#/escultura">${t('sculptureTitle')} · ${SCULPTURES.length}</a></div>
+    </section>
+    <section class="section">
+      <h2>${t('exhibitions')}</h2>
+      <ul class="timeline">${EXHIBITIONS.slice().reverse().map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${lang === 'es' && e.pes ? e.pes : e.p} · ${e.y}</span></li>`).join('')}</ul>
+      <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://oscarabreu.com/exhibits" target="_blank" rel="noopener">oscarabreu.com/exhibits ↗</a> · <a href="https://oscarabreu.com/biography" target="_blank" rel="noopener">oscarabreu.com/biography ↗</a></p>
+    </section>
+  </div>`;
+}
+
 function pageContact() {
   return `<div class="wrap">
     <section class="section contact">
@@ -307,6 +349,6 @@ function pageGabangi() {
 
 Object.assign(EXTRA_ROUTES, {
   pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'), fotos: () => pageGallery('fotos'),
-  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, contacto: pageContact, gabangi: pageGabangi,
+  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, exposiciones: pageExhibits, contacto: pageContact, gabangi: pageGabangi,
 });
 Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });

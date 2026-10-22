@@ -23,6 +23,7 @@ cd museo-abreu && python3 -m http.server 8000
 | Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
 | Pinturas · Dibujos · Escultura · Fotos | `#/pinturas`, `#/dibujos`, `#/escultura`, `#/fotos` | The numbered galleries from oscarabreu.com (36 paintings, 36 drawings, 12 sculptures, 36 photos), lightbox with swipe; WhatsApp enquiry on artworks only |
 | Reseñas | `#/resenas` | The 9 critics' excerpts from oscarabreu.com/reviews (ES/EN) |
+| Exposiciones | `#/exposiciones` | The Huellas 2004 catalogue from oscarabreu.com/exhibits and the full exhibitions list |
 | Contacto | `#/contacto` | Portrait, WhatsApp, Instagram and email from oscarabreu.com/contact |
 | Prensa | `#/prensa` | The 10 press articles from oscarabreu.com/bibliography, with the site's summaries (ES/EN) |
 | ART GABANGI | `#/gabangi` | 2026 edition from gabangi.com: artists, programme, tickets, exhibit spaces, sponsors, team |
@@ -54,6 +55,11 @@ cd museo-abreu && python3 -m http.server 8000
   could not be checked from the build environment (news sites blocked there).
 - **Photos** (`/photos`, `index2.html`, `index3.html`): 36 event photos (files 3–38, shown as 1–36) with no
   captions, dates or names on the site; the app does not name people or events.
+- **Exhibits** (`/exhibits`, a 2008 page): one catalogue, Huellas "La invención de lo visible" (Museo del
+  Hombre Dominicano, Nov 4–20, 2004; 64 pp.; essays by Marianne de Tolentino, Odalís G. Perez, Abil Peralta
+  Aguero), original English text kept. Its 48-image gallery (`/exhibits/VII/`) is byte-for-byte the same images
+  as paintings 1–36 and sculptures 1–12 (two of its files, 10 and 35, are corrupt on the server), so the app
+  links to those galleries. "Upcoming Exhibitions" is empty on the site.
 - **Contact** (`/contact`): WhatsApp, Instagram `@oscarabreu_aertist` (spelled so on the site, not verified from
   here), info@oscarabreu.com and the portrait. The site's placeholder line "xxxxxxx" is left out.
 - **Not included:** `/sociales` is linked in the site's menu but returns 404. `/news` is a 2008 page that only lists Centro Abreu (Curazao No. 61, Ensanche Ozama) as a

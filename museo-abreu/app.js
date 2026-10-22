@@ -194,6 +194,7 @@ function pageArtist() {
         <h2>${t('exhibitions')}</h2>
         <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${lang === 'es' && e.pes ? e.pes : e.p} · ${e.y}</span></li>`).join('')}</ul>
         <p style="margin-top:.5rem">${esc(L(BIO_SITE).circuit)}</p>
+        <div class="btn-row"><a class="btn" href="#/exposiciones">${t('navExhibits')} · ${t('catalogueTitle')}</a></div>
       </div>
     </section>
     <section class="section grid two">
