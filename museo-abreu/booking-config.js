@@ -18,7 +18,7 @@ var BOOKING = {
     'gabangi-gala': '',
     'gabangi-regular': '',
   },
-  whatsapp: '',
+  whatsapp: '18098409588', // Oscar Abreu / Museo Abreu WhatsApp Business
 };
 
 function bookingLink(key) {

@@ -317,7 +317,7 @@ function pageVisit() {
           <dt>${t('accessibility')}</dt><dd>${pend()}</dd>
           <dt>${t('arrival')}</dt><dd>${pend()}</dd>
           <dt>${t('transport')}</dt><dd>${t('transportVal')}</dd>
-          <dt>${t('contact')}</dt><dd>${pend()}</dd>
+          <dt>${t('contact')}</dt><dd>WhatsApp <a href="https://wa.me/18098409588" target="_blank" rel="noopener">+1 (809) 840-9588</a></dd>
         </dl>
       </div>
     </section>
