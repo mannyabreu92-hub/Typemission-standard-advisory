@@ -361,3 +361,4 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 :root[lang="ar"] body * { letter-spacing: 0 !important; }
 :root[lang="ar"] .eyebrow, :root[lang="ar"] .brand-desc { text-transform: none; }
 :root[lang="ar"] h1, :root[lang="ar"] h2, :root[lang="ar"] h3 { line-height: 1.4; }
+.section[id] { scroll-margin-top: 84px; }

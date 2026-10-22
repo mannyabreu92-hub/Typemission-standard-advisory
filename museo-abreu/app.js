@@ -110,6 +110,9 @@ function route() {
     if (a.dataset.route === section) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   afterRender(name);
+  // A last path part naming an element on the page (e.g. #/biblioteca/top100) scrolls to it.
+  const anchor = parts.length > 1 && /^[a-z][\w-]*$/.test(parts.at(-1)) && document.getElementById(parts.at(-1));
+  if (anchor) requestAnimationFrame(() => anchor.scrollIntoView());
 }
 
 function afterRender(name) {
@@ -701,6 +704,7 @@ function pageLibrary() {
         })()}
       </div>
     </section>
+    ${typeof libraryExtras === 'function' ? libraryExtras() : ''}
   </div>`;
 }
 

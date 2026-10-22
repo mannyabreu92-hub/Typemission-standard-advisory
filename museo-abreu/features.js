@@ -512,8 +512,9 @@ function homeExtras() {
   const tiles = [
     ['#/clases', 'moreClasses', 'moreClassesText'], ['#/eventos', 'moreEvents', 'moreEventsText'],
     ['#/coleccion', 'moreCollection', 'moreCollectionText'], ['#/pro', 'morePro', 'moreProText'],
+    ['#/galeria', 'navFineArt', 'moreFineArtText'], ['#/biblioteca/top100', 'moreTop100', 'moreTop100Text'],
   ];
-  return promo + `<section class="section"><h2>${t('moreTitle')}</h2><div class="grid four">${tiles.map(([h, a, b]) =>
+  return promo + `<section class="section"><h2>${t('moreTitle')}</h2><div class="grid three">${tiles.map(([h, a, b]) =>
     `<a class="card" href="${h}" style="text-decoration:none"><h3>${t(a)}</h3><p class="muted">${t(b)}</p></a>`).join('')}</div></section>`;
 }
 

@@ -14,6 +14,15 @@ updated the table of contents (chapters XX–LXX were renumbered and retitled), 
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
 
+## Abreu Fine Art and Top 100 Artists
+
+- `#/galeria`: Abreu Fine Art, reopened on October 17, 2026 at Greenfit Wellness Club (Edificio Gardenia, Los
+  Corales, Bávaro) with *El ritmo de lo invisible* by Julieta Prissell; its 2011 history at 4394 Broadway. From the
+  book's chapters XXXV and LXIX; quotes in Oscar Abreu's English words. Hours pending.
+- Library (`#/biblioteca/top100`): *Top 100 Artists: ART GABANGI 2026*, from chapters LXV and LXVII and the chronology.
+  "Request a copy" opens WhatsApp; price and cover image pending.
+- Both linked from the home page ("More of Museo Abreu") and the footer.
+
 ## Link previews
 
 `index.html` carries Open Graph / Twitter tags so shared links show `img/og-image.jpg` (1200 × 630, Oscar Abreu's
@@ -127,6 +136,15 @@ every language, marked "English edition", until the Spanish edition text is deli
 updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
+
+## Abreu Fine Art and Top 100 Artists
+
+- `#/galeria`: Abreu Fine Art, reopened on October 17, 2026 at Greenfit Wellness Club (Edificio Gardenia, Los
+  Corales, Bávaro) with *El ritmo de lo invisible* by Julieta Prissell; its 2011 history at 4394 Broadway. From the
+  book's chapters XXXV and LXIX; quotes in Oscar Abreu's English words. Hours pending.
+- Library (`#/biblioteca/top100`): *Top 100 Artists: ART GABANGI 2026*, from chapters LXV and LXVII and the chronology.
+  "Request a copy" opens WhatsApp; price and cover image pending.
+- Both linked from the home page ("More of Museo Abreu") and the footer.
 
 ## Link previews
 

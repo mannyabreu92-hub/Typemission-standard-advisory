@@ -7,6 +7,29 @@
 // section menu (sectionNav) and the home page highlights (homeHighlights).
 
 Object.assign(I18N.es, {
+  navFineArt: 'Abreu Fine Art',
+  faEyebrow: 'Galería · Los Corales, Bávaro',
+  faLead: 'La galería de los proyectos de Oscar Abreu: representación, promoción, ventas y exposiciones temporales, junto al Museo Abreu.',
+  faWhere: 'Greenfit Wellness Club, Edificio Gardenia, Los Corales, Bávaro',
+  faOpened: 'Abrió el 17 de octubre de 2026',
+  faInaugural: 'Exposición inaugural',
+  faShowText: 'Pinturas abstractas construidas con capas, gestos y relaciones de color, en torno a los vínculos entre África y el Caribe, la música y el movimiento. Entre las obras: Ecos del tambor ancestral, La danza de los vientos yoruba y El llamado de la kalimba azul.',
+  faArtist: 'Julieta Prissell, antigua alumna de Oscar Abreu, vive y trabaja en Chicago. Trabajadora social clínica licenciada y doctora en Trabajo Social, fundó RIMYA, una organización de salud conductual para niños, jóvenes y familias, y tiene formación en arteterapia.',
+  faOpening: 'La exposición abrió el 17 de octubre de 2026 a las 3:00 p. m., junto con Top 100 Artists: ART GABANGI 2026, cuya portada muestra una de sus obras.',
+  faHistoryTitle: 'De Broadway a Bávaro',
+  faHistory: 'El primer Abreu Fine Art abrió en noviembre de 2011 en el 4394 de Broadway, Washington Heights, Nueva York, con la exposición colectiva Memoria/Arte Dominicano. El plan ahora es una sede permanente junto al Museo Abreu: el museo para la trayectoria de Oscar Abreu y el Psico-Expresionismo; la galería para exposiciones temporales, nuevas propuestas y obras disponibles para adquisición.',
+  faAsk: 'Consultar obras disponibles',
+  faBookNote: 'En palabras de Oscar Abreu, de Ecce Homo (edición en inglés):',
+  waFineArt: 'Hola, quiero información sobre las obras de Abreu Fine Art.',
+  moreFineArtText: 'La nueva galería en Los Corales: El ritmo de lo invisible, de Julieta Prissell.',
+  t100Eyebrow: 'Publicación · ART GABANGI',
+  t100Title: 'Top 100 Artists: ART GABANGI 2026',
+  t100Text: 'Una publicación de colección que documenta a cien artistas dominicanos de distintas generaciones, con reproducciones de su obra, ensayos y documentos. Su edición principal es en inglés, para que el arte dominicano pueda viajar más allá del país.',
+  t100Details: 'Presentado en ART GABANGI 2026 (6–14 de julio) y el 4 de agosto en los Magazines Awards, Universidad Católica Nordestana, San Francisco de Macorís. Diez artistas tienen portadas especiales, cada una vinculada a una exposición individual.',
+  t100Ask: 'Solicitar un ejemplar',
+  waTop100: 'Hola, quiero un ejemplar de Top 100 Artists: ART GABANGI 2026.',
+  moreTop100: 'Top 100 Artists',
+  moreTop100Text: 'Cien artistas dominicanos en un libro de colección.',
   paintingsEyebrow: 'Obra', paintingsTitle: 'Pinturas',
   paintingsLead: 'Las pinturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
   drawingsTitle: 'Dibujos', drawingsLead: 'Los dibujos que Oscar Abreu publica en oscarabreu.com, identificados por número.',
@@ -51,6 +74,29 @@ Object.assign(I18N.es, {
 });
 
 Object.assign(I18N.en, {
+  navFineArt: 'Abreu Fine Art',
+  faEyebrow: 'Gallery · Los Corales, Bávaro',
+  faLead: 'The gallery of Oscar Abreu’s projects: representation, promotion, sales and temporary exhibitions, alongside Museo Abreu.',
+  faWhere: 'Greenfit Wellness Club, Edificio Gardenia, Los Corales, Bávaro',
+  faOpened: 'Opened on October 17, 2026',
+  faInaugural: 'Inaugural exhibition',
+  faShowText: 'Abstract paintings built from layers, gestures and color relationships, around the bonds between Africa and the Caribbean, music and movement. Among the works: Ecos del tambor ancestral, La danza de los vientos yoruba and El llamado de la kalimba azul.',
+  faArtist: 'Julieta Prissell, a former student of Oscar Abreu, lives and works in Chicago. A licensed clinical social worker with a Doctorate in Social Work, she founded RIMYA, a behavioral health organization for children, young people and families, and is trained in art therapy.',
+  faOpening: 'The exhibition opened on October 17, 2026 at 3:00 PM, together with Top 100 Artists: ART GABANGI 2026, whose cover features one of her works.',
+  faHistoryTitle: 'From Broadway to Bávaro',
+  faHistory: 'The first Abreu Fine Art opened in November 2011 at 4394 Broadway, Washington Heights, New York, with the group exhibition Memoria/Arte Dominicano. The plan now is a permanent home next to Museo Abreu: the museum for Oscar Abreu’s career and Psycho-Expressionism, the gallery for temporary exhibitions, new proposals and works available for acquisition.',
+  faAsk: 'Ask about available works',
+  faBookNote: 'In Oscar Abreu’s words, from Ecce Homo (English edition):',
+  waFineArt: 'Hello, I would like information about the works at Abreu Fine Art.',
+  moreFineArtText: 'The new gallery in Los Corales: El ritmo de lo invisible by Julieta Prissell.',
+  t100Eyebrow: 'Publication · ART GABANGI',
+  t100Title: 'Top 100 Artists: ART GABANGI 2026',
+  t100Text: 'A collectible publication that documents one hundred Dominican artists from different generations, with reproductions of their work, essays and documents. Its primary edition is in English, so that Dominican art can travel beyond the country.',
+  t100Details: 'Presented at ART GABANGI 2026 (July 6–14) and on August 4 at the Magazines Awards, Universidad Católica Nordestana, San Francisco de Macorís. Ten artists have special covers, each linked to a solo exhibition.',
+  t100Ask: 'Request a copy',
+  waTop100: 'Hello, I would like a copy of Top 100 Artists: ART GABANGI 2026.',
+  moreTop100: 'Top 100 Artists',
+  moreTop100Text: 'One hundred Dominican artists in one collectible book.',
   paintingsEyebrow: 'Work', paintingsTitle: 'Paintings',
   paintingsLead: 'The paintings Oscar Abreu publishes on oscarabreu.com, identified by number.',
   drawingsTitle: 'Drawings', drawingsLead: 'The drawings Oscar Abreu publishes on oscarabreu.com, identified by number.',
@@ -95,6 +141,29 @@ Object.assign(I18N.en, {
 });
 
 Object.assign(I18N.fr, {
+  navFineArt: 'Abreu Fine Art',
+  faEyebrow: 'Galerie · Los Corales, Bávaro',
+  faLead: 'La galerie des projets d’Oscar Abreu : représentation, promotion, ventes et expositions temporaires, aux côtés du Museo Abreu.',
+  faWhere: 'Greenfit Wellness Club, Edificio Gardenia, Los Corales, Bávaro',
+  faOpened: 'Ouverte le 17 octobre 2026',
+  faInaugural: 'Exposition inaugurale',
+  faShowText: 'Des peintures abstraites construites par couches, gestes et relations de couleur, autour des liens entre l’Afrique et les Caraïbes, la musique et le mouvement. Parmi les œuvres : Ecos del tambor ancestral, La danza de los vientos yoruba et El llamado de la kalimba azul.',
+  faArtist: 'Julieta Prissell, ancienne élève d’Oscar Abreu, vit et travaille à Chicago. Travailleuse sociale clinicienne diplômée et docteure en travail social, elle a fondé RIMYA, une organisation de santé comportementale pour les enfants, les jeunes et les familles, et est formée à l’art-thérapie.',
+  faOpening: 'L’exposition a ouvert le 17 octobre 2026 à 15 h, avec Top 100 Artists : ART GABANGI 2026, dont la couverture reproduit l’une de ses œuvres.',
+  faHistoryTitle: 'De Broadway à Bávaro',
+  faHistory: 'Le premier Abreu Fine Art a ouvert en novembre 2011 au 4394 Broadway, à Washington Heights, New York, avec l’exposition collective Memoria/Arte Dominicano. Le projet est désormais un lieu permanent à côté du Museo Abreu : le musée pour la carrière d’Oscar Abreu et le Psycho-Expressionnisme, la galerie pour les expositions temporaires, les nouvelles propositions et les œuvres disponibles à l’acquisition.',
+  faAsk: 'Se renseigner sur les œuvres disponibles',
+  faBookNote: 'Dans les mots d’Oscar Abreu, extraits d’Ecce Homo (édition anglaise) :',
+  waFineArt: 'Bonjour, je souhaite des informations sur les œuvres d’Abreu Fine Art.',
+  moreFineArtText: 'La nouvelle galerie à Los Corales : El ritmo de lo invisible de Julieta Prissell.',
+  t100Eyebrow: 'Publication · ART GABANGI',
+  t100Title: 'Top 100 Artists : ART GABANGI 2026',
+  t100Text: 'Une publication de collection qui documente cent artistes dominicains de différentes générations, avec des reproductions de leurs œuvres, des essais et des documents. Son édition principale est en anglais, pour que l’art dominicain puisse voyager au-delà du pays.',
+  t100Details: 'Présentée à ART GABANGI 2026 (6–14 juillet) et le 4 août aux Magazines Awards, Universidad Católica Nordestana, San Francisco de Macorís. Dix artistes ont des couvertures spéciales, chacune liée à une exposition personnelle.',
+  t100Ask: 'Demander un exemplaire',
+  waTop100: 'Bonjour, je souhaite un exemplaire de Top 100 Artists : ART GABANGI 2026.',
+  moreTop100: 'Top 100 Artists',
+  moreTop100Text: 'Cent artistes dominicains dans un livre de collection.',
   paintingsEyebrow: 'Œuvre',
   paintingsTitle: 'Peintures',
   paintingsLead: 'Les peintures qu’Oscar Abreu publie sur oscarabreu.com, identifiées par leur numéro.',
@@ -599,8 +668,53 @@ function pageGabangi(sub) {
   </div>`;
 }
 
+
+// Abreu Fine Art (reopened October 17, 2026) and Top 100 Artists: ART GABANGI 2026, from the
+// book's chapters LXV and LXIX. Quotes are Oscar Abreu's words in the English edition.
+const BOOK_QUOTE = (q, note = true) => `<figure class="quote" style="margin:1.2rem 0"><blockquote lang="en" dir="ltr">“${q}”</blockquote>
+  <figcaption class="muted">— Oscar Abreu${note && lang !== 'en' ? ` · ${t('englishEdition')}` : ''}</figcaption></figure>`;
+const askLink = (key, label) => `<a class="btn primary" href="${whatsappLink(t(key))}" target="_blank" rel="noopener">${t(label)}</a>`;
+
+function pageFineArt() {
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('faEyebrow')}</p><h1>Abreu Fine Art</h1>
+      <p class="lead" style="margin-top:.8rem">${t('faLead')}</p>
+      ${BOOK_QUOTE('The museum would offer permanence; the gallery, movement.')}
+      <dl class="specs">
+        <dt>${t('location')}</dt><dd>${t('faWhere')}</dd>
+        <dt>${t('hours')}</dt><dd>${pend()}</dd>
+        <dt>${t('date')}</dt><dd>${t('faOpened')}</dd>
+      </dl>
+      <div class="btn-row">${askLink('waFineArt', 'faAsk')}</div>
+    </section>
+    <section class="section">
+      <div class="ci-panel"><p class="ci-kicker">${t('faInaugural')}</p>
+        <h2>El ritmo de lo invisible</h2><p class="ci-since">Julieta Prissell</p>
+        <p>${t('faShowText')}</p><p style="margin-top:.8rem">${t('faArtist')}</p>
+        <p class="ci-since" style="margin-top:.8rem">${t('faOpening')}</p></div>
+    </section>
+    <section class="section">
+      <h2>${t('faHistoryTitle')}</h2>
+      <p style="max-width:62ch;margin-top:.6rem">${t('faHistory')}</p>
+      ${BOOK_QUOTE('A gallery does not begin when it has walls of its own, but when the works receive dignified conditions, a coherent program, and people willing to stop in front of them.')}
+      <div class="btn-row"><a class="btn" href="#/biblioteca/top100">${t('t100Title')}</a></div>
+    </section>
+  </div>`;
+}
+
+function libraryExtras() {
+  return `<section class="section top100" id="top100">
+    <p class="eyebrow">${t('t100Eyebrow')}</p><h2>${t('t100Title')}</h2>
+    <p style="max-width:62ch;margin-top:.6rem">${t('t100Text')}</p>
+    <p class="muted" style="max-width:62ch;margin-top:.6rem">${t('t100Details')}</p>
+    ${BOOK_QUOTE('The book was not meant to close any artist’s story, but to open a door into it.')}
+    <div class="btn-row">${askLink('waTop100', 't100Ask')}<a class="btn" href="#/galeria">Abreu Fine Art</a></div>
+  </section>`;
+}
+
 Object.assign(EXTRA_ROUTES, {
   pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'), fotos: () => pageGallery('fotos'),
-  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, exposiciones: pageExhibits, contacto: pageContact, gabangi: pageGabangi,
+  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, exposiciones: pageExhibits, contacto: pageContact, gabangi: pageGabangi, galeria: pageFineArt,
 });
 Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });
