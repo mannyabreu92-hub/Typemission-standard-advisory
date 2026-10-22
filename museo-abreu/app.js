@@ -242,7 +242,7 @@ function openWork(id) {
   dlg.addEventListener('click', e => {
     const b = e.target.closest('[data-dlg]');
     if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
-    if (b && b.dataset.dlg === 'acquire') { dlg.close(); toast(t('acquireSent')); }
+    if (b && b.dataset.dlg === 'acquire') { dlg.close(); if (!(BOOKING.live && openWhatsApp(t('waWork', { title: L(w.title) })))) toast(t('acquireSent')); }
   });
   dlg.addEventListener('close', () => dlg.remove());
   dlg.showModal();
@@ -400,7 +400,9 @@ function bookingWizard() {
           </div>
         </div>
         <div class="btn-row"><button class="btn" data-action="back">${t('back')}</button>
-        <button class="btn primary" data-action="toPay" ${canPay() ? '' : 'disabled'}>${t('continue')}</button></div>`;
+        ${BOOKING.live
+          ? `<button class="btn wa" data-action="waBook" ${canPay() ? '' : 'disabled'}>${t('sendWhatsApp')}</button>`
+          : `<button class="btn primary" data-action="toPay" ${canPay() ? '' : 'disabled'}>${t('continue')}</button>`}</div>`;
       break;
     case 4:
       body = `<h2 tabindex="-1">${t('payTitle')}</h2>
@@ -418,6 +420,14 @@ function bookingWizard() {
         </div>`;
       break;
     case 5: {
+      if (bk.requested) {
+        body = `<h2 tabindex="-1">${t('requestedTitle')}</h2>
+          <p class="lead" style="margin:.6rem 0 1rem">${t('requestedText')}</p>
+          <div class="card" style="max-width:560px">${summary(EXPERIENCES.find(e => e.id === bk.exp))}</div>
+          <div class="btn-row"><button class="btn wa" data-action="waBook">${t('openWAagain')}</button>
+          <button class="btn" data-action="back">${t('back')}</button></div>`;
+        break;
+      }
       const tk = bk.ticket;
       body = `<h2 tabindex="-1">${t('confirmed')}</h2>
         <p class="muted" style="margin-bottom:1rem">${t('confirmedText', { email: esc(tk.email) })}</p>
@@ -633,6 +643,7 @@ function pageLibrary() {
 }
 
 function buyEdition(l) {
+  if (BOOKING.live) return openWhatsApp(t('waBuyBook', { lang: L(LANG_NAMES[l]), price: usd(EDITIONS.find(e => e.lang === l).price) }));
   const finish = email => {
     profile.email = email;
     purchases.push({ lang: l, price: EDITIONS.find(e => e.lang === l).price, source: 'direct', date: new Date().toISOString() });
@@ -730,7 +741,7 @@ function pageAccount() {
     <section class="section">
       <h2>${t('support')}</h2><p>${t('supportText')}</p>
       <div class="btn-row"><a class="btn" href="mailto:?subject=Museo%20Abreu">${t('contactSupport')}</a>
-      <button class="btn small" data-action="reset">${t('resetDemo')}</button></div>
+      ${BOOKING.live ? '' : `<button class="btn small" data-action="reset">${t('resetDemo')}</button>`}</div>
     </section>
   </div>`;
 }
@@ -778,6 +789,16 @@ const actions = {
     if (bk.exp === 'private' || bk.step <= 1) Object.assign(bk, freshBooking());
     else bk.step--;
     bk.error = '';
+    rerenderWizard();
+  },
+  waBook: () => {
+    if (!canPay()) return;
+    save();
+    const exp = EXPERIENCES.find(e => e.id === bk.exp);
+    const per = exp.seatsPer === 2 ? t('couplesN', { n: bk.qty }) : t('peopleN', { n: bk.qty });
+    openWhatsApp(t('waBookMsg', { exp: L(exp.name), date: fmtDate(bk.date), time: bk.time, glang: L(LANG_NAMES[bk.glang]), qty: per,
+      total: usd(exp.price * bk.qty), name: profile.name.trim(), email: profile.email.trim() }));
+    Object.assign(bk, { step: 5, requested: true, error: '' });
     rerenderWizard();
   },
   toPay: () => { if (!canPay()) return; save(); bk.step = 4; bk.holdUntil = Date.now() + 10 * 60 * 1000; rerenderWizard(); },
@@ -831,7 +852,7 @@ main.addEventListener('input', e => {
   if (el.dataset.bind) {
     if (el.type === 'checkbox') bk[el.dataset.bind] = el.checked;
     else profile[el.dataset.bind] = el.value;
-    const btn = $('[data-action="toPay"]');
+    const btn = $('[data-action="toPay"], [data-action="waBook"]');
     if (btn) btn.disabled = !canPay();
   }
 });
@@ -845,6 +866,7 @@ main.addEventListener('submit', e => {
   if (form.dataset.form === 'private') {
     e.preventDefault();
     profile.name = $('#p-name').value; profile.email = $('#p-email').value; save();
+    if (BOOKING.live) openWhatsApp(t('waPrivateTour', { size: $('#p-size').value, date: $('#p-date').value, name: profile.name, msg: $('#p-msg').value }));
     toast(t('requestSent'));
     bk = freshBooking();
     rerenderWizard();
@@ -880,6 +902,9 @@ window.addEventListener('hashchange', e => {
   route();
   window.scrollTo(0, 0);
 });
+if (BOOKING.live) {
+  document.querySelectorAll('.demo-banner, .staff-link').forEach(el => { el.hidden = true; });
+}
 setLang(lang);
 
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {

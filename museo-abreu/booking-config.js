@@ -4,6 +4,8 @@
 // (country code + number, digits only, e.g. '18095550100') adds
 // "Book via WhatsApp" buttons with the request already written.
 var BOOKING = {
+  // true = public site: nothing is simulated; requests go to WhatsApp (or Bókun links).
+  live: true,
   provider: 'Bókun',
   links: {
     vip: '',
@@ -27,4 +29,13 @@ function bookingLink(key) {
 
 function whatsappLink(text) {
   return BOOKING.whatsapp ? `https://wa.me/${BOOKING.whatsapp}?text=${encodeURIComponent(text)}` : '';
+}
+
+// Opens WhatsApp with a prefilled message (new tab, or same tab if blocked).
+function openWhatsApp(text) {
+  const url = whatsappLink(text);
+  if (!url) return false;
+  const w = window.open(url, '_blank');
+  if (w) w.opener = null; else location.href = url;
+  return true;
 }

@@ -333,7 +333,7 @@ function pageEvents() {
     </section>
     <section class="section"><h2>${t('annualTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('annualLead')}</p>
       <div class="grid two">${sortedEvents().filter(ev => ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>
-    <section class="section"><h2>${t('moreEvents')}</h2><div class="grid two">${sortedEvents().filter(ev => !ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>
+    ${BOOKING.live ? '' : `<section class="section"><h2>${t('moreEvents')}</h2><div class="grid two">${sortedEvents().filter(ev => !ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>`}
   </div>`;
 }
 
@@ -413,7 +413,9 @@ function passHTML(p) {
 function workById(id) { return WORKS.find(w => w.id === id); }
 
 function pageCollection() {
-  const tabs = [['new', 'tabNew'], ['available', 'tabAvailable'], ['sale', 'tabSale'], ['auctions', 'tabAuctions']];
+  const tabs = [['new', 'tabNew'], ['available', 'tabAvailable'], ['sale', 'tabSale'], ['auctions', 'tabAuctions']]
+    .filter(([id]) => !(BOOKING.live && id === 'auctions'));
+  if (BOOKING.live && collectionTab === 'auctions') collectionTab = 'available';
   const locked = !isPro() && collectionTab !== 'available';
   let body;
   if (collectionTab === 'auctions') {
@@ -542,6 +544,7 @@ const EXTRA_ACTIONS = {
     location.hash = '#/visita';
   },
   joinClub: el => {
+    if (BOOKING.live) return openWhatsApp(t('waClub', { club: L(CLUBS.find(c => c.id === el.dataset.id).name) }));
     const clubs = fx.get('clubs', []);
     if (!clubs.includes(el.dataset.id)) clubs.push(el.dataset.id);
     fx.set('clubs', clubs);
@@ -549,6 +552,7 @@ const EXTRA_ACTIONS = {
     route();
   },
   sponsor: el => {
+    if (BOOKING.live) return openWhatsApp(t('waSponsor', { amount: usd(Number(el.dataset.amount)) }));
     const gifts = fx.get('sponsorships', []);
     gifts.push({ amount: Number(el.dataset.amount), at: new Date().toISOString() });
     fx.set('sponsorships', gifts);
@@ -578,6 +582,7 @@ const EXTRA_ACTIONS = {
   },
   ctab: el => { collectionTab = el.dataset.id; route(); },
   notifyEvent: el => {
+    if (BOOKING.live) return openWhatsApp(t('waNotify', { event: eventTitle(EVENTS.find(e => e.id === el.dataset.id)) }));
     const list = fx.get('eventAlerts', []);
     if (!list.includes(el.dataset.id)) list.push(el.dataset.id);
     fx.set('eventAlerts', list);
@@ -598,6 +603,7 @@ const EXTRA_ACTIONS = {
     setTimeout(() => document.getElementById('pm-name').focus({ preventScroll: true }), 400);
   },
   joinPro: () => {
+    if (BOOKING.live) return openWhatsApp(t('waPro'));
     const name = profile.name.trim() || 'Miembro Pro';
     fx.set('member', { id: proCode(), name, since: new Date().toISOString() });
     toast(t('joinedPro'));
@@ -610,6 +616,11 @@ const EXTRA_FORMS = {
   privateMeet: () => {
     const v = id => document.getElementById(id).value;
     profile.name = v('pm-name'); profile.email = v('pm-email'); save();
+    if (BOOKING.live) {
+      const w = v('pm-work') ? L(workById(v('pm-work')).title) : '—';
+      openWhatsApp(t('waPrivateMeet', { type: v('pm-type') === 'dinner' ? t('meetDinner') : t('meetMeeting'), interest: v('pm-int'), budget: v('pm-budget'),
+        work: w, date: v('pm-date') || '—', name: v('pm-name'), phone: v('pm-phone') || '—', msg: v('pm-msg') }));
+    }
     const reqs = fx.get('privateRequests', []);
     reqs.push({ type: v('pm-type'), interest: v('pm-int'), budget: v('pm-budget'), work: v('pm-work'), date: v('pm-date'), phone: v('pm-phone'), message: v('pm-msg'), at: new Date().toISOString() });
     fx.set('privateRequests', reqs);
@@ -617,3 +628,51 @@ const EXTRA_FORMS = {
     route();
   },
 };
+
+/* ---------- Public (live) wording ---------- */
+
+Object.assign(I18N.es, {
+  sendWhatsApp: 'Enviar reserva por WhatsApp', requestedTitle: '¡Solicitud enviada!',
+  requestedText: 'Te abrimos WhatsApp con tu reserva. El museo te confirmará la disponibilidad y la forma de pago.',
+  openWAagain: 'Abrir WhatsApp otra vez', couplesN: '{n} pareja(s)', peopleN: '{n} persona(s)',
+  waBookMsg: 'Hola, quiero reservar: {exp} · {date} a las {time} · guía en {glang} · {qty} · Total aprox. {total}. Nombre: {name}. Email: {email}.',
+  waBuyBook: 'Hola, quiero comprar el libro Ecce Homo de Oscar Abreu, edición en {lang} ({price}).',
+  waWork: 'Hola, me interesa la obra "{title}" de Oscar Abreu.',
+  waPrivateTour: 'Hola, quiero un tour privado para {size} personas. Fecha preferida: {date}. Nombre: {name}. {msg}',
+  waPro: 'Hola, quiero hacerme miembro Pro del Museo Abreu.',
+  waClub: 'Hola, quiero unirme al {club} del Museo Abreu.',
+  waSponsor: 'Hola, quiero patrocinar una clase de pintura con {amount}.',
+  waNotify: 'Hola, avísenme cuando abran las entradas de {event}.',
+  waPrivateMeet: 'Hola, solicito una {type}. Interés: {interest}. Presupuesto: {budget}. Obra: {work}. Fecha preferida: {date}. Nombre: {name}. Teléfono: {phone}. {msg}',
+});
+Object.assign(I18N.en, {
+  sendWhatsApp: 'Send booking via WhatsApp', requestedTitle: 'Request sent!',
+  requestedText: 'We opened WhatsApp with your booking. The museum will confirm availability and how to pay.',
+  openWAagain: 'Open WhatsApp again', couplesN: '{n} couple(s)', peopleN: '{n} person(s)',
+  waBookMsg: 'Hello, I would like to book: {exp} · {date} at {time} · guide in {glang} · {qty} · Approx. total {total}. Name: {name}. Email: {email}.',
+  waBuyBook: 'Hello, I would like to buy the book Ecce Homo by Oscar Abreu, {lang} edition ({price}).',
+  waWork: 'Hello, I am interested in the work "{title}" by Oscar Abreu.',
+  waPrivateTour: 'Hello, I would like a private tour for {size} people. Preferred date: {date}. Name: {name}. {msg}',
+  waPro: 'Hello, I would like to become a Pro member of Museo Abreu.',
+  waClub: 'Hello, I would like to join the Museo Abreu {club}.',
+  waSponsor: 'Hello, I would like to sponsor a painting class with {amount}.',
+  waNotify: 'Hello, please let me know when tickets open for {event}.',
+  waPrivateMeet: 'Hello, I am requesting a {type}. Interest: {interest}. Budget: {budget}. Work: {work}. Preferred date: {date}. Name: {name}. Phone: {phone}. {msg}',
+});
+
+if (BOOKING.live) {
+  Object.assign(I18N.es, {
+    illustrative: 'Precios sujetos a confirmación del museo', sponsorBtn: 'Aportar {amount} por WhatsApp',
+    joinPro: 'Solicitar membresía Pro por WhatsApp', joinClub: 'Unirme por WhatsApp', notifyMe: 'Avísame por WhatsApp',
+    acquire: 'Consultar por WhatsApp', sendPrivate: 'Enviar por WhatsApp', sendRequest: 'Enviar por WhatsApp',
+    requestSent: 'Abrimos WhatsApp para enviar tu solicitud.', privateSent: 'Abrimos WhatsApp para enviar tu solicitud.',
+    buy: 'Comprar {price} por WhatsApp', lockedText: 'Hazte Pro para ver las obras nuevas y las ofertas exclusivas.',
+  });
+  Object.assign(I18N.en, {
+    illustrative: 'Prices subject to confirmation by the museum', sponsorBtn: 'Give {amount} via WhatsApp',
+    joinPro: 'Request Pro membership via WhatsApp', joinClub: 'Join via WhatsApp', notifyMe: 'Notify me via WhatsApp',
+    acquire: 'Ask via WhatsApp', sendPrivate: 'Send via WhatsApp', sendRequest: 'Send via WhatsApp',
+    requestSent: 'We opened WhatsApp to send your request.', privateSent: 'We opened WhatsApp to send your request.',
+    buy: 'Buy {price} via WhatsApp', lockedText: 'Become Pro to see new works and exclusive offers.',
+  });
+}
