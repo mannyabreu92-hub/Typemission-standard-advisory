@@ -2,7 +2,7 @@
 // the Paintings, Drawings, Sculpture and Photos galleries (#/pinturas, #/dibujos,
 // #/escultura, #/fotos), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa),
 // exhibitions (#/exposiciones), contact (#/contacto) and
-// the ART GABANGI page (#/gabangi).
+// the ART GABANGI page (#/gabangi) with its sub-pages from gabangi.js.
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
 Object.assign(I18N.es, {
@@ -24,7 +24,16 @@ Object.assign(I18N.es, {
   gabangiTeamLead: 'ART GABANGI está dirigido por un equipo internacional con responsabilidad directa sobre la dirección ejecutiva, las operaciones curatoriales y el desarrollo de mercado en las Américas y Europa.',
   gabangiContact: 'Contactos en gabangi.com',
   gabangiExhibit: 'Exponer en ART GABANGI', gabangiExhibitLead: 'Espacios de exposición para artistas, galerías e instituciones. Todas las solicitudes se revisan con criterios curatoriales y de producción.',
-  gabangiApply: 'Solicitar espacio', gabangiSponsor: 'Patrocinar', gabangiSponsorLead: 'Paquetes de patrocinio desde US$3,000, con presencia en el Catálogo Oficial de la Feria.',
+  gbTabFounder: 'Fundador', gbTabClub: 'Club', gbTabEssay: 'Revista', gbTab2025: 'Edición 2025',
+  gbFounderNote: 'Texto de Oscar Abreu en su perfil de gabangi.com.',
+  gbEssayBy: 'Por Oscar Abreu · Revista GABANGI', gbEssayNote: 'Ensayo publicado en gabangi.com/magazine.',
+  gb2025Note: 'Comunicado de noviembre de 2025 publicado en gabangi.com. La edición 2025 (11–17 de diciembre de 2025) ya se celebró.',
+  gbTopTen: 'Top Ten GABANGI 2025', gbGGCover: 'Portada de la edición especial de GG Magazine',
+  gbClubNote: 'Datos de gabangi.com/club. Para exponer en el festival o participar en la subasta se requiere ser miembro.',
+  gbClubJoin: 'Hacerse miembro', gbFaq: 'Preguntas frecuentes',
+  gbPackages: 'Paquetes de patrocinio 2026', gbCustom: 'Patrocinio a medida: pantallas, hospitalidad, experiencias curadas o activaciones de marca.',
+  gbOfficialSponsors: 'Patrocinadores oficiales',
+  gabangiApply: 'Solicitar espacio', gabangiSponsor: 'Patrocinar',
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
   manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
   allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos',
@@ -56,7 +65,16 @@ Object.assign(I18N.en, {
   gabangiTeamLead: 'ART GABANGI is led by an international team with direct responsibility for executive direction, curatorial operations, and market development across the Americas and Europe.',
   gabangiContact: 'Contacts on gabangi.com',
   gabangiExhibit: 'Exhibit at ART GABANGI', gabangiExhibitLead: 'Exhibition spaces for artists, galleries and institutions. All applications are reviewed under curatorial and production criteria.',
-  gabangiApply: 'Apply to exhibit', gabangiSponsor: 'Become a sponsor', gabangiSponsorLead: 'Sponsorship packages from US$3,000, with placement in the Official Fair Catalog.',
+  gbTabFounder: 'Founder', gbTabClub: 'Club', gbTabEssay: 'Magazine', gbTab2025: '2025 edition',
+  gbFounderNote: 'Text by Oscar Abreu on his gabangi.com profile.',
+  gbEssayBy: 'By Oscar Abreu · GABANGI Magazine', gbEssayNote: 'Essay published on gabangi.com/magazine.',
+  gb2025Note: 'November 2025 press release published on gabangi.com. The 2025 edition (December 11–17, 2025) has already taken place.',
+  gbTopTen: 'GABANGI 2025 Top Ten', gbGGCover: 'Cover of the GG Magazine special edition',
+  gbClubNote: 'Details from gabangi.com/club. Membership is required to exhibit at the festival or take part in the auction.',
+  gbClubJoin: 'Become a member', gbFaq: 'FAQ',
+  gbPackages: '2026 sponsorship packages', gbCustom: 'Custom sponsorship: screens, hospitality, curated experiences or brand activations.',
+  gbOfficialSponsors: 'Official sponsors',
+  gabangiApply: 'Apply to exhibit', gabangiSponsor: 'Become a sponsor',
   space: 'Space', size: 'Size (ft)', price: 'Price',
   manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
   allManifestos: 'All manifestos', navManifestos: 'Manifestos',
@@ -98,6 +116,19 @@ const GABANGI = {
     { name: 'Thomas Rehberger', role: { es: 'Representante de Ventas para Europa', en: 'European Sales Representative' } },
     { name: 'Karima Boutaleb', role: { es: 'Representante Curatorial Internacional', en: 'International Curatorial Representative' } },
   ],
+  // gabangi.com/sponsor, "Sponsorship Packages" (ART GABANGI 2026).
+  sponsors: [
+    { name: 'Supporter', price: 3000, items: { es: ['Catálogo: 1 página completa', 'Logo en la línea de patrocinadores de la web', 'Mención en la lista digital de patrocinadores', '2 entradas de Día regular'],
+      en: ['Catalog: 1 full page', 'Logo on website sponsor line', 'Mention on digital sponsor roll', '2 Regular Day tickets'] } },
+    { name: 'Official Sponsor', price: 5000, items: { es: ['Catálogo: 1 doble página', 'Logo en la web (posición superior)', 'Logo en materiales impresos seleccionados', '4 entradas de Día regular'],
+      en: ['Catalog: 1 double-page spread', 'Logo on website (top placement)', 'Logo in selected printed materials', '4 Regular Day tickets'] } },
+    { name: 'Partner', price: 10000, items: { es: ['Catálogo: 1 doble página', 'Reportaje editorial: 3 páginas', 'Logo destacado (web y en el lugar)', '2 pases VIP All-Access', '2 puestos en la Cena de Subasta y Premios'],
+      en: ['Catalog: 1 double-page spread', 'Editorial feature: 3 pages', 'Premium logo placement (web + onsite)', '2 VIP All-Access passes', '2 Auction & Awards Dinner seats'] } },
+    { name: 'Title Sponsor', price: 30000, items: { es: ['Catálogo: 1 doble página', 'Reportaje editorial: 5 páginas', 'Reconocimiento oficial como Patrocinador Oficial', 'Logo principal en los materiales clave', 'Reconocimiento en tarima en la Gala y la Cena de Premios', '4 pases VIP All-Access', '6 puestos en la Cena de Subasta y Premios'],
+      en: ['Catalog: 1 double-page spread', 'Editorial feature: 5 pages', 'Official recognition as an Official Sponsor', 'Top logo placement across key assets', 'On-stage recognition at Gala & Awards Dinner', '4 VIP All-Access passes', '6 Auction & Awards Dinner seats'] } },
+  ],
+  // Home page sponsor line.
+  officialSponsors: [['Centro Abreu', 'https://centroabreu.com'], ['ARTFORO', 'https://artforo.com']],
   // gabangi.com/apply, "Exhibition Spaces & Pricing" (USD).
   spaces: [
     ['Compact Booth', '5 × 10', 2800], ['Standard Booth', '10 × 10', 5000], ['Extended Booth', '15 × 15', 8500],
@@ -303,11 +334,55 @@ function pageContact() {
   </div>`;
 }
 
-function pageGabangi() {
+// Site text that carries <em>/<strong> (gabangi.js): escape, then allow those tags back.
+const rich = s => esc(s).replace(/&lt;(\/?)(em|strong)&gt;/g, '<$1$2>');
+const richParas = ps => ps.map(p => `<p>${rich(p)}</p>`).join('');
+
+const GB_TABS = [['', 'ART GABANGI 2026'], ['fundador', 'gbTabFounder'], ['club', 'gbTabClub'], ['revista', 'gbTabEssay'], ['2025', 'gbTab2025']];
+const gbTabs = sub => `<div class="tabs gallery-tabs" role="tablist" style="margin-top:1rem">${GB_TABS.map(([k, label]) =>
+  `<a role="tab" class="tab" href="#/gabangi${k ? '/' + k : ''}" aria-selected="${k === (sub || '')}">${k ? t(label) : label}</a>`).join('')}</div>`;
+
+function pageGabangiSub(sub) {
+  const head = (title, eyebrow) => `<section class="section"><p class="eyebrow">${eyebrow || 'GABANGI'}</p><h1>${title}</h1>${gbTabs(sub)}</section>`;
+  if (sub === 'fundador') return `<div class="wrap">${head(L(GB_FOUNDER.subtitle))}
+    <section class="section manifesto"><p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${L(GB_FOUNDER.byline)}</p>
+      ${richParas(L(GB_FOUNDER))}
+      <p class="muted">${t('gbFounderNote')} <a href="https://gabangi.com/artistas/oscar-abreu/" target="_blank" rel="noopener">gabangi.com ↗</a></p></section></div>`;
+  if (sub === 'revista') return `<div class="wrap">${head(L(GB_ESSAY.title), t('gbTabEssay'))}
+    <section class="section manifesto"><p class="muted" style="margin-bottom:1rem">${t('gbEssayBy')}</p>
+      <figure class="gb-fig"><img src="${GB_ESSAY.images[0].img}" alt="" loading="lazy"><figcaption>${esc(L(GB_ESSAY.images[0].cap))}</figcaption></figure>
+      ${richParas(L(GB_ESSAY).slice(0, 3))}
+      <div class="gb-figs">${GB_ESSAY.images.slice(1).map(i => `<figure class="gb-fig"><img src="${i.img}" alt="" loading="lazy"><figcaption>${esc(L(i.cap))}</figcaption></figure>`).join('')}</div>
+      ${richParas(L(GB_ESSAY).slice(3))}
+      <p class="muted">${t('gbEssayNote')} <a href="https://gabangi.com/magazine/" target="_blank" rel="noopener">gabangi.com/magazine ↗</a></p></section></div>`;
+  if (sub === '2025') return `<div class="wrap">${head(L(GB_2025.title), `${L(GB_2025.eyebrow)} · ${L(GB_2025.meta)}`)}
+    <section class="section"><p class="muted">${t('gb2025Note')}</p></section>
+    <section class="section manifesto">${richParas(L(GB_2025))}</section>
+    <section class="section"><h2>${t('gbTopTen')}</h2>
+      <div class="grid two">${GB_2025.topTen.map(a => `<figure class="card gb-artist"><div class="art-frame"><img src="${a.img}" alt="${esc(a.name)}" loading="lazy"></div>
+        <figcaption><h3>${a.name}</h3></figcaption></figure>`).join('')}</div>
+      <figure class="gb-fig" style="max-width:360px;margin-top:1.4rem"><img src="${GB_2025.cover}" alt="GG Magazine" loading="lazy"><figcaption>${t('gbGGCover')}</figcaption></figure>
+      <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://gabangi.com/nota/" target="_blank" rel="noopener">gabangi.com/nota ↗</a></p></section></div>`;
+  const c = k => L(GB_CLUB[k]);
+  return `<div class="wrap">${head(c('h1'), c('ey'))}
+    <section class="section"><p class="lead">${c('lead')}</p><p class="muted" style="margin-top:.5rem">${t('gbClubNote')}</p></section>
+    <section class="section"><h2>${c('benefits_h2')} · ${c('per_year')}</h2>
+      <div class="grid three">${[1, 2, 3].map(n => `<div class="card"><h3>${c(`b${n}_t`)}</h3><p class="muted">${c(`b${n}_d`)}</p></div>`).join('')}</div></section>
+    <section class="section"><h2>${c('how_h2')}</h2>
+      <ol class="timeline">${[1, 2, 3].map(n => `<li><strong>${c(`how_${n}_t`)}</strong><br><span class="muted">${c(`how_${n}_d`)}</span></li>`).join('')}</ol>
+      <div class="card" style="margin-top:1rem"><strong>${c('req_t')}</strong><p class="muted">${c('req_d')}</p></div></section>
+    <section class="section"><h2>${c('faq_h2')}</h2>
+      ${[1, 2, 3, 4].map(n => `<details class="card" style="margin-bottom:.6rem"><summary><strong>${c(`q${n}`)}</strong></summary><p style="margin-top:.5rem">${c(`a${n}`)}</p></details>`).join('')}
+      <div class="btn-row"><a class="btn primary" href="https://gabangi.com/club/" target="_blank" rel="noopener">${t('gbClubJoin')} ↗</a></div></section></div>`;
+}
+
+function pageGabangi(sub) {
+  if (sub) return pageGabangiSub(sub);
   const ev = EVENTS.find(e => e.id === 'art-gabangi');
   return `<div class="wrap">
     <section class="section">
       <p class="eyebrow">${t('gabangiEyebrow')}</p><h1>ART GABANGI</h1>
+      ${gbTabs('')}
       <p class="lead" style="margin-top:.8rem">${t('gabangiLead')}</p>
       <p class="muted" style="margin-top:.5rem">${t('gabangiEdition')}</p>
     </section>
@@ -334,8 +409,12 @@ function pageGabangi() {
         <table class="gb-spaces"><thead><tr><th>${t('space')}</th><th>${t('size')}</th><th>${t('price')}</th></tr></thead>
           <tbody>${GABANGI.spaces.map(([s, d, p]) => `<tr><td lang="en">${s}</td><td>${d}</td><td>${usd(p)}</td></tr>`).join('')}</tbody></table>
         <div class="btn-row"><a class="btn" href="https://gabangi.com/apply/" target="_blank" rel="noopener">${t('gabangiApply')} ↗</a></div>
-        <p style="margin-top:1.2rem">${t('gabangiSponsorLead')}</p>
+        <h3 style="margin-top:1.6rem">${t('gbPackages')}</h3>
+        <div class="tiers" style="margin-top:.6rem">${GABANGI.sponsors.map(p => `<div class="tier"><div class="tier-head"><strong lang="en">${p.name}</strong><span class="tier-price">${usd(p.price)}</span></div>
+          <ul>${L(p.items).map(i => `<li>${i}</li>`).join('')}</ul></div>`).join('')}</div>
+        <p class="muted" style="margin-top:.6rem">${t('gbCustom')}</p>
         <div class="btn-row"><a class="btn" href="https://gabangi.com/sponsor/" target="_blank" rel="noopener">${t('gabangiSponsor')} ↗</a></div>
+        <p style="margin-top:1.2rem"><span class="muted">${t('gbOfficialSponsors')}:</span> ${GABANGI.officialSponsors.map(([n, u]) => `<a href="${u}" target="_blank" rel="noopener">${n}</a>`).join(' · ')}</p>
       </div>
       <div>
         <h2 class="gb-team">${t('gabangiTeam')}</h2>

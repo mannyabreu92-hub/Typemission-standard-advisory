@@ -302,3 +302,11 @@ table.gb-spaces thead th { background: var(--ink); color: var(--paper); }
 .catalogue img { width: 110px; height: auto; border-radius: 8px; display: block; }
 .catalogue h3 { font-size: 1.2rem; line-height: 1.25; }
 .catalogue .specs { margin-top: .6rem; }
+
+/* GABANGI sub-pages */
+.gb-fig { margin: 0 0 1.4rem; max-width: 640px; }
+.gb-fig img { width: 100%; height: auto; border-radius: var(--radius); display: block; background: var(--paper-2); }
+.gb-fig figcaption { margin-top: .4rem; font-size: .85rem; color: var(--ink-2); }
+.gb-figs { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); max-width: 640px; margin-bottom: 1.4rem; }
+.gb-figs .gb-fig { margin: 0; }
+.manifesto > p strong { font-weight: 600; }

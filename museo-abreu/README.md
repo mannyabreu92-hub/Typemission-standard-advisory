@@ -26,7 +26,7 @@ cd museo-abreu && python3 -m http.server 8000
 | Exposiciones | `#/exposiciones` | The Huellas 2004 catalogue from oscarabreu.com/exhibits and the full exhibitions list |
 | Contacto | `#/contacto` | Portrait, WhatsApp, Instagram and email from oscarabreu.com/contact |
 | Prensa | `#/prensa` | The 10 press articles from oscarabreu.com/bibliography, with the site's summaries (ES/EN) |
-| ART GABANGI | `#/gabangi` | 2026 edition from gabangi.com: artists, programme, tickets, exhibit spaces, sponsors, team |
+| ART GABANGI | `#/gabangi`, `#/gabangi/fundador`, `/club`, `/revista`, `/2025` | 2026 edition from gabangi.com: artists, programme, tickets, exhibit spaces, sponsor packages, team; plus Oscar Abreu's "Quién soy", Club GABANGI, his magazine essay and the 2025 Top Ten press release |
 | Visita y VIP Tour | `#/visita` | Booking: experience → date/time/guide language → guests → terms → payment (10-min hold) → QR ticket + calendar file. Private tour request form |
 | Biblioteca | `#/biblioteca`, `#/leer/:lang/:chapter` | Editions per language, free sample, purchase, reader with text size, bookmarks, last position |
 | Mi cuenta | `#/cuenta` | Tickets, purchases, reading progress, rating, support |
@@ -64,6 +64,14 @@ cd museo-abreu && python3 -m http.server 8000
   here), info@oscarabreu.com and the portrait. The site's placeholder line "xxxxxxx" is left out.
 - **Not included:** `/sociales` is linked in the site's menu but returns 404. `/news` is a 2008 page that only lists Centro Abreu (Curazao No. 61, Ensanche Ozama) as a
   permanent exhibition with old phone numbers; left out until confirmed current.
+- **gabangi.com beyond the 2026 menu** (`gabangi.js`, generated from the pages' own text objects): Oscar Abreu's
+  "Quién soy" (`/artistas/oscar-abreu/`), his essay "El desafío de recuperar la confianza en las artes visuales"
+  (`/magazine/`), the GABANGI 2025 Top Ten press release (`/nota/`, without its closing RSVP/press contact for the
+  past gala) and Club GABANGI (`/club/`). Left out: `/festival/`, `/convocatorias/`, `/eventos/`, `/patrocinios/`
+  and `/registro/` are 2025-edition prices, calls and sign-up forms for dates now past (they also give two venues,
+  Museo Abreu and "Campus GABANGI, Suero"); `/artistas/` shows 0 profiles; `/revista/` lists articles that all
+  return 404; `/contacto/` duplicates the contacts (adds gabangiclub@gmail.com, Instagram @gabangi_club);
+  `/tienda/` returns 404.
 - **From gabangi.com:** ART GABANGI 2026 programme, ticket tiers, artists with Oscar Abreu's quotes
   (English only on the site), exhibit spaces, sponsor entry price, team names and roles.
 
