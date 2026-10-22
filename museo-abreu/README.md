@@ -2,7 +2,20 @@
 
 Installable web app (PWA) for Museo Abreu in Bávaro, Punta Cana, built from the
 "Propuesta de app para el Museo Abreu" (21 Oct 2026). It covers the three core
-actions of the first version: **descubrir, reservar, leer**, in Spanish and English.
+actions of the first version: **descubrir, reservar, leer**, in Spanish, English and French.
+
+## Languages
+
+- **ES / EN / FR** buttons in the header; the browser language picks the first one (other languages get English).
+- The artist's texts use his own published versions: biography, exhibitions, manifestos 1–23, reviews, press
+  summaries, artwork titles and the GABANGI texts all come in French from oscarabreu.com and gabangi.com.
+  On oscarabreu.com the French manifesto 15 omits one sentence of the Spanish ("En mi pintura, los sueños toman
+  cuerpo, forma y color."); the app follows the site.
+- The interface French and the app's own content (tours, events, classes, timeline, ART GABANGI programme) are a
+  first translation by Claude, **pending the human editorial review** the proposal requires for new languages.
+- Text that only exists in English (book sample and front-matter quotes, ART GABANGI artist quotes) is shown in
+  English, marked `lang="en"`. In code: `L()` falls back from French to English, then Spanish; `typeset()` keeps
+  French non-breaking spaces (before `: ; ? !`, inside « », in "20 h").
 
 ## Run it
 

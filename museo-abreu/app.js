@@ -7,7 +7,10 @@ const store = {
   set(k, v) { try { localStorage.setItem('ma.' + k, JSON.stringify(v)); } catch { /* private mode: keep in memory only */ } },
 };
 
-let lang = store.get('lang', (navigator.language || 'es').toLowerCase().startsWith('es') ? 'es' : 'en');
+const LANGS = ['es', 'en', 'fr'];
+const browserLang = (navigator.language || 'es').slice(0, 2).toLowerCase();
+let lang = store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
+if (!LANGS.includes(lang)) lang = 'es';
 let tickets = store.get('tickets', []);
 let purchases = store.get('purchases', []);
 let reading = store.get('reading', { fontSize: 1.15, last: null, bookmarks: [] });
@@ -18,12 +21,18 @@ let holdTimer = null;
 const main = document.getElementById('main');
 const $ = (s, el = document) => el.querySelector(s);
 
+// French typography: keep the space before : ; ? ! » and after «, and in "20 h", from breaking.
+const frSpaces = s => s.replace(/ ([:;?!»])/g, '\u00a0$1').replace(/« /g, '«\u00a0').replace(/(\d) h\b/g, '$1\u00a0h');
+const typeset = v => lang !== 'fr' ? v : typeof v === 'string' ? frSpaces(v) : Array.isArray(v) ? v.map(x => typeof x === 'string' ? frSpaces(x) : x) : v;
+
 function t(key, vars) {
   let s = (I18N[lang] && I18N[lang][key]) ?? I18N.es[key] ?? key;
   if (vars) for (const k in vars) s = s.replace('{' + k + '}', vars[k]);
-  return s;
+  return typeset(s);
 }
-const L = obj => obj[lang] ?? obj.es;
+// French falls back to English where a text exists only in Spanish and English.
+const L = obj => typeset(obj[lang] ?? (lang === 'fr' ? obj.en : undefined) ?? obj.es);
+const expoPlace = e => (lang === 'es' && e.pes) || (lang === 'fr' && e.pfr) || e.p;
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const usd = n => 'US$' + n.toLocaleString('en-US');
 const pend = () => `<span class="pending">${t('pending')}</span>`;
@@ -50,7 +59,7 @@ function addDays(iso, n) {
 function dow(iso) { const [y, m, d] = iso.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay(); }
 function fmtDate(iso, opts = { weekday: 'long', day: 'numeric', month: 'long' }) {
   const [y, m, d] = iso.split('-').map(Number);
-  return new Intl.DateTimeFormat(lang === 'es' ? 'es-DO' : 'en-US', { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
+  return new Intl.DateTimeFormat({ es: 'es-DO', en: 'en-US', fr: 'fr-FR' }[lang], { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
 }
 
 /* ---------- Availability ---------- */
@@ -197,7 +206,7 @@ function pageArtist() {
       </div>
       <div>
         <h2>${t('exhibitions')}</h2>
-        <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${lang === 'es' && e.pes ? e.pes : e.p} · ${e.y}</span></li>`).join('')}</ul>
+        <ul class="timeline">${EXHIBITIONS.map(e => `<li><strong><i>${e.t}</i></strong><br><span class="muted">${expoPlace(e)} · ${e.y}</span></li>`).join('')}</ul>
         <p style="margin-top:.5rem">${esc(L(BIO_SITE).circuit)}</p>
         <div class="btn-row"><a class="btn" href="#/exposiciones">${t('navExhibits')} · ${t('catalogueTitle')}</a></div>
       </div>
@@ -699,7 +708,7 @@ function buyEdition(l) {
   dlg.showModal();
 }
 
-const chTitle = (c, l) => c.title[l] ?? c.title.es;
+const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
 const sampleFor = (l, c) => (l === 'en' && SAMPLE_EN[c.key === 'ch1' ? 'ch1' : c.key]) || null;
 const hasSample = l => l === 'en';
 

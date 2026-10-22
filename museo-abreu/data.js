@@ -5,44 +5,44 @@ const TZ = 'America/Santo_Domingo';
 const EXPERIENCES = [
   {
     id: 'vip', price: 100, capacity: 10, minutes: 75,
-    name: { es: 'VIP Tour del museo', en: 'Museum VIP Tour' },
+    name: { es: 'VIP Tour del museo', en: 'Museum VIP Tour', fr: 'VIP Tour du musée' },
     desc: {
       es: 'Recorrido en grupo reducido con guía autorizado y selección de salas y obras. 60–90 min.',
-      en: 'Small-group tour with an authorised guide through selected rooms and works. 60–90 min.',
+      en: 'Small-group tour with an authorised guide through selected rooms and works. 60–90 min.', fr: 'Visite en petit groupe avec un guide agréé à travers une sélection de salles et d’œuvres. 60–90 min.',
     },
   },
   {
     id: 'artist', price: 250, capacity: 8, minutes: 90,
-    name: { es: 'Encuentro con Oscar Abreu', en: 'Meet Oscar Abreu' },
+    name: { es: 'Encuentro con Oscar Abreu', en: 'Meet Oscar Abreu', fr: 'Rencontre avec Oscar Abreu' },
     desc: {
       es: 'Recorrido o conversación con el artista. Solo en fechas con su participación confirmada.',
-      en: 'A tour or conversation with the artist. Only on dates with his confirmed participation.',
+      en: 'A tour or conversation with the artist. Only on dates with his confirmed participation.', fr: 'Une visite ou une conversation avec l’artiste. Uniquement aux dates où sa participation est confirmée.',
     },
   },
   {
     id: 'combo', price: 115, capacity: 10, minutes: 75, includesBook: true,
-    name: { es: 'Tour y libro digital', en: 'Tour + digital book' },
+    name: { es: 'Tour y libro digital', en: 'Tour + digital book', fr: 'Visite + livre numérique' },
     desc: {
       es: 'VIP Tour más acceso a una edición digital de El arte salvó mi vida.',
-      en: 'VIP Tour plus access to a digital edition of Art Saved My Life.',
+      en: 'VIP Tour plus access to a digital edition of Art Saved My Life.', fr: 'VIP Tour avec accès à une édition numérique de L’art m’a sauvé la vie.',
     },
   },
   {
     id: 'private', price: null,
-    name: { es: 'Tour privado', en: 'Private tour' },
+    name: { es: 'Tour privado', en: 'Private tour', fr: 'Visite privée' },
     desc: {
       es: 'Para parejas, familias, grupos o empresas. Solicitud de disponibilidad y cotización.',
-      en: 'For couples, families, groups or companies. Availability request and quote.',
+      en: 'For couples, families, groups or companies. Availability request and quote.', fr: 'Pour couples, familles, groupes ou entreprises. Demande de disponibilité et devis.',
     },
   },
 ];
 
 const LANG_NAMES = {
-  es: { es: 'Español', en: 'Spanish' },
-  en: { es: 'Inglés', en: 'English' },
-  fr: { es: 'Francés', en: 'French' },
-  de: { es: 'Alemán', en: 'German' },
-  pt: { es: 'Portugués', en: 'Portuguese' },
+  es: { es: 'Español', en: 'Spanish', fr: 'Espagnol' },
+  en: { es: 'Inglés', en: 'English', fr: 'Anglais' },
+  fr: { es: 'Francés', en: 'French', fr: 'Français' },
+  de: { es: 'Alemán', en: 'German', fr: 'Allemand' },
+  pt: { es: 'Portugués', en: 'Portuguese', fr: 'Portugais' },
 };
 
 // Sample weekly schedule. Each session lists its real guide languages; a language
@@ -61,20 +61,22 @@ SCHEDULE.combo = SCHEDULE.vip;
 // (oscarabreu.com/museo) and the manifesto works (oscarabreu.com/statement,
 // /manifiesto/2.html) each share one spec.
 const SPEC_MINI = { es: ['2021', 'Técnica mixta sobre MDF', '8 × 8 in (20.32 × 20.32 cm)'], en: ['2021', 'Mixed media on MDF', '8 × 8 in (20.32 × 20.32 cm)'],
-  series: { es: 'Serie miniaturas del Psico Expresionismo', en: 'Psycho-Expressionism Miniatures Series' } };
-const SPEC_PAPER = { es: ['2019', 'Técnica mixta sobre papel', '24 × 24 pulgadas'], en: ['2019', 'Mixed media on paper', '24 × 24 in'] };
+  fr: ['2021', 'Technique mixte sur MDF', '8 × 8 in (20,32 × 20,32 cm)'],
+  series: { es: 'Serie miniaturas del Psico Expresionismo', en: 'Psycho-Expressionism Miniatures Series', fr: 'Série Miniatures du Psycho-Expressionnisme' } };
+const SPEC_PAPER = { es: ['2019', 'Técnica mixta sobre papel', '24 × 24 pulgadas'], en: ['2019', 'Mixed media on paper', '24 × 24 in'],
+  fr: ['2019', 'Technique mixte sur papier', '24 × 24 pouces'] };
 
 // Works shown on oscarabreu.com, with the original image files from the site.
 // "sold" follows the miniatures page (sold: 1, 9, 14, 17, 18).
 const WORKS = [
-  { id: 'escaping-being', seed: 11, img: 'img/escaping-being.jpg', spec: SPEC_PAPER, title: { es: 'El Ser que se Escapa', en: 'The Escaping Being' } },
-  { id: 'passion', seed: 23, img: 'img/passion.jpg', spec: SPEC_MINI, sold: true, title: { es: 'Pasión', en: 'Passion' } },
-  { id: 'petrichor', seed: 37, img: 'img/petrichor.jpg', spec: SPEC_MINI, title: { es: 'Petricor', en: 'Petrichor' } },
-  { id: 'resilience', seed: 41, img: 'img/resilience.jpg', spec: SPEC_MINI, title: { es: 'Resiliencia', en: 'Resilience' } },
-  { id: 'limerence', seed: 59, img: 'img/limerence.jpg', spec: SPEC_MINI, title: { es: 'Limerencia', en: 'Limerence' } },
+  { id: 'escaping-being', seed: 11, img: 'img/escaping-being.jpg', spec: SPEC_PAPER, title: { es: 'El Ser que se Escapa', en: 'The Escaping Being', fr: 'L’Être qui s’échappe' } },
+  { id: 'passion', seed: 23, img: 'img/passion.jpg', spec: SPEC_MINI, sold: true, title: { es: 'Pasión', en: 'Passion', fr: 'Passion' } },
+  { id: 'petrichor', seed: 37, img: 'img/petrichor.jpg', spec: SPEC_MINI, title: { es: 'Petricor', en: 'Petrichor', fr: 'Pétrichor' } },
+  { id: 'resilience', seed: 41, img: 'img/resilience.jpg', spec: SPEC_MINI, title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' } },
+  { id: 'limerence', seed: 59, img: 'img/limerence.jpg', spec: SPEC_MINI, title: { es: 'Limerencia', en: 'Limerence', fr: 'Limerence' } },
   // Shown on the Biography page; no technical data published for it.
-  { id: 'echoes-of-memory', seed: 67, img: 'img/echoes-of-memory.jpg', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory' } },
-  { id: 'time-on-my-face', seed: 71, img: 'img/time-on-my-face.jpg', spec: SPEC_PAPER, title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face' } },
+  { id: 'echoes-of-memory', seed: 67, img: 'img/echoes-of-memory.jpg', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' } },
+  { id: 'time-on-my-face', seed: 71, img: 'img/time-on-my-face.jpg', spec: SPEC_PAPER, title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face', fr: 'Le temps sur mon visage' } },
 ];
 
 // "Discover another layer": six paintings by Oscar Abreu on the display cubes at
@@ -104,52 +106,52 @@ const EDITIONS = [
 // Table of contents of ECCE HOMO. Introduction and Chapter I are the free sample.
 // Spanish chapter titles are pending the Spanish edition.
 const CHAPTERS = [
-  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction' } },
+  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction', fr: 'Introduction' } },
   ...TOC_EN.nums.map((n, i) => ({
     key: 'ch' + (i + 1), free: i === 0,
-    title: { es: 'Capítulo ' + n, en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i] },
+    title: { es: 'Capítulo ' + n, en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i], fr: 'Chapitre ' + n },
   })),
-  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments' } },
-  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology' } },
+  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments', fr: 'Remerciements' } },
+  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology', fr: 'Chronologie biographique' } },
 ];
 
 // Selected milestones from the book's Biographical Chronology.
 const TIMELINE = [
-  { y: '1978', es: 'Nace el 6 de marzo en San Juan de la Maguana, República Dominicana.', en: 'Born on March 6 in San Juan de la Maguana, Dominican Republic.' },
-  { y: '1982', es: 'Con sus abuelos en Las Mulas dibuja sobre la tierra y modela figuras con barro tras la lluvia.', en: 'Living with his grandparents in Las Mulas, he draws on the earth and models figures from mud after the rain.' },
-  { y: '1990', es: 'A los doce años visita por primera vez el Museo del Prado, en España.', en: 'At twelve, he visits the Museo del Prado in Spain for the first time.' },
-  { y: '1994', es: 'Llega solo a Chicago a los dieciséis años. Ese verano nombra por primera vez el Psico-Expresionismo.', en: 'Arrives alone in Chicago at sixteen. That summer he first names Psycho-Expressionism.' },
-  { y: '2004', es: 'Huellas: la invención de lo visible, en el Museo del Hombre Dominicano.', en: 'Huellas: la invención de lo visible at the Museo del Hombre Dominicano.' },
-  { y: '2016', es: 'Un incendio destruye su estudio-residencia en Nueva York.', en: 'A fire destroys his studio-residence in New York.' },
-  { y: '2017', es: 'Crea el mural Todos somos inmigrantes durante ARTFORO en Nueva York.', en: 'Creates the mural Todos somos inmigrantes during ARTFORO in New York.' },
-  { y: '2021', es: 'El 17 de noviembre abre la primera fase del Museo Abreu en Bávaro con la retrospectiva Memoria del Psico-Expresionismo.', en: 'On November 17, the first phase of Museo Abreu opens in Bávaro with the retrospective Memoria del Psico-Expresionismo.' },
-  { y: '2023', es: 'El 12 de diciembre el museo se amplía a diez salas.', en: 'On December 12, the museum expands to ten galleries.' },
-  { y: '2025', es: 'Primera edición de ART GABANGI en el Museo Abreu.', en: 'First edition of ART GABANGI at Museo Abreu.' },
-  { y: '2026', es: 'Publica Ecce Homo: El arte salvó mi vida.', en: 'Publishes Ecce Homo: Art Saved My Life.' },
+  { y: '1978', es: 'Nace el 6 de marzo en San Juan de la Maguana, República Dominicana.', en: 'Born on March 6 in San Juan de la Maguana, Dominican Republic.', fr: 'Naît le 6 mars à San Juan de la Maguana, en République dominicaine.' },
+  { y: '1982', es: 'Con sus abuelos en Las Mulas dibuja sobre la tierra y modela figuras con barro tras la lluvia.', en: 'Living with his grandparents in Las Mulas, he draws on the earth and models figures from mud after the rain.', fr: 'Chez ses grands-parents à Las Mulas, il dessine sur la terre et modèle des figures en boue après la pluie.' },
+  { y: '1990', es: 'A los doce años visita por primera vez el Museo del Prado, en España.', en: 'At twelve, he visits the Museo del Prado in Spain for the first time.', fr: 'À douze ans, il visite pour la première fois le Museo del Prado, en Espagne.' },
+  { y: '1994', es: 'Llega solo a Chicago a los dieciséis años. Ese verano nombra por primera vez el Psico-Expresionismo.', en: 'Arrives alone in Chicago at sixteen. That summer he first names Psycho-Expressionism.', fr: 'Arrive seul à Chicago à seize ans. Cet été-là, il nomme pour la première fois le Psycho-Expressionnisme.' },
+  { y: '2004', es: 'Huellas: la invención de lo visible, en el Museo del Hombre Dominicano.', en: 'Huellas: la invención de lo visible at the Museo del Hombre Dominicano.', fr: 'Huellas : la invención de lo visible au Museo del Hombre Dominicano.' },
+  { y: '2016', es: 'Un incendio destruye su estudio-residencia en Nueva York.', en: 'A fire destroys his studio-residence in New York.', fr: 'Un incendie détruit son atelier-résidence à New York.' },
+  { y: '2017', es: 'Crea el mural Todos somos inmigrantes durante ARTFORO en Nueva York.', en: 'Creates the mural Todos somos inmigrantes during ARTFORO in New York.', fr: 'Réalise la fresque Todos somos inmigrantes pendant ARTFORO à New York.' },
+  { y: '2021', es: 'El 17 de noviembre abre la primera fase del Museo Abreu en Bávaro con la retrospectiva Memoria del Psico-Expresionismo.', en: 'On November 17, the first phase of Museo Abreu opens in Bávaro with the retrospective Memoria del Psico-Expresionismo.', fr: 'Le 17 novembre, la première phase du Museo Abreu ouvre à Bávaro avec la rétrospective Memoria del Psico-Expresionismo.' },
+  { y: '2023', es: 'El 12 de diciembre el museo se amplía a diez salas.', en: 'On December 12, the museum expands to ten galleries.', fr: 'Le 12 décembre, le musée s’agrandit et compte dix salles.' },
+  { y: '2025', es: 'Primera edición de ART GABANGI en el Museo Abreu.', en: 'First edition of ART GABANGI at Museo Abreu.', fr: 'Première édition d’ART GABANGI au Museo Abreu.' },
+  { y: '2026', es: 'Publica Ecce Homo: El arte salvó mi vida.', en: 'Publishes Ecce Homo: Art Saved My Life.', fr: 'Publie Ecce Homo : L’art m’a sauvé la vie.' },
 ];
 
 // Major exhibitions as listed on oscarabreu.com (Biography page); `pes` is the
-// Spanish place name where it differs.
+// Spanish place name and `pfr` the French one, where they differ.
 const EXHIBITIONS = [
   { y: 1996, t: 'El mal de las drogas', p: 'Riverside Arts Center, Illinois' },
   { y: 1999, t: 'Mira a través de mis ojos', p: 'Casa Dominicana, Chicago' },
   { y: 1999, t: 'Resaca de la existencia', p: 'Truman College, Chicago' },
-  { y: 2004, t: 'Huellas: La invención de lo visible', p: 'Museo del Hombre Dominicano, Santo Domingo' },
-  { y: 2005, t: 'La forma de la música', p: 'Sofitel Nicolás de Ovando, Santo Domingo' },
-  { y: 2005, t: 'Acontecimientos del espíritu', p: 'Galerías Prinardi, Puerto Rico' },
+  { y: 2004, t: 'Huellas: La invención de lo visible', p: 'Museo del Hombre Dominicano, Santo Domingo', pfr: 'Museo del Hombre Dominicano, Saint-Domingue' },
+  { y: 2005, t: 'La forma de la música', p: 'Sofitel Nicolás de Ovando, Santo Domingo', pfr: 'Sofitel Nicolás de Ovando, Saint-Domingue' },
+  { y: 2005, t: 'Acontecimientos del espíritu', p: 'Galerías Prinardi, Puerto Rico', pfr: 'Galerías Prinardi, Porto Rico' },
   { y: 2005, t: 'Comportamiento de la memoria', p: 'Alianza Art Gallery, New York', pes: 'Alianza Art Gallery, Nueva York' },
   { y: 2006, t: 'Punishment of Memory', p: 'Joe Hintersteiner Gallery, New York', pes: 'Joe Hintersteiner Gallery, Nueva York' },
   { y: 2006, t: 'Detachment of the Ego', p: 'Marwen Foundation, Chicago / Alianza Art Gallery, New York', pes: 'Marwen Foundation, Chicago / Alianza Art Gallery, Nueva York' },
-  { y: 2006, t: 'Generaciones', p: 'Ozamarte Centro de Arte Contemporáneo, Santo Domingo' },
-  { y: 2009, t: 'Ironically Absurd', p: 'Alliance Française, Santo Domingo', pes: 'Alianza Francesa, Santo Domingo' },
-  { y: 2009, t: 'Agitación de la memoria', p: 'Centro Abreu, Santo Domingo' },
-  { y: 2019, t: 'La forma del pensamiento', p: 'CODAP, Santo Domingo' },
-  { y: 2019, t: 'Razonamiento de la Identidad', p: 'Altos de Chavón Gallery, Casa de Campo', pes: 'Galería Altos de Chavón, Casa de Campo' },
-  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Abreu Museum, Punta Cana', pes: 'Museo Abreu, Punta Cana' },
-  { y: 2024, t: 'Luxura', p: 'Abreu Museum, Punta Cana', pes: 'Museo Abreu, Punta Cana' },
+  { y: 2006, t: 'Generaciones', p: 'Ozamarte Centro de Arte Contemporáneo, Santo Domingo', pfr: 'Ozamarte Centro de Arte Contemporáneo, Saint-Domingue' },
+  { y: 2009, t: 'Ironically Absurd', p: 'Alliance Française, Santo Domingo', pes: 'Alianza Francesa, Santo Domingo', pfr: 'Alliance Française, Saint-Domingue' },
+  { y: 2009, t: 'Agitación de la memoria', p: 'Centro Abreu, Santo Domingo', pfr: 'Centro Abreu, Saint-Domingue' },
+  { y: 2019, t: 'La forma del pensamiento', p: 'CODAP, Santo Domingo', pfr: 'CODAP, Saint-Domingue' },
+  { y: 2019, t: 'Razonamiento de la Identidad', p: 'Altos de Chavón Gallery, Casa de Campo', pes: 'Galería Altos de Chavón, Casa de Campo', pfr: 'Galerie Altos de Chavón, Casa de Campo' },
+  { y: 2021, t: 'Memoria del Psico-Expresionismo', p: 'Abreu Museum, Punta Cana', pes: 'Museo Abreu, Punta Cana', pfr: 'Musée Abreu, Punta Cana' },
+  { y: 2024, t: 'Luxura', p: 'Abreu Museum, Punta Cana', pes: 'Museo Abreu, Punta Cana', pfr: 'Musée Abreu, Punta Cana' },
 ];
 
-// Official biography from oscarabreu.com/biography, Spanish and English
+// Official biography from oscarabreu.com/biography, Spanish, English and French
 // versions as published (critics' links removed).
 const BIO_SITE = {
   source: 'oscarabreu.com',
@@ -161,6 +163,15 @@ const BIO_SITE = {
       'In parallel with his artistic production, Abreu has developed significant work as a cultural organizer. In 2000 he founded Artep Magazine; in 2014 he created ARTFORO —which became an international fair—; and in 2021 he inaugurated the Abreu Museum, a space dedicated to consecrating contemporary Dominican art.',
     ],
     legacy: 'With boldness and originality, Oscar Abreu has turned Psycho-Expressionism into a visual and philosophical movement that goes beyond painting. Exhibited in museums and private collections across the United States, the Caribbean and Europe, his work stands as a landmark of contemporary Dominican art and a cultural bridge between the Dominican Republic and its global diaspora.',
+  },
+  fr: {
+    intro: 'Oscar Abreu (San Juan de la Maguana, République dominicaine, 1978) est considéré depuis 2021 comme l’artiste dominicain vivant le plus coté, après qu’une de ses œuvres a atteint le prix record de 200 000 USD. Fort de plus de trois décennies de carrière, Abreu a développé un langage personnel : le Psycho-Expressionnisme, inspiré par la psychanalyse freudienne et centré sur l’exploration de la mémoire, de l’identité et de la psyché humaine à travers des couches de couleur, des collages, des symboles et des textures.',
+    circuit: 'Ces expositions ont consolidé sa présence à New York, Chicago, Porto Rico, Saint-Domingue et Punta Cana, positionnant son œuvre dans un circuit international diversifié.',
+    recognition: [
+      'Son travail a été analysé par des critiques influents tels que Candido Geron, Abil Peralta Agüero (Memoria del Psico-Expresionismo, 2018), Odalís G. Pérez, Fernando Morbán Laucer, Laura Gil, Gamal Michelen et Marianne de Tolentino, qui ont souligné l’originalité, la puissance expressive et la profondeur psychologique de sa proposition.',
+      'Parallèlement à sa production artistique, Abreu a mené une importante action en tant qu’organisateur culturel. En 2000, il fonde la revue Artep Magazine ; en 2014, il crée ARTFORO —devenue une foire internationale— ; et en 2021, il inaugure le Musée Abreu, un espace dédié à l’art contemporain dominicain.',
+    ],
+    legacy: 'Avec audace et originalité, Oscar Abreu a fait du Psycho-Expressionnisme un mouvement visuel et philosophique qui dépasse la peinture. Présentée dans des musées et des collections privées aux États-Unis, dans les Caraïbes et en Europe, son œuvre constitue une référence de l’art dominicain contemporain et un pont culturel entre la République dominicaine et sa diaspora.',
   },
   es: {
     intro: 'Oscar Abreu (San Juan de la Maguana, República Dominicana, 1978) es considerado desde 2021 el artista vivo más cotizado de la República Dominicana, tras alcanzar un récord de 200,000 dólares por una de sus obras. Con más de tres décadas de trayectoria, Abreu ha desarrollado un lenguaje propio: el Psico-Expresionismo, inspirado en el psicoanálisis freudiano y centrado en la exploración de la memoria, la identidad y la psicología humana mediante capas de color, collages, símbolos y texturas.',
@@ -251,10 +262,10 @@ function coverSVG(title, sub) {
 }
 
 // Manifestos as published on oscarabreu.com (/statement and /manifiesto/2.html),
-// in the artist's own Spanish and English versions. `work` is the image that
+// in the artist's own Spanish, English and French versions. `work` is the image that
 // opens each one on the site.
 const MANIFESTO = {
-  title: { es: 'La urgencia de crear: el arte como revelación', en: 'The Urgency to Create: Art as Revelation' },
+  title: { es: 'La urgencia de crear: el arte como revelación', en: 'The Urgency to Create: Art as Revelation', fr: 'L’urgence de créer : l’art comme révélation' },
   source: 'oscarabreu.com', work: 'escaping-being',
   es: [
     'No fui yo quien eligió al arte; fue el arte quien me eligió. Me atravesó como médium, como campo de batalla, como refugio. Desde la infancia sentí una energía indomable que no encontraba contención en lo visible. Una urgencia interior que exigía transformar lo intangible en imagen, lo reprimido en forma. Ese impulso fue —y sigue siendo— el motor vital de mi existencia.',
@@ -280,10 +291,22 @@ const MANIFESTO = {
     'It speaks from the abyss.',
     'And it reveals us.',
   ],
+  fr: [
+    'Je n’ai pas choisi l’art ; l’art m’a choisi. Il m’a traversé comme médium, champ de bataille et refuge. Depuis l’enfance, j’ai senti une énergie indomptable que le visible ne pouvait contenir. Une urgence intérieure exigeant de transformer l’intangible en image, le refoulé en forme. Cet élan fut—et demeure—le moteur vital de ma existence.',
+    'Ce manifeste n’est ni une autobiographie traditionnelle ni un catalogue d’œuvres. C’est une carte émotionnelle. Chaque mot répond à une image, et chaque image est l’écho d’une expérience vécue qui a dû être transfigurée. Dans cet acte de création, j’ai trouvé du sens dans le chaos, de la musique dans la fracture, et de la beauté dans le brut, le non décoratif. Comme l’écrivait Jung : « Qui regarde en soi s’éveille. » Cet éveil n’apaise pas : il secoue. Là naît l’authentique.',
+    'Le Psycho-Expressionnisme que je propose n’est ni une technique ni un courant : c’est une manière d’être au monde. Une éthique expressive assumée depuis la vulnérabilité et la lucidité. Je ne cherche pas à représenter ce que nous voyons mais ce que nous ressentons. Mon langage visuel est fait de taches, silences, ruptures et gestes ; entre le spontané et le délibéré s’ouvre une fêlure par où paraît l’âme.',
+    'Bien que mon œuvre naisse de l’autobiographique, sa vocation est de s’étendre vers le collectif. Elle ne reste pas une confession intime : elle cherche une résonance universelle. En chaque pièce, il y a douleur mais aussi émerveillement ; désir mais aussi contemplation ; et, par-dessus tout, une vérité—non pas objective mais incarnée : émotionnelle, symbolique, profondément humaine.',
+    'Ce manifeste est aussi une offrande. À ceux qui m’ont formé, aux symboles qui m’accompagnent, et à ceux qui cherchent dans l’art un langage quand les mots manquent. Plus qu’un parcours, je partage ici une façon de résister à l’oubli, de transformer la blessure en mémoire et la mémoire en signe.',
+    'Je n’ai pas écrit ce livre pour plaire. Je l’ai écrit pour émouvoir. Pour ouvrir des questions. Pour agiter ce que nous croyions endormi. L’art qui m’intéresse n’orne pas : il interpelle. Il n’explique pas : il suggère. Il ne console pas : il réveille.',
+    'Qui franchit ce seuil ne trouvera pas de réponses closes. Mais peut-être—entre ces mots et ces formes—trouvera-t-il un reflet de lui-même.',
+    'Car l’art—lorsqu’il est vrai—ne parle pas de l’extérieur.',
+    'Il parle depuis l’abîme.',
+    'Et il nous révèle.',
+  ],
 };
 
 const MANIFESTO2 = {
-  title: { es: 'El trazo como origen', en: 'The Stroke as Origin' },
+  title: { es: 'El trazo como origen', en: 'The Stroke as Origin', fr: 'Le trait comme origine' },
   source: 'oscarabreu.com', work: 'time-on-my-face',
   es: [
     'Tenía apenas tres años. No sabía escribir, pero ya dibujaba. Un palo en la mano. La tierra como lienzo.',
@@ -339,42 +362,78 @@ const MANIFESTO2 = {
     'I write to trace the path traveled and to offer a map to anyone who needs to rediscover their memory.',
     'May these pages work as a key, an invitation—a luminous fissure through which others might glimpse themselves.',
   ],
+  fr: [
+    'J’avais à peine trois ans. Je ne savais pas encore écrire, mais je dessinais déjà. Un bâton à la main. La terre comme toile.',
+    'La cour poussiéreuse chez mes grands-parents à San Juan de la Maguana — au sud de la République dominicaine — fut, sans que je le sache, mon premier atelier.',
+    'Je passais des heures à tracer des figures sur le sol humide, absorbé, concentré, comme si chaque ligne emportait un morceau de mon âme.',
+    'Personne ne me l’a appris. Personne ne me l’a demandé. Mais je dessinais — parce que j’en avais besoin.',
+    '« L’âme se nourrit de symboles. » — Carl G. Jung',
+    'Plus tard, mes cahiers d’écolier se couvrirent de dessins : marges remplies, pages saturées. Ce n’était pas un divertissement : c’était une manière d’exister.',
+    'Un élan jaillissant du corps, sans explication ; comme si je cherchais à parler à quelque chose de plus ancien, de plus profond que moi.',
+    'La famille maternelle, sans formation académique, ne savait qu’en faire. Cela les amusait. On me laissait seul avec mes lignes et mes mondes inventés.',
+    'Pour moi, ce n’était pas un jeu : c’était une affirmation. Une urgence. Respirer avec la main.',
+    'Je me souviens d’une pièce spéciale chez ma grand-mère : la chambre des saints. Sur une table, un verre d’eau, des images de vierges, des prières, de l’encens.',
+    'Une image m’hypnotisait : Saint Michel Archange, l’épée à la main, écrasant le diable avec une fermeté céleste. J’essayais de la copier encore et encore.',
+    'Les détails religieux m’importaient peu. C’était le combat qui me frappait : la lutte silencieuse entre la lumière et l’ombre, la tension gravée dans le geste de l’archange.',
+    '« On ne s’éclaire pas en imaginant des figures de lumière, mais en rendant consciente l’obscurité. » — Carl G. Jung',
+    'Sans le savoir, je représentais déjà une bataille intérieure : je dessinais mes ombres — peur, désir, culpabilité.',
+    'Cette image devint symbole. Et les symboles, avec les années, devinrent ma langue.',
+    'Chaque trait sur la terre, chaque dessin sur papier, était une manière primitive de faire mémoire : donner un corps à l’innommable, un langage secret de gestes, de couleurs et de silences.',
+    'Des années plus tard, je compris que c’était la graine de mon Psycho-Expressionnisme : une pratique née de l’isolement, de l’intuition et du désir de regarder au-dedans.',
+    '« Connaître sa propre obscurité est la meilleure méthode pour affronter l’obscurité d’autrui. » — Carl G. Jung',
+    'Je n’écris pas ce livre pour raconter des anecdotes. Je l’écris parce que l’art m’a sauvé. Quand je ne savais plus qui j’étais, l’art m’a soutenu.',
+    'Quand tout se brisait, l’art était la fissure par où la lumière rentrait.',
+    'Le Psycho-Expressionnisme n’est pas une théorie que j’ai conçue : c’est une manière de respirer. De résister. De comprendre l’expérience humaine dans ses couches les plus invisibles.',
+    'C’est ma façon de vivre et de partager ma vérité.',
+    'Ce livre n’est ni académique ni une autobiographie classique : c’est un manifeste émotionnel, une cartographie symbolique.',
+    'J’écris pour tracer le chemin parcouru et offrir une carte à quiconque veut retrouver sa mémoire.',
+    'Que ces pages soient une clé, une invitation — une faille lumineuse par laquelle chacun puisse se regarder.',
+  ],
 };
 
-// Reviews as published on oscarabreu.com/reviews (Spanish and English). Only
+// Reviews as published on oscarabreu.com/reviews (Spanish, English and French). Only
 // Cándido Gerón's full text is online (oscarabreu.com/candidogeron); the site's
 // links for the other critics return 404, so they are left out.
 const REVIEWS = {
-  title: { es: 'Reseñas', en: 'Reviews' },
-  intro: { es: 'Lecturas críticas sobre la obra de Oscar Abreu por parte de historiadores y críticos de arte.', en: 'Critical readings of Oscar Abreu’s work by art historians and leading critics.' },
+  title: { es: 'Reseñas', en: 'Reviews', fr: 'Critiques' },
+  intro: { es: 'Lecturas críticas sobre la obra de Oscar Abreu por parte de historiadores y críticos de arte.', en: 'Critical readings of Oscar Abreu’s work by art historians and leading critics.', fr: 'Lectures critiques de l’œuvre d’Oscar Abreu par des historiens et critiques d’art.' },
   items: [
     { critic: 'Marianne de Tolentino', year: '2004',
       es: 'Esta actitud formal concuerda con inquietudes humanistas y la creación de personajes “sobrevivientes y testigos” —así los califica el propio artista— comprometidos con su historia y comprometiendo la reflexión del espectador. Si no representa ni imita, Oscar Abreu sugiere e “inventa lo visible”, acorde con la propuesta del filósofo francés Henri Meschonnic acerca de la escritura y de la pintura: “Inventa otra cosa que el sentido. Y que tenga sentido.”',
-      en: 'This formal attitude aligns with humanist concerns and with the creation of characters—“survivors and witnesses,” as the artist himself calls them—committed to their history and engaging the viewer’s reflection. Rather than representing or imitating, Oscar Abreu suggests and “invents the visible,” in keeping with the French philosopher Henri Meschonnic’s proposal regarding writing and painting: “Invent something other than meaning. And let it make sense.”' },
+      en: 'This formal attitude aligns with humanist concerns and with the creation of characters—“survivors and witnesses,” as the artist himself calls them—committed to their history and engaging the viewer’s reflection. Rather than representing or imitating, Oscar Abreu suggests and “invents the visible,” in keeping with the French philosopher Henri Meschonnic’s proposal regarding writing and painting: “Invent something other than meaning. And let it make sense.”',
+      fr: 'Cette attitude formelle s’accorde avec des préoccupations humanistes et la création de personnages — « survivants et témoins », ainsi que les nomme l’artiste — engagés dans leur histoire et sollicitant la réflexion du spectateur. Plutôt que de représenter ou d’imiter, Oscar Abreu suggère et « invente le visible », conformément à la proposition du philosophe français Henri Meschonnic : « Invente autre chose que le sens. Et que cela ait du sens. »' },
     { critic: 'Abil Peralta', year: '1998',
       es: 'Oscar Abreu, aplica con sensibilidad y raciocinio una cromática deliberadamente anárquica en su exposición, sin dejarla desbordar hasta el esquizoide estado del abigarramiento, demostrando así poseer un ojo cromático de conciencia severa y fría, a pesar de la turbulencia y energía que emiten y transmiten hasta el ojo espectador las líneas de su dibujo vibrante y suelto.',
-      en: 'With sensitivity and reason, Oscar Abreu applies a deliberately anarchic chromatic palette, without letting it spill over into a schizoid state of cluttered motley. Thus he shows a chromatic eye marked by a severe, cool awareness, despite the turbulence and energy that the vibrant, free line of his drawing emits and transmits to the viewer.' },
+      en: 'With sensitivity and reason, Oscar Abreu applies a deliberately anarchic chromatic palette, without letting it spill over into a schizoid state of cluttered motley. Thus he shows a chromatic eye marked by a severe, cool awareness, despite the turbulence and energy that the vibrant, free line of his drawing emits and transmits to the viewer.',
+      fr: 'Avec sensibilité et discernement, Oscar Abreu emploie une palette chromatique délibérément anarchique, sans la laisser déborder jusqu’à un état schizoïde de bariolage saturé. Il révèle ainsi un œil chromatique d’une conscience sévère et froide, malgré la turbulence et l’énergie que la ligne vibrante et libre de son dessin émet et transmet au regard.' },
     { critic: 'Abil Peralta Agüero', year: '2004',
       es: 'El diseño constructivo, normado por líneas afirmativas en la que prevalece el negro sobre colores cálidos, hace de la mancha y el accidente matérico una entidad de alta significación simbólica dentro de la lingüística visual de Oscar Abreu, en la que prevalecen como valores semánticos, tanto el valor de la pintura-pintura como lenguaje autónomo, como el valor sociológico del humanismo visceral que connota ante la mirada perceptora el habla interior existencial del propio artista.',
-      en: 'The constructive design, governed by assertive lines in which black prevails over warm colors, turns stain and material accident into entities of high symbolic significance within Oscar Abreu’s visual linguistics. There, semantic values include both painting-as-painting as an autonomous language and the sociological value of a visceral humanism that, to the perceiving gaze, connotes the artist’s own interior, existential speech.' },
+      en: 'The constructive design, governed by assertive lines in which black prevails over warm colors, turns stain and material accident into entities of high symbolic significance within Oscar Abreu’s visual linguistics. There, semantic values include both painting-as-painting as an autonomous language and the sociological value of a visceral humanism that, to the perceiving gaze, connotes the artist’s own interior, existential speech.',
+      fr: 'Le dessin constructif, régi par des lignes affirmatives où le noir l’emporte sur les tons chauds, fait de la tache et de l’accident matériel une entité de haute portée symbolique au sein de la linguistique visuelle d’Oscar Abreu. Les valeurs sémantiques y incluent à la fois la peinture-en-tant-que-peinture comme langage autonome, et la valeur sociologique d’un humanisme viscéral qui, pour le regard percevant, connote la parole intérieure existentielle de l’artiste.' },
     { critic: 'Odalís G. Pérez', year: '2003',
       es: 'Indudablemente, el eje narrativo de la creación pictórica de Oscar Abreu traduce la visión transindividual del pintor, habida cuenta de los usos estético-sensibles abarcantes de la forma visual que asegura los bordes y centros de una obra presentificada en lo invisible como narrativa de lo visible.',
-      en: 'Undoubtedly, the narrative axis of Oscar Abreu’s pictorial creation translates the painter’s trans-individual vision, given the wide aesthetico-sensitive uses of visual form that ensure the edges and centers of a work—made present within the invisible—become a narrative of the visible.' },
+      en: 'Undoubtedly, the narrative axis of Oscar Abreu’s pictorial creation translates the painter’s trans-individual vision, given the wide aesthetico-sensitive uses of visual form that ensure the edges and centers of a work—made present within the invisible—become a narrative of the visible.',
+      fr: 'Sans doute, l’axe narratif de la création picturale d’Oscar Abreu traduit la vision trans-individuelle du peintre, compte tenu des usages esthétiques et sensibles étendus de la forme visuelle qui font que bords et centres d’une œuvre, présentifiée dans l’invisible, deviennent récit du visible.' },
     { critic: 'Odalís G. Pérez', year: '1998',
       es: 'Las imágenes pictóricas de Oscar Abréu puntualizan cierta ontología, onirogestualidad que interpreta la luz, el falso sentido de la realidad que desajusta el vivir planteado y determinado por el artista. La raíz del acto pictórico va articulando todo un proceso desde el cual se unifica el orden de la línea, el punto, las densidades del color y de la forma. No se trata de un discurrir desde la sustancia y el encuadre temático, más bien se trata de un nacimiento del cuerpo alienado por el uso y el contacto corrosivo de los signos.',
-      en: 'Oscar Abreu’s pictorial images pinpoint a certain ontology, an oneiric gesturality that interprets light and the false sense of reality that unsettles the life posited and determined by the artist. The root of the pictorial act articulates a process through which the order of line, point, and the densities of color and form are unified. This is not a discourse proceeding from substance and thematic framing; rather, it is the birth of a body alienated by the use and corrosive contact of signs.' },
+      en: 'Oscar Abreu’s pictorial images pinpoint a certain ontology, an oneiric gesturality that interprets light and the false sense of reality that unsettles the life posited and determined by the artist. The root of the pictorial act articulates a process through which the order of line, point, and the densities of color and form are unified. This is not a discourse proceeding from substance and thematic framing; rather, it is the birth of a body alienated by the use and corrosive contact of signs.',
+      fr: 'Les images picturales d’Oscar Abreu précisent une certaine ontologie, une gestualité onirique qui interprète la lumière et le faux sentiment de réalité perturbant la vie posée et déterminée par l’artiste. La racine de l’acte pictural articule un processus où s’unifient l’ordre de la ligne, du point, et les densités de la couleur et de la forme. Il ne s’agit pas d’un discours issu de la substance et de l’encadrement thématique ; il s’agit plutôt de la naissance d’un corps aliéné par l’usage et le contact corrosif des signes.' },
     { critic: 'José Saldaña', year: '1998',
       es: 'El mundo de Oscar Abreu se aparta de las referencias circunstanciales, de toda anécdota, para decir, exclamar, la concepción agónica y solitaria del individuo al que se refiere en cada uno de sus lienzos. Sugerente, explorador, de lo más inverosímil del ser, con habilidad y destreza precisa en las líneas.',
-      en: 'Oscar Abreu’s world leaves aside circumstantial references and anecdote in order to say—indeed to cry out—the agonistic and solitary conception of the individual he addresses in each canvas. Suggestive, exploratory of the most implausible reaches of being, with skill and precise mastery of line.' },
+      en: 'Oscar Abreu’s world leaves aside circumstantial references and anecdote in order to say—indeed to cry out—the agonistic and solitary conception of the individual he addresses in each canvas. Suggestive, exploratory of the most implausible reaches of being, with skill and precise mastery of line.',
+      fr: 'L’univers d’Oscar Abreu s’écarte des références circonstancielles et de toute anecdote pour dire — pour clamer — la conception agonique et solitaire de l’individu auquel il se réfère dans chacune de ses toiles. Suggestif, explorateur de l’invraisemblable de l’être, avec habileté et une maîtrise précise de la ligne.' },
     { critic: 'Fernando Morbán Laucer', year: '1999',
       es: 'La fuerza interpretativa de las obras de Oscar Abreu, en muchos casos, nos recrea los discursos pictóricos del pasado y presente siglo, donde descifrar el código de los símbolos y de las imágenes constituye una tarea que no siempre resulta fácil. Oscar Abreu se abraza en el año de 1994 a lo que él ha llamado Psico-Expresionismo, para con habilidad y talento crear las obras pictóricas de sus experiencias vividas durante diversas etapas de su vida y de distintos personajes, cual si fuera un psicoanalista.',
-      en: 'The interpretive force of Oscar Abreu’s works often revisits the pictorial discourses of the past and present century, where deciphering the code of symbols and images is a task that is not always easy. In 1994, Abreu embraced what he called Psycho-Expressionism, and with skill and talent created paintings drawn from lived experiences across stages of his life and from different characters — as if he were a psychoanalyst.' },
+      en: 'The interpretive force of Oscar Abreu’s works often revisits the pictorial discourses of the past and present century, where deciphering the code of symbols and images is a task that is not always easy. In 1994, Abreu embraced what he called Psycho-Expressionism, and with skill and talent created paintings drawn from lived experiences across stages of his life and from different characters — as if he were a psychoanalyst.',
+      fr: 'La force interprétative des œuvres d’Oscar Abreu recrée souvent les discours picturaux des siècles passé et présent, où déchiffrer le code des symboles et des images n’est pas toujours aisé. En 1994, Abreu adopte ce qu’il nomme le Psycho-Expressionnisme et, avec habileté et talent, crée des œuvres nourries de ses expériences et de divers personnages — comme s’il était psychanalyste.' },
     { critic: 'Cándido Gerón', year: '2000', url: 'https://oscarabreu.com/candidogeron/',
       es: 'En realidad, la pintura de Oscar Abreu propone valores plásticos y se ve afectada por todas las vías de expresión. Su diversidad evocadora ensaya ciertos paralelismos sosegados y silentes. En ocasiones, refleja una indulgente ilusión como si naciera desde el recuerdo y, en otros casos, nostálgicas reminiscencias en sus particulares anatemas.',
-      en: 'In truth, Oscar Abreu’s painting proposes plastic values and is affected by every avenue of expression. Its evocative diversity essays certain quiet, silent parallelisms. At times it reflects an indulgent illusion, as if born of memory, and in other cases nostalgic reminiscences in his particular anathemas.' },
+      en: 'In truth, Oscar Abreu’s painting proposes plastic values and is affected by every avenue of expression. Its evocative diversity essays certain quiet, silent parallelisms. At times it reflects an indulgent illusion, as if born of memory, and in other cases nostalgic reminiscences in his particular anathemas.',
+      fr: 'En réalité, la peinture d’Oscar Abreu propose des valeurs plastiques et se voit affectée par toutes les voies d’expression. Sa diversité évocatrice tente certains parallélismes apaisés et silencieux. Parfois, elle reflète une indulgente illusion, comme née du souvenir ; d’autres fois, des réminiscences nostalgiques dans ses anathèmes particuliers.' },
     { critic: 'Myrna Guerrero', year: '2005',
       es: 'Puede que su discurso resulte ajeno o lejano por cuanto en la tradición pictórica dominicana prevalece la figuración. Sin embargo, no cabe duda de que tenemos que reconocer que estamos ante un artista comprometido con su propio ser y su espacio vital.',
-      en: 'His discourse may seem alien or distant insofar as figuration prevails in Dominican pictorial tradition. Nevertheless, there is no doubt that we must acknowledge we are before an artist committed to his own being and vital space.' },
+      en: 'His discourse may seem alien or distant insofar as figuration prevails in Dominican pictorial tradition. Nevertheless, there is no doubt that we must acknowledge we are before an artist committed to his own being and vital space.',
+      fr: 'Son discours peut paraître étranger ou lointain, dans la mesure où la figuration prévaut dans la tradition picturale dominicaine. Néanmoins, il ne fait aucun doute que nous sommes face à un artiste engagé envers son propre être et son espace vital.' },
   ],
 };
 
@@ -385,8 +444,8 @@ const CATALOGUE = {
   img: 'img/exhibits/huellas-catalogue.jpg', title: 'Huellas “La invención de lo visible”',
   venue: 'Museo del Hombre Dominicano', year: 2004,
   text: 'Published on the occasion of the exhibitions “Huellas “La invención de lo visible”” at Museo del Hombre Dominicano, Dominican Republic, (November 4-20, 2004). Softcover. 64 pgs. with essay by Marianne de Tolentino, Odalís G. Perez, Abil Peralta Aguero',
-  dates: { es: '4–20 de noviembre de 2004', en: 'November 4–20, 2004' },
-  format: { es: 'Tapa blanda · 64 páginas', en: 'Softcover · 64 pages' },
+  dates: { es: '4–20 de noviembre de 2004', en: 'November 4–20, 2004', fr: '4–20 novembre 2004' },
+  format: { es: 'Tapa blanda · 64 páginas', en: 'Softcover · 64 pages', fr: 'Couverture souple · 64 pages' },
   essays: 'Marianne de Tolentino, Odalís G. Perez, Abil Peralta Aguero',
 };
 
@@ -400,51 +459,61 @@ const CONTACT = {
 };
 
 // Press list as published on oscarabreu.com/bibliography: headlines as each
-// outlet published them (Spanish), with the site's own summaries in Spanish and English.
+// outlet published them (Spanish), with the site's own summaries in Spanish, English and French.
 const BIBLIOGRAPHY = {
-  title: { es: 'Bibliografía y prensa', en: 'Bibliography & Press' },
-  intro: { es: 'Selección de artículos, entrevistas y notas recientes sobre Oscar Abreu en medios de referencia.', en: 'A selection of recent articles, interviews, and features on Oscar Abreu from reputable outlets.' },
-  note: { es: 'Los titulares se muestran tal como fueron publicados por cada medio. Selección en actualización continua.', en: 'Headlines are shown exactly as originally published by each outlet. Selection updated on a rolling basis.' },
+  title: { es: 'Bibliografía y prensa', en: 'Bibliography & Press', fr: 'Bibliographie & Presse' },
+  intro: { es: 'Selección de artículos, entrevistas y notas recientes sobre Oscar Abreu en medios de referencia.', en: 'A selection of recent articles, interviews, and features on Oscar Abreu from reputable outlets.', fr: 'Sélection d’articles récents, d’entretiens et de dossiers sur Oscar Abreu issus de médias de référence.' },
+  note: { es: 'Los titulares se muestran tal como fueron publicados por cada medio. Selección en actualización continua.', en: 'Headlines are shown exactly as originally published by each outlet. Selection updated on a rolling basis.', fr: 'Les titres sont affichés tels que publiés à l’origine par chaque média. Sélection mise à jour en continu.' },
   items: [
     { title: 'Pequeños y medianos formatos de Oscar Abreu en Puerto Rico', outlet: 'Hoy',
       url: 'https://hoy.com.do/pequenos-y-medianos-formatos-de-oscar-abreu-en-puerto-rico/',
       es: 'Cobertura de la muestra de pequeños y medianos formatos presentada en Puerto Rico. El artículo destaca la experimentación material y la continuidad del Psico-Expresionismo en obras recientes, así como la cercanía con el público local. Incluye detalles del montaje y del enfoque curatorial.',
-      en: 'Coverage of a presentation of small and medium formats in Puerto Rico. The piece highlights material experimentation and the continuity of Psycho-Expressionism in recent works, as well as a close rapport with local audiences. It also mentions curatorial choices and display.' },
+      en: 'Coverage of a presentation of small and medium formats in Puerto Rico. The piece highlights material experimentation and the continuity of Psycho-Expressionism in recent works, as well as a close rapport with local audiences. It also mentions curatorial choices and display.',
+      fr: 'Couverture d’une présentation de petits et moyens formats à Porto Rico. L’article met en avant l’expérimentation matérielle et la continuité du Psycho-Expressionnisme dans les œuvres récentes, ainsi que la proximité avec le public local. Des choix curatoriaux et scénographiques sont évoqués.' },
     { title: 'Oscar Abreu: cuando el arte ayuda a los demás', outlet: 'Diario Libre',
       url: 'https://www.diariolibre.com/revista/oscar-abreu-cuando-el-arte-ayuda-a-los-dems-KODL84815',
       es: 'Reporte que pone en primer plano la dimensión social del trabajo de Abreu: iniciativas benéficas, subastas y acciones comunitarias articuladas desde el arte. El medio subraya cómo su práctica conecta sensibilidad estética con impacto real. Un perfil humano y comprometido.',
-      en: 'A feature foregrounding the social dimension of Abreu’s practice: charitable initiatives, benefit auctions, and community-driven action. The outlet stresses the bond between aesthetic sensitivity and real-world impact. A humane, committed profile.' },
+      en: 'A feature foregrounding the social dimension of Abreu’s practice: charitable initiatives, benefit auctions, and community-driven action. The outlet stresses the bond between aesthetic sensitivity and real-world impact. A humane, committed profile.',
+      fr: 'Un dossier qui met au premier plan la dimension sociale de la pratique d’Abreu : initiatives caritatives, ventes solidaires et actions communautaires. Le média souligne le lien entre sensibilité esthétique et impact concret. Un portrait engagé et humain.' },
     { title: 'Oscar Abreu: “El arte salvó mi vida”', outlet: 'Listín Diario', date: '2018-01-13',
       url: 'https://listindiario.com/las-sociales/2018/01/13/498494/oscar-abreu-el-arte-salvo-mi-vida.html',
       es: 'Entrevista y testimonio sobre la trayectoria del artista, donde narra cómo la disciplina y la creación transformaron momentos difíciles. La nota repasa hitos de carrera y motivaciones íntimas. Una lectura valiosa para comprender su ética de trabajo.',
-      en: 'Interview and personal account of the artist’s path, reflecting on how discipline and creation transformed difficult moments. The article revisits career milestones and inner motivations. Useful reading to grasp his work ethic.' },
+      en: 'Interview and personal account of the artist’s path, reflecting on how discipline and creation transformed difficult moments. The article revisits career milestones and inner motivations. Useful reading to grasp his work ethic.',
+      fr: 'Entretien et témoignage personnel sur la trajectoire de l’artiste, expliquant comment la discipline et la création ont transformé des moments difficiles. L’article revisite des jalons de carrière et des motivations intimes. Une clé pour comprendre son éthique de travail.' },
     { title: 'Oscar Abreu deja sus huellas en Trinidad y Tobago', outlet: 'Hoy',
       url: 'https://hoy.com.do/oscar-abreu-deja-sus-huellas-en-trinidad-y-tobago/',
       es: 'Crónica de actividades en Trinidad y Tobago, con énfasis en la pintura en vivo y el intercambio cultural. Se reseña la recepción del público y el diálogo con artistas de la región. La cobertura enfatiza la huella creativa que dejó la visita.',
-      en: 'Report from Trinidad & Tobago with emphasis on live painting and cultural exchange. It covers audience reception and dialogue with regional artists. The coverage points to the creative imprint left by the visit.' },
+      en: 'Report from Trinidad & Tobago with emphasis on live painting and cultural exchange. It covers audience reception and dialogue with regional artists. The coverage points to the creative imprint left by the visit.',
+      fr: 'Reportage depuis Trinité-et-Tobago, axé sur la peinture en direct et l’échange culturel. Réception du public et dialogue avec des artistes régionaux sont détaillés. Le texte insiste sur l’empreinte créative laissée par la visite.' },
     { title: 'Muestran “Por el amor de Dios” de Oscar Abreu', outlet: 'La Información',
       url: 'https://lainformacion.com.do/tendencias/tendencias/muestran-por-el-amor-de-dios-de-oscar-abreu',
       es: 'Presentación de la serie “Por el amor de Dios”, con comentarios sobre su carga simbólica y su exploración de memoria y espiritualidad. Se mencionan recursos de color y capas texturales característicos. La nota contextualiza la propuesta dentro de su obra.',
-      en: 'Presentation of the series “Por el amor de Dios,” noting its symbolic charge and explorations of memory and spirituality. Color strategies and layered textures are discussed. The piece situates the work within his broader production.' },
+      en: 'Presentation of the series “Por el amor de Dios,” noting its symbolic charge and explorations of memory and spirituality. Color strategies and layered textures are discussed. The piece situates the work within his broader production.',
+      fr: 'Présentation de la série « Por el amor de Dios », soulignant sa charge symbolique et ses explorations de la mémoire et de la spiritualité. Couleur et textures stratifiées sont discutées. L’article situe l’ensemble dans sa production globale.' },
     { title: 'Oscar Abreu presentará su arte en Alemania', outlet: 'Diario Libre', date: '2025-05-29',
       url: 'https://www.diariolibre.com/revista/cultura/2025/05/29/oscar-abreu-presentara-su-arte-en-alemania/3131395',
       es: 'Anuncio de agenda artística en Alemania, con muestras y presentaciones públicas. La publicación enfatiza el alcance internacional del proyecto y su proyección en el circuito europeo. Un adelanto de itinerario y objetivos.',
-      en: 'Announcement of upcoming presentations in Germany, including public events. The article underscores the project’s international scope and projection in the European circuit. A preview of itinerary and goals.' },
+      en: 'Announcement of upcoming presentations in Germany, including public events. The article underscores the project’s international scope and projection in the European circuit. A preview of itinerary and goals.',
+      fr: 'Annonce de présentations en Allemagne, incluant des événements publics. Le papier insiste sur la portée internationale du projet et sa projection dans le circuit européen. Un aperçu de l’itinéraire et des objectifs.' },
     { title: 'Oscar Abreu emociona a Hamburgo con un poderoso performance pictórico', outlet: 'El Nuevo Diario',
       url: 'https://elnuevodiario.com.do/oscar-abreu-emociona-a-hamburgo-con-un-poderoso-performance-pictorico-durante-la-segunda-semana-dominicana-en-alemania/',
       es: 'Reseña del performance pictórico realizado en Hamburgo durante la Semana Dominicana en Alemania. El texto describe la energía del proceso en vivo y la respuesta del público. Señala conexiones con los ejes de memoria e identidad.',
-      en: 'Review of a pictorial performance in Hamburg during Dominican Week in Germany. It describes the energy of the live process and the audience’s response, linking it to themes of memory and identity. Immediate impact on site.' },
+      en: 'Review of a pictorial performance in Hamburg during Dominican Week in Germany. It describes the energy of the live process and the audience’s response, linking it to themes of memory and identity. Immediate impact on site.',
+      fr: 'Compte rendu d’une performance picturale à Hambourg durant la Semaine dominicaine en Allemagne. Énergie du processus live et réaction du public sont décrites, en lien avec la mémoire et l’identité. Un impact immédiat en salle.' },
     { title: 'Oscar Abreu presentará en Miami “Estructura de la memoria”', outlet: 'El Nuevo Diario',
       url: 'https://elnuevodiario.com.do/oscar-abreu-presentara-en-miami-estructura-de-la-memoria/',
       es: 'Anuncio de la exposición “Estructura de la memoria” en Miami, con apuntes curatoriales y claves del Psico-Expresionismo. Se resalta la relevancia del contexto de Miami y su diálogo con la diáspora. Una parada estratégica en su calendario.',
-      en: 'Announcement of the Miami show “Structure of Memory,” with curatorial notes and Psycho-Expressionism keys. The relevance of Miami’s context and the dialogue with the diaspora are highlighted. A strategic stop in his calendar.' },
+      en: 'Announcement of the Miami show “Structure of Memory,” with curatorial notes and Psycho-Expressionism keys. The relevance of Miami’s context and the dialogue with the diaspora are highlighted. A strategic stop in his calendar.',
+      fr: 'Annonce de l’exposition de Miami « Structure de la mémoire », avec notes curatoriales et clés du Psycho-Expressionnisme. L’importance du contexte miamien et le dialogue avec la diaspora sont soulignés. Une étape stratégique.' },
     { title: 'Oscar Abreu, invitado especial y en portada durante Miami Art Week', outlet: 'Diario Hispaniola',
       url: 'https://www.diariohispaniola.com/noticia/17849/entretenimiento-y-cultura/oscar-abreu-invitado-especial-y-en-portada-de-revista-durante-miami-art-week.html',
       es: 'Nota sobre su participación como invitado especial y presencia en portada durante la Miami Art Week. Se subraya la visibilidad que otorga el ecosistema ferial y mediático de la ciudad. Reconocimiento y proyección internacional.',
-      en: 'Note on his role as special guest and magazine cover presence during Miami Art Week. It stresses the visibility granted by the fair and media ecosystem. International projection and recognition.' },
+      en: 'Note on his role as special guest and magazine cover presence during Miami Art Week. It stresses the visibility granted by the fair and media ecosystem. International projection and recognition.',
+      fr: 'Note sur sa participation en tant qu’invité d’honneur et sa présence en couverture pendant la Miami Art Week. La visibilité offerte par l’écosystème foires/médias est mise en avant. Rayonnement et reconnaissance internationaux.' },
     { title: 'Oscar Abreu deslumbra en Alemania con un performance', outlet: 'El Día',
       url: 'https://eldia.com.do/oscar-abreu-deslumbra-en-alemania-con-un-performance/',
       es: 'Cobertura del performance realizado en Alemania, destacando su potencia escénica y el uso de recursos gestuales. El medio resalta la recepción entusiasta y el carácter experimental de la propuesta. Una lectura del impacto inmediato en sala.',
-      en: 'Coverage of a performance in Germany, emphasizing gestural force and stage presence. The outlet notes the enthusiastic reception and experimental character of the proposal. A snapshot of its immediate impact.' },
+      en: 'Coverage of a performance in Germany, emphasizing gestural force and stage presence. The outlet notes the enthusiastic reception and experimental character of the proposal. A snapshot of its immediate impact.',
+      fr: 'Couverture d’une performance en Allemagne, insistant sur la force gestuelle et la présence scénique. Réception enthousiaste et caractère expérimental sont relevés. Un instantané de l’impact immédiat.' },
   ],
 };
