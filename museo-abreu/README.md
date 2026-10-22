@@ -67,6 +67,10 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
   The site marks *Pasión* as sold, so it is out of the collection list.
 - **Reviews** (`/reviews`): the 9 excerpts in Spanish and English. Only Cándido Gerón's full review is
   online (`/candidogeron/`); the site's links for the other six critics return 404, so the app does not link them.
+- **Gamal Michelén's essay** (`/gamalmichelen/`, linked from the biography but not from the reviews page):
+  "Oscar Abreu, verdad o ilusión en su pintura?" in full, in the site's own Spanish, English and French, with its
+  five works on paper (`/gallery4/56–60.JPG`, titles only; no year, technique or size on the page). In the app at
+  `#/resenas/michelen`, featured at the top of the reviews page.
 - **Press** (`/bibliography`): 10 articles with headlines as published and the site's summaries. The article links
   could not be checked from the build environment (news sites blocked there).
 - **Photos** (`/photos`, `index2.html`, `index3.html`): 36 event photos (files 3–38, shown as 1–36) with no
@@ -129,8 +133,7 @@ Works are acquired by introduction, not bought from a list:
 - Full reviews for Marianne de Tolentino, Abil Peralta, Odalís G. Pérez, José Saldaña, Fernando Morbán Laucer
   and Myrna Guerrero (their pages on oscarabreu.com return 404).
 - Drawings 16, 17, 18 and 33 are smaller copies of 3, 2, 1 and 6 on oscarabreu.com.
-- Gamal Michelén's full review exists (oscarabreu.com/gamalmichelen/, linked from the biography) but is not on
-  the reviews page; it could be added.
+- Gamal Michelén's essay: year of publication, and year, technique and size of its five works (not on the page).
 - Website fixes for the site owners: https://claude.ai/artifact/M65zq23L1QYti11tFVpqcL
 - Questions for the family (answers stored with the page): https://claude.ai/artifact/MaKd21KM2Z39nyuLCK37Ph
 - "Ecos de la memoria": year, technique, size (not published on the site).

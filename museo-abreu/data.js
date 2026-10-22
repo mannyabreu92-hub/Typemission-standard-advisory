@@ -392,7 +392,8 @@ const MANIFESTO2 = {
 };
 
 // Reviews as published on oscarabreu.com/reviews (Spanish, English and French). Only
-// Cándido Gerón's full text is online (oscarabreu.com/candidogeron); the site's
+// Cándido Gerón's full text is online (oscarabreu.com/candidogeron; Gamal Michelén's essay,
+// not on the reviews page, is in MICHELEN below); the site's
 // links for the other critics return 404, so they are left out.
 const REVIEWS = {
   title: { es: 'Reseñas', en: 'Reviews', fr: 'Critiques' },
@@ -434,6 +435,51 @@ const REVIEWS = {
       es: 'Puede que su discurso resulte ajeno o lejano por cuanto en la tradición pictórica dominicana prevalece la figuración. Sin embargo, no cabe duda de que tenemos que reconocer que estamos ante un artista comprometido con su propio ser y su espacio vital.',
       en: 'His discourse may seem alien or distant insofar as figuration prevails in Dominican pictorial tradition. Nevertheless, there is no doubt that we must acknowledge we are before an artist committed to his own being and vital space.',
       fr: 'Son discours peut paraître étranger ou lointain, dans la mesure où la figuration prévaut dans la tradition picturale dominicaine. Néanmoins, il ne fait aucun doute que nous sommes face à un artiste engagé envers son propre être et son espace vital.' },
+  ],
+};
+
+// Gamal Michelén’s essay as published on oscarabreu.com/gamalmichelen (Spanish, English and
+// French versions from the page itself; works on paper gallery4/56–60, titles only).
+const MICHELEN = {
+  url: 'https://oscarabreu.com/gamalmichelen/',
+  title: { es: "Oscar Abreu, verdad o ilusión en su pintura?", en: "Oscar Abreu: truth or illusion in his painting?", fr: "Oscar Abreu : vérité ou illusion dans sa peinture ?" },
+  by: { es: "Ensayo de Gamal Michelén", en: "Essay by Gamal Michelén", fr: "Essai de Gamal Michelén" },
+  es: [
+    "Escribió Hegel, “Lo que buscamos en el arte, lo mismo que en el pensamiento, es la verdad”, partiendo de esta expresión podemos conformar una dialéctica contrapuesta donde el arte oscila entre la verdad y la mentira o la ilusión. Cuando Kandinsky, en cierto sentido, responde a la convicción de Cézanne de que todo en la naturaleza puede ser reducido a su geometría simple y que al pintar una naranja lo que él busca es el círculo, en el tronco del árbol un cilindro y en la montaña una pirámide —es decir, que esas figuras son solo el pretexto para armar geometrías compositivas— se pregunta: ¿por qué no eliminar el pretexto y pintar el círculo, el cilindro y la pirámide? ¿Por qué necesitamos lo figurativo si, al final, toda la pintura es una mentira? Es una ilusión incluso la sensación de profundidad cuando el lienzo es plano y bidimensional.",
+    "De ahí surge la abstracción porque, en un sentido último, una pintura no es otra cosa que una combinación armónica de líneas, manchas y tonos: las primeras expresan dirección, las segundas equilibrio de peso y los últimos la mayor o menor luminosidad de las partes.",
+    "Hemos procurado en varias ocasiones definir el psico-expresionismo de Oscar Abreu y presentar su obra como un desahogo, una liberación de su universo interno. En ese contexto —y contrastando con aquello que vuelve a la pintura una ilusión— proponemos ahora, en aparente paradoja, que su obra contiene una alta dosis de verdad.",
+    "Cuando André Bretón trató de convencer a Frida Kahlo de que su pintura era surrealista, ella lo contradijo: su obra no habitaba otro meridiano de la realidad; por el contrario, era muy real porque hacía catarsis al pintar, y lo que reflejaba era su propia vida: una verdad objetiva y, a veces, dolorosa.",
+    "Esto nos concede la licencia de analizar la obra de Abreu, destacar sus rasgos distintivos y asignarles claves de significado para buscar eso que llamamos verdad. Porque, como dijo Oscar Wilde, cuando el artista hace una obra de arte limita la visión; es el espectador quien la amplía al contemplarla. Así, nos permitimos hacer una exégesis de su obra. Más allá de su temática plural y compleja, hay un claro protagonismo de la mujer que remite al rol de su madre, Rosa, en su formación, y a Rosanna, su hermana, fallecida trágicamente en el vuelo 587 de AA en noviembre de 2001. Esa lección —que muchas veces la vida duele— vuelve a la mujer tema primordial si entendemos la pintura como liberación: verdad real atada a los intrincados mundos de su psique. De ahí que dos proposiciones opuestas sean ciertas: el arte es certeza y, a la vez, ilusión. Es real su insistencia en la mirada —los ojos— a veces abiertos, como en “las hermanas” y “voluntad”, y con frecuencia cerrados, como en “secuestro del olvido”, “momentos de relajación” y “remembranza de mi maestro”.",
+    "Más complejo es analizar sus geometrías: verticales, horizontales, diagonales; juegos de cuadrados y rectángulos que construyen armonías compositivas. Pensamos que son, sencillamente, intuitivas.",
+    "Es la corazonada del artista: la obra adquiere autonomía y se libera, mientras el hacedor la mantiene dentro de un criterio armónico. Eso la vuelve atractiva y nos permite afirmar, como críticos, que estamos ante una factura depurada.",
+    "En definitiva, el arte construye una dialéctica entre la verdad y la ilusión. En este conjunto de pinturas de Abreu lo comprobamos. Solo queda exponernos a su contemplación y permitir que haga empatía con nuestra mente porque, al final, el arte es eso: una alianza emotiva entre el artista y nuestra conciencia.",
+  ],
+  en: [
+    "Hegel wrote: “What we seek in art, as in thought, is truth.” From this statement we can set up a counterposed dialectic in which art oscillates between truth and falsehood—or illusion. When Kandinsky, in a sense, responds to Cézanne’s conviction that everything in nature can be reduced to simple geometry—painting an orange as a circle, a tree trunk as a cylinder, a mountain as a pyramid—he asks: why not remove the pretext and paint the circle, the cylinder, and the pyramid themselves? Why do we need figuration if, in the end, painting is a kind of lie? Even depth is illusory on a flat, two-dimensional canvas.",
+    "Hence abstraction arises, because ultimately a painting is a harmonious combination of lines, patches, and tones: the first express direction, the second balance of weight, and the last the degree of luminosity.",
+    "We have often tried to define Oscar Abreu’s Psycho-Expressionism and present his work as catharsis—a release of his inner universe. In that context—and in contrast with what makes painting an illusion—we now propose, in apparent paradox, that his work contains a strong dose of truth.",
+    "When André Breton tried to convince Frida Kahlo that her painting was Surrealist, she contradicted him: her work did not inhabit another meridian of reality; rather, it was profoundly real because painting was catharsis, and what it reflected was her own life—an objective, sometimes painful, truth.",
+    "This grants us license to analyze Abreu’s work, highlight its distinctive traits, and assign meaning keys in the search for truth. For, as Oscar Wilde said, when the artist creates a work of art, the vision is limited; it is the spectator who expands it upon contemplating it. Thus we venture an exegesis. Beyond its plural, complex themes, there is a clear prominence of women that points to the role of his mother, Rosa, in his formation, and to Rosanna, his sister, tragically lost on AA Flight 587 in November 2001. That lesson—that life often hurts—makes woman a primary subject if we understand painting as release: a real truth tied to the intricate worlds of his psyche. Hence two opposing propositions can both be true: art is certainty and, at once, illusion. His insistence on the gaze—eyes sometimes open, as in “las hermanas” and “voluntad,” and often closed, as in “secuestro del olvido,” “momentos de relajación,” and “remembranza de mi maestro”—is real.",
+    "More complex is an analysis of his geometries: verticals, horizontals, diagonals; games of squares and rectangles that build compositional harmonies—intuitive, we believe.",
+    "It is the artist’s hunch: the work gains autonomy and frees itself while the maker holds it within a harmonic criterion. That makes it compelling and allows us, as critics, to affirm a refined craftsmanship.",
+    "Ultimately, art builds a dialectic between truth and illusion. In this body of Abreu’s paintings we see it clearly. What remains is to expose ourselves to contemplation and let the work resonate with our mind, because art, in the end, is an emotional alliance between the artist and our consciousness.",
+  ],
+  fr: [
+    "Hegel écrivait : « Ce que nous cherchons dans l’art, comme dans la pensée, c’est la vérité. » À partir de là, l’art oscille entre vérité et mensonge — ou illusion. Lorsque Kandinsky répond, d’une certaine manière, à la conviction de Cézanne que tout dans la nature se réduit à une géométrie simple (l’orange-cercle, le tronc-cylindre, la montagne-pyramide), il demande : pourquoi ne pas supprimer le prétexte et peindre directement cercle, cylindre et pyramide ? Pourquoi le figuratif, si la peinture, au fond, est un « mensonge » ? Même la profondeur est illusoire sur une toile plane.",
+    "D’où l’abstraction : un tableau n’est, en dernière analyse, qu’une combinaison harmonieuse de lignes, taches et tons ; les premières donnent la direction, les secondes l’équilibre, les derniers la luminosité.",
+    "Nous avons souvent défini le Psycho-Expressionnisme d’Oscar Abreu comme une catharsis, une libération de son univers intérieur. Dans ce cadre — et par contraste avec ce qui fait de la peinture une illusion — nous avançons, paradoxe apparent, que son œuvre contient une forte dose de vérité.",
+    "Quand André Breton voulut convaincre Frida Kahlo que sa peinture était surréaliste, elle s’y opposa : son œuvre n’habitait pas un autre méridien du réel ; elle était profondément réelle, la peinture étant une catharsis et le reflet de sa vie même — une vérité objective, parfois douloureuse.",
+    "Cela nous autorise à analyser l’œuvre d’Abreu, à en dégager les traits distinctifs et à leur attribuer des clés de sens pour chercher la vérité. Car, comme le disait Oscar Wilde, l’artiste limite la vision en créant ; c’est le spectateur qui l’élargit en contemplant. Ainsi risquons-nous une exégèse. Au-delà des thèmes pluriels et complexes, la femme occupe une place centrale — renvoyant au rôle de sa mère, Rosa, et à Rosanna, sa sœur, tragiquement disparue lors du vol AA 587 en novembre 2001. Cette leçon — que la vie blesse souvent — fait de la femme un sujet majeur si l’on comprend la peinture comme libération : vérité réelle liée aux mondes intriqués de sa psyché. Deux propositions opposées peuvent donc être vraies : l’art est certitude et, en même temps, illusion. Réelle est son insistance sur le regard — yeux parfois ouverts (« las hermanas », « voluntad »), souvent fermés (« secuestro del olvido », « momentos de relajación », « remembranza de mi maestro »).",
+    "Plus complexe : ses géométries — verticales, horizontales, diagonales ; jeux de carrés et de rectangles bâtissant des harmonies compositionnelles. Nous les pensons intuitives.",
+    "C’est l’intuition de l’artiste : l’œuvre gagne en autonomie tout en restant tenue par un critère harmonique. Cela la rend prenante et manifeste une facture raffinée.",
+    "En somme, l’art tisse une dialectique entre vérité et illusion. Ce corpus de toiles d’Abreu en témoigne. Il ne reste qu’à se livrer à la contemplation et laisser l’œuvre résonner avec notre esprit : au bout du compte, l’art est une alliance affective entre l’artiste et notre conscience.",
+  ],
+  works: [
+    { img: 'img/reviews/michelen-56.jpg', title: "Huellas Personales" },
+    { img: 'img/reviews/michelen-57.jpg', title: "La Voz del Pasado" },
+    { img: 'img/reviews/michelen-58.jpg', title: "El Peso del Yo" },
+    { img: 'img/reviews/michelen-59.jpg', title: "El Cuerpo que Recuerda" },
+    { img: 'img/reviews/michelen-60.jpg', title: "Identidad Intermitente" },
   ],
 };
 

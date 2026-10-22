@@ -47,7 +47,7 @@ Object.assign(I18N.es, {
   hlReviews: '{r} reseñas de la crítica y {p} artículos de prensa sobre su obra', hlPress: 'Reseñas y prensa',
   navContact: 'Contacto', contactLead: 'Contacto de Oscar Abreu, tal como aparece en oscarabreu.com.',
   navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
-  navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
+  navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', essayFull: 'Ensayo completo', readEssay: 'Leer el ensayo', backReviews: 'Volver a reseñas', essayWorks: 'Obras del ensayo', essayNote: 'Ensayo publicado en oscarabreu.com/gamalmichelen.', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
 });
 
 Object.assign(I18N.en, {
@@ -91,7 +91,7 @@ Object.assign(I18N.en, {
   hlReviews: '{r} critics’ reviews and {p} press articles on his work', hlPress: 'Reviews and press',
   navContact: 'Contact', contactLead: 'Oscar Abreu’s contact details, as published on oscarabreu.com.',
   navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
-  navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
+  navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', essayFull: 'Full essay', readEssay: 'Read the essay', backReviews: 'Back to reviews', essayWorks: 'Works in the essay', essayNote: 'Essay published on oscarabreu.com/gamalmichelen.', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
 });
 
 Object.assign(I18N.fr, {
@@ -176,6 +176,11 @@ Object.assign(I18N.fr, {
   navReviews: 'Critiques',
   reviewsCta: 'Critiques ({n})',
   fullReview: 'Lire la critique complète',
+  essayFull: 'Essai complet',
+  readEssay: 'Lire l’essai',
+  backReviews: 'Retour aux critiques',
+  essayWorks: 'Œuvres de l’essai',
+  essayNote: 'Essai publié sur oscarabreu.com/gamalmichelen.',
   reviewsNote: 'Extraits tels que publiés sur oscarabreu.com/reviews.',
   imagePending: 'image non disponible sur oscarabreu.com',
 });
@@ -381,11 +386,29 @@ function openGalleryItem(id, n) {
   dlg.showModal();
 }
 
-function pageReviews() {
+function pageMichelen() {
+  const m = MICHELEN, [hero, ...rest] = m.works;
+  const fig = w => `<figure class="gb-fig"><img src="${w.img}" alt="${esc(w.title)}" loading="lazy"><figcaption>${esc(w.title)}</figcaption></figure>`;
+  return `<div class="wrap">
+    <section class="section"><p class="eyebrow"><a href="#/resenas">← ${t('backReviews')}</a></p><h1>${L(m.title)}</h1>
+      <p class="muted" style="margin-top:.6rem">${L(m.by)}</p></section>
+    <section class="section manifesto">${fig(hero)}${L(m).map(p => `<p>${esc(p)}</p>`).join('')}</section>
+    <section class="section"><h2>${t('essayWorks')}</h2><div class="gb-figs">${rest.map(fig).join('')}</div>
+      <p class="muted" style="margin-top:1rem">${t('essayNote')} <a href="${m.url}" target="_blank" rel="noopener">oscarabreu.com/gamalmichelen ↗</a></p></section>
+  </div>`;
+}
+
+function pageReviews(sub) {
+  if (sub === 'michelen') return pageMichelen();
   return `<div class="wrap">
     <section class="section">
       <p class="eyebrow">Oscar Abreu</p><h1>${L(REVIEWS.title)}</h1>
       <p class="lead" style="margin-top:.8rem">${L(REVIEWS.intro)}</p>
+    </section>
+    <section class="section">
+      <a class="card essay-card" href="#/resenas/michelen"><img src="${MICHELEN.works[0].img}" alt="" loading="lazy">
+        <div><p class="eyebrow">${t('essayFull')}</p><h2>${L(MICHELEN.title)}</h2><p class="muted">${L(MICHELEN.by)}</p>
+        <span class="btn" style="margin-top:.8rem">${t('readEssay')} →</span></div></a>
     </section>
     <section class="section">
       <div class="grid two">${REVIEWS.items.map(r => `<figure class="card quote"><blockquote>“${esc(L(r))}”</blockquote>

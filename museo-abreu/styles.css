@@ -341,3 +341,7 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .ci-mark { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); margin-top: .8rem; }
 .ci-note { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--ink-2); max-width: 58ch; }
 .ci-panel .btn-row { margin-top: .4rem; }
+.essay-card { display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center; text-decoration: none; color: inherit; }
+.essay-card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); background: var(--paper-2); }
+.essay-card h2 { font-size: 1.25rem; margin: .2rem 0; }
+@media (min-width: 640px) { .essay-card { grid-template-columns: 180px 1fr; } }
