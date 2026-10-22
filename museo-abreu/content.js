@@ -1,6 +1,6 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
 // the Paintings, Drawings and Sculpture galleries (#/pinturas, #/dibujos,
-// #/escultura), the 23 manifestos (#/manifiestos), the reviews (#/resenas) and
+// #/escultura), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa) and
 // the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
@@ -25,6 +25,7 @@ Object.assign(I18N.es, {
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
   manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
   allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos',
+  navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
   navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
 });
 
@@ -49,6 +50,7 @@ Object.assign(I18N.en, {
   space: 'Space', size: 'Size (ft)', price: 'Price',
   manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
   allManifestos: 'All manifestos', navManifestos: 'Manifestos',
+  navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
   navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
 });
 
@@ -213,6 +215,25 @@ function pageReviews() {
   </div>`;
 }
 
+function pageBibliography() {
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">Oscar Abreu</p><h1>${L(BIBLIOGRAPHY.title)}</h1>
+      <p class="lead" style="margin-top:.8rem">${L(BIBLIOGRAPHY.intro)}</p>
+      <p class="muted" style="margin-top:.5rem">${L(BIBLIOGRAPHY.note)}</p>
+    </section>
+    <section class="section">
+      <div class="grid two">${BIBLIOGRAPHY.items.map(b => `<article class="card press">
+        <p class="eyebrow" style="margin:0 0 .3rem">${b.outlet}${b.date ? ` · <time datetime="${b.date}">${fmtDate(b.date, { day: 'numeric', month: 'short', year: 'numeric' })}</time>` : ''}</p>
+        <h3 lang="es">${esc(b.title)}</h3>
+        <p style="margin-top:.4rem">${esc(L(b))}</p>
+        <a class="press-link" href="${b.url}" target="_blank" rel="noopener">${t('readArticle', { outlet: b.outlet })} ↗</a>
+      </article>`).join('')}</div>
+      <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://oscarabreu.com/bibliography" target="_blank" rel="noopener">oscarabreu.com/bibliography ↗</a></p>
+    </section>
+  </div>`;
+}
+
 function pageGabangi() {
   const ev = EVENTS.find(e => e.id === 'art-gabangi');
   return `<div class="wrap">
@@ -259,6 +280,6 @@ function pageGabangi() {
 
 Object.assign(EXTRA_ROUTES, {
   pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'),
-  manifiestos: pageManifestos, resenas: pageReviews, gabangi: pageGabangi,
+  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, gabangi: pageGabangi,
 });
 Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });

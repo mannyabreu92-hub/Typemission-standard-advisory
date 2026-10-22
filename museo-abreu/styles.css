@@ -283,3 +283,7 @@ table.gb-spaces th, table.gb-spaces td { padding: .55rem .7rem; border-bottom: 1
 table.gb-spaces td:last-child, table.gb-spaces th:last-child { text-align: right; white-space: nowrap; }
 table.gb-spaces thead th { background: var(--ink); color: var(--paper); }
 @media (max-width: 639px) { .gb-team { margin-top: 2rem; } }
+
+/* Press (oscarabreu.com/bibliography) */
+.press h3 { font-size: 1.25rem; line-height: 1.25; }
+.press-link { display: inline-block; margin-top: .6rem; font-weight: 600; color: var(--accent); }
