@@ -287,3 +287,11 @@ table.gb-spaces thead th { background: var(--ink); color: var(--paper); }
 /* Press (oscarabreu.com/bibliography) */
 .press h3 { font-size: 1.25rem; line-height: 1.25; }
 .press-link { display: inline-block; margin-top: .6rem; font-weight: 600; color: var(--accent); }
+
+/* Contact (oscarabreu.com/contact) */
+.contact { display: grid; gap: 1.4rem; align-items: start; }
+@media (min-width: 720px) { .contact { grid-template-columns: 280px 1fr; } }
+.contact-photo { width: 100%; max-width: 280px; border-radius: var(--radius); display: block; }
+.contact-list { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: .6rem; }
+.contact-list li { display: grid; grid-template-columns: 6.5rem 1fr; gap: .5rem; align-items: baseline; }
+.contact-list a { font-weight: 600; word-break: break-word; }

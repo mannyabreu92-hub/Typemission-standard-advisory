@@ -370,6 +370,15 @@ const REVIEWS = {
   ],
 };
 
+// oscarabreu.com/contact as published (the Instagram handle is spelled
+// "aertist" on the site; kept as is). Portrait from the same page.
+const CONTACT = {
+  photo: 'img/oscar-abreu.jpg',
+  whatsapp: { label: '1809-840-9588', url: 'https://wa.me/18098409588' },
+  instagram: { label: '@oscarabreu_aertist', url: 'https://www.instagram.com/oscarabreu_aertist/' },
+  email: 'info@oscarabreu.com',
+};
+
 // Press list as published on oscarabreu.com/bibliography: headlines as each
 // outlet published them (Spanish), with the site's own summaries in Spanish and English.
 const BIBLIOGRAPHY = {

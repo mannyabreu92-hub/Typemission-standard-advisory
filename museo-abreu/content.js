@@ -1,6 +1,7 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
 // the Paintings, Drawings and Sculpture galleries (#/pinturas, #/dibujos,
-// #/escultura), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa) and
+// #/escultura), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa),
+// contact (#/contacto) and
 // the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
@@ -25,6 +26,7 @@ Object.assign(I18N.es, {
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
   manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
   allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos',
+  navContact: 'Contacto', contactLead: 'Contacto de Oscar Abreu, tal como aparece en oscarabreu.com.',
   navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
   navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
 });
@@ -50,6 +52,7 @@ Object.assign(I18N.en, {
   space: 'Space', size: 'Size (ft)', price: 'Price',
   manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
   allManifestos: 'All manifestos', navManifestos: 'Manifestos',
+  navContact: 'Contact', contactLead: 'Oscar Abreu’s contact details, as published on oscarabreu.com.',
   navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
   navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
 });
@@ -234,6 +237,25 @@ function pageBibliography() {
   </div>`;
 }
 
+function pageContact() {
+  return `<div class="wrap">
+    <section class="section contact">
+      <img class="contact-photo" src="${CONTACT.photo}" alt="Oscar Abreu">
+      <div>
+        <p class="eyebrow">Oscar Abreu</p><h1>${t('navContact')}</h1>
+        <p class="lead" style="margin-top:.8rem">${t('contactLead')}</p>
+        <ul class="contact-list">
+          <li><span class="muted">WhatsApp</span><a href="${CONTACT.whatsapp.url}" target="_blank" rel="noopener">${CONTACT.whatsapp.label}</a></li>
+          <li><span class="muted">Instagram</span><a href="${CONTACT.instagram.url}" target="_blank" rel="noopener">${CONTACT.instagram.label}</a></li>
+          <li><span class="muted">Email</span><a href="mailto:${CONTACT.email}">${CONTACT.email}</a></li>
+        </ul>
+        <div class="btn-row"><a class="btn wa" href="${CONTACT.whatsapp.url}" target="_blank" rel="noopener">WhatsApp ↗</a></div>
+        <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://oscarabreu.com/contact" target="_blank" rel="noopener">oscarabreu.com/contact ↗</a></p>
+      </div>
+    </section>
+  </div>`;
+}
+
 function pageGabangi() {
   const ev = EVENTS.find(e => e.id === 'art-gabangi');
   return `<div class="wrap">
@@ -280,6 +302,6 @@ function pageGabangi() {
 
 Object.assign(EXTRA_ROUTES, {
   pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'),
-  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, gabangi: pageGabangi,
+  manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, contacto: pageContact, gabangi: pageGabangi,
 });
 Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });

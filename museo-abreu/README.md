@@ -23,6 +23,7 @@ cd museo-abreu && python3 -m http.server 8000
 | Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
 | Pinturas · Dibujos · Escultura | `#/pinturas`, `#/dibujos`, `#/escultura` | The numbered galleries from oscarabreu.com (36 paintings, 36 drawings, 12 sculptures), lightbox with swipe and WhatsApp enquiry |
 | Reseñas | `#/resenas` | The 9 critics' excerpts from oscarabreu.com/reviews (ES/EN) |
+| Contacto | `#/contacto` | Portrait, WhatsApp, Instagram and email from oscarabreu.com/contact |
 | Prensa | `#/prensa` | The 10 press articles from oscarabreu.com/bibliography, with the site's summaries (ES/EN) |
 | ART GABANGI | `#/gabangi` | 2026 edition from gabangi.com: artists, programme, tickets, exhibit spaces, sponsors, team |
 | Visita y VIP Tour | `#/visita` | Booking: experience → date/time/guide language → guests → terms → payment (10-min hold) → QR ticket + calendar file. Private tour request form |
@@ -51,7 +52,9 @@ cd museo-abreu && python3 -m http.server 8000
   online (`/candidogeron/`); the site's links for the other six critics return 404, so the app does not link them.
 - **Press** (`/bibliography`): 10 articles with headlines as published and the site's summaries. The article links
   could not be checked from the build environment (news sites blocked there).
-- **Not included:** `/news` is a 2008 page that only lists Centro Abreu (Curazao No. 61, Ensanche Ozama) as a
+- **Contact** (`/contact`): WhatsApp, Instagram `@oscarabreu_aertist` (spelled so on the site, not verified from
+  here), info@oscarabreu.com and the portrait. The site's placeholder line "xxxxxxx" is left out.
+- **Not included:** `/sociales` is linked in the site's menu but returns 404. `/news` is a 2008 page that only lists Centro Abreu (Curazao No. 61, Ensanche Ozama) as a
   permanent exhibition with old phone numbers; left out until confirmed current.
 - **From gabangi.com:** ART GABANGI 2026 programme, ticket tiers, artists with Oscar Abreu's quotes
   (English only on the site), exhibit spaces, sponsor entry price, team names and roles.
