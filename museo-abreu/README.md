@@ -200,6 +200,8 @@ Works are acquired by introduction, not bought from a list:
   and Myrna Guerrero (their pages on oscarabreu.com return 404).
 - Drawings 16, 17, 18 and 33 are smaller copies of 3, 2, 1 and 6 on oscarabreu.com.
 - Gamal Michelén's essay: year of publication, and year, technique and size of its five works (not on the page).
+- Translation review (German, Italian, Arabic; 699 texts, reviews saved with the page): https://claude.ai/artifact/RPe9zs7kgDfzFdfSENpSjq
+- Phase 2 plan (Bókun, Whop, Collectors' Circle, server): https://claude.ai/artifact/URy8r3Lf2nb9iTt5vMFS1f
 - Website fixes for the site owners: https://claude.ai/artifact/M65zq23L1QYti11tFVpqcL
 - Questions for the family (answers stored with the page): https://claude.ai/artifact/MaKd21KM2Z39nyuLCK37Ph
 - "Ecos de la memoria": year, technique, size (not published on the site).
