@@ -568,7 +568,7 @@ function tierBlock(ev, tier, passes) {
   return `<div class="tier ${tier.proFree ? 'tier-vip' : ''}">
     <div class="tier-head"><strong>${L(tier.name)}</strong><span class="tier-price">${usd(tier.price)}</span></div>
     <span class="chip">${L(tier.tag)}</span>${tier.proFree ? ` <span class="status ok">${t('freeForPro')}</span>` : ''}
-    <ul>${tier.items[lang].map(i => `<li>${i}</li>`).join('')}</ul>
+    <ul>${L(tier.items).map(i => `<li>${i}</li>`).join('')}</ul>
     ${action}
   </div>`;
 }

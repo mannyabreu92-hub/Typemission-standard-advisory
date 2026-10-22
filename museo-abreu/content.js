@@ -43,11 +43,11 @@ Object.assign(I18N.es, {
   catalogueQuote: 'Texto original en oscarabreu.com/exhibits (en inglés):',
   catalogueWorks: 'En oscarabreu.com, este catálogo enlaza a una galería de 48 imágenes: son las mismas 36 pinturas y 12 esculturas de las secciones Pinturas y Escultura.',
   navWork: 'Obra', hlTitle: 'Descubre a Oscar Abreu', hlWork: '{p} pinturas, {d} dibujos, {s} esculturas y {f} fotos',
-  hlManifestos: 'Los {n} manifiestos del Psico-Expresionismo, en español, inglés y francés', hlTopTen: 'Diez artistas caribeños destacados por GABANGI',
+  hlManifestos: 'Los {n} manifiestos del Psico-Expresionismo, en seis idiomas', hlTopTen: 'Diez artistas caribeños destacados por GABANGI',
   hlReviews: '{r} reseñas de la crítica y {p} artículos de prensa sobre su obra', hlPress: 'Reseñas y prensa',
   navContact: 'Contacto', contactLead: 'Contacto de Oscar Abreu, tal como aparece en oscarabreu.com.',
   navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
-  navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', essayFull: 'Ensayo completo', readEssay: 'Leer el ensayo', backReviews: 'Volver a reseñas', essayWorks: 'Obras del ensayo', essayNote: 'Ensayo publicado en oscarabreu.com/gamalmichelen.', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
+  navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', langOffline: 'No se pudo cargar el idioma. Revise su conexión.', essayFull: 'Ensayo completo', readEssay: 'Leer el ensayo', backReviews: 'Volver a reseñas', essayWorks: 'Obras del ensayo', essayNote: 'Ensayo publicado en oscarabreu.com/gamalmichelen.', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
 });
 
 Object.assign(I18N.en, {
@@ -87,11 +87,11 @@ Object.assign(I18N.en, {
   catalogueQuote: 'Original text on oscarabreu.com/exhibits:',
   catalogueWorks: 'On oscarabreu.com, this catalogue links to a gallery of 48 images: the same 36 paintings and 12 sculptures as in the Paintings and Sculpture sections.',
   navWork: 'Work', hlTitle: 'Discover Oscar Abreu', hlWork: '{p} paintings, {d} drawings, {s} sculptures and {f} photos',
-  hlManifestos: 'The {n} manifestos of Psycho-Expressionism, in Spanish, English and French', hlTopTen: 'Ten Caribbean artists highlighted by GABANGI',
+  hlManifestos: 'The {n} manifestos of Psycho-Expressionism, in six languages', hlTopTen: 'Ten Caribbean artists highlighted by GABANGI',
   hlReviews: '{r} critics’ reviews and {p} press articles on his work', hlPress: 'Reviews and press',
   navContact: 'Contact', contactLead: 'Oscar Abreu’s contact details, as published on oscarabreu.com.',
   navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
-  navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', essayFull: 'Full essay', readEssay: 'Read the essay', backReviews: 'Back to reviews', essayWorks: 'Works in the essay', essayNote: 'Essay published on oscarabreu.com/gamalmichelen.', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
+  navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', langOffline: 'The language could not be loaded. Check your connection.', essayFull: 'Full essay', readEssay: 'Read the essay', backReviews: 'Back to reviews', essayWorks: 'Works in the essay', essayNote: 'Essay published on oscarabreu.com/gamalmichelen.', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
 });
 
 Object.assign(I18N.fr, {
@@ -164,7 +164,7 @@ Object.assign(I18N.fr, {
   navWork: 'Œuvre',
   hlTitle: 'Découvrir Oscar Abreu',
   hlWork: '{p} peintures, {d} dessins, {s} sculptures et {f} photos',
-  hlManifestos: 'Les {n} manifestes du Psycho-Expressionnisme, en espagnol, anglais et français',
+  hlManifestos: 'Les {n} manifestes du Psycho-Expressionnisme, en six langues',
   hlTopTen: 'Dix artistes caribéens mis en avant par GABANGI',
   hlReviews: '{r} critiques et {p} articles de presse sur son œuvre',
   hlPress: 'Critiques et presse',
@@ -176,6 +176,7 @@ Object.assign(I18N.fr, {
   navReviews: 'Critiques',
   reviewsCta: 'Critiques ({n})',
   fullReview: 'Lire la critique complète',
+  langOffline: 'La langue n’a pas pu être chargée. Vérifiez votre connexion.',
   essayFull: 'Essai complet',
   readEssay: 'Lire l’essai',
   backReviews: 'Retour aux critiques',
@@ -265,10 +266,25 @@ function loadManifestoText() {
   return manifestoTextLoad;
 }
 
+// German, Italian and Arabic text of manifestos 3–23 (lang/<code>-manifestos.js adds it to TR).
+const MANIFESTO_LANGS = new Set();
+const manifestoLangLoad = {};
+function loadManifestoLang(l) {
+  if (!LAZY_LANGS.includes(l) || MANIFESTO_LANGS.has(l)) return Promise.resolve();
+  return manifestoLangLoad[l] ||= new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = `lang/${l}-manifestos.js`;
+    s.onload = resolve;
+    s.onerror = () => { delete manifestoLangLoad[l]; s.remove(); reject(); };
+    document.head.appendChild(s);
+  });
+}
+
 function pageManifestos(nStr) {
   const n = Number(nStr), m = MANIFESTOS.find(x => x.n === n);
-  if (m && !m.es) {
-    loadManifestoText().then(() => { if (location.hash === '#/manifiestos/' + n) route(); }, () => toast(t('manifestoOffline')));
+  if (m && m.n > 2 && (!m.es || (LAZY_LANGS.includes(lang) && !MANIFESTO_LANGS.has(lang)))) {
+    Promise.all([loadManifestoText(), loadManifestoLang(lang)])
+      .then(() => { if (location.hash === '#/manifiestos/' + n) route(); }, () => toast(t('manifestoOffline')));
     return `<div class="wrap"><section class="section"><p class="eyebrow">${t('manifestoEyebrow')} ${n}/${MANIFESTOS.length}</p>
       <h1>${L(m.title)}</h1><p class="muted" style="margin-top:1rem">${t('loadingText')}</p></section></div>`;
   }
@@ -283,8 +299,8 @@ function pageManifestos(nStr) {
   return `<div class="wrap">
     ${manifestoSection(m, true)}
     <nav class="m-nav" aria-label="${t('allManifestos')}">
-      ${prev ? `<a class="btn" href="#/manifiestos/${prev.n}">← ${prev.n}. ${L(prev.title)}</a>` : '<span></span>'}
-      ${next ? `<a class="btn" href="#/manifiestos/${next.n}">${next.n}. ${L(next.title)} →</a>` : '<span></span>'}
+      ${prev ? `<a class="btn" href="#/manifiestos/${prev.n}"><span class="arr">←</span> ${prev.n}. ${L(prev.title)}</a>` : '<span></span>'}
+      ${next ? `<a class="btn" href="#/manifiestos/${next.n}">${next.n}. ${L(next.title)} <span class="arr">→</span></a>` : '<span></span>'}
     </nav>
     <div class="btn-row"><a class="btn dark" href="#/manifiestos">${t('allManifestos')}</a></div>
   </div>`;
@@ -351,8 +367,8 @@ function openGalleryItem(id, n) {
       <h3 style="margin-top:1rem">${name} <span class="muted">· ${n}/${items.length}</span></h3>
       <p class="muted">${t(g.photos ? 'photosNote' : 'galleryNote')}</p>
       <div class="btn-row">
-        <button class="btn small" data-dlg="prev" aria-label="${t('prev')}">←</button>
-        <button class="btn small" data-dlg="next" aria-label="${t('next')}">→</button>
+        <button class="btn small" data-dlg="prev" aria-label="${t('prev')}"><span class="arr">←</span></button>
+        <button class="btn small" data-dlg="next" aria-label="${t('next')}"><span class="arr">→</span></button>
         ${g.photos ? '' : `<button class="btn dark small" data-dlg="acquire">${circleStatus() === 'member' ? t('ciInterest') : t('ciRequestCta')}</button>`}
         <button class="btn small" data-dlg="close">${t('close')}</button>
       </div></div>`;
@@ -390,7 +406,7 @@ function pageMichelen() {
   const m = MICHELEN, [hero, ...rest] = m.works;
   const fig = w => `<figure class="gb-fig"><img src="${w.img}" alt="${esc(w.title)}" loading="lazy"><figcaption>${esc(w.title)}</figcaption></figure>`;
   return `<div class="wrap">
-    <section class="section"><p class="eyebrow"><a href="#/resenas">← ${t('backReviews')}</a></p><h1>${L(m.title)}</h1>
+    <section class="section"><p class="eyebrow"><a href="#/resenas"><span class="arr">←</span> ${t('backReviews')}</a></p><h1>${L(m.title)}</h1>
       <p class="muted" style="margin-top:.6rem">${L(m.by)}</p></section>
     <section class="section manifesto">${fig(hero)}${L(m).map(p => `<p>${esc(p)}</p>`).join('')}</section>
     <section class="section"><h2>${t('essayWorks')}</h2><div class="gb-figs">${rest.map(fig).join('')}</div>
@@ -408,7 +424,7 @@ function pageReviews(sub) {
     <section class="section">
       <a class="card essay-card" href="#/resenas/michelen"><img src="${MICHELEN.works[0].img}" alt="" loading="lazy">
         <div><p class="eyebrow">${t('essayFull')}</p><h2>${L(MICHELEN.title)}</h2><p class="muted">${L(MICHELEN.by)}</p>
-        <span class="btn" style="margin-top:.8rem">${t('readEssay')} →</span></div></a>
+        <span class="btn" style="margin-top:.8rem">${t('readEssay')} <span class="arr">→</span></span></div></a>
     </section>
     <section class="section">
       <div class="grid two">${REVIEWS.items.map(r => `<figure class="card quote"><blockquote>“${esc(L(r))}”</blockquote>

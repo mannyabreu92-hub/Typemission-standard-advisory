@@ -103,6 +103,24 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
   opens WhatsApp **+1 (809) 840-9588** with the message written. Paste Bókun links there when
   the account exists (see `BOOKING-SETUP.md`).
 
+## Languages
+
+Spanish, English and French are built in (`i18n.js` and the `es`/`en`/`fr` fields of the content). German, Italian
+and Arabic load only when a visitor picks them from the language menu:
+- `lang/<code>.js`: interface text (`I18N.<code>`) and content as English text → translation (`TR.<code>`).
+- `lang/<code>-manifestos.js`: manifestos 3–23, loaded with `manifestos-text.js` the first time one is opened.
+- **From oscarabreu.com** (the site's own versions): biography, exhibitions' places, manifestos 1–23, work titles,
+  reviews, press summaries and Gamal Michelén's essay. Manifesto 15 has one English paragraph ("In my painting,
+  dreams take on body, form, and color.") that the site's German, Italian and Arabic versions lack; the app
+  translates it.
+- **Translated for the app, pending review by a native speaker:** the interface, tours and classes, events,
+  the Collectors' Circle, the book's chapter list and chronology, and the gabangi.com texts (Oscar Abreu's
+  "Quién soy", his magazine essay, the 2025 press release and Club GABANGI), which gabangi.com publishes only
+  in Spanish, English and French.
+- Arabic switches the page to right-to-left (`dir="rtl"`, logical CSS properties, mirrored arrows) and loads the
+  Noto Naskh Arabic and Noto Sans Arabic fonts.
+- Book quotes and the reader stay in the language of the edition (English).
+
 ## Círculo de Coleccionistas (`#/coleccion`)
 
 Works are acquired by introduction, not bought from a list:
@@ -147,6 +165,6 @@ Works are acquired by introduction, not bought from a list:
 
 ## Files
 
-`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, Collectors' Circle, Pro, daily reading) · `manifestos.js` (manifestos 3–23: titles and images) · `manifestos-text.js` (their text, loaded on demand) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN/FR strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
+`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, Collectors' Circle, Pro, daily reading) · `manifestos.js` (manifestos 3–23: titles and images) · `manifestos-text.js` (their text, loaded on demand) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN/FR strings) · `lang/` (DE/IT/AR, loaded on demand) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
 works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).

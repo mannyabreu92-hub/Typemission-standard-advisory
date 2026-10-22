@@ -7,7 +7,11 @@ const store = {
   set(k, v) { try { localStorage.setItem('ma.' + k, JSON.stringify(v)); } catch { /* private mode: keep in memory only */ } },
 };
 
-const LANGS = ['es', 'en', 'fr'];
+const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar'];
+// German, Italian and Arabic live in lang/<code>.js, loaded when chosen: their UI strings go
+// into I18N, and their content into TR as English text → translation.
+const LAZY_LANGS = ['de', 'it', 'ar'];
+const TR = {};
 const browserLang = (navigator.language || 'es').slice(0, 2).toLowerCase();
 let lang = store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
 if (!LANGS.includes(lang)) lang = 'es';
@@ -26,13 +30,16 @@ const frSpaces = s => s.replace(/ ([:;?!»])/g, '\u00a0$1').replace(/« /g, '«\
 const typeset = v => lang !== 'fr' ? v : typeof v === 'string' ? frSpaces(v) : Array.isArray(v) ? v.map(x => typeof x === 'string' ? frSpaces(x) : x) : v;
 
 function t(key, vars) {
-  let s = (I18N[lang] && I18N[lang][key]) ?? I18N.es[key] ?? key;
+  let s = (I18N[lang] && I18N[lang][key]) ?? (lang !== 'es' ? I18N.en[key] : undefined) ?? I18N.es[key] ?? key;
   if (vars) for (const k in vars) s = s.replace('{' + k + '}', vars[k]);
   return typeset(s);
 }
-// French falls back to English where a text exists only in Spanish and English.
-const L = obj => typeset(obj[lang] ?? (lang === 'fr' ? obj.en : undefined) ?? obj.es);
-const expoPlace = e => (lang === 'es' && e.pes) || (lang === 'fr' && e.pfr) || e.p;
+// English text in the current language through TR (strings, lists and blocks alike); unchanged if none.
+const tr = v => !TR[lang] ? v : typeof v === 'string' ? TR[lang][v] ?? v : Array.isArray(v) ? v.map(tr)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, tr(x)])) : v;
+// Other languages fall back to English (translated through TR) where a text has no version of its own.
+const L = obj => typeset(obj[lang] ?? (lang !== 'es' && obj.en !== undefined ? tr(obj.en) : obj.es));
+const expoPlace = e => (lang === 'es' && e.pes) || (lang === 'fr' && e.pfr) || tr(e.p);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const usd = n => 'US$' + n.toLocaleString('en-US');
 const pend = () => `<span class="pending">${t('pending')}</span>`;
@@ -59,7 +66,7 @@ function addDays(iso, n) {
 function dow(iso) { const [y, m, d] = iso.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay(); }
 function fmtDate(iso, opts = { weekday: 'long', day: 'numeric', month: 'long' }) {
   const [y, m, d] = iso.split('-').map(Number);
-  return new Intl.DateTimeFormat({ es: 'es-DO', en: 'en-US', fr: 'fr-FR' }[lang], { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
+  return new Intl.DateTimeFormat({ es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar-u-nu-latn' }[lang], { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
 }
 
 /* ---------- Availability ---------- */
@@ -151,7 +158,7 @@ function pageHome() {
         <div>
           <h2>${t('layersTitle')}</h2>
           <p class="lead">${t('psicoLead')}</p>
-          <div class="btn-row"><a class="btn" href="#/psico">${t('psicoIntro')} →</a></div>
+          <div class="btn-row"><a class="btn" href="#/psico">${t('psicoIntro')} <span class="arr">→</span></a></div>
         </div>
         <a class="layers" href="#/psico" style="justify-self:center;width:100%" aria-label="${t('layersTitle')}"><img src="${LAYER_WORKS[0].img}" alt="" loading="lazy"></a>
       </div>
@@ -739,7 +746,7 @@ function pageReader(l = 'es', chStr = '0') {
   }
   return `<div class="wrap reader">
     <div class="reader-bar">
-      <a href="#/biblioteca" class="btn small">← ${t('backToLib')}</a>
+      <a href="#/biblioteca" class="btn small"><span class="arr">←</span> ${t('backToLib')}</a>
       <span class="muted">${t('bookTitle')} · ${L(LANG_NAMES[l])}</span>
       <div style="display:flex;gap:.3rem" role="group" aria-label="${t('fontSize')}">
         <button class="btn small" data-action="font" data-d="-0.1" aria-label="${t('fontSize')} −">A−</button>
@@ -749,8 +756,8 @@ function pageReader(l = 'es', chStr = '0') {
     </div>
     <article class="reader-text" lang="${l}">${text}</article>
     <nav class="reader-nav">
-      ${ch > 0 ? `<a class="btn small" href="#/leer/${l}/${ch - 1}">← ${t('prev')}</a>` : '<span></span>'}
-      ${ch < CHAPTERS.length - 1 ? `<a class="btn small dark" href="#/leer/${l}/${ch + 1}">${t('next')} →</a>` : ''}
+      ${ch > 0 ? `<a class="btn small" href="#/leer/${l}/${ch - 1}"><span class="arr">←</span> ${t('prev')}</a>` : '<span></span>'}
+      ${ch < CHAPTERS.length - 1 ? `<a class="btn small dark" href="#/leer/${l}/${ch + 1}">${t('next')} <span class="arr">→</span></a>` : ''}
     </nav>
   </div>`;
 }
@@ -926,18 +933,41 @@ main.addEventListener('submit', e => {
 
 /* ---------- Language ---------- */
 
+const langSelect = document.getElementById('lang-select');
+const langFile = {};
+function loadLang(l) {
+  if (!LAZY_LANGS.includes(l) || TR[l]) return Promise.resolve();
+  return langFile[l] ||= new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = `lang/${l}.js`;
+    s.onload = resolve;
+    s.onerror = () => { delete langFile[l]; s.remove(); reject(); };
+    document.head.appendChild(s);
+  });
+}
 function setLang(l) {
+  // Arabic text uses Noto fonts, fetched only for Arabic readers.
+  if (l === 'ar' && !document.getElementById('font-ar')) document.head.insertAdjacentHTML('beforeend',
+    '<link id="font-ar" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&family=Noto+Sans+Arabic:wght@400;500;600&display=swap">');
+  loadLang(l).then(() => applyLang(l), () => {
+    langSelect.value = lang;
+    if (!main.firstChild) applyLang(lang = 'en', false); // first visit offline: show English
+    toast(t('langOffline'));
+  });
+}
+function applyLang(l, remember = true) {
   lang = l;
-  store.set('lang', l);
+  if (remember) store.set('lang', l);
   document.documentElement.lang = l;
+  document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  langSelect.value = l;
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll('[data-lang]').forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === l));
   // Re-render in place; the booking in progress is kept.
   const y = window.scrollY;
   route();
   window.scrollTo(0, y);
 }
-document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+langSelect.addEventListener('change', () => setLang(langSelect.value));
 
 window.addEventListener('hashchange', e => {
   if (location.hash === '#main') { // skip link: keep the current page
