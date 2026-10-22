@@ -215,7 +215,8 @@ function pageArtist() {
     <section class="section">
       <h2>${t('catalog')}</h2>
       <div class="grid four">${WORKS.map(workCard).join('')}</div>
-      <div class="btn-row"><a class="btn dark" href="#/pinturas">${t('paintingsCta', { n: PAINTINGS.length })}</a></div>
+      <div class="btn-row"><a class="btn dark" href="#/pinturas">${t('paintingsCta', { n: PAINTINGS.length })}</a>
+        <a class="btn" href="#/dibujos">${t('drawingsTitle')} · ${DRAWINGS.length}</a><a class="btn" href="#/escultura">${t('sculptureTitle')} · ${SCULPTURES.length}</a></div>
     </section>
   </div>`;
 }

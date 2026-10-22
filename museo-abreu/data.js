@@ -77,8 +77,13 @@ const WORKS = [
   { id: 'time-on-my-face', seed: 71, img: 'img/time-on-my-face.jpg', spec: SPEC_PAPER, title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face' } },
 ];
 
-// oscarabreu.com/paintings: 36 works published by number only (no titles or data).
-const PAINTINGS = Array.from({ length: 36 }, (_, i) => ({ n: i + 1, img: `img/paintings/${i + 1}.jpg` }));
+// oscarabreu.com/paintings, /drawings and /sculpture: works published by number
+// only (no titles or data). Sculptures are files 37–48 on the site, shown as 1–12.
+// Drawings 16–18 and 33 repeat 3, 2, 1 and 6 on the site; kept as published.
+const numbered = (count, dir) => Array.from({ length: count }, (_, i) => ({ n: i + 1, img: `img/${dir}/${i + 1}.jpg` }));
+const PAINTINGS = numbered(36, 'paintings');
+const DRAWINGS = numbered(36, 'drawings');
+const SCULPTURES = numbered(12, 'sculpture');
 
 const EDITIONS = [
   { lang: 'es', price: 25, status: 'available' },

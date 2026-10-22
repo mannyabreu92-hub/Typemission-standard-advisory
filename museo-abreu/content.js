@@ -1,13 +1,17 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
-// the Paintings gallery (#/pinturas), the 23 manifestos (#/manifiestos) and
+// the Paintings, Drawings and Sculpture galleries (#/pinturas, #/dibujos,
+// #/escultura), the 23 manifestos (#/manifiestos) and
 // the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
 Object.assign(I18N.es, {
   paintingsEyebrow: 'Obra', paintingsTitle: 'Pinturas',
   paintingsLead: 'Las pinturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
-  paintingsNote: 'oscarabreu.com publica estas obras solo con su número; título, año, técnica y medidas están pendientes.',
-  paintingN: 'Pintura {n}', waPainting: 'Hola, me interesa la pintura n.º {n} de Oscar Abreu (oscarabreu.com/paintings).',
+  drawingsTitle: 'Dibujos', drawingsLead: 'Los dibujos que Oscar Abreu publica en oscarabreu.com, identificados por número.',
+  sculptureTitle: 'Escultura', sculptureLead: 'Las esculturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
+  galleryNote: 'oscarabreu.com publica estas obras solo con su número; título, año, técnica y medidas están pendientes.',
+  paintingsN: 'Pintura {n}', drawingsN: 'Dibujo {n}', sculptureN: 'Escultura {n}',
+  waGallery: 'Hola, me interesa la obra "{name}" de Oscar Abreu ({site}).',
   prev: 'Anterior', next: 'Siguiente',
   gabangiMore: 'Programa y artistas', gabangiEyebrow: 'Feria de arte · Punta Cana',
   gabangiLead: 'ART GABANGI 2026 · Punta Cana · 6–14 de julio. Gala de apertura, feria abierta al público, subasta y premios.',
@@ -26,8 +30,11 @@ Object.assign(I18N.es, {
 Object.assign(I18N.en, {
   paintingsEyebrow: 'Work', paintingsTitle: 'Paintings',
   paintingsLead: 'The paintings Oscar Abreu publishes on oscarabreu.com, identified by number.',
-  paintingsNote: 'oscarabreu.com publishes these works by number only; title, year, technique and size are pending.',
-  paintingN: 'Painting {n}', waPainting: 'Hello, I am interested in painting no. {n} by Oscar Abreu (oscarabreu.com/paintings).',
+  drawingsTitle: 'Drawings', drawingsLead: 'The drawings Oscar Abreu publishes on oscarabreu.com, identified by number.',
+  sculptureTitle: 'Sculpture', sculptureLead: 'The sculptures Oscar Abreu publishes on oscarabreu.com, identified by number.',
+  galleryNote: 'oscarabreu.com publishes these works by number only; title, year, technique and size are pending.',
+  paintingsN: 'Painting {n}', drawingsN: 'Drawing {n}', sculptureN: 'Sculpture {n}',
+  waGallery: 'Hello, I am interested in the work "{name}" by Oscar Abreu ({site}).',
   prev: 'Previous', next: 'Next',
   gabangiMore: 'Programme and artists', gabangiEyebrow: 'Art fair · Punta Cana',
   gabangiLead: 'ART GABANGI 2026 · Punta Cana · July 6–14. Opening gala, public fair, auction and awards.',
@@ -117,31 +124,43 @@ function pageManifestos(nStr) {
   </div>`;
 }
 
-function pagePaintings() {
+// The three numbered galleries of oscarabreu.com share one page and lightbox.
+const GALLERIES = {
+  pinturas: { items: PAINTINGS, key: 'paintings', site: 'oscarabreu.com/paintings' },
+  dibujos: { items: DRAWINGS, key: 'drawings', site: 'oscarabreu.com/drawings' },
+  escultura: { items: SCULPTURES, key: 'sculpture', site: 'oscarabreu.com/sculpture' },
+};
+
+function pageGallery(id) {
+  const g = GALLERIES[id];
   return `<div class="wrap">
     <section class="section">
-      <p class="eyebrow">${t('paintingsEyebrow')}</p><h1>${t('paintingsTitle')}</h1>
-      <p class="lead" style="margin-top:.8rem">${t('paintingsLead')}</p>
-      <p class="muted" style="margin-top:.5rem">${t('paintingsNote')}</p>
+      <p class="eyebrow">${t('paintingsEyebrow')}</p><h1>${t(g.key + 'Title')}</h1>
+      <div class="tabs" role="tablist" style="margin-top:1rem">${Object.entries(GALLERIES).map(([k, x]) =>
+        `<a role="tab" class="tab" href="#/${k}" aria-selected="${k === id}">${t(x.key + 'Title')} · ${x.items.length}</a>`).join('')}</div>
+      <p class="lead" style="margin-top:1rem">${t(g.key + 'Lead')}</p>
+      <p class="muted" style="margin-top:.5rem">${t('galleryNote')}</p>
     </section>
     <section class="section">
-      <div class="paintings">${PAINTINGS.map(p => `<button type="button" class="painting" data-action="painting" data-n="${p.n}" aria-label="${t('paintingN', { n: p.n })}">
+      <div class="paintings">${g.items.map(p => `<button type="button" class="painting" data-action="galleryItem" data-g="${id}" data-n="${p.n}" aria-label="${t(g.key + 'N', { n: p.n })}">
         <img src="${p.img}" alt="" loading="lazy"><span>${p.n}</span></button>`).join('')}</div>
-      <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://oscarabreu.com/paintings" target="_blank" rel="noopener">oscarabreu.com/paintings ↗</a></p>
+      <p class="muted" style="margin-top:1rem">${t('sourceLabel')}: <a href="https://${g.site}" target="_blank" rel="noopener">${g.site} ↗</a></p>
     </section>
   </div>`;
 }
 
 // Lightbox with previous/next, swipe and arrow keys.
-function openPainting(n) {
+function openGalleryItem(id, n) {
+  const g = GALLERIES[id], items = g.items;
   const dlg = document.createElement('dialog');
   const show = k => {
-    n = (k + PAINTINGS.length - 1) % PAINTINGS.length + 1;
-    dlg.setAttribute('aria-label', t('paintingN', { n }));
+    n = (k + items.length - 1) % items.length + 1;
+    const name = t(g.key + 'N', { n });
+    dlg.setAttribute('aria-label', name);
     dlg.innerHTML = `<div class="dlg-body">
-      <div class="dlg-art"><img src="${PAINTINGS[n - 1].img}" alt="${t('paintingN', { n })}, Oscar Abreu"></div>
-      <h3 style="margin-top:1rem">${t('paintingN', { n })} <span class="muted">· ${n}/${PAINTINGS.length}</span></h3>
-      <p class="muted">${t('paintingsNote')}</p>
+      <div class="dlg-art"><img src="${items[n - 1].img}" alt="${name}, Oscar Abreu"></div>
+      <h3 style="margin-top:1rem">${name} <span class="muted">· ${n}/${items.length}</span></h3>
+      <p class="muted">${t('galleryNote')}</p>
       <div class="btn-row">
         <button class="btn small" data-dlg="prev" aria-label="${t('prev')}">←</button>
         <button class="btn small" data-dlg="next" aria-label="${t('next')}">→</button>
@@ -156,7 +175,10 @@ function openPainting(n) {
     if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
     else if (b && b.dataset.dlg === 'prev') show(n - 1);
     else if (b && b.dataset.dlg === 'next') show(n + 1);
-    else if (b && b.dataset.dlg === 'acquire') { dlg.close(); if (!(BOOKING.live && openWhatsApp(t('waPainting', { n })))) toast(t('acquireSent')); }
+    else if (b && b.dataset.dlg === 'acquire') {
+      dlg.close();
+      if (!(BOOKING.live && openWhatsApp(t('waGallery', { name: t(g.key + 'N', { n }), site: g.site })))) toast(t('acquireSent'));
+    }
   });
   dlg.addEventListener('keydown', e => {
     if (e.key === 'ArrowLeft') show(n - 1);
@@ -218,5 +240,8 @@ function pageGabangi() {
   </div>`;
 }
 
-Object.assign(EXTRA_ROUTES, { pinturas: pagePaintings, manifiestos: pageManifestos, gabangi: pageGabangi });
-Object.assign(EXTRA_ACTIONS, { painting: el => openPainting(Number(el.dataset.n)) });
+Object.assign(EXTRA_ROUTES, {
+  pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'),
+  manifiestos: pageManifestos, gabangi: pageGabangi,
+});
+Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });
