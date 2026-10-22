@@ -19,7 +19,8 @@ cd museo-abreu && python3 -m http.server 8000
 |---|---|---|
 | Inicio | `#/` | CTAs for VIP Tour and the book |
 | Oscar Abreu | `#/artista` | Bio, timeline, video, catalogue with artwork detail and acquisition enquiry |
-| Psico-Expresionismo | `#/psico` | 3-minute intro, interactive "discover another layer", both manifestos (ES/EN) with their artworks, guiding questions |
+| Psico-Expresionismo | `#/psico` | 3-minute intro, interactive "discover another layer", first manifesto in full, list of all 23, guiding questions |
+| Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
 | Pinturas | `#/pinturas` | The 36 numbered paintings from oscarabreu.com/paintings, lightbox with swipe and WhatsApp enquiry |
 | ART GABANGI | `#/gabangi` | 2026 edition from gabangi.com: artists, programme, tickets, exhibit spaces, sponsors, team |
 | Visita y VIP Tour | `#/visita` | Booking: experience → date/time/guide language → guests → terms → payment (10-min hold) → QR ticket + calendar file. Private tour request form |
@@ -38,6 +39,8 @@ cd museo-abreu && python3 -m http.server 8000
 - **From oscarabreu.com** (copied verbatim, Spanish and English as published): biography and exhibitions
   (`/biography`), manifestos "La urgencia de crear / The Urgency to Create" (`/statement`) and
   "El trazo como origen / The Stroke as Origin" (`/manifiesto/2.html`, artwork "Time on My Face"),
+  manifestos 3–23 (`/manifiesto/N.html`, in `manifestos.js`, generated from the pages' own text objects;
+  the images for 16–23 are missing on the site itself, so the app shows only their titles),
   paintings 1–36 (`/paintings`, numbers only), original images of the 6 works (miniatures series
   `/museo/N.JPG`, 8×8 in, MDF, 2021; manifesto works `/gallery4/N.JPG`, 24×24 in, paper, 2019).
   The site marks *Pasión* as sold, so it is out of the collection list.
@@ -56,7 +59,7 @@ cd museo-abreu && python3 -m http.server 8000
 
 - Paintings 1–36: titles, year, technique, size (the site publishes numbers only).
 - "Ecos de la memoria": year, technique, size (not published on the site).
-- Manifestos 3–23 on oscarabreu.com/manifiesto/ are not in the app yet.
+- Images of the works that open manifestos 16–23 (oscarabreu.com/gallery4/161…231.JPG return 404).
 - Spanish versions of the ART GABANGI artist quotes; ART GABANGI 2027 dates.
 - Pro membership price; class, tour and club prices (several are illustrative).
 - Nov 17 anniversary and June 13 group exhibition: ticket prices and times.
@@ -66,6 +69,6 @@ cd museo-abreu && python3 -m http.server 8000
 
 ## Files
 
-`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, collection, Pro, daily reading) · `content.js` (Paintings, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
+`index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, collection, Pro, daily reading) · `manifestos.js` (manifestos 3–23) · `content.js` (Paintings, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN strings) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
 works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).

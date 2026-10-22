@@ -1,6 +1,6 @@
 // Offline shell: the app opens without a connection (e.g. to show a ticket QR).
-const CACHE = 'museo-abreu-v6';
-const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'data.js', 'booking-config.js', 'features.js', 'content.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
+const CACHE = 'museo-abreu-v7';
+const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'data.js', 'manifestos.js', 'booking-config.js', 'features.js', 'content.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
   'qrcode.js', 'img/escaping-being.jpg', 'img/passion.jpg', 'img/petrichor.jpg', 'img/resilience.jpg', 'img/limerence.jpg', 'img/echoes-of-memory.jpg',
   'img/time-on-my-face.jpg'];
 

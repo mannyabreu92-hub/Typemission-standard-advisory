@@ -220,8 +220,10 @@ function pageArtist() {
   </div>`;
 }
 
+const findWork = id => WORKS.find(x => x.id === id) || MANIFESTO_WORKS.find(x => x.id === id);
+
 function openWork(id) {
-  const w = WORKS.find(x => x.id === id);
+  const w = findWork(id);
   const dlg = document.createElement('dialog');
   dlg.setAttribute('aria-label', L(w.title));
   dlg.innerHTML = `<div class="dlg-body">
@@ -276,8 +278,12 @@ function pagePsico() {
         <input id="layer-range" class="range" type="range" min="0" max="2" step="1" value="0" data-action="layers" aria-valuetext="${t('layer')} 1/3">
       </div>
     </section>
-    ${manifestoSection(MANIFESTO, false)}
-    ${manifestoSection(MANIFESTO2, true)}
+    ${manifestoSection(MANIFESTOS[0])}
+    <section class="section">
+      <h2>${t('manifestosTitle', { n: MANIFESTOS.length })}</h2>
+      <p class="muted" style="margin-bottom:1rem">${t('manifestosLead')}</p>
+      ${manifestoList()}
+    </section>
     <section class="section">
       <h2>${t('questionsTitle')}</h2>
       <ol class="questions"><li>${t('q1')}</li><li>${t('q2')}</li><li>${t('q3')}</li></ol>
@@ -289,20 +295,22 @@ function pagePsico() {
   </div>`;
 }
 
-// A manifesto opens with its artwork, as on oscarabreu.com. Lines that are
-// quotations (Jung) are set as pull quotes. `fold` shows the opening and keeps
-// the rest behind "keep reading".
-function manifestoSection(m, fold) {
-  const w = WORKS.find(x => x.id === m.work);
-  const para = p => /^[«“]/.test(p) ? `<blockquote class="m-quote">${esc(p)}</blockquote>` : `<p>${esc(p)}</p>`;
-  const paras = L(m), cut = fold ? 5 : paras.length;
-  return `<section class="section manifesto${fold ? ' m-fold' : ''}">
-      <p class="eyebrow">${t('manifestoEyebrow')}</p>
+// A manifesto opens with its artwork, as on oscarabreu.com. Blocks are
+// paragraphs (strings), headings { h }, quotations { q } and lists { ul }.
+function manifestoSection(m) {
+  const w = findWork(m.work);
+  const body = L(m).map(b => typeof b === 'string' ? `<p>${esc(b)}</p>`
+    : b.h ? `<h3 class="m-h">${esc(b.h)}</h3>`
+    : b.q ? `<blockquote class="m-quote">${esc(b.q)}</blockquote>`
+    : `<ul class="m-list">${b.ul.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`).join('');
+  const caption = `${L(w.title)}${w.spec ? ` · ${L(w.spec)[0]}` : ''}`;
+  return `<section class="section manifesto${m.n === 1 ? ' m-coda' : ''}">
+      <p class="eyebrow">${t('manifestoEyebrow')} ${m.n}/${MANIFESTOS.length}</p>
       <h2>${L(m.title)}</h2>
       <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${m.source}</p>
-      <button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${L(w.title)}${w.spec ? ` · ${L(w.spec)[0]}` : ''}</span></button>
-      ${paras.slice(0, cut).map(para).join('')}
-      ${cut < paras.length ? `<details class="m-more"><summary>${t('keepReading')}</summary>${paras.slice(cut).map(para).join('')}</details>` : ''}
+      ${w.img ? `<button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${caption}</span></button>`
+        : `<p class="m-work-missing">${caption} · ${t('imagePending')}</p>`}
+      ${body}
     </section>`;
 }
 

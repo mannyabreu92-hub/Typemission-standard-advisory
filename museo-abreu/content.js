@@ -1,5 +1,6 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
-// the Paintings gallery (#/pinturas) and the ART GABANGI page (#/gabangi).
+// the Paintings gallery (#/pinturas), the 23 manifestos (#/manifiestos) and
+// the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
 Object.assign(I18N.es, {
@@ -18,6 +19,8 @@ Object.assign(I18N.es, {
   gabangiExhibit: 'Exponer en ART GABANGI', gabangiExhibitLead: 'Espacios de exposición para artistas, galerías e instituciones. Todas las solicitudes se revisan con criterios curatoriales y de producción.',
   gabangiApply: 'Solicitar espacio', gabangiSponsor: 'Patrocinar', gabangiSponsorLead: 'Paquetes de patrocinio desde US$3,000, con presencia en el Catálogo Oficial de la Feria.',
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
+  manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
+  allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos', imagePending: 'imagen no disponible en oscarabreu.com',
 });
 
 Object.assign(I18N.en, {
@@ -36,6 +39,8 @@ Object.assign(I18N.en, {
   gabangiExhibit: 'Exhibit at ART GABANGI', gabangiExhibitLead: 'Exhibition spaces for artists, galleries and institutions. All applications are reviewed under curatorial and production criteria.',
   gabangiApply: 'Apply to exhibit', gabangiSponsor: 'Become a sponsor', gabangiSponsorLead: 'Sponsorship packages from US$3,000, with placement in the Official Fair Catalog.',
   space: 'Space', size: 'Size (ft)', price: 'Price',
+  manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
+  allManifestos: 'All manifestos', navManifestos: 'Manifestos', imagePending: 'image not available on oscarabreu.com',
 });
 
 /* ---------- Data (gabangi.com, ART GABANGI 2026) ---------- */
@@ -74,7 +79,43 @@ const GABANGI = {
   ],
 };
 
+// Manifestos 1–2 (data.js) are paragraph lists; 3–23 (manifestos.js) are blocks.
+const paraBlocks = ps => ps.map(p => /^[«“]/.test(p) ? { q: p } : p);
+const MANIFESTOS = [
+  { ...MANIFESTO, n: 1, es: paraBlocks(MANIFESTO.es), en: paraBlocks(MANIFESTO.en) },
+  { ...MANIFESTO2, n: 2, es: paraBlocks(MANIFESTO2.es), en: paraBlocks(MANIFESTO2.en) },
+  ...MANIFESTOS_MORE,
+];
+
 /* ---------- Pages ---------- */
+
+function manifestoList() {
+  return `<ol class="m-index">${MANIFESTOS.map(m => {
+    const w = findWork(m.work);
+    return `<li><a href="#/manifiestos/${m.n}">${w.img ? `<img src="${w.img}" alt="" loading="lazy">` : '<span class="m-noimg"></span>'}
+      <span><small>${m.n}</small><strong>${L(m.title)}</strong></span></a></li>`;
+  }).join('')}</ol>`;
+}
+
+function pageManifestos(nStr) {
+  const n = Number(nStr), m = MANIFESTOS.find(x => x.n === n);
+  if (!m) return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">${t('navPsico')}</p><h1>${t('manifestosTitle', { n: MANIFESTOS.length })}</h1>
+      <p class="lead" style="margin-top:.8rem">${t('manifestosLead')}</p>
+    </section>
+    <section class="section">${manifestoList()}</section>
+  </div>`;
+  const prev = MANIFESTOS.find(x => x.n === n - 1), next = MANIFESTOS.find(x => x.n === n + 1);
+  return `<div class="wrap">
+    ${manifestoSection(m)}
+    <nav class="m-nav" aria-label="${t('allManifestos')}">
+      ${prev ? `<a class="btn" href="#/manifiestos/${prev.n}">← ${prev.n}. ${L(prev.title)}</a>` : '<span></span>'}
+      ${next ? `<a class="btn" href="#/manifiestos/${next.n}">${next.n}. ${L(next.title)} →</a>` : '<span></span>'}
+    </nav>
+    <div class="btn-row"><a class="btn dark" href="#/manifiestos">${t('allManifestos')}</a></div>
+  </div>`;
+}
 
 function pagePaintings() {
   return `<div class="wrap">
@@ -177,5 +218,5 @@ function pageGabangi() {
   </div>`;
 }
 
-Object.assign(EXTRA_ROUTES, { pinturas: pagePaintings, gabangi: pageGabangi });
+Object.assign(EXTRA_ROUTES, { pinturas: pagePaintings, manifiestos: pageManifestos, gabangi: pageGabangi });
 Object.assign(EXTRA_ACTIONS, { painting: el => openPainting(Number(el.dataset.n)) });
