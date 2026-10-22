@@ -511,6 +511,10 @@ I18N.it = {
   "waTop100": "Buongiorno, vorrei una copia di Top 100 Artists: ART GABANGI 2026.",
   "moreTop100": "Top 100 Artists",
   "moreTop100Text": "Cento artisti dominicani in un libro da collezione.",
+  "joinProOnline": "Diventa Pro",
+  "joinClubOnline": "Iscriviti al club",
+  "sponsorOnline": "Dona {amount}",
+  "buyOnline": "Acquista a {price}",
 };
 TR.it = {
   "2019": "2019",

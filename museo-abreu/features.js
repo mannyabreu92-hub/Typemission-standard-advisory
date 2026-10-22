@@ -538,10 +538,10 @@ function pageClasses() {
     <section class="section"><h2>${t('clubsSection')}</h2><div class="grid two">${CLUBS.map(c => `
       <div class="card"><span style="float:right;font-weight:600">${usd(c.price)} <small class="muted">${t('perMonth')}</small></span>
         <h3>${L(c.name)}</h3><p class="muted">${L(c.when)}</p><p>${L(c.desc)}</p>
-        <div class="btn-row">${clubs.includes(c.id) ? `<span class="status ok">${t('clubMember')}</span>` : `<button class="btn" data-action="joinClub" data-id="${c.id}">${t('joinClub')}</button>`}</div></div>`).join('')}</div></section>
+        <div class="btn-row">${clubs.includes(c.id) ? `<span class="status ok">${t('clubMember')}</span>` : `<button class="btn" data-action="joinClub" data-id="${c.id}">${t(whopLink(c.id) ? 'joinClubOnline' : 'joinClub')}</button>`}</div></div>`).join('')}</div></section>
     <section class="section"><div class="card" style="max-width:640px">
       <h2>${t('sponsorTitle')}</h2><p>${t('sponsorText')}</p>
-      <div class="btn-row">${[25, 50, 100].map(a => `<button class="btn ${a === 50 ? 'primary' : ''}" data-action="sponsor" data-amount="${a}">${t('sponsorBtn', { amount: usd(a) })}</button>`).join('')}</div>
+      <div class="btn-row">${[25, 50, 100].map(a => `<button class="btn ${a === 50 ? 'primary' : ''}" data-action="sponsor" data-amount="${a}">${t(whopLink('sponsor-' + a) ? 'sponsorOnline' : 'sponsorBtn', { amount: usd(a) })}</button>`).join('')}</div>
     </div></section>
   </div>`;
 }
@@ -736,7 +736,7 @@ function pagePro() {
       <p class="eyebrow">${t('proEyebrow')}</p><h1>${t('proTitle')}</h1>
       <p class="lead" style="margin-top:.8rem">${t('proLead')}</p>
       <p style="margin-top:.8rem"><strong>${t('proPrice')}</strong></p>
-      ${m ? `<p class="status ok" style="margin-top:.8rem">${t('youArePro')} · ${m.id}</p>` : `<div class="btn-row"><button class="btn primary" data-action="joinPro">${t('joinPro')}</button></div>`}
+      ${m ? `<p class="status ok" style="margin-top:.8rem">${t('youArePro')} · ${m.id}</p>` : `<div class="btn-row"><button class="btn primary" data-action="joinPro">${t(whopLink('pro') ? 'joinProOnline' : 'joinPro')}</button></div>`}
     </section>
     ${m ? `<section class="section"><h2>${t('memberPass')}</h2><p class="muted" style="margin-bottom:1rem">${t('memberPassHelp')}</p>${memberCard(m)}
       <div class="btn-row"><a class="btn dark" href="#/eventos">${t('navEvents')}</a><button class="btn small" data-action="leavePro">${t('leavePro')}</button></div></section>` : ''}
@@ -794,6 +794,7 @@ const EXTRA_ACTIONS = {
     location.hash = '#/visita';
   },
   joinClub: el => {
+    if (whopLink(el.dataset.id)) return openCheckout(whopLink(el.dataset.id));
     if (BOOKING.live) return openWhatsApp(t('waClub', { club: L(CLUBS.find(c => c.id === el.dataset.id).name) }));
     const clubs = fx.get('clubs', []);
     if (!clubs.includes(el.dataset.id)) clubs.push(el.dataset.id);
@@ -802,6 +803,7 @@ const EXTRA_ACTIONS = {
     route();
   },
   sponsor: el => {
+    if (whopLink('sponsor-' + el.dataset.amount)) return openCheckout(whopLink('sponsor-' + el.dataset.amount));
     if (BOOKING.live) return openWhatsApp(t('waSponsor', { amount: usd(Number(el.dataset.amount)) }));
     const gifts = fx.get('sponsorships', []);
     gifts.push({ amount: Number(el.dataset.amount), at: new Date().toISOString() });
@@ -866,6 +868,7 @@ const EXTRA_ACTIONS = {
   circleApprove: () => { fx.set('circle', { ...circle(), status: 'member', since: new Date().toISOString() }); route(); },
   circleReset: () => { fx.set('circle', null); route(); },
   joinPro: () => {
+    if (whopLink('pro')) return openCheckout(whopLink('pro'));
     if (BOOKING.live) return openWhatsApp(t('waPro'));
     const name = profile.name.trim() || 'Miembro Pro';
     fx.set('member', { id: proCode(), name, since: new Date().toISOString() });

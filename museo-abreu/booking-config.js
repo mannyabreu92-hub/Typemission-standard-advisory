@@ -20,11 +20,34 @@ var BOOKING = {
     'gabangi-gala': '',
     'gabangi-regular': '',
   },
+  // Whop checkout links (memberships, clubs, digital book, donations). Paste each product's
+  // checkout link; an empty one keeps the WhatsApp request. See BOOKING-SETUP.md, part 2.
+  whop: {
+    pro: '',
+    'painting-club': '',
+    'art-club': '',
+    'book-en': '',
+    'book-es': '',
+    'sponsor-25': '',
+    'sponsor-50': '',
+    'sponsor-100': '',
+  },
   whatsapp: '18098409588', // Oscar Abreu / Museo Abreu WhatsApp Business
 };
 
 function bookingLink(key) {
   return (BOOKING.links && BOOKING.links[key]) || '';
+}
+
+function whopLink(key) {
+  return (BOOKING.whop && BOOKING.whop[key]) || '';
+}
+
+// Opens an external checkout (new tab, or same tab if blocked).
+function openCheckout(url) {
+  const w = window.open(url, '_blank');
+  if (w) w.opener = null; else location.href = url;
+  return true;
 }
 
 function whatsappLink(text) {

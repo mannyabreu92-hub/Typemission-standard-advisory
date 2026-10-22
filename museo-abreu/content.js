@@ -7,6 +7,10 @@
 // section menu (sectionNav) and the home page highlights (homeHighlights).
 
 Object.assign(I18N.es, {
+  joinProOnline: 'Hacerme Pro',
+  joinClubOnline: 'Unirme al club',
+  sponsorOnline: 'Aportar {amount}',
+  buyOnline: 'Comprar {price}',
   navFineArt: 'Abreu Fine Art',
   faEyebrow: 'Galería · Los Corales, Bávaro',
   faLead: 'La galería de los proyectos de Oscar Abreu: representación, promoción, ventas y exposiciones temporales, junto al Museo Abreu.',
@@ -74,6 +78,10 @@ Object.assign(I18N.es, {
 });
 
 Object.assign(I18N.en, {
+  joinProOnline: 'Become Pro',
+  joinClubOnline: 'Join the club',
+  sponsorOnline: 'Give {amount}',
+  buyOnline: 'Buy {price}',
   navFineArt: 'Abreu Fine Art',
   faEyebrow: 'Gallery · Los Corales, Bávaro',
   faLead: 'The gallery of Oscar Abreu’s projects: representation, promotion, sales and temporary exhibitions, alongside Museo Abreu.',
@@ -141,6 +149,10 @@ Object.assign(I18N.en, {
 });
 
 Object.assign(I18N.fr, {
+  joinProOnline: 'Devenir Pro',
+  joinClubOnline: 'Rejoindre le club',
+  sponsorOnline: 'Donner {amount}',
+  buyOnline: 'Acheter {price}',
   navFineArt: 'Abreu Fine Art',
   faEyebrow: 'Galerie · Los Corales, Bávaro',
   faLead: 'La galerie des projets d’Oscar Abreu : représentation, promotion, ventes et expositions temporaires, aux côtés du Museo Abreu.',

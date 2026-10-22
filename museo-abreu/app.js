@@ -686,7 +686,7 @@ function pageLibrary() {
           <div class="edition">
             <div><strong>${L(LANG_NAMES[ed.lang])}</strong><br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span></div>
             ${owns(ed.lang) ? `<a class="btn small dark" href="#/leer/${ed.lang}/0">${t('owned')} · ${t('read')}</a>`
-              : ed.status === 'available' ? `<button class="btn small primary" data-action="buy" data-l="${ed.lang}">${t('buy', { price: usd(ed.price) })}</button>`
+              : ed.status === 'available' ? `<button class="btn small primary" data-action="buy" data-l="${ed.lang}">${t(whopLink('book-' + ed.lang) ? 'buyOnline' : 'buy', { price: usd(ed.price) })}</button>`
               : `<span class="chip">${t('comingSoon')}</span>`}
           </div>`).join('')}
         </div>
@@ -709,6 +709,7 @@ function pageLibrary() {
 }
 
 function buyEdition(l) {
+  if (whopLink('book-' + l)) return openCheckout(whopLink('book-' + l));
   if (BOOKING.live) return openWhatsApp(t('waBuyBook', { lang: L(LANG_NAMES[l]), price: usd(EDITIONS.find(e => e.lang === l).price) }));
   const finish = email => {
     profile.email = email;
@@ -756,7 +757,7 @@ function pageReader(l = 'es', chStr = '0') {
         : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`);
   } else {
     text = `<h2>${chTitle(c, l)}</h2><div class="empty">🔒<p>${t('lockedChapter')}</p>
-      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t('buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 60) })}</button></div></div>`;
+      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t(whopLink('book-' + l) ? 'buyOnline' : 'buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 60) })}</button></div></div>`;
   }
   return `<div class="wrap reader">
     <div class="reader-bar">

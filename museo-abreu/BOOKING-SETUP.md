@@ -52,3 +52,28 @@ meeting/dinner requests. These need the museum's own server later (phase 2).
 Put the museum's WhatsApp number in `booking-config.js` (`whatsapp: '1809…'`). Every booking
 and ticket button without a Bókun link then becomes "Book via WhatsApp" with the request
 already written, like gabangi.com does today.
+
+## Part 2 · Whop (memberships, clubs, digital book, donations)
+
+Bókun keeps everything with a date and a time. Whop sells what has no date: the Pro membership,
+the two monthly clubs, the digital editions of Ecce Homo and class sponsorships. See the Phase 2
+plan for the reasons and costs.
+
+1. Before signing up, confirm with Whop that it can pay out to the museum's bank account in the
+   Dominican Republic, and the all-in fees (card, payout, currency).
+2. Create the account in the museum's name and one product per row below.
+3. Copy each product's checkout link into `BOOKING.whop` in `booking-config.js`. An empty value
+   keeps the WhatsApp request; a filled one sends the button straight to Whop's checkout and drops
+   "via WhatsApp" from its label.
+
+| Key in `BOOKING.whop` | Product | Price (USD) | Billing |
+|---|---|---|---|
+| `pro` | Pro membership | to be defined | monthly or yearly |
+| `painting-club` | Painting club | 80 | monthly |
+| `art-club` | Art club | 30 | monthly |
+| `book-en` | Ecce Homo, English digital edition | 60 | one-time |
+| `book-es` | Ecce Homo, Spanish digital edition | 60 (when the text is ready) | one-time |
+| `sponsor-25`, `sponsor-50`, `sponsor-100` | Sponsor a painting class | 25 / 50 / 100 | one-time |
+
+Until the app has its own server (Phase 2, step 3), Pro benefits and book access are checked by
+hand against Whop's member list.

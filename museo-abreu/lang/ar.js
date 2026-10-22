@@ -511,6 +511,10 @@ I18N.ar = {
   "waTop100": "مرحبًا، أودّ نسخة من Top 100 Artists: ART GABANGI 2026.",
   "moreTop100": "Top 100 Artists",
   "moreTop100Text": "مئة فنان دومينيكاني في كتاب واحد للاقتناء.",
+  "joinProOnline": "اشترك في Pro",
+  "joinClubOnline": "انضمّ إلى النادي",
+  "sponsorOnline": "تبرّع بمبلغ {amount}",
+  "buyOnline": "اشترِ بسعر {price}",
 };
 TR.ar = {
   "2019": "2019",
