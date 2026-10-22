@@ -22,6 +22,7 @@ cd museo-abreu && python3 -m http.server 8000
 | Psico-Expresionismo | `#/psico` | 3-minute intro, interactive "discover another layer", first manifesto in full, list of all 23, guiding questions |
 | Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
 | Pinturas · Dibujos · Escultura | `#/pinturas`, `#/dibujos`, `#/escultura` | The numbered galleries from oscarabreu.com (36 paintings, 36 drawings, 12 sculptures), lightbox with swipe and WhatsApp enquiry |
+| Reseñas | `#/resenas` | The 9 critics' excerpts from oscarabreu.com/reviews (ES/EN) |
 | ART GABANGI | `#/gabangi` | 2026 edition from gabangi.com: artists, programme, tickets, exhibit spaces, sponsors, team |
 | Visita y VIP Tour | `#/visita` | Booking: experience → date/time/guide language → guests → terms → payment (10-min hold) → QR ticket + calendar file. Private tour request form |
 | Biblioteca | `#/biblioteca`, `#/leer/:lang/:chapter` | Editions per language, free sample, purchase, reader with text size, bookmarks, last position |
@@ -45,6 +46,8 @@ cd museo-abreu && python3 -m http.server 8000
   site's sculpture files 37–48 are shown as 1–12; drawings 16–18 and 33 repeat 3, 2, 1 and 6 on the site), original images of the 6 works (miniatures series
   `/museo/N.JPG`, 8×8 in, MDF, 2021; manifesto works `/gallery4/N.JPG`, 24×24 in, paper, 2019).
   The site marks *Pasión* as sold, so it is out of the collection list.
+- **Reviews** (`/reviews`): the 9 excerpts in Spanish and English. Only Cándido Gerón's full review is
+  online (`/candidogeron/`); the site's links for the other six critics return 404, so the app does not link them.
 - **From gabangi.com:** ART GABANGI 2026 programme, ticket tiers, artists with Oscar Abreu's quotes
   (English only on the site), exhibit spaces, sponsor entry price, team names and roles.
 
@@ -59,6 +62,8 @@ cd museo-abreu && python3 -m http.server 8000
 ## Open items
 
 - Paintings, drawings and sculptures: titles, year, technique, size (the site publishes numbers only).
+- Full reviews for Marianne de Tolentino, Abil Peralta, Odalís G. Pérez, José Saldaña, Fernando Morbán Laucer
+  and Myrna Guerrero (their pages on oscarabreu.com return 404).
 - Drawings 16, 17, 18 and 33 are duplicates of 3, 2, 1 and 6 on oscarabreu.com.
 - "Ecos de la memoria": year, technique, size (not published on the site).
 - Images of the works that open manifestos 16–23 (oscarabreu.com/gallery4/161…231.JPG return 404).

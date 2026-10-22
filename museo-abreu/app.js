@@ -211,6 +211,7 @@ function pageArtist() {
       <div class="grid two">${QUOTES.map(q => `<figure class="card quote"><blockquote lang="en">“${q.q}”</blockquote>
         <figcaption><strong>${q.a}</strong><br><span class="muted">${q.r}</span></figcaption></figure>`).join('')}</div>
       ${lang !== 'en' ? `<p class="muted" style="margin-top:.8rem">${t('quotesNote')}</p>` : ''}
+      <div class="btn-row"><a class="btn dark" href="#/resenas">${t('reviewsCta', { n: REVIEWS.items.length })}</a></div>
     </section>
     <section class="section">
       <h2>${t('catalog')}</h2>

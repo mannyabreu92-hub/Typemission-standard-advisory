@@ -1,6 +1,6 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
 // the Paintings, Drawings and Sculpture galleries (#/pinturas, #/dibujos,
-// #/escultura), the 23 manifestos (#/manifiestos) and
+// #/escultura), the 23 manifestos (#/manifiestos), the reviews (#/resenas) and
 // the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
 
@@ -24,7 +24,8 @@ Object.assign(I18N.es, {
   gabangiApply: 'Solicitar espacio', gabangiSponsor: 'Patrocinar', gabangiSponsorLead: 'Paquetes de patrocinio desde US$3,000, con presencia en el Catálogo Oficial de la Feria.',
   space: 'Espacio', size: 'Medidas (pies)', price: 'Precio',
   manifestosTitle: 'Los {n} manifiestos', manifestosLead: 'Oscar Abreu escribe sobre el origen, los principios y el futuro del Psico-Expresionismo. Textos completos de oscarabreu.com.',
-  allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos', imagePending: 'imagen no disponible en oscarabreu.com',
+  allManifestos: 'Todos los manifiestos', navManifestos: 'Manifiestos',
+  navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
 });
 
 Object.assign(I18N.en, {
@@ -47,7 +48,8 @@ Object.assign(I18N.en, {
   gabangiApply: 'Apply to exhibit', gabangiSponsor: 'Become a sponsor', gabangiSponsorLead: 'Sponsorship packages from US$3,000, with placement in the Official Fair Catalog.',
   space: 'Space', size: 'Size (ft)', price: 'Price',
   manifestosTitle: 'The {n} manifestos', manifestosLead: 'Oscar Abreu writes about the origin, principles and future of Psycho-Expressionism. Full texts from oscarabreu.com.',
-  allManifestos: 'All manifestos', navManifestos: 'Manifestos', imagePending: 'image not available on oscarabreu.com',
+  allManifestos: 'All manifestos', navManifestos: 'Manifestos',
+  navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
 });
 
 /* ---------- Data (gabangi.com, ART GABANGI 2026) ---------- */
@@ -196,6 +198,21 @@ function openGalleryItem(id, n) {
   dlg.showModal();
 }
 
+function pageReviews() {
+  return `<div class="wrap">
+    <section class="section">
+      <p class="eyebrow">Oscar Abreu</p><h1>${L(REVIEWS.title)}</h1>
+      <p class="lead" style="margin-top:.8rem">${L(REVIEWS.intro)}</p>
+    </section>
+    <section class="section">
+      <div class="grid two">${REVIEWS.items.map(r => `<figure class="card quote"><blockquote>“${esc(L(r))}”</blockquote>
+        <figcaption><strong>${r.critic}</strong><br><span class="muted">${r.year}</span>
+        ${r.url ? `<br><a href="${r.url}" target="_blank" rel="noopener">${t('fullReview')} ↗</a>` : ''}</figcaption></figure>`).join('')}</div>
+      <p class="muted" style="margin-top:1rem">${t('reviewsNote')} ${t('sourceLabel')}: <a href="https://oscarabreu.com/reviews" target="_blank" rel="noopener">oscarabreu.com/reviews ↗</a></p>
+    </section>
+  </div>`;
+}
+
 function pageGabangi() {
   const ev = EVENTS.find(e => e.id === 'art-gabangi');
   return `<div class="wrap">
@@ -242,6 +259,6 @@ function pageGabangi() {
 
 Object.assign(EXTRA_ROUTES, {
   pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'),
-  manifiestos: pageManifestos, gabangi: pageGabangi,
+  manifiestos: pageManifestos, resenas: pageReviews, gabangi: pageGabangi,
 });
 Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });
