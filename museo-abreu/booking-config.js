@@ -45,6 +45,7 @@ function whopLink(key) {
 
 // Opens an external checkout (new tab, or same tab if blocked).
 function openCheckout(url) {
+  if (typeof trackEvent === 'function') trackEvent('Checkout', { url });
   const w = window.open(url, '_blank');
   if (w) w.opener = null; else location.href = url;
   return true;
@@ -58,6 +59,8 @@ function whatsappLink(text) {
 function openWhatsApp(text) {
   const url = whatsappLink(text);
   if (!url) return false;
+  // Never the message itself: it can hold the visitor's name, email or phone.
+  if (typeof trackEvent === 'function') trackEvent('WhatsApp', {});
   const w = window.open(url, '_blank');
   if (w) w.opener = null; else location.href = url;
   return true;

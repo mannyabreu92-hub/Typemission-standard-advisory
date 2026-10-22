@@ -183,13 +183,23 @@ Works are acquired by introduction, not bought from a list:
 - Demo mode only (`live: false`): buttons to simulate approval and reset the request.
 - No advisor name, response time or extra services are stated; add them when the museum confirms them.
 
-## Quality checks (22 Oct 2026)
+## Quality checks (22 Oct 2026, second pass)
 
-- Accessibility: axe-core (WCAG 2 A/AA + best practice) on 18 pages × ES/EN: no violations.
-- Slow 4G (1.6 Mbps, 150 ms) from a local server without compression: home 558 KB, first paint ~1.0 s,
-  load ~3.4 s. Code is ~150 KB gzipped; the manifesto text (51 KB gzipped) loads only when a manifesto opens.
+- Accessibility: axe-core (WCAG 2 A/AA + best practice) on 32 pages × 6 languages (ES, EN, FR, DE, IT, AR) at
+  phone width: no violations, no sideways scrolling, no broken images, no script errors, one main heading per page
+  (the reader's chapter title became the page heading). All 54 internal links lead to existing pages.
+- Slow 4G (1.6 Mbps, 150 ms) from a local server without compression: home ~700 KB, first paint ~1.1 s.
+  German, Italian and Arabic add one language file (~105–130 KB) only for visitors who choose them.
 - Offline: after one visit the app, tickets and all manifestos open without a connection.
 - Install: PNG icons 180/192/512 and a maskable 512 (`img/icon-*.png`), rendered from `icon.svg`.
+
+## Visitor statistics
+
+Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Vercel dashboard: project
+`museo-abreu` → Analytics → Enable. The app loads `/_vercel/insights/script.js` only on the live site and reports:
+- a page view per app page (`/visita`, `/coleccion`, `/manifiestos/12`…), since its pages are hash routes;
+- events `WhatsApp` (with the page and button label, never the message, which can hold a visitor's name,
+  email or phone), `Checkout` (Bókun or Whop link) and `Language`. Custom events show on plans that include them.
 
 ## Open items
 

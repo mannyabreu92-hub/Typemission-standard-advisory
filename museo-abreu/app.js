@@ -110,10 +110,28 @@ function route() {
     if (a.dataset.route === section) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   afterRender(name);
+  trackPage();
   // A last path part naming an element on the page (e.g. #/biblioteca/top100) scrolls to it.
   const anchor = parts.length > 1 && /^[a-z][\w-]*$/.test(parts.at(-1)) && document.getElementById(parts.at(-1));
   if (anchor) requestAnimationFrame(() => anchor.scrollIntoView());
 }
+
+// Analytics: one page view per route the visitor opens (re-renders for a language change don't count).
+let lastTracked = null;
+function trackPage() {
+  const path = '/' + location.hash.replace(/^#\/?/, '');
+  if (path === lastTracked) return;
+  lastTracked = path;
+  window.va('pageview', { route: path, path });
+}
+function trackEvent(name, data) { window.va('event', { name, data: { page: lastTracked || '/', ...data } }); }
+// Taps on WhatsApp, booking and checkout links rendered as <a>.
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href]'); if (!a) return;
+  const href = a.href;
+  if (/wa\.me\//.test(href)) trackEvent('WhatsApp', { button: (a.textContent || '').trim().slice(0, 60) });
+  else if (Object.values(BOOKING.links || {}).includes(href) || Object.values(BOOKING.whop || {}).includes(href)) trackEvent('Checkout', { url: href });
+});
 
 function afterRender(name) {
   renderQRs();
@@ -750,13 +768,13 @@ function pageReader(l = 'es', chStr = '0') {
     reading.last = { lang: l, ch, at: new Date().toISOString() };
     save();
     const paras = sampleFor(l, c);
-    text = `<h2>${chTitle(c, l)}</h2>` + (paras
+    text = `<h1 class="ch-title">${chTitle(c, l)}</h1>` + (paras
       ? paras.map(p => `<p>${esc(p)}</p>`).join('')
       : c.free
         ? `<div class="empty"><p>${t('samplePending')}</p><div class="btn-row" style="justify-content:center"><a class="btn dark" href="#/leer/en/${ch}">${t('readEnSample')}</a></div></div>`
         : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`);
   } else {
-    text = `<h2>${chTitle(c, l)}</h2><div class="empty">🔒<p>${t('lockedChapter')}</p>
+    text = `<h1 class="ch-title">${chTitle(c, l)}</h1><div class="empty">🔒<p>${t('lockedChapter')}</p>
       <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t(whopLink('book-' + l) ? 'buyOnline' : 'buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 60) })}</button></div></div>`;
   }
   return `<div class="wrap reader">
@@ -971,6 +989,7 @@ function setLang(l) {
   });
 }
 function applyLang(l, remember = true) {
+  if (l !== lang) trackEvent('Language', { lang: l });
   lang = l;
   if (remember) store.set('lang', l);
   document.documentElement.lang = l;

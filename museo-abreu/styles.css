@@ -182,7 +182,8 @@ dialog::backdrop { background: rgba(22, 18, 15, .6); }
 .reader-bar { position: sticky; top: 64px; z-index: 10; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: space-between; padding: .6rem 0; background: var(--paper); border-bottom: 1px solid var(--line); }
 .reader-text { font-family: var(--serif); line-height: 1.75; padding: 1.5rem 0 2rem; }
 .reader-text p { margin-top: 1em; }
-.reader-text h2 { margin-bottom: .5rem; }
+.reader-text h2, .reader-text .ch-title { margin-bottom: .5rem; }
+.reader-text .ch-title { font-size: clamp(1.7rem, 4.5vw, 2.4rem); }
 .reader-nav { display: flex; justify-content: space-between; gap: .5rem; padding-bottom: 2rem; }
 
 .empty { text-align: center; padding: 2rem 1rem; color: var(--ink-3); }
