@@ -84,6 +84,9 @@ const numbered = (count, dir) => Array.from({ length: count }, (_, i) => ({ n: i
 const PAINTINGS = numbered(36, 'paintings');
 const DRAWINGS = numbered(36, 'drawings');
 const SCULPTURES = numbered(12, 'sculpture');
+// oscarabreu.com/photos (three pages, files 3–38, shown as 1–36): event photos
+// with no captions, dates or names on the site.
+const PHOTOS = numbered(36, 'photos');
 
 const EDITIONS = [
   { lang: 'es', price: 25, status: 'available' },

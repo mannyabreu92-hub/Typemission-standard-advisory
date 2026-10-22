@@ -21,7 +21,7 @@ cd museo-abreu && python3 -m http.server 8000
 | Oscar Abreu | `#/artista` | Bio, timeline, video, catalogue with artwork detail and acquisition enquiry |
 | Psico-Expresionismo | `#/psico` | 3-minute intro, interactive "discover another layer", first manifesto in full, list of all 23, guiding questions |
 | Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
-| Pinturas · Dibujos · Escultura | `#/pinturas`, `#/dibujos`, `#/escultura` | The numbered galleries from oscarabreu.com (36 paintings, 36 drawings, 12 sculptures), lightbox with swipe and WhatsApp enquiry |
+| Pinturas · Dibujos · Escultura · Fotos | `#/pinturas`, `#/dibujos`, `#/escultura`, `#/fotos` | The numbered galleries from oscarabreu.com (36 paintings, 36 drawings, 12 sculptures, 36 photos), lightbox with swipe; WhatsApp enquiry on artworks only |
 | Reseñas | `#/resenas` | The 9 critics' excerpts from oscarabreu.com/reviews (ES/EN) |
 | Contacto | `#/contacto` | Portrait, WhatsApp, Instagram and email from oscarabreu.com/contact |
 | Prensa | `#/prensa` | The 10 press articles from oscarabreu.com/bibliography, with the site's summaries (ES/EN) |
@@ -52,6 +52,8 @@ cd museo-abreu && python3 -m http.server 8000
   online (`/candidogeron/`); the site's links for the other six critics return 404, so the app does not link them.
 - **Press** (`/bibliography`): 10 articles with headlines as published and the site's summaries. The article links
   could not be checked from the build environment (news sites blocked there).
+- **Photos** (`/photos`, `index2.html`, `index3.html`): 36 event photos (files 3–38, shown as 1–36) with no
+  captions, dates or names on the site; the app does not name people or events.
 - **Contact** (`/contact`): WhatsApp, Instagram `@oscarabreu_aertist` (spelled so on the site, not verified from
   here), info@oscarabreu.com and the portrait. The site's placeholder line "xxxxxxx" is left out.
 - **Not included:** `/sociales` is linked in the site's menu but returns 404. `/news` is a 2008 page that only lists Centro Abreu (Curazao No. 61, Ensanche Ozama) as a

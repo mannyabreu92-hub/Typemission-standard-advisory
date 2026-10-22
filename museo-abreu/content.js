@@ -1,6 +1,6 @@
 // Museo Abreu — content brought in from oscarabreu.com and gabangi.com:
-// the Paintings, Drawings and Sculpture galleries (#/pinturas, #/dibujos,
-// #/escultura), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa),
+// the Paintings, Drawings, Sculpture and Photos galleries (#/pinturas, #/dibujos,
+// #/escultura, #/fotos), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa),
 // contact (#/contacto) and
 // the ART GABANGI page (#/gabangi).
 // Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
@@ -11,6 +11,8 @@ Object.assign(I18N.es, {
   drawingsTitle: 'Dibujos', drawingsLead: 'Los dibujos que Oscar Abreu publica en oscarabreu.com, identificados por número.',
   sculptureTitle: 'Escultura', sculptureLead: 'Las esculturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
   galleryNote: 'oscarabreu.com publica estas obras solo con su número; título, año, técnica y medidas están pendientes.',
+  photosTitle: 'Fotos', photosLead: 'Fotos de Oscar Abreu en inauguraciones y encuentros, publicadas en oscarabreu.com.',
+  photosNote: 'oscarabreu.com publica estas fotos sin pie de foto, fecha ni nombres.', photosN: 'Foto {n}',
   paintingsN: 'Pintura {n}', drawingsN: 'Dibujo {n}', sculptureN: 'Escultura {n}',
   waGallery: 'Hola, me interesa la obra "{name}" de Oscar Abreu ({site}).',
   prev: 'Anterior', next: 'Siguiente',
@@ -37,6 +39,8 @@ Object.assign(I18N.en, {
   drawingsTitle: 'Drawings', drawingsLead: 'The drawings Oscar Abreu publishes on oscarabreu.com, identified by number.',
   sculptureTitle: 'Sculpture', sculptureLead: 'The sculptures Oscar Abreu publishes on oscarabreu.com, identified by number.',
   galleryNote: 'oscarabreu.com publishes these works by number only; title, year, technique and size are pending.',
+  photosTitle: 'Photos', photosLead: 'Photos of Oscar Abreu at openings and gatherings, published on oscarabreu.com.',
+  photosNote: 'oscarabreu.com publishes these photos without captions, dates or names.', photosN: 'Photo {n}',
   paintingsN: 'Painting {n}', drawingsN: 'Drawing {n}', sculptureN: 'Sculpture {n}',
   waGallery: 'Hello, I am interested in the work "{name}" by Oscar Abreu ({site}).',
   prev: 'Previous', next: 'Next',
@@ -136,17 +140,18 @@ const GALLERIES = {
   pinturas: { items: PAINTINGS, key: 'paintings', site: 'oscarabreu.com/paintings' },
   dibujos: { items: DRAWINGS, key: 'drawings', site: 'oscarabreu.com/drawings' },
   escultura: { items: SCULPTURES, key: 'sculpture', site: 'oscarabreu.com/sculpture' },
+  fotos: { items: PHOTOS, key: 'photos', site: 'oscarabreu.com/photos', photos: true },
 };
 
 function pageGallery(id) {
   const g = GALLERIES[id];
   return `<div class="wrap">
     <section class="section">
-      <p class="eyebrow">${t('paintingsEyebrow')}</p><h1>${t(g.key + 'Title')}</h1>
-      <div class="tabs" role="tablist" style="margin-top:1rem">${Object.entries(GALLERIES).map(([k, x]) =>
+      <p class="eyebrow">${g.photos ? 'Oscar Abreu' : t('paintingsEyebrow')}</p><h1>${t(g.key + 'Title')}</h1>
+      <div class="tabs gallery-tabs" role="tablist" style="margin-top:1rem">${Object.entries(GALLERIES).map(([k, x]) =>
         `<a role="tab" class="tab" href="#/${k}" aria-selected="${k === id}">${t(x.key + 'Title')} · ${x.items.length}</a>`).join('')}</div>
       <p class="lead" style="margin-top:1rem">${t(g.key + 'Lead')}</p>
-      <p class="muted" style="margin-top:.5rem">${t('galleryNote')}</p>
+      <p class="muted" style="margin-top:.5rem">${t(g.photos ? 'photosNote' : 'galleryNote')}</p>
     </section>
     <section class="section">
       <div class="paintings">${g.items.map(p => `<button type="button" class="painting" data-action="galleryItem" data-g="${id}" data-n="${p.n}" aria-label="${t(g.key + 'N', { n: p.n })}">
@@ -167,11 +172,11 @@ function openGalleryItem(id, n) {
     dlg.innerHTML = `<div class="dlg-body">
       <div class="dlg-art"><img src="${items[n - 1].img}" alt="${name}, Oscar Abreu"></div>
       <h3 style="margin-top:1rem">${name} <span class="muted">· ${n}/${items.length}</span></h3>
-      <p class="muted">${t('galleryNote')}</p>
+      <p class="muted">${t(g.photos ? 'photosNote' : 'galleryNote')}</p>
       <div class="btn-row">
         <button class="btn small" data-dlg="prev" aria-label="${t('prev')}">←</button>
         <button class="btn small" data-dlg="next" aria-label="${t('next')}">→</button>
-        <button class="btn dark small" data-dlg="acquire">${t('acquire')}</button>
+        ${g.photos ? '' : `<button class="btn dark small" data-dlg="acquire">${t('acquire')}</button>`}
         <button class="btn small" data-dlg="close">${t('close')}</button>
       </div></div>`;
   };
@@ -301,7 +306,7 @@ function pageGabangi() {
 }
 
 Object.assign(EXTRA_ROUTES, {
-  pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'),
+  pinturas: () => pageGallery('pinturas'), dibujos: () => pageGallery('dibujos'), escultura: () => pageGallery('escultura'), fotos: () => pageGallery('fotos'),
   manifiestos: pageManifestos, resenas: pageReviews, prensa: pageBibliography, contacto: pageContact, gabangi: pageGabangi,
 });
 Object.assign(EXTRA_ACTIONS, { galleryItem: el => openGalleryItem(el.dataset.g, Number(el.dataset.n)) });
