@@ -17,7 +17,7 @@ cd museo-abreu && python3 -m http.server 8000
 
 | Section | Route | Notes |
 |---|---|---|
-| Inicio | `#/` | CTAs for VIP Tour and the book |
+| Inicio | `#/` | CTAs for VIP Tour and the book; "Descubre a Oscar Abreu" highlights (work, manifestos, Top Ten, reviews) |
 | Oscar Abreu | `#/artista` | Bio, timeline, video, catalogue with artwork detail and acquisition enquiry |
 | Psico-Expresionismo | `#/psico` | 3-minute intro, interactive "discover another layer", first manifesto in full, list of all 23, guiding questions |
 | Manifiestos | `#/manifiestos`, `#/manifiestos/:n` | The 23 manifestos from oscarabreu.com (ES/EN), each opening with its artwork, previous/next |
@@ -31,6 +31,9 @@ cd museo-abreu && python3 -m http.server 8000
 | Biblioteca | `#/biblioteca`, `#/leer/:lang/:chapter` | Editions per language, free sample, purchase, reader with text size, bookmarks, last position |
 | Mi cuenta | `#/cuenta` | Tickets, purchases, reading progress, rating, support |
 | Personal | `#/personal` | Staff search by code/name, mark ticket as used, today's guests |
+
+Every page about the artist (Oscar Abreu, Psico-Expresionismo, Obra, Manifiestos, Reseñas, Prensa, Exposiciones,
+Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_SECTION` in `content.js`).
 
 ## Content sources
 

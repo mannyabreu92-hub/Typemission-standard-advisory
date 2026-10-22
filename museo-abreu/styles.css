@@ -310,3 +310,12 @@ table.gb-spaces thead th { background: var(--ink); color: var(--paper); }
 .gb-figs { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); max-width: 640px; margin-bottom: 1.4rem; }
 .gb-figs .gb-fig { margin: 0; }
 .manifesto > p strong { font-weight: 600; }
+
+/* Artist section menu and home highlights */
+.section-nav { border-bottom: 1px solid var(--line); background: var(--paper); }
+.section-nav .tabs { padding-top: .6rem; padding-bottom: .6rem; scrollbar-width: none; }
+.section-nav .tabs::-webkit-scrollbar { display: none; }
+.section-nav .tab { font-size: .82rem; padding: .35rem .8rem; }
+.card.hl { text-decoration: none; color: inherit; display: grid; gap: .3rem; align-content: start; }
+.card.hl img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; margin-bottom: .4rem; }
+.card.hl h3 { font-size: 1.15rem; }

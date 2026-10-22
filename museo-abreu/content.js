@@ -3,7 +3,8 @@
 // #/escultura, #/fotos), the 23 manifestos (#/manifiestos), reviews (#/resenas), press (#/prensa),
 // exhibitions (#/exposiciones), contact (#/contacto) and
 // the ART GABANGI page (#/gabangi) with its sub-pages from gabangi.js.
-// Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS.
+// Loaded after features.js; adds to EXTRA_ROUTES and EXTRA_ACTIONS, the artist
+// section menu (sectionNav) and the home page highlights (homeHighlights).
 
 Object.assign(I18N.es, {
   paintingsEyebrow: 'Obra', paintingsTitle: 'Pinturas',
@@ -41,6 +42,9 @@ Object.assign(I18N.es, {
   catalogueTitle: 'Catálogo', catalogueDates: 'Fechas', catalogueFormat: 'Formato', catalogueEssays: 'Ensayos',
   catalogueQuote: 'Texto original en oscarabreu.com/exhibits (en inglés):',
   catalogueWorks: 'En oscarabreu.com, este catálogo enlaza a una galería de 48 imágenes: son las mismas 36 pinturas y 12 esculturas de las secciones Pinturas y Escultura.',
+  navWork: 'Obra', hlTitle: 'Descubre a Oscar Abreu', hlWork: '{p} pinturas, {d} dibujos, {s} esculturas y {f} fotos',
+  hlManifestos: 'Los {n} manifiestos del Psico-Expresionismo, en español e inglés', hlTopTen: 'Diez artistas caribeños destacados por GABANGI',
+  hlReviews: '{r} reseñas de la crítica y {p} artículos de prensa sobre su obra', hlPress: 'Reseñas y prensa',
   navContact: 'Contacto', contactLead: 'Contacto de Oscar Abreu, tal como aparece en oscarabreu.com.',
   navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
   navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
@@ -82,6 +86,9 @@ Object.assign(I18N.en, {
   catalogueTitle: 'Catalogue', catalogueDates: 'Dates', catalogueFormat: 'Format', catalogueEssays: 'Essays',
   catalogueQuote: 'Original text on oscarabreu.com/exhibits:',
   catalogueWorks: 'On oscarabreu.com, this catalogue links to a gallery of 48 images: the same 36 paintings and 12 sculptures as in the Paintings and Sculpture sections.',
+  navWork: 'Work', hlTitle: 'Discover Oscar Abreu', hlWork: '{p} paintings, {d} drawings, {s} sculptures and {f} photos',
+  hlManifestos: 'The {n} manifestos of Psycho-Expressionism, in Spanish and English', hlTopTen: 'Ten Caribbean artists highlighted by GABANGI',
+  hlReviews: '{r} critics’ reviews and {p} press articles on his work', hlPress: 'Reviews and press',
   navContact: 'Contact', contactLead: 'Oscar Abreu’s contact details, as published on oscarabreu.com.',
   navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
   navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
@@ -172,6 +179,28 @@ function pageManifestos(nStr) {
     </nav>
     <div class="btn-row"><a class="btn dark" href="#/manifiestos">${t('allManifestos')}</a></div>
   </div>`;
+}
+
+// Artist section: one menu above every page about Oscar Abreu, and the top
+// menu's "Oscar Abreu" link stays active on all of them (see route() in app.js).
+const SECTION_TABS = [['artista', 'Oscar Abreu'], ['psico', 'navPsico'], ['pinturas', 'navWork', ['dibujos', 'escultura', 'fotos']],
+  ['manifiestos', 'navManifestos'], ['resenas', 'navReviews'], ['prensa', 'navPress'], ['exposiciones', 'navExhibits'], ['contacto', 'navContact']];
+const ROUTE_SECTION = Object.fromEntries(SECTION_TABS.flatMap(([k, , also = []]) => [k, ...also].map(r => [r, 'artista'])));
+function sectionNav(name) {
+  if (ROUTE_SECTION[name] !== 'artista') return '';
+  return `<nav class="section-nav" aria-label="Oscar Abreu"><div class="wrap tabs">${SECTION_TABS.map(([k, label, also = []]) =>
+    `<a class="tab" href="#/${k}" aria-selected="${k === name || also.includes(name)}">${label === 'Oscar Abreu' ? label : t(label)}</a>`).join('')}</div></nav>`;
+}
+
+function homeHighlights() {
+  const card = (href, img, title, text) => `<a class="card hl" href="${href}"><img src="${img}" alt="" loading="lazy"><h3>${title}</h3><p class="muted">${text}</p></a>`;
+  return `<section class="section"><h2>${t('hlTitle')}</h2>
+    <div class="grid four" style="margin-top:1rem">
+      ${card('#/pinturas', PAINTINGS[5].img, t('navWork'), t('hlWork', { p: PAINTINGS.length, d: DRAWINGS.length, s: SCULPTURES.length, f: PHOTOS.length }))}
+      ${card('#/manifiestos', 'img/escaping-being.jpg', t('navManifestos'), t('hlManifestos', { n: MANIFESTOS.length }))}
+      ${card('#/gabangi/2025', GB_2025.topTen[1].img, t('gbTopTen'), t('hlTopTen'))}
+      ${card('#/resenas', CONTACT.photo, t('hlPress'), t('hlReviews', { r: REVIEWS.items.length, p: BIBLIOGRAPHY.items.length }))}
+    </div></section>`;
 }
 
 // The three numbered galleries of oscarabreu.com share one page and lightbox.

@@ -87,16 +87,20 @@ function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/');
   const name = routes[parts[0]] ? parts[0] : '';
   clearInterval(holdTimer);
-  main.innerHTML = routes[name](...parts.slice(1));
+  main.innerHTML = (typeof sectionNav === 'function' ? sectionNav(name) : '') + routes[name](...parts.slice(1));
+  const section = (typeof ROUTE_SECTION !== 'undefined' && ROUTE_SECTION[name]) || name;
   document.querySelectorAll('[data-route]').forEach(a => {
-    a.classList.toggle('active', a.dataset.route === name);
-    if (a.dataset.route === name) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    a.classList.toggle('active', a.dataset.route === section);
+    if (a.dataset.route === section) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   afterRender(name);
 }
 
 function afterRender(name) {
   renderQRs();
+  // Keep the current tab of the artist section menu in view on narrow screens.
+  const strip = $('.section-nav .tabs'), sel = strip && strip.querySelector('[aria-selected="true"]');
+  if (sel) strip.scrollLeft = sel.offsetLeft - (strip.clientWidth - sel.clientWidth) / 2;
   if (name === 'visita' && bk.step === 4) startHoldTimer();
   if (name === 'leer') {
     const txt = $('.reader-text');
@@ -143,6 +147,7 @@ function pageHome() {
         <div class="layers" style="justify-self:center;width:100%">${artSVG(41, t('layersTitle'))}</div>
       </div>
     </section>
+    ${typeof homeHighlights === 'function' ? homeHighlights() : ''}
     ${typeof homeExtras === 'function' ? homeExtras() : ''}
     <section class="section">
       <div style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem">
