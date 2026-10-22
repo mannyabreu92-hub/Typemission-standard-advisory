@@ -10,7 +10,14 @@ The home page opens with a different quote from Ecce Homo each day (Punta Cana d
 `DAILY_QUOTES` in `data.js`: 78 passages in Oscar Abreu's words, copied exactly from the updated English
 manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. They are shown in English in
 every language, marked "English edition", until the Spanish edition text is delivered. The same manuscript
-updated the table of contents (chapters XX–LXX were renumbered and retitled) and the free Chapter I in `sample-en.js`.
+updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
+and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
+Italian and Arabic wording is the app's, pending the Spanish edition).
+
+## Link previews
+
+`index.html` carries Open Graph / Twitter tags so shared links show `img/og-image.jpg` (1200 × 630, Oscar Abreu's
+*Escaping Being* with the museum name) and a one-line description.
 
 ## Languages
 
@@ -117,7 +124,14 @@ The home page opens with a different quote from Ecce Homo each day (Punta Cana d
 `DAILY_QUOTES` in `data.js`: 78 passages in Oscar Abreu's words, copied exactly from the updated English
 manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. They are shown in English in
 every language, marked "English edition", until the Spanish edition text is delivered. The same manuscript
-updated the table of contents (chapters XX–LXX were renumbered and retitled) and the free Chapter I in `sample-en.js`.
+updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
+and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
+Italian and Arabic wording is the app's, pending the Spanish edition).
+
+## Link previews
+
+`index.html` carries Open Graph / Twitter tags so shared links show `img/og-image.jpg` (1200 × 630, Oscar Abreu's
+*Escaping Being* with the museum name) and a one-line description.
 
 ## Languages
 
