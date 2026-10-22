@@ -132,13 +132,23 @@ function go(hash) {
 
 /* ---------- Pages ---------- */
 
+// A different quote from the book each day (Punta Cana date), in the book's order.
+function quoteOfTheDay() {
+  const today = todayPC();
+  const q = DAILY_QUOTES[Math.floor(Date.parse(today) / 864e5) % DAILY_QUOTES.length];
+  const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
+  return `<p class="eyebrow">${t('quoteOfDay')} · ${fmtDate(today, { day: 'numeric', month: 'long' })}</p>
+      <figure class="hero-quote"><blockquote lang="en" dir="ltr">“${esc(q.q)}”</blockquote>
+        <figcaption>— Oscar Abreu · <cite>Ecce Homo</cite>, ${where}${lang !== 'en' ? ` · ${t('englishEdition')}` : ''}</figcaption></figure>`;
+}
+
 function pageHome() {
   return `
   <section class="hero">
     <div class="hero-art"><img src="img/escaping-being.jpg" srcset="img/escaping-being-800.jpg 800w, img/escaping-being.jpg 1400w" sizes="(max-width: 700px) 100vw, 50vw" alt="" fetchpriority="high"></div>
     <div class="hero-inner">
-      <p class="eyebrow">${t('homeEyebrow')}</p>
-      <h1>${t('homeTitle')}</h1>
+      <h1 class="visually-hidden">${t('homeTitle')}</h1>
+      ${quoteOfTheDay()}
       <p class="lead" style="margin-top:1rem">${t('homeLead')}</p>
       <div class="btn-row">
         <a class="btn primary" href="#/visita">${t('ctaTour')}</a>

@@ -485,6 +485,9 @@ I18N.ar = {
   "buyTickets": "اشترِ التذاكر",
   "eventDetails": "عرض التفاصيل",
   "waTicketsFor": "مرحبًا، أودّ شراء تذاكر لـ{event} ({date}).",
+  "quoteOfDay": "اقتباس اليوم",
+  "chapterN": "الفصل {n}",
+  "englishEdition": "الطبعة الإنجليزية",
 };
 TR.ar = {
   "2019": "2019",

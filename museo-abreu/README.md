@@ -4,6 +4,14 @@ Installable web app (PWA) for Museo Abreu in Bávaro, Punta Cana, built from the
 "Propuesta de app para el Museo Abreu" (21 Oct 2026). It covers the three core
 actions of the first version: **descubrir, reservar, leer**, in Spanish, English and French.
 
+## Quote of the day
+
+The home page opens with a different quote from Ecce Homo each day (Punta Cana date), cycling through
+`DAILY_QUOTES` in `data.js`: 78 passages in Oscar Abreu's words, copied exactly from the updated English
+manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. They are shown in English in
+every language, marked "English edition", until the Spanish edition text is delivered. The same manuscript
+updated the table of contents (chapters XX–LXX were renumbered and retitled) and the free Chapter I in `sample-en.js`.
+
 ## Languages
 
 - **ES / EN / FR** buttons in the header; the browser language picks the first one (other languages get English).
@@ -102,6 +110,14 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
 - `booking-config.js`: `live: true` hides all simulation; every booking, purchase and request
   opens WhatsApp **+1 (809) 840-9588** with the message written. Paste Bókun links there when
   the account exists (see `BOOKING-SETUP.md`).
+
+## Quote of the day
+
+The home page opens with a different quote from Ecce Homo each day (Punta Cana date), cycling through
+`DAILY_QUOTES` in `data.js`: 78 passages in Oscar Abreu's words, copied exactly from the updated English
+manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. They are shown in English in
+every language, marked "English edition", until the Spanish edition text is delivered. The same manuscript
+updated the table of contents (chapters XX–LXX were renumbered and retitled) and the free Chapter I in `sample-en.js`.
 
 ## Languages
 

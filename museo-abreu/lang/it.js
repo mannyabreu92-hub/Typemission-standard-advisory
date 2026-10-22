@@ -485,6 +485,9 @@ I18N.it = {
   "buyTickets": "Acquista i biglietti",
   "eventDetails": "Vedi i dettagli",
   "waTicketsFor": "Buongiorno, vorrei acquistare i biglietti per {event} ({date}).",
+  "quoteOfDay": "Citazione del giorno",
+  "chapterN": "capitolo {n}",
+  "englishEdition": "edizione inglese",
 };
 TR.it = {
   "2019": "2019",
