@@ -223,10 +223,15 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
 - "Ecos de la memoria": year, technique, size (not published on the site).
 - Images of the works that open manifestos 16–23 (oscarabreu.com/gallery4/161…231.JPG return 404).
 - Spanish versions of the ART GABANGI artist quotes; ART GABANGI 2027 dates.
-- Pro membership price; class, tour and club prices (several are illustrative).
+- **Whop, to finish** (saved for later): create Pro (USD 25/month) and the three class sponsorships (USD 25,
+  50, 100, one-time) and paste their links into `BOOKING.whop` (`pro`, `sponsor-25`, `sponsor-50`,
+  `sponsor-100`). Already connected: Painting club, Art club, Ecce Homo English and Spanish. Check that
+  there is only one Art club product (its link ends in `art-club-5d`). Payouts in USD to be confirmed with
+  Whop. Delivery of the digital book after purchase (file in Whop "Content", or access sent by email).
+- Class, tour and club prices (several are illustrative).
 - Nov 17 anniversary and June 13 group exhibition: ticket prices and times.
 - Museum hours (WhatsApp profile says "by appointment only"), address, accessibility.
-- Spanish edition text of Ecce Homo; editorial notes to remove before chapters V, XIV, XVI.
+- Editorial notes to remove before chapters V, XIV, XVI of the English manuscript.
 - Phase 2: server for real payments, accounts (Collectors' Circle approval), book access, invitation auctions and admin panel.
 
 ## Files
