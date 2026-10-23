@@ -259,7 +259,8 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
 - Spanish versions of the ART GABANGI artist quotes; ART GABANGI 2027 dates.
 - **Whop, to finish** (saved for later): create Pro (USD 25/month) and the three class sponsorships (USD 25,
   50, 100, one-time) and paste their links into `BOOKING.whop` (`pro`, `sponsor-25`, `sponsor-50`,
-  `sponsor-100`). Already connected: Painting club, Art club, Ecce Homo English and Spanish. Check that
+  `sponsor-100`). Already connected: Ecce Homo English and Spanish. Painting club and Art club are on hold on Whop (family
+  decision, Oct 2026): their links are removed from the app, so both clubs go back to WhatsApp requests. Check that
   there is only one Art club product (its link ends in `art-club-5d`). Payouts in USD to be confirmed with
   Whop. Delivery of the digital book after purchase (file in Whop "Content", or access sent by email).
 - Class, tour and club prices (several are illustrative).

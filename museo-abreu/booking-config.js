@@ -24,8 +24,8 @@ var BOOKING = {
   // checkout link; an empty one keeps the WhatsApp request. See BOOKING-SETUP.md, part 2.
   whop: {
     pro: '',
-    'painting-club': 'https://whop.com/museoabreu/painting-club',
-    'art-club': 'https://whop.com/museoabreu/art-club-5d',
+    'painting-club': '', // on hold (family decision); was https://whop.com/museoabreu/painting-club
+    'art-club': '', // on hold (family decision); was https://whop.com/museoabreu/art-club-5d
     'book-en': 'https://whop.com/museoabreu/ecce-homo-english-edition',
     'book-es': 'https://whop.com/museoabreu/ecce-homo-edicion-en-espanol',
     'book-fr': '',
