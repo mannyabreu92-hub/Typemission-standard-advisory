@@ -431,3 +431,5 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .btn.wa { background: var(--ink); border-color: var(--ink); color: var(--paper); }
 .btn.wa:hover { box-shadow: inset 0 0 0 1px var(--champagne); }
 .chip.sold { background: var(--ink); color: var(--champagne); border-color: var(--ink); }
+.invite-also { font: italic 400 1.15rem/1.45 var(--serif); color: var(--ink); max-width: 30ch; margin-top: .2rem; text-wrap: balance; }
+.event-launch { font-family: var(--serif); font-style: italic; font-size: 1.08rem; margin-top: .4rem; color: var(--ink); }

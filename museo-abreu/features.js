@@ -414,6 +414,14 @@ const CLUBS = [
 const ANNUAL_EVENTS = [
   { id: 'anniversary', annual: { m: 11, d: 17 }, since: 2021, vip: true, price: null, time: '19:00',
     name: { es: 'Aniversario del Museo Abreu', en: 'Museo Abreu anniversary', fr: 'Anniversaire du Museo Abreu' },
+    // The Spanish edition of Ecce Homo is "published in commemoration of the anniversary of Museo Abreu" (its credits).
+    launch: { es: 'y la presentación del libro Ecce Homo: El arte me salvó la vida, de Oscar Abreu',
+      en: 'and the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu',
+      fr: 'et la présentation du livre Ecce Homo : L’art m’a sauvé la vie, d’Oscar Abreu' },
+    launchCard: { es: 'Con la presentación del libro Ecce Homo: El arte me salvó la vida, de Oscar Abreu.',
+      en: 'With the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu.',
+      fr: 'Avec la présentation du livre Ecce Homo : L’art m’a sauvé la vie, d’Oscar Abreu.' },
+    launchShort: { es: 'presentación del libro Ecce Homo', en: 'Ecce Homo book launch', fr: 'présentation du livre Ecce Homo' },
     desc: { es: 'Celebramos la apertura del museo, inaugurado el 17 de noviembre de 2021 con la retrospectiva Memoria del Psico-Expresionismo.',
       en: 'We celebrate the opening of the museum, inaugurated on November 17, 2021 with the retrospective Memoria del Psico-Expresionismo.', fr: 'Nous célébrons l’ouverture du musée, inauguré le 17 novembre 2021 avec la rétrospective Memoria del Psico-Expresionismo.' } },
   { id: 'group-exhibition', annual: { m: 6, d: 13 }, vip: true, price: null, time: '19:00',
@@ -625,6 +633,7 @@ function eventCard(ev, passes) {
         <h3>${eventTitle(ev)}</h3>
         <p class="muted">${fmtDate(d)} · ${ev.time} (UTC−4)${ev.annual ? ` · <strong>${n === 0 ? t('today') : t('inNDays', { n })}</strong>` : ''}</p>
         <p style="margin-top:.4rem">${L(ev.desc)}</p>
+        ${ev.launchCard ? `<p class="event-launch">${L(ev.launchCard)}</p>` : ''}
         <p style="margin-top:.6rem"><strong>${ev.price ? usd(ev.price) : invite ? t('ciByInvitation') : t('priceTbc')}</strong> · <span class="status ok">${t('freeForPro')}</span></p>
         ${pass ? `<div style="margin-top:.8rem">${passHTML(pass)}</div>` : isPro() ? `
           <div class="event-form" style="margin-top:.8rem">

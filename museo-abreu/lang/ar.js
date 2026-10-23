@@ -959,4 +959,7 @@ TR.ar = {
   "Thirty years of Psycho-Expressionism. At the museum’s third anniversary, the Sala Freddy Javier opens.": "ثلاثون عامًا على التعبيرية النفسية. وفي الذكرى الثالثة للمتحف تُفتتح قاعة فريدي خافيير.",
   "From December 11 to 20, ART GABANGI 2025 at Museo Abreu.": "من 11 إلى 20 ديسمبر، ART GABANGI 2025 في متحف أبرو.",
   "ART GABANGI 2026 (July 6–14) and the publication Top 100 Artists: ART GABANGI 2026. On October 17, Abreu Fine Art opens in Los Corales, Bávaro. Publishes Ecce Homo: Art Saved My Life.": "ART GABANGI 2026 (6–14 يوليو) وإصدار Top 100 Artists: ART GABANGI 2026. وفي 17 أكتوبر يُفتتح Abreu Fine Art في لوس كوراليس، بافارو. وينشر Ecce Homo: الفن أنقذ حياتي.",
+  "and the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu": "وإطلاق كتاب Ecce Homo: الفن أنقذ حياتي لأوسكار أبرو",
+  "With the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu.": "مع إطلاق كتاب Ecce Homo: الفن أنقذ حياتي لأوسكار أبرو.",
+  "Ecce Homo book launch": "إطلاق كتاب Ecce Homo",
 };

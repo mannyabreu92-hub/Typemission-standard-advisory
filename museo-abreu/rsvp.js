@@ -71,6 +71,7 @@ function pageRsvp(id) {
       <p class="invite-request">${t('rsvpRequests')}</p>
       <h1 class="invite-title">${L(ev.name)}</h1>
       ${ev.since ? `<p class="invite-sub">${t('nth', { n: Number(d.slice(0, 4)) - ev.since })}</p>` : ''}
+      ${ev.launch ? `<p class="invite-also">${L(ev.launch)}</p>` : ''}
       <div class="invite-rule" aria-hidden="true"><span></span></div>
       <p class="invite-date">${rsvpLongDate(d)}<br>${t('rsvpAtTime', { time: rsvpTime(ev.time) })}</p>
       <p class="invite-place">${t('rsvpPlace')}</p>
@@ -158,10 +159,11 @@ Object.assign(EXTRA_FORMS, {
     profile.name = reply.name; profile.email = reply.email; save();
     if (BOOKING.live) {
       const date = rsvpLongDate(reply.date) + ' · ' + rsvpTime(ev.time);
+      const title = eventTitle(ev) + (ev.launchShort ? ' · ' + L(ev.launchShort) : '');
       openWhatsApp(att === 'yes'
-        ? t('waRsvpYes', { event: eventTitle(ev), date, name: reply.name, email: reply.email, phone: reply.phone, note: reply.note,
+        ? t('waRsvpYes', { event: title, date, name: reply.name, email: reply.email, phone: reply.phone, note: reply.note,
             guests: guests ? t('rsvpWithGuests', { n: guests, names: reply.guestNames || '—' }) : '' })
-        : t('waRsvpNo', { event: eventTitle(ev), date, name: reply.name, note: reply.note }));
+        : t('waRsvpNo', { event: title, date, name: reply.name, note: reply.note }));
     }
     fx.set('rsvps', { ...rsvpReplies(), [ev.id]: reply });
     rsvpEditing.delete(ev.id);

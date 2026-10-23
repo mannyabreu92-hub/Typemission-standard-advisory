@@ -23,7 +23,7 @@ const EXPERIENCES = [
     id: 'combo', price: 115, capacity: 10, minutes: 75, includesBook: true,
     name: { es: 'Tour y libro digital', en: 'Tour + digital book', fr: 'Visite + livre numérique' },
     desc: {
-      es: 'VIP Tour más acceso a una edición digital de El arte salvó mi vida.',
+      es: 'VIP Tour más acceso a una edición digital de El arte me salvó la vida.',
       en: 'VIP Tour plus access to a digital edition of Art Saved My Life.', fr: 'VIP Tour avec accès à une édition numérique de L’art m’a sauvé la vie.',
     },
   },
@@ -138,7 +138,7 @@ const TIMELINE = [
   { y: '2023', es: 'El 12 de diciembre el museo se amplía a diez salas.', en: 'On December 12, the museum expands to ten galleries.', fr: 'Le 12 décembre, le musée s’agrandit et compte dix salles.' },
   { y: '2024', es: 'Treinta años del Psico-Expresionismo. En el tercer aniversario del museo se inaugura la Sala Freddy Javier.', en: 'Thirty years of Psycho-Expressionism. At the museum’s third anniversary, the Sala Freddy Javier opens.', fr: 'Trente ans de Psycho-Expressionnisme. Au troisième anniversaire du musée, la Sala Freddy Javier est inaugurée.' },
   { y: '2025', es: 'Del 11 al 20 de diciembre, ART GABANGI 2025 en el Museo Abreu.', en: 'From December 11 to 20, ART GABANGI 2025 at Museo Abreu.', fr: 'Du 11 au 20 décembre, ART GABANGI 2025 au Museo Abreu.' },
-  { y: '2026', es: 'ART GABANGI 2026 (6–14 de julio) y la publicación Top 100 Artists: ART GABANGI 2026. El 17 de octubre abre Abreu Fine Art en Los Corales, Bávaro. Publica Ecce Homo: El arte salvó mi vida.', en: 'ART GABANGI 2026 (July 6–14) and the publication Top 100 Artists: ART GABANGI 2026. On October 17, Abreu Fine Art opens in Los Corales, Bávaro. Publishes Ecce Homo: Art Saved My Life.', fr: 'ART GABANGI 2026 (6–14 juillet) et la publication Top 100 Artists : ART GABANGI 2026. Le 17 octobre, Abreu Fine Art ouvre à Los Corales, Bávaro. Publie Ecce Homo : L’art m’a sauvé la vie.' },
+  { y: '2026', es: 'ART GABANGI 2026 (6–14 de julio) y la publicación Top 100 Artists: ART GABANGI 2026. El 17 de octubre abre Abreu Fine Art en Los Corales, Bávaro. Publica Ecce Homo: El arte me salvó la vida.', en: 'ART GABANGI 2026 (July 6–14) and the publication Top 100 Artists: ART GABANGI 2026. On October 17, Abreu Fine Art opens in Los Corales, Bávaro. Publishes Ecce Homo: Art Saved My Life.', fr: 'ART GABANGI 2026 (6–14 juillet) et la publication Top 100 Artists : ART GABANGI 2026. Le 17 octobre, Abreu Fine Art ouvre à Los Corales, Bávaro. Publie Ecce Homo : L’art m’a sauvé la vie.' },
 ];
 
 // Major exhibitions as listed on oscarabreu.com (Biography page); `pes` is the

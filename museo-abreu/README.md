@@ -29,6 +29,9 @@ Bávaro), then the reply (accepts with pleasure or declines with regret, up to t
 the hosts). Live mode sends it to the museum by WhatsApp as a formal RSVP; the reply stays on the visitor's
 device, where they can change it or add the evening to their calendar. Linked from the events page and from the
 home banner when one of these is the next yearly event. ART GABANGI keeps its tickets.
+The anniversary invitation includes the launch of Ecce Homo: the Spanish edition's credits say it is "Publicado en
+conmemoración del aniversario del Museo Abreu". Its official Spanish title, *Ecce Homo: El arte me salvó la vida*,
+is used throughout (the 2018 Listín Diario headline keeps its own wording).
 
 ## Abreu Fine Art and Top 100 Artists
 
@@ -168,6 +171,9 @@ Bávaro), then the reply (accepts with pleasure or declines with regret, up to t
 the hosts). Live mode sends it to the museum by WhatsApp as a formal RSVP; the reply stays on the visitor's
 device, where they can change it or add the evening to their calendar. Linked from the events page and from the
 home banner when one of these is the next yearly event. ART GABANGI keeps its tickets.
+The anniversary invitation includes the launch of Ecce Homo: the Spanish edition's credits say it is "Publicado en
+conmemoración del aniversario del Museo Abreu". Its official Spanish title, *Ecce Homo: El arte me salvó la vida*,
+is used throughout (the 2018 Listín Diario headline keeps its own wording).
 
 ## Abreu Fine Art and Top 100 Artists
 
