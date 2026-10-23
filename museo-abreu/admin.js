@@ -181,7 +181,7 @@ let doorQuery = '';
 function doorRow(r) {
   const party = 1 + (r.guests || 0), here = r.arrived || 0;
   return `<li class="door-row${here ? ' here' : ''}" data-name="${esc((r.name + ' ' + (r.guestNames || '')).toLowerCase())}">
-    <div><strong>${esc(r.name)}</strong> <span class="muted">· ${t('adParty', { n: party })}</span>
+    <div><strong>${esc(r.name)}</strong> <span class="muted">· ${t('adParty', { n: party })}</span>${r.walkin ? ` <span class="chip">${t('adWalkinTag')}</span>` : ''}
       ${r.guestNames ? `<br><small class="muted">${esc(r.guestNames)}</small>` : ''}${r.note ? `<br><small class="muted">${esc(r.note)}</small>` : ''}</div>
     <button class="btn small ${here ? '' : 'primary'}" data-action="adCheckin" data-id="${esc(r.id)}" data-n="${here ? 0 : party}">${here ? t('adUndo') : t('adArrived')}</button>
   </li>`;
@@ -197,6 +197,15 @@ function pageDoor(ev, date) {
       <input id="door-q" type="search" placeholder="${t('adSearch')}" value="${esc(doorQuery)}" autocomplete="off">
       <p class="status" id="door-err" role="status" aria-live="polite" hidden></p>
       <ul class="door-list">${rs.map(doorRow).join('') || `<li class="muted">${t('adNone')}</li>`}</ul>
+      <details class="door-walkin"><summary>${t('adWalkin')}</summary>
+        <form data-form="walkin" data-event="${esc(ev)}" data-date="${esc(date)}" class="unlock" novalidate>
+          <div class="field"><label for="wi-name">${t('name')}</label><input id="wi-name" required autocomplete="off"></div>
+          <div class="grid two">
+            <div class="field"><label for="wi-party">${t('adPartySize')}</label><select id="wi-party">${[1, 2, 3, 4, 5, 6].map(n => `<option>${n}</option>`).join('')}</select></div>
+            <div class="field"><label for="wi-phone">${t('phone')}</label><input id="wi-phone" type="tel" autocomplete="off"></div>
+          </div>
+          <button class="btn primary" type="submit">${t('adAdd')}</button>
+        </form></details>
       <div class="btn-row"><button class="btn" data-action="adRefresh">${t('adRefresh')}</button></div>
     </section></div>`;
 }
@@ -225,3 +234,20 @@ Object.assign(EXTRA_ACTIONS, {
     } catch (e) { const out = document.getElementById('door-err'); if (out) { out.textContent = t('adSaveErr'); out.hidden = false; } el.disabled = false; }
   },
 });
+
+Object.assign(I18N.es, { adWalkin: 'Añadir invitado sin confirmación', adWalkinTag: 'Sin RSVP', adPartySize: 'Personas', adAdd: 'Añadir y marcar llegada' });
+Object.assign(I18N.en, { adWalkin: 'Add a walk-in guest', adWalkinTag: 'Walk-in', adPartySize: 'People', adAdd: 'Add and check in' });
+Object.assign(I18N.fr, { adWalkin: 'Ajouter un invité sans réponse', adWalkinTag: 'Sans réponse', adPartySize: 'Personnes', adAdd: 'Ajouter et marquer l’arrivée' });
+
+EXTRA_FORMS.walkin = async form => {
+  const name = $('#wi-name', form);
+  if (name.value.trim().length < 2) { name.focus(); return; }
+  const btn = form.querySelector('button'); btn.disabled = true;
+  try {
+    const r = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adPassword() },
+      body: JSON.stringify({ action: 'walkin', event: form.dataset.event, date: form.dataset.date, name: name.value.trim(), party: Number($('#wi-party', form).value), phone: $('#wi-phone', form).value.trim() }) });
+    if (!r.ok) throw new Error(r.status);
+    adData.rsvps.push(await r.json());
+    doorQuery = ''; route();
+  } catch (e) { const out = document.getElementById('door-err'); if (out) { out.textContent = t('adSaveErr'); out.hidden = false; } btn.disabled = false; }
+};

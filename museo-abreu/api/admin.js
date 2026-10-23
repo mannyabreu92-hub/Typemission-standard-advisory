@@ -39,6 +39,17 @@ module.exports = async (req, res) => {
   // Door check-in: POST { action: 'checkin', id, arrived } records how many of the party have arrived.
   if (req.method === 'POST') {
     const b = req.body || {};
+    // Walk-in: POST { action: 'walkin', event, date, name, party, phone } adds a guest who came without
+    // an RSVP, already checked in.
+    if (b.action === 'walkin') {
+      const name = String(b.name || '').trim().slice(0, 120), party = Math.max(1, Math.min(10, Number(b.party) || 1));
+      if (!/^[a-z0-9-]+$/.test(String(b.event)) || !/^\d{4}-\d{2}-\d{2}$/.test(String(b.date)) || name.length < 2) return res.status(400).json({ error: 'request' });
+      const id = `rsvps/${b.event}/${b.date}/${crypto.randomBytes(32).toString('hex')}.json`, now = new Date().toISOString();
+      const rec = { event: b.event, date: b.date, att: 'yes', walkin: true, name, email: '', phone: String(b.phone || '').trim().slice(0, 40),
+        guests: party - 1, guestNames: '', note: '', lang: 'es', at: now, arrived: party, arrivedAt: now };
+      await writeJSON(id, rec);
+      return res.status(200).json({ id, ...rec });
+    }
     if (b.action !== 'checkin' || !/^rsvps\/[a-z0-9-]+\/\d{4}-\d{2}-\d{2}\/[0-9a-f]{64}\.json$/.test(String(b.id))) return res.status(400).json({ error: 'request' });
     const r = await readJSON(b.id);
     if (!r) return res.status(404).json({ error: 'rsvp' });

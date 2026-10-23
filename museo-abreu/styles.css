@@ -593,3 +593,6 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .door-row.here { background: var(--paper-2); border-color: var(--gold); }
 .door-row.here strong::before { content: "✓ "; color: var(--ok); }
 .door-row .btn { min-width: 6.5rem; min-height: 44px; }
+.door-walkin { margin-top: 1.2rem; }
+.door-walkin summary { cursor: pointer; font-weight: 600; padding: .6rem 0; }
+.door-walkin .unlock { max-width: none; }

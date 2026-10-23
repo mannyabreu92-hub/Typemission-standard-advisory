@@ -208,6 +208,8 @@ collection, the reader and Pro stay in the top menu and on the home page.
   lists confirmed guests with search by name; "Arrived" checks in the whole party (saved on the server, so several
   staff phones can work at once; "Refresh" shows the others' check-ins) and the count shows arrivals of the total.
   Note: if a guest changes their RSVP after checking in, the check-in is reset.
+  "Add a walk-in guest" at the bottom of the door list adds someone without an RSVP (name, party size, optional phone),
+  already checked in and marked "Walk-in"; walk-ins appear in the dashboard and the CSV like other guests.
 - **Share links for lots and the book**: each lot page and the Shop have a Share button. `/l/<lot>` and `/b`
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
