@@ -84,8 +84,9 @@ separately (bank transfer, instant or wire, each with its own fee). No monthly f
 | `pro` | Pro membership | 25 | monthly |
 | `painting-club` | Painting club | 80 | monthly |
 | `art-club` | Art club | 30 | monthly |
-| `book-en` | Ecce Homo, English digital edition | 60 | one-time |
-| `book-es` | Ecce Homo, Spanish digital edition | 60 | one-time |
+| `book-en` | Ecce Homo, English digital edition | 59.99 | one-time |
+| `book-es` | Ecce Homo, Spanish digital edition | 59.99 | one-time |
+| `book-fr` | Ecce Homo, French digital edition | 59.99 | one-time |
 | `sponsor-25`, `sponsor-50`, `sponsor-100` | Sponsor a painting class | 25 / 50 / 100 | one-time |
 | `gabangi-festival` | ART GABANGI · Festival Pass | 50 | one-time |
 | `gabangi-vip` | ART GABANGI · VIP All-Access | 140 | one-time |

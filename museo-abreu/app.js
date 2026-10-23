@@ -41,7 +41,9 @@ const tr = v => !TR[lang] ? v : typeof v === 'string' ? TR[lang][v] ?? v : Array
 const L = obj => typeset(obj[lang] ?? (lang !== 'es' && obj.en !== undefined ? tr(obj.en) : obj.es));
 const expoPlace = e => (lang === 'es' && e.pes) || (lang === 'fr' && e.pfr) || tr(e.p);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const usd = n => 'US$' + n.toLocaleString('en-US');
+// Amounts in US dollars: whole numbers without decimals (US$60), others with cents (US$59.99).
+const money = n => (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
+const usd = n => 'US$' + money(n);
 const pend = () => `<span class="pending">${t('pending')}</span>`;
 const save = () => { store.set('tickets', tickets); store.set('purchases', purchases); store.set('reading', reading); store.set('profile', profile); };
 
@@ -784,7 +786,7 @@ function pageReader(l = 'es', chStr = '0') {
         : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`);
   } else {
     text = `<h1 class="ch-title">${chTitle(c, l)}</h1><div class="empty">🔒<p>${t('lockedChapter')}</p>
-      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t(BOOKING.live || whopLink('book-' + l) ? 'buyOnline' : 'buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 60) })}</button></div></div>`;
+      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t(BOOKING.live || whopLink('book-' + l) ? 'buyOnline' : 'buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 59.99) })}</button></div></div>`;
   }
   return `<div class="wrap reader">
     <div class="reader-bar">

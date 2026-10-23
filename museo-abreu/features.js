@@ -402,7 +402,7 @@ SCHEDULE['painting-class'] = [{ time: '10:00', langs: ['es', 'en'], days: [2, 4,
 SCHEDULE['sculpture-class'] = [{ time: '15:00', langs: ['es'], days: [3, 6] }];
 
 // The book price requested by the family.
-EDITIONS.forEach(e => { e.price = 60; });
+EDITIONS.forEach(e => { e.price = 59.99; }); // as charged on Whop
 
 const CLUBS = [
   { id: 'painting-club', price: 80, name: { es: 'Club de pintura', en: 'Painting club', fr: 'Club de peinture' },

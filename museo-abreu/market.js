@@ -85,7 +85,7 @@ const printSub = p => L(p.name) + ' · Ediciones ARTFORO';
 
 /* ---------- Auction ---------- */
 
-const auUSD = n => 'USD ' + Number(n).toLocaleString('en-US');
+const auUSD = n => 'USD ' + money(Number(n));
 let auState = null, auFailed = false, auTimer = null;
 
 function lotTitle(lot) {

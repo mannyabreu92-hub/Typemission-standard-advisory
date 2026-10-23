@@ -32,7 +32,7 @@ function checkout(o) {
   // A card checkout (Bókun, Whop) asks for the quantity itself.
   if (o.link) o.qty = false;
   let qty = 1;
-  const amount = () => o.price == null ? t('coPriceTbd') : 'USD ' + (o.price * qty).toLocaleString('en-US') + (o.period ? ' ' + t('perMonth') : '');
+  const amount = () => o.price == null ? t('coPriceTbd') : 'USD ' + money(o.price * qty) + (o.period ? ' ' + t('perMonth') : '');
   const dlg = document.createElement('dialog');
   dlg.className = 'co-sheet';
   dlg.setAttribute('aria-labelledby', 'co-title');
