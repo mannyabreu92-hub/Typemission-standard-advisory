@@ -57,13 +57,17 @@ const writeJSON = (pathname, obj) => put(pathname, JSON.stringify(obj), {
 // payment id with a secret kept in the private store (tickets/secret.json, created on first use), so the
 // same payment always gives the same code and codes cannot be guessed.
 const isTicketKey = key => /^gabangi-/.test(key);
-async function ticketCode(paymentId) {
-  let s = await readJSON('tickets/secret.json');
+// A random secret kept in the private store, created on first use (two first calls at once: one write wins).
+async function storedSecret(path) {
+  let s = await readJSON(path);
   if (!s) {
-    await put('tickets/secret.json', JSON.stringify({ secret: crypto.randomBytes(32).toString('hex') }), { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: false }).catch(() => {});
-    s = await readJSON('tickets/secret.json');
+    await put(path, JSON.stringify({ secret: crypto.randomBytes(32).toString('hex') }), { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: false }).catch(() => {});
+    s = await readJSON(path);
   }
-  const h = crypto.createHmac('sha256', s.secret).update(String(paymentId)).digest();
+  return s.secret;
+}
+async function ticketCode(paymentId) {
+  const h = crypto.createHmac('sha256', await storedSecret('tickets/secret.json')).update(String(paymentId)).digest();
   const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let c = '';
   for (let i = 0; i < 8; i++) c += A[h[i] % 32];
   return `GB-${c.slice(0, 4)}-${c.slice(4)}`;
@@ -76,4 +80,8 @@ function quantityOf(data) {
   return Math.min(q || 1, 20);
 }
 
-module.exports = { emailHash, verifyWebhook, findEmail, findProductKey, readJSON, writeJSON, isTicketKey, ticketCode, quantityOf };
+// Reading the full book (api/book.js): the app gets a token for the email it unlocked with, so chapters are
+// sent only to someone who went through "Unlock" for an email that owns the edition.
+const readerToken = async eHash => crypto.createHmac('sha256', await storedSecret('book/secret.json')).update('reader:' + eHash).digest('hex').slice(0, 40);
+
+module.exports = { emailHash, verifyWebhook, findEmail, findProductKey, readJSON, writeJSON, isTicketKey, ticketCode, quantityOf, readerToken };

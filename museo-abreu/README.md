@@ -216,6 +216,17 @@ collection, the reader and Pro stay in the top menu and on the home page.
   shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
   `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
   their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
+- **The full book in the app** (`fullbook.js`, `api/book.js`): Dashboard › **Full book** (`#/admin/libro`) takes an
+  edition's Word file (.docx); the browser unpacks it (DecompressionStream, no library) and reads the book's own styles
+  (Sección, Capítulo número/título/subtítulo, Cronología año, Texto): introduction, 70 chapters with subheadings,
+  acknowledgements and chronology, 73 sections; the edition is detected from the chapter headings (CAPÍTULO, CHAPTER,
+  CHAPITRE, KAPITEL, ГЛАВА) and can be changed. It is sent in batches of 8 sections (`book-put`, `book-done`) and kept
+  privately as `book/<lang>/<section>.json`; the book is never in the code or on GitHub. Checked against the build
+  scripts: identical paragraphs for the English, Spanish, French, German and Russian files. In the reader, chapters
+  beyond the free sample load from `api/book.js` for owners of that edition (or Pro): `api/purchases` gives the app a
+  reading token (HMAC of the email hash with `book/secret.json`) when the purchase is unlocked, and each request checks
+  the token and that the edition (or Pro) is active, so a refund ends access. As with unlocking, the proof is the
+  purchase email; a one-time email code would make it stricter.
 - **QR check-in for ART GABANGI tickets** (`scanner.js`, `api/_lib.js` tickets, `api/admin.js`): when Whop confirms a
   payment for a `gabangi-…` product, the webhook issues a code (`GB-XXXX-XXXX`, from the payment id and a private
   secret in `tickets/secret.json`) stored as `tickets/<code>.json` with the quantity; a refund voids it. `api/purchases`

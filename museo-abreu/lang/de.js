@@ -725,6 +725,11 @@ I18N.de = {
   "kitShareText": "Oscar Abreu · Presse und Sammler · Museo Abreu",
   "moreKit": "Presse und Sammler",
   "moreKitText": "Sein Werdegang, Werke zum Herunterladen, das Buch und die Veranstaltungen auf einer Seite.",
+  "fbNotYet": "Der vollständige Text dieser Ausgabe ist sehr bald hier. Bis dahin können Sie ihn in Ihrem Whop-Konto lesen.",
+  "fbNeedUnlock": "Um hier zu lesen, aktivieren Sie Ihren Kauf mit der E-Mail-Adresse, die Sie bei Whop verwendet haben.",
+  "fbUnlockBtn": "Meinen Kauf aktivieren",
+  "fbErr": "Das Kapitel konnte nicht geladen werden. Prüfen Sie Ihre Verbindung.",
+  "fbNotOwned": "Ihr Kauf umfasst diese Ausgabe nicht.",
 };
 TR.de = {
   "2019": "2019",

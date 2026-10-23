@@ -219,7 +219,9 @@ EXTRA_FORMS.unlock = async form => {
   try {
     const r = await fetch('/api/purchases', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value.trim() }) });
     if (!r.ok) throw new Error(r.status);
-    const { keys, tickets } = await r.json();
+    const { keys, tickets, reader } = await r.json();
+    // The token for reading the full book in the app (fullbook.js, api/book.js).
+    if (reader) fx.set('reader', reader);
     const names = applyPurchases((keys || []).filter(k => !/^gabangi-/.test(k)), input.value.trim(), tickets || []);
     say(names.length ? t('unDone', { items: names.join(' · ') }) : t('unNone'), names.length);
   } catch (e) { say(t('unError')); }

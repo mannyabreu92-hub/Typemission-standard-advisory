@@ -725,6 +725,11 @@ I18N.it = {
   "kitShareText": "Oscar Abreu · Stampa e collezionisti · Museo Abreu",
   "moreKit": "Stampa e collezionisti",
   "moreKitText": "Il suo percorso, opere da scaricare, il libro e gli eventi in una pagina.",
+  "fbNotYet": "Il testo integrale di questa edizione sarà qui molto presto. Nel frattempo puoi leggerlo nel tuo account Whop.",
+  "fbNeedUnlock": "Per leggere qui, attiva il tuo acquisto con l’e-mail che hai usato su Whop.",
+  "fbUnlockBtn": "Attiva il mio acquisto",
+  "fbErr": "Non è stato possibile caricare il capitolo. Controlla la connessione.",
+  "fbNotOwned": "Il tuo acquisto non include questa edizione.",
 };
 TR.it = {
   "2019": "2019",
