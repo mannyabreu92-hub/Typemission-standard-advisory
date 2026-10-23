@@ -276,7 +276,7 @@ The app's interface is not in Russian, so the edition is reached from the librar
   "Read free sample" for each edition in another language than the one shown, and the reader shows the text left to right.
 - `CREDITS_RU` (credits page as printed): at the end of its Introduction in the reader, under "Выходные данные"
   (edition credits are shown there for any edition read in another language than the app's).
-- Digital edition listed as available (Whop key `book-ru`, link to come; until then orders go to WhatsApp); printed
+- Digital edition listed as available (Whop key `book-ru`, https://whop.com/museoabreu/ecce-homo); printed
   Russian edition in the Shop (`book-print-ru`, price pending).
 - Russian is also a full app language (`lang/ru.js`, loaded on demand like German, Italian and Arabic): interface and
   content translated by the app (pending review by a native speaker), chapter titles and book texts from the Russian
