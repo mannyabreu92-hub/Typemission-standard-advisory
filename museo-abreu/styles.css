@@ -39,7 +39,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .main-nav a.active, .main-nav a:hover { color: var(--ink); border-bottom-color: var(--accent); }
 .lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
 
-.tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: grid; grid-template-columns: repeat(6, 1fr); background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+.tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; display: grid; grid-template-columns: repeat(5, 1fr); background: var(--card); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
 .tabbar a { text-decoration: none; display: flex; flex-direction: column; align-items: center; font-size: .7rem; padding: .45rem 0 .5rem; color: var(--ink-3); }
 .tabbar .ti { font-size: 1.1rem; line-height: 1.3; }
 .tabbar a.active { color: var(--accent); font-weight: 600; }
@@ -508,3 +508,44 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .unlock-row { display: flex; gap: .5rem; flex-wrap: wrap; }
 .unlock-row input { flex: 1 1 220px; min-height: 48px; }
 .unlock .status.ok { color: var(--ok); }
+
+/* Auction (market.js) */
+.lots { display: grid; gap: 2rem; }
+@media (min-width: 640px) { .lots { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); } }
+.lot-card { display: grid; gap: .35rem; align-content: start; }
+.lot-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); background: var(--paper-2); }
+.lot-meta { font: 600 .72rem/1.4 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); margin-top: .5rem; }
+.lot-meta .chip { letter-spacing: 0; text-transform: none; font-weight: 500; }
+.lot-title { font: 700 1.3rem/1.2 var(--sans); margin: 0; }
+.lot-title a { color: inherit; text-decoration: none; }
+.lot-state { display: flex; gap: .8rem; align-items: baseline; flex-wrap: wrap; margin: .2rem 0 0; }
+.lot-price { display: grid; font: 400 1.1rem/1.2 var(--sans); }
+.lot-price small { font-size: .72rem; color: var(--ink-3); letter-spacing: .06em; }
+.lot-state.big .lot-price { font-size: 1.7rem; font-weight: 600; }
+.lot-close { font-size: .88rem; color: var(--ink-2); margin: 0; }
+.lot-live { font: italic 400 1.05rem/1.45 var(--serif); color: var(--ink-2); margin-top: .4rem; }
+.lot-page > .btn { margin-top: 1rem; }
+.lot-detail { display: grid; gap: 1.6rem; }
+@media (min-width: 860px) { .lot-detail { grid-template-columns: 1.1fr 1fr; align-items: start; } }
+.lot-figure { margin: 0; }
+.lot-figure img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+.lot-figure figcaption { font-size: .8rem; color: var(--ink-3); margin-top: .4rem; }
+.lot-info { display: grid; gap: .6rem; align-content: start; }
+.lot-h1 { font-size: clamp(2rem, 7vw, 2.8rem); margin: 0; }
+.bid-form { display: grid; gap: .7rem; margin-top: .8rem; padding: 1.1rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.bid-form input[type=number] { font-size: 1.3rem; font-weight: 600; }
+.bid-accept { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; line-height: 1.45; }
+.bid-accept input { margin-top: .25rem; width: 20px; height: 20px; flex: none; }
+.bid-form .status.ok { color: var(--ok); }
+.bid-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+.bid-list li { display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); padding-bottom: .4rem; flex-wrap: wrap; }
+:root[lang="ar"] .lot-meta { letter-spacing: 0; text-transform: none; }
+
+/* Shop */
+.shop-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.shop-item { display: grid; gap: .35rem; align-content: start; }
+.shop-item .cover { max-width: 200px; margin-bottom: .6rem; }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.section-head .buy-now { margin-top: 0; }
+.shop-banner { display: grid; grid-template-columns: 90px 1fr; gap: 1.2rem; align-items: center; text-decoration: none; color: inherit; }
+.shop-banner .cover { width: 90px; }

@@ -169,6 +169,24 @@ order summary, quantity for tickets, live total in USD.
 - **Thank-you page** (`#/gracias/<key>`): Whop's redirect after purchase goes to
   `https://museo-abreu.vercel.app/?gracias=<key>`; the page names what was bought and what happens next.
 
+## Events, Auction, Shop (the app's focus)
+
+The bottom menu is **Home · Events · Auction · Shop · Account**; artist pages, visits, classes, the
+collection, the reader and Pro stay in the top menu and on the home page.
+
+- **Auction** (`#/subasta`, `#/subasta/<lot>`; `market.js`, `auction-config.js`, `api/auction.js`): online
+  bidding in the app until each lot's close, then the auction ends live at the ART GABANGI Auction & Awards
+  Dinner. Bidders give name, email and phone and confirm that a winning bid is a commitment to buy; the page
+  shows initials only. Each bid must beat the current one by `AUCTION.increment` (USD 50). The server checks
+  every rule and uses ETag-checked writes so simultaneous bids cannot overwrite each other. Bids are kept in
+  the private Blob store (`auction/<lot>.json`, with bidder contacts for the museum). The five lots now in
+  `auction-config.js` are **examples** (no starting bid or close), so bidding is not open; visitors can ask
+  to be notified on WhatsApp.
+  To open a lot: set `startBid`, `closesAt` (e.g. `'2027-07-14T12:00:00-04:00'`) and `example: false`.
+- **Shop** (`#/tienda`): the printed Ecce Homo (Spanish edition; price pending, orders via the checkout
+  sheet, Whop key `book-print-es`), the digital editions and the auction lots.
+- **Home**: the next event, then the auction lots and the shop.
+
 ## Spanish edition (`sample-es.js`)
 
 From `Ecce Homo Español` (Ediciones ARTFORO, 2026, published for the museum's anniversary):
@@ -233,6 +251,7 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
   there is only one Art club product (its link ends in `art-club-5d`). Payouts in USD to be confirmed with
   Whop. Delivery of the digital book after purchase (file in Whop "Content", or access sent by email).
 - Class, tour and club prices (several are illustrative).
+- Auction: the real lots, starting bids, online closing time and bid increment; printed book price.
 - Nov 17 anniversary and June 13 group exhibition: ticket prices and times.
 - Museum hours (WhatsApp profile says "by appointment only"), address, accessibility.
 - Editorial notes to remove before chapters V, XIV, XVI of the English manuscript.
