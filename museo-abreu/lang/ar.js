@@ -294,7 +294,7 @@ I18N.ar = {
   "priceTbc": "سعر التذكرة قيد التأكيد",
   "notifyMe": "أبلغني عبر واتساب",
   "notifySet": "سنبلغك حين يبدأ بيع التذاكر (محاكاة).",
-  "nextAnnual": "الفعالية السنوية القادمة",
+  "nextAnnual": "الفعالية القادمة",
   "officialSite": "الموقع الرسمي",
   "bookOn": "احجز عبر {provider}",
   "buyOn": "اشترِ بسعر {price} عبر {provider}",

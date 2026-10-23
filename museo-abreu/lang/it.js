@@ -294,7 +294,7 @@ I18N.it = {
   "priceTbc": "Prezzo del biglietto da confermare",
   "notifyMe": "Avvisami via WhatsApp",
   "notifySet": "Ti avviseremo quando apriranno le vendite (simulato).",
-  "nextAnnual": "Prossimo evento annuale",
+  "nextAnnual": "Prossimo evento",
   "officialSite": "Sito ufficiale",
   "bookOn": "Prenota su {provider}",
   "buyOn": "Acquista a {price} su {provider}",
