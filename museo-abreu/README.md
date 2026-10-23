@@ -216,6 +216,18 @@ collection, the reader and Pro stay in the top menu and on the home page.
   shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
   `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
   their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
+- **QR check-in for ART GABANGI tickets** (`scanner.js`, `api/_lib.js` tickets, `api/admin.js`): when Whop confirms a
+  payment for a `gabangi-…` product, the webhook issues a code (`GB-XXXX-XXXX`, from the payment id and a private
+  secret in `tickets/secret.json`) stored as `tickets/<code>.json` with the quantity; a refund voids it. `api/purchases`
+  returns the codes, and after "Unlock" with the purchase email the app shows each as a pass with its QR. At the door,
+  Dashboard › **Scan tickets** (`#/admin/escanear`) reads the QR with the phone camera (BarcodeDetector, or jsQR from
+  `vendor/jsQR.js`, Apache-2.0, loaded only there) or a typed code: admitted (green), already used with the time
+  (amber), refunded or unknown (red), with Undo and a count of people inside. Needs the Whop links for the ART GABANGI
+  tickets in `booking-config.js`.
+- **Press & collectors page** (`kit.js`, `#/kit`): biography, a quote from Ecce Homo (the visitor's edition where there
+  is one), key dates from the book's chronology, the critics, the selected works with image downloads and a credit
+  line, the book and its editions, upcoming events, links and contacts, plus the mailing-list form. "Save as PDF"
+  prints a clean page (print styles hide menus and buttons). Linked from the home page and the Contact page.
 - **Auction alerts** (`alerts.js`, `api/push.js` lot actions): each piece's page has "Alert me on this phone" (Web Push,
   same keys as the event reminders). Stored as `push/lots/<lot>/<hash>.json` with the messages in the guest's language
   and locale. "You've been outbid" goes from `api/auction.js` to the previous highest bidder (matched by a hash of the

@@ -680,3 +680,20 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .sc-recent li { padding-inline-start: .6rem; border-inline-start: 4px solid var(--line); }
 .sc-recent .sc-admitted { border-color: var(--ok); } .sc-recent .sc-used { border-color: var(--warn); }
 .sc-recent .sc-void, .sc-recent .sc-unknown { border-color: #b42318; }
+
+/* Press & collectors page (kit.js) */
+.kit-hero { display: grid; gap: 1.4rem; align-items: start; }
+.kit-hero .contact-photo { width: 100%; max-width: 220px; height: auto; aspect-ratio: 1; object-fit: cover; object-position: top; border-radius: var(--radius); }
+@media (min-width: 760px) { .kit-hero { grid-template-columns: 280px 1fr; } }
+.kit-quote blockquote { font: italic 400 1.5rem/1.35 var(--serif); }
+.kit-quote figcaption { margin-top: .5rem; color: var(--ink-3); font-size: .9rem; }
+.kit-work img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--paper-2); display: block; }
+.kit-work figcaption { margin-top: .5rem; font-size: .9rem; }
+.kit-events { list-style: none; padding: 0; display: grid; gap: .5rem; }
+@media print {
+  .topbar, .tabbar, .demo-banner, .skip, .section-nav, .kit-actions, .kit .btn-row, .kit .nl, .toast { display: none !important; }
+  body { padding: 0; background: #fff; }
+  .kit .section { break-inside: avoid; padding: 1rem 0; }
+  .kit-works { grid-template-columns: repeat(3, 1fr) !important; }
+  .kit a[download] { display: none; }
+}
