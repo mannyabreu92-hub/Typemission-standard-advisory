@@ -210,6 +210,12 @@ collection, the reader and Pro stay in the top menu and on the home page.
   Note: if a guest changes their RSVP after checking in, the check-in is reset.
   "Add a walk-in guest" at the bottom of the door list adds someone without an RSVP (name, party size, optional phone),
   already checked in and marked "Walk-in"; walk-ins appear in the dashboard and the CSV like other guests.
+- **After the event** (`aftercare.js`, `api/photos.js`): dashboard › Event photos (`#/admin/fotos/<event>/<date>`,
+  date preset to the last occurrence if it was within 60 days) uploads photos from the phone or computer, resized to
+  1600 px JPEG in the browser, into the private Blob store (`photos/<event>/<date>/`); × removes one. The event page then
+  shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
+  `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
+  their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
 - **Invitations** (dashboard › Invitations, `#/admin/invitar/<event>/<date>`): paste the guest list (a name and a phone
   per line, e.g. from a spreadsheet; optional es/en/fr at the end; "Last, First" is turned round). Each guest gets
   "Send invitation", which opens WhatsApp with a personal invitation in their language and the event's link

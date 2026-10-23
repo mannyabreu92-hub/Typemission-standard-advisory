@@ -643,6 +643,11 @@ I18N.de = {
   "igBtn": "Bild für Instagram",
   "igReady": "Bild fertig: teilen oder speichern.",
   "igErr": "Das Bild konnte nicht erstellt werden.",
+  "phTitle": "Fotos des Abends",
+  "phCount": "{n} Fotos",
+  "phPrev": "Zurück",
+  "phNext": "Weiter",
+  "phOpen": "Foto {n} ansehen",
 };
 TR.de = {
   "2019": "2019",

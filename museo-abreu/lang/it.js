@@ -643,6 +643,11 @@ I18N.it = {
   "igBtn": "Immagine per Instagram",
   "igReady": "Immagine pronta: condividila o salvala.",
   "igErr": "Non è stato possibile creare l’immagine.",
+  "phTitle": "Foto della serata",
+  "phCount": "{n} foto",
+  "phPrev": "Precedente",
+  "phNext": "Successiva",
+  "phOpen": "Vedi la foto {n}",
 };
 TR.it = {
   "2019": "2019",

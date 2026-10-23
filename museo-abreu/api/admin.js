@@ -2,7 +2,7 @@
 // Protected by ADMIN_PASSWORD (Vercel › Settings › Environment Variables), sent by the dashboard page
 // as "Authorization: Bearer <password>". Without that variable the dashboard stays closed.
 const crypto = require('crypto');
-const { list } = require('@vercel/blob');
+const { list, put, del } = require('@vercel/blob');
 const { AUCTION } = require('../auction-config.js');
 const { readJSON, writeJSON, findEmail, findProductKey } = require('./_lib');
 
@@ -56,6 +56,26 @@ module.exports = async (req, res) => {
         if (b.action === 'invite-sent') doc.list[i].sentAt = new Date().toISOString(); else doc.list.splice(i, 1);
       }
       await writeJSON(path, doc);
+      return res.status(200).json({ event: b.event, date: b.date, ...doc });
+    }
+    // Event photos (photos/<event>/<date>/<id>.jpg + photos/<event>/<date>.json index). The dashboard
+    // sends each photo already resized to JPEG, as base64.
+    if (b.action === 'photo-add' || b.action === 'photo-remove') {
+      if (!/^[a-z0-9-]+$/.test(String(b.event)) || !/^\d{4}-\d{2}-\d{2}$/.test(String(b.date))) return res.status(400).json({ error: 'request' });
+      const idx = `photos/${b.event}/${b.date}.json`, doc = (await readJSON(idx)) || { photos: [] };
+      if (b.action === 'photo-add') {
+        const buf = Buffer.from(String(b.data || ''), 'base64');
+        if (buf.length < 1000 || buf.length > 3e6 || buf[0] !== 0xff || buf[1] !== 0xd8) return res.status(400).json({ error: 'image' });
+        const id = crypto.randomBytes(8).toString('hex');
+        await put(`photos/${b.event}/${b.date}/${id}.jpg`, buf, { access: 'private', contentType: 'image/jpeg', addRandomSuffix: false });
+        doc.photos.push({ id, w: Number(b.w) || 0, h: Number(b.h) || 0, at: new Date().toISOString() });
+      } else {
+        const i = doc.photos.findIndex(p => p.id === b.id);
+        if (i < 0) return res.status(404).json({ error: 'photo' });
+        doc.photos.splice(i, 1);
+        await del(`photos/${b.event}/${b.date}/${b.id}.jpg`).catch(() => {});
+      }
+      await writeJSON(idx, doc);
       return res.status(200).json({ event: b.event, date: b.date, ...doc });
     }
     // Walk-in: POST { action: 'walkin', event, date, name, party, phone } adds a guest who came without
