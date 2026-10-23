@@ -193,6 +193,12 @@ collection, the reader and Pro stay in the top menu and on the home page.
   French (`?l=es|en|fr`; other languages get English), then open the event page. Its texts copy those in
   `features.js`; keep them in step when an event changes. Event titles on the events page and the home card
   open these pages.
+- **Museum dashboard** (`#/admin`, `admin.js`, `api/admin.js`; not in the menus): all auction bids with the
+  bidders' names, phones (call / WhatsApp) and emails, Whop purchases (from the webhook log) and RSVPs with the
+  headcount per event, each downloadable as CSV. Protected by `ADMIN_PASSWORD` (Vercel › Settings ›
+  Environment Variables, Production; redeploy after setting it); without it the dashboard stays closed. The
+  password is kept for the browser tab only. RSVPs are now also saved on the server (`api/rsvp.js`,
+  `rsvps/<event>/<date>/`), one per guest, a changed reply replacing the earlier one.
 - **Share links for lots and the book**: each lot page and the Shop have a Share button. `/l/<lot>` and `/b`
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.

@@ -178,6 +178,9 @@ Object.assign(EXTRA_FORMS, {
             guests: guests ? t('rsvpWithGuests', { n: guests, names: reply.guestNames || '—' }) : '' })
         : t('waRsvpNo', { event: title, date, name: reply.name, note: reply.note }));
     }
+    // Also saved for the museum's dashboard (api/rsvp.js); the WhatsApp message above stays the main channel.
+    fetch('/api/rsvp', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event: ev.id, ...reply }) }).catch(() => {});
     fx.set('rsvps', { ...rsvpReplies(), [ev.id]: reply });
     rsvpEditing.delete(ev.id);
     window.scrollTo(0, 0);
