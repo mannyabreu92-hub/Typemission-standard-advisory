@@ -11,6 +11,8 @@
   --accent-soft: rgba(194, 65, 12, 0.1);
   --ok: #11652f;
   --warn: #8a5200;
+  --gold: #a68a52;
+  --gold-ink: #75602f;
   --radius: 14px;
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Work Sans', system-ui, sans-serif;
@@ -363,3 +365,36 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 :root[lang="ar"] .eyebrow, :root[lang="ar"] .brand-desc { text-transform: none; }
 :root[lang="ar"] h1, :root[lang="ar"] h2, :root[lang="ar"] h3 { line-height: 1.4; }
 .section[id] { scroll-margin-top: 84px; }
+
+/* RSVP (rsvp.js): an engraved-style invitation — ink frame, gold hairline, letterspaced capitals. */
+.rsvp-page { max-width: 760px; }
+.invite { max-width: 560px; margin: 0 auto; background: var(--card); border: 1px solid var(--ink); padding: 9px; box-shadow: 0 18px 50px -30px rgba(22, 18, 15, .45); }
+.invite-inner { border: 1px solid var(--gold); padding: clamp(32px, 7vw, 56px) clamp(20px, 6vw, 48px); text-align: center; display: grid; gap: .55rem; justify-items: center; }
+.invite-host { font: 600 .74rem/1 var(--sans); letter-spacing: .34em; text-transform: uppercase; color: var(--ink); padding-inline-start: .34em; }
+.invite-request { font: italic 400 1.2rem/1.4 var(--serif); color: var(--ink-2); max-width: 26ch; margin-top: .4rem; }
+.invite-title { font: 600 clamp(2rem, 7vw, 2.8rem)/1.08 var(--serif); margin: .4rem 0 .2rem; text-wrap: balance; }
+.invite-rule { display: flex; align-items: center; gap: 12px; width: 140px; margin: .5rem 0; }
+.invite-rule::before, .invite-rule::after { content: ''; flex: 1; border-top: 1px solid var(--gold); }
+.invite-rule span { width: 7px; height: 7px; transform: rotate(45deg); border: 1px solid var(--gold); }
+.invite-date { font: 400 1.25rem/1.3 var(--serif); }
+.invite-place { font: 600 .74rem/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--ink-2); margin-top: .5rem; }
+.invite-desc { font: italic 400 1.05rem/1.5 var(--serif); color: var(--ink-2); max-width: 40ch; margin-top: 1rem; }
+.invite-kindly { font: 600 .68rem/1 var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--gold-ink); margin-top: 1.4rem; }
+.rsvp-form-wrap h2, .rsvp-reply h2 { font-size: 1.7rem; }
+.rsvp-form { display: grid; gap: 1rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(18px, 4vw, 28px); }
+.rsvp-att { border: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rsvp-choice { position: relative; display: block; cursor: pointer; }
+.rsvp-choice input { position: absolute; opacity: 0; inset: 0; pointer-events: none; }
+.rsvp-choice span { display: block; text-align: center; font: italic 600 1.15rem/1.3 var(--serif); padding: 1rem .6rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); transition: border-color .2s, background .2s; }
+.rsvp-choice input:checked + span { border-color: var(--ink); background: var(--card); box-shadow: inset 0 0 0 1px var(--gold); }
+.rsvp-choice input:focus-visible + span { outline: 3px solid var(--accent); outline-offset: 2px; }
+.rsvp-private { font-size: .85rem; }
+.rsvp-thanks { font: italic 600 1.7rem/1.25 var(--serif); margin: .2rem 0 .6rem; text-wrap: balance; }
+.rsvp-reply { max-width: 560px; margin: 0 auto; text-align: start; }
+.rsvp-form textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: .6rem .7rem; background: var(--paper); resize: vertical; }
+:root[lang="ar"] .invite-host, :root[lang="ar"] .invite-place, :root[lang="ar"] .invite-kindly { text-transform: none; }
+@media (max-width: 420px) { .rsvp-att { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .rsvp-choice span { transition: none; } }
+[hidden] { display: none !important; }
+.invite-sub { font: italic 400 1.2rem/1.3 var(--serif); color: var(--ink-2); margin-top: -.2rem; }
+.invite-date { line-height: 1.5; }

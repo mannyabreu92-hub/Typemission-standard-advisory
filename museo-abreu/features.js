@@ -499,7 +499,9 @@ function homeExtras() {
   // Tickets: the event's booking link when there is one, else WhatsApp with the request written;
   // ART GABANGI has several ticket types, so it goes to its tickets on the events page.
   const ext = bookingLink(ev.id) || (ev.tiers ? '' : whatsappLink(t('waTicketsFor', { event: eventTitle(ev), date: fmtDate(d) })));
-  const buy = ext ? `<a class="btn primary" href="${ext}" target="_blank" rel="noopener">${t('buyTickets')}</a>`
+  // The museum's own invitations (no ticket price) take an RSVP instead of tickets.
+  const buy = !bookingLink(ev.id) && !ev.tiers && !ev.price ? `<a class="btn primary" href="#/rsvp/${ev.id}">${t('rsvp')}</a>`
+    : ext ? `<a class="btn primary" href="${ext}" target="_blank" rel="noopener">${t('buyTickets')}</a>`
     : `<a class="btn primary" href="#/eventos">${t('buyTickets')}</a>`;
   const promo = `<section class="section"><div class="promo">
     <span class="promo-count"><strong>${n}</strong><small>${t('daysLabel')}</small></span>
@@ -617,6 +619,7 @@ function eventCard(ev, passes) {
   {
       const pass = passes.find(p => p.event === ev.id);
       const d = eventDate(ev), n = daysUntil(d);
+      const invite = ev.annual && !ev.price && !ev.tiers; // the museum's own invitation: RSVP (rsvp.js)
       return `<article class="card event ${ev.annual ? 'annual' : ''}">
         <div class="chips" style="margin:0 0 .5rem">${ev.vip ? `<span class="chip vip">${t('vipEvent')}</span>` : ''}${ev.annual ? `<span class="chip annual-chip">${t('everyYear')}</span>` : `<span class="chip">${t('example')}</span>`}${ev.pendingName ? `<span class="pending">${t('nameTbc')}</span>` : ''}</div>
         <h3>${eventTitle(ev)}</h3>
@@ -629,7 +632,9 @@ function eventCard(ev, passes) {
               <select id="g-${ev.id}">${[0, 1, 2, 3].map(n => `<option value="${n}">${n}</option>`).join('')}</select>
               <small class="muted">${t('guestsHelp')}</small></label>` : ''}
             <button class="btn primary" data-action="getPass" data-id="${ev.id}">${t('getPass')}</button>
-          </div>` : `
+            ${invite ? `<a class="btn" href="#/rsvp/${ev.id}">${t('rsvp')}</a>` : ''}
+          </div>` : invite ? `
+          <div class="btn-row"><a class="btn primary" href="#/rsvp/${ev.id}">${t('rsvp')}</a><a class="btn" href="#/pro">${t('becomePro')}</a></div>` : `
           <div class="btn-row"><a class="btn primary" href="#/pro">${t('becomePro')}</a>
           ${ev.price ? `<button class="btn" data-action="buyEvent" data-id="${ev.id}">${t('buyTicket', { price: usd(ev.price) })}</button>`
             : `<button class="btn" data-action="notifyEvent" data-id="${ev.id}">${t('notifyMe')}</button>`}</div>`}

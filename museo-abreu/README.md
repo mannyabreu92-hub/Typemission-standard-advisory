@@ -14,6 +14,15 @@ updated the table of contents (chapters XX–LXX were renumbered and retitled), 
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
 
+## RSVP (`rsvp.js`, `#/rsvp/<event>`)
+
+The museum's own yearly invitations without a ticket price (the anniversary on November 17, the group
+exhibition on June 13) take a formal RSVP instead of tickets: an engraved-style invitation (event, date, time,
+Bávaro), then the reply (accepts with pleasure or declines with regret, up to three guests by name, a note for
+the hosts). Live mode sends it to the museum by WhatsApp as a formal RSVP; the reply stays on the visitor's
+device, where they can change it or add the evening to their calendar. Linked from the events page and from the
+home banner when one of these is the next yearly event. ART GABANGI keeps its tickets.
+
 ## Abreu Fine Art and Top 100 Artists
 
 - `#/galeria`: Abreu Fine Art, reopened on October 17, 2026 at Greenfit Wellness Club (Edificio Gardenia, Los
@@ -136,6 +145,15 @@ every language, marked "English edition", until the Spanish edition text is deli
 updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
+
+## RSVP (`rsvp.js`, `#/rsvp/<event>`)
+
+The museum's own yearly invitations without a ticket price (the anniversary on November 17, the group
+exhibition on June 13) take a formal RSVP instead of tickets: an engraved-style invitation (event, date, time,
+Bávaro), then the reply (accepts with pleasure or declines with regret, up to three guests by name, a note for
+the hosts). Live mode sends it to the museum by WhatsApp as a formal RSVP; the reply stays on the visitor's
+device, where they can change it or add the evening to their calendar. Linked from the events page and from the
+home banner when one of these is the next yearly event. ART GABANGI keeps its tickets.
 
 ## Abreu Fine Art and Top 100 Artists
 
