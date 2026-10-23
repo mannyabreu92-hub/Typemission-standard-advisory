@@ -1025,6 +1025,8 @@ window.addEventListener('hashchange', e => {
 if (BOOKING.live) {
   document.querySelectorAll('.demo-banner, .staff-link').forEach(el => { el.hidden = true; });
 }
+// Scripts loaded before this one can adjust functions defined here before the first page shows (wishlist.js).
+(window.APP_HOOKS || []).forEach(f => f());
 setLang(lang);
 
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {

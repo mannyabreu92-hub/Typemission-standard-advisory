@@ -216,6 +216,11 @@ collection, the reader and Pro stay in the top menu and on the home page.
   shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
   `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
   their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
+- **Wishlist** (`wishlist.js`, `api/wish.js`): a ♡ on artwork cards, in the artwork window, on auction cards and on each
+  piece's page saves it to Account › "My saved works" (kept on the device, `ma.wish`), with "Remove" and "Ask the museum
+  about these works" (WhatsApp with the list). The list is also sent under a random device id only
+  (`wish/<device>.json`, private), and the dashboard Overview shows "Most wanted works" (top 10, number of people).
+  `app.js` runs `window.APP_HOOKS` before the first page so earlier scripts can wrap its functions (`workCard`, `openWork`).
 - **Reminder the day before** (`remind.js`, `api/push.js`, `api/push-cron.js`): after replying yes to an invitation,
   the reply (and the event page) offers "Remind me the day before". The app writes the reminder in the guest's language
   and subscribes the phone with Web Push; a "Reminder set" notification arrives at once. Subscriptions are stored

@@ -634,3 +634,18 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .remind { margin-top: 1rem; display: grid; gap: .4rem; justify-items: start; }
 .remind-on { color: var(--ok); font-weight: 600; }
 .remind-help { font-size: .85rem; margin: 0; }
+
+/* Wishlist (wishlist.js) */
+.work-wrap { position: relative; display: flex; }
+.work-wrap > .work { flex: 1; }
+.lot-card { position: relative; }
+.wish { position: absolute; top: .5rem; inset-inline-end: .5rem; z-index: 1; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%;
+  border: 1px solid var(--line); background: rgba(255, 253, 249, .94); color: var(--accent); font-size: 1.35rem; line-height: 1; cursor: pointer; box-shadow: 0 1px 4px rgba(22, 18, 15, .12); }
+.wish:hover { background: var(--card); }
+.wish.on, .wish-btn.on span { color: var(--accent); }
+.wish-btn span { font-size: 1.1em; }
+.ws-list { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: .6rem; }
+.ws-list li { display: flex; align-items: center; gap: .8rem; padding-bottom: .6rem; border-bottom: 1px solid var(--line); }
+.ws-open { display: flex; align-items: center; gap: .8rem; flex: 1; min-width: 0; background: none; border: 0; padding: 0; font: inherit; color: inherit; text-align: start; text-decoration: none; cursor: pointer; }
+.ws-thumb { flex: 0 0 64px; width: 64px; height: 64px; border-radius: 8px; overflow: hidden; background: var(--paper-2); }
+.ws-thumb img, .ws-thumb svg { width: 100%; height: 100%; object-fit: cover; display: block; }

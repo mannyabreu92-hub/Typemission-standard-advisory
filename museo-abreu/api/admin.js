@@ -113,5 +113,8 @@ module.exports = async (req, res) => {
     const [, event, file] = r.path.split('/');
     return { event, date: file.replace('.json', ''), list: r.data.list || [] };
   });
-  res.status(200).json({ auction, purchases, rsvps, invites, now: new Date().toISOString() });
+  // Wishlist: how many devices saved each work (api/wish.js).
+  const wishes = {};
+  (await all('wish/', 3000)).forEach(w => ((w.data && w.data.items) || []).forEach(k => { wishes[k] = (wishes[k] || 0) + 1; }));
+  res.status(200).json({ auction, purchases, rsvps, invites, wishes, now: new Date().toISOString() });
 };
