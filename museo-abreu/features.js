@@ -768,14 +768,15 @@ function memberCard(m) {
 }
 
 function dailyReading() {
-  const paras = SAMPLE_EN.intro.concat(SAMPLE_EN.ch1);
+  const S = lang === 'es' ? SAMPLE_ES : SAMPLE_EN;
+  const paras = S.intro.concat(S.ch1);
   const today = todayPC();
   const day = Math.floor(Date.parse(today) / 864e5);
   const passage = paras.at(day % paras.length);
   const ch = 1 + (day % 70);
   return `<section class="section daily">
     <p class="eyebrow">${t('dailyTitle')} · ${fmtDate(today)}</p>
-    <blockquote lang="en">${esc(passage)}</blockquote>
+    <blockquote lang="${lang === 'es' ? 'es' : 'en'}">${esc(passage)}</blockquote>
     <p class="muted" style="margin-top:.6rem">${t('dailyNote')}</p>
     <div class="btn-row">${isPro()
       ? `<a class="btn primary" href="#/leer/en/${ch}">${t('dailyFull', { ch: chTitle(CHAPTERS.at(ch), 'en') })}</a>`

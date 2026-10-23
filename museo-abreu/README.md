@@ -4,62 +4,6 @@ Installable web app (PWA) for Museo Abreu in Bávaro, Punta Cana, built from the
 "Propuesta de app para el Museo Abreu" (21 Oct 2026). It covers the three core
 actions of the first version: **descubrir, reservar, leer**, in Spanish, English and French.
 
-## Quote of the day
-
-The home page opens with a different quote from Ecce Homo each day (Punta Cana date), cycling through
-`DAILY_QUOTES` in `data.js`: 78 passages in Oscar Abreu's words, copied exactly from the updated English
-manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. They are shown in English in
-every language, marked "English edition", until the Spanish edition text is delivered. The same manuscript
-updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
-and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
-Italian and Arabic wording is the app's, pending the Spanish edition).
-
-## Look
-
-Ink, ivory and gold (`styles.css`, "Luxury pass" at the end): the house accent is an antique gold
-(`--accent: #75602f`, readable as text), champagne (`--champagne`) for buttons and labels on dark surfaces, and
-`--gold` for hairlines. Buttons are squared and letterspaced; tickets, the Pro member card, the Collectors' Circle
-panel, the event banner and the RSVP invitation carry a fine gold rule. Terracotta is no longer used.
-
-## RSVP (`rsvp.js`, `#/rsvp/<event>`)
-
-The museum's own yearly invitations without a ticket price (the anniversary on November 17, the group
-exhibition on June 13) take a formal RSVP instead of tickets: an engraved-style invitation (event, date, time,
-Bávaro), then the reply (accepts with pleasure or declines with regret, up to three guests by name, a note for
-the hosts). Live mode sends it to the museum by WhatsApp as a formal RSVP; the reply stays on the visitor's
-device, where they can change it or add the evening to their calendar. Linked from the events page and from the
-home banner when one of these is the next yearly event. ART GABANGI keeps its tickets.
-The anniversary invitation includes the launch of Ecce Homo: the Spanish edition's credits say it is "Publicado en
-conmemoración del aniversario del Museo Abreu". Its official Spanish title, *Ecce Homo: El arte me salvó la vida*,
-is used throughout (the 2018 Listín Diario headline keeps its own wording).
-
-## Abreu Fine Art and Top 100 Artists
-
-- `#/galeria`: Abreu Fine Art, reopened on October 17, 2026 at Greenfit Wellness Club (Edificio Gardenia, Los
-  Corales, Bávaro) with *El ritmo de lo invisible* by Julieta Prissell; its 2011 history at 4394 Broadway. From the
-  book's chapters XXXV and LXIX; quotes in Oscar Abreu's English words. Hours pending.
-- Library (`#/biblioteca/top100`): *Top 100 Artists: ART GABANGI 2026*, from chapters LXV and LXVII and the chronology.
-  "Request a copy" opens WhatsApp; price and cover image pending.
-- Both linked from the home page ("More of Museo Abreu") and the footer.
-
-## Link previews
-
-`index.html` carries Open Graph / Twitter tags so shared links show `img/og-image.jpg` (1200 × 630, Oscar Abreu's
-*Escaping Being* with the museum name) and a one-line description.
-
-## Languages
-
-- **ES / EN / FR** buttons in the header; the browser language picks the first one (other languages get English).
-- The artist's texts use his own published versions: biography, exhibitions, manifestos 1–23, reviews, press
-  summaries, artwork titles and the GABANGI texts all come in French from oscarabreu.com and gabangi.com.
-  On oscarabreu.com the French manifesto 15 omits one sentence of the Spanish ("En mi pintura, los sueños toman
-  cuerpo, forma y color."); the app follows the site.
-- The interface French and the app's own content (tours, events, classes, timeline, ART GABANGI programme) are a
-  first translation by Claude, **pending the human editorial review** the proposal requires for new languages.
-- Text that only exists in English (book sample and front-matter quotes, ART GABANGI artist quotes) is shown in
-  English, marked `lang="en"`. In code: `L()` falls back from French to English, then Spanish; `typeset()` keeps
-  French non-breaking spaces (before `: ; ? !`, inside « », in "20 h").
-
 ## Run it
 
 Any static server works:
@@ -150,8 +94,10 @@ Contacto) shows one section menu, added by the router (`sectionNav` and `ROUTE_S
 
 The home page opens with a different quote from Ecce Homo each day (Punta Cana date), cycling through
 `DAILY_QUOTES` in `data.js`: 78 passages in Oscar Abreu's words, copied exactly from the updated English
-manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. They are shown in English in
-every language, marked "English edition", until the Spanish edition text is delivered. The same manuscript
+manuscript (`New_11_Ecce_Homo_English_presentation`), each credited to its chapter. Spanish visitors get
+`DAILY_QUOTES_ES`: 74 sentences copied exactly from the Spanish edition (`Ecce Homo Español`, Ediciones ARTFORO,
+2026), checked word for word against its text. Other languages see the English quote, marked "English edition".
+The English manuscript
 updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
@@ -205,7 +151,18 @@ and Arabic load only when a visitor picks them from the language menu:
   in Spanish, English and French.
 - Arabic switches the page to right-to-left (`dir="rtl"`, logical CSS properties, mirrored arrows) and loads the
   Noto Naskh Arabic and Noto Sans Arabic fonts.
-- Book quotes and the reader stay in the language of the edition (English).
+- Book quotes and the reader stay in the language of an edition: Spanish visitors read the Spanish edition, the
+  others the English one.
+
+## Spanish edition (`sample-es.js`)
+
+From `Ecce Homo Español` (Ediciones ARTFORO, 2026, published for the museum's anniversary):
+- `SAMPLE_ES`: the free Introduction and Chapter I, exact text. The library's free sample and the Pro daily
+  reading use it in Spanish.
+- `TOC_ES`: the 70 Spanish chapter titles ("Capítulo I — La tierra fue mi primer lienzo").
+- `CREDITS_ES`: the credits page as printed, shown in the library (Spanish) under "Créditos de la edición".
+  The short credits line reads: Primera edición, 2026 · Ediciones ARTFORO · Dirección conceptual y editorial:
+  Cándido Gerón · Impreso por Amigo del Hogar, Santo Domingo.
 
 ## Círculo de Coleccionistas (`#/coleccion`)
 

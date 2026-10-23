@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.de = {
   "readEnSample": "Die englische Leseprobe lesen",
-  "samplePending": "Die spanische Leseprobe wird ergänzt, sobald der Text der spanischen Ausgabe vorliegt. Die kostenlose Leseprobe gibt es in der englischen Ausgabe.",
+  "samplePending": "In dieser Sprache gibt es noch keine kostenlose Leseprobe. Die kostenlose Leseprobe gibt es in der spanischen und der englischen Ausgabe.",
   "credits": "Erstausgabe, 2026 · ARTFORO Editions · Englische Übersetzung: Reed Newhall",
   "bookSub2": "Die Geburt des Psycho-Expressionismus",
   "bookSub": "Die Kunst hat mir das Leben gerettet",

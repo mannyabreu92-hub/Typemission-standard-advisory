@@ -5,8 +5,8 @@
 const I18N = {
   es: {
     readEnSample: 'Leer muestra en inglés',
-    samplePending: 'La muestra en español se cargará cuando se entregue el texto de la edición en español. La muestra gratuita ya está disponible en la edición en inglés.',
-    credits: 'Primera edición, 2026 · ARTFORO Editions · Traducción al inglés: Reed Newhall',
+    samplePending: 'Todavía no hay muestra gratuita en este idioma. La muestra gratuita está disponible en las ediciones en español e inglés.',
+    credits: 'Primera edición, 2026 · Ediciones ARTFORO · Dirección conceptual y editorial: Cándido Gerón · Impreso por Amigo del Hogar, Santo Domingo',
     bookSub2: 'El nacimiento del Psico-Expresionismo',
     bookSub: 'El arte me salvó la vida',
     psicoQuoteNote: 'Del libro Ecce Homo (edición en inglés)',
@@ -144,7 +144,7 @@ const I18N = {
   },
   en: {
     readEnSample: 'Read the English sample',
-    samplePending: 'The Spanish sample will be loaded once the Spanish edition text is delivered. The free sample is available in the English edition.',
+    samplePending: 'There is no free sample in this language yet. The free sample is available in the Spanish and English editions.',
     credits: 'First edition, 2026 · ARTFORO Editions · English translation: Reed Newhall',
     bookSub2: 'The Birth of Psycho-Expressionism',
     bookSub: 'Art Saved My Life',
@@ -283,7 +283,7 @@ const I18N = {
   },
   fr: {
     readEnSample: 'Lire l’extrait en anglais',
-    samplePending: 'L’extrait en espagnol sera ajouté dès réception du texte de l’édition espagnole. L’extrait gratuit est disponible dans l’édition anglaise.',
+    samplePending: 'Il n’y a pas encore d’extrait gratuit dans cette langue. L’extrait gratuit est disponible dans les éditions espagnole et anglaise.',
     credits: 'Première édition, 2026 · ARTFORO Editions · Traduction anglaise : Reed Newhall',
     bookSub2: 'La naissance du Psycho-Expressionnisme',
     bookSub: 'L’art m’a sauvé la vie',

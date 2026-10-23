@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.it = {
   "readEnSample": "Leggi l’estratto in inglese",
-  "samplePending": "L’estratto in spagnolo sarà aggiunto non appena verrà consegnato il testo dell’edizione spagnola. L’estratto gratuito è disponibile nell’edizione inglese.",
+  "samplePending": "Non c’è ancora un estratto gratuito in questa lingua. L’estratto gratuito è disponibile nelle edizioni spagnola e inglese.",
   "credits": "Prima edizione, 2026 · ARTFORO Editions · Traduzione inglese: Reed Newhall",
   "bookSub2": "La nascita dello Psico-Espressionismo",
   "bookSub": "L’arte mi ha salvato la vita",

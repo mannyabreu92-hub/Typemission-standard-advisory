@@ -433,3 +433,11 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .chip.sold { background: var(--ink); color: var(--champagne); border-color: var(--ink); }
 .invite-also { font: italic 400 1.15rem/1.45 var(--serif); color: var(--ink); max-width: 30ch; margin-top: .2rem; text-wrap: balance; }
 .event-launch { font-family: var(--serif); font-style: italic; font-size: 1.08rem; margin-top: .4rem; color: var(--ink); }
+
+/* Spanish edition credits (library) */
+.ed-credits { margin-top: .8rem; font-size: .88rem; }
+.ed-credits summary { cursor: pointer; font-family: var(--sans); letter-spacing: .12em; text-transform: uppercase; font-size: .72rem; color: var(--gold-ink); }
+.ed-credits dl { margin: .8rem 0; display: grid; gap: .45rem; }
+.ed-credits dt { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.ed-credits dd { margin: 0; }
+.ed-credits p { margin: .2rem 0; color: var(--ink-3); }
