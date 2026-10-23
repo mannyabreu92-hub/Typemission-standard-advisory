@@ -12,7 +12,7 @@ Object.assign(I18N.es, {
   bkFile: 'Archivo Word de una edición', bkFound: 'Encontrado: {s} secciones · {p} párrafos · primer capítulo: «{first}»', bkLang: 'Edición',
   bkUpload: 'Subir esta edición', bkUploading: 'Subiendo… {n} de {total}', bkDone: 'Edición subida: {lang}.', bkErr: 'No se pudo subir. Revise la conexión e inténtelo de nuevo.',
   bkBad: 'Este archivo no parece una edición de Ecce Homo: no se encontraron capítulos.', bkWarn: 'Atención: se esperaban 73 secciones (introducción, 70 capítulos, agradecimientos y cronología).',
-  bkStatus: 'Subida el {date} · {s} secciones', bkMissing: 'Aún no subida', adBook: 'Libro completo', bkReading: 'Leyendo el archivo…',
+  bkStatus: 'Subida el {date} · {s} secciones', bkMissing: 'Aún no subida', adBook: 'Libro completo', bkPdf: 'Este archivo es un PDF. Elija la versión Word (.docx) del libro.', bkNotWord: 'Este archivo no es un documento Word (.docx). Elija el archivo Word del libro.', bkReading: 'Leyendo el archivo…',
 });
 Object.assign(I18N.en, {
   fbNotYet: 'The full text of this edition will be here very soon. Meanwhile, you can read it in your Whop account.',
@@ -22,7 +22,7 @@ Object.assign(I18N.en, {
   bkFile: 'Word file of an edition', bkFound: 'Found: {s} sections · {p} paragraphs · first chapter: “{first}”', bkLang: 'Edition',
   bkUpload: 'Upload this edition', bkUploading: 'Uploading… {n} of {total}', bkDone: 'Edition uploaded: {lang}.', bkErr: 'Could not upload. Check the connection and try again.',
   bkBad: 'This file does not look like an edition of Ecce Homo: no chapters were found.', bkWarn: 'Note: 73 sections were expected (introduction, 70 chapters, acknowledgements and chronology).',
-  bkStatus: 'Uploaded on {date} · {s} sections', bkMissing: 'Not uploaded yet', adBook: 'Full book', bkReading: 'Reading the file…',
+  bkStatus: 'Uploaded on {date} · {s} sections', bkMissing: 'Not uploaded yet', adBook: 'Full book', bkPdf: 'This file is a PDF. Choose the Word (.docx) version of the book.', bkNotWord: 'This file is not a Word document (.docx). Choose the book’s Word file.', bkReading: 'Reading the file…',
 });
 Object.assign(I18N.fr, {
   fbNotYet: 'Le texte intégral de cette édition sera ici très bientôt. En attendant, vous pouvez le lire dans votre compte Whop.',
@@ -32,31 +32,23 @@ Object.assign(I18N.fr, {
   bkFile: 'Fichier Word d’une édition', bkFound: 'Trouvé : {s} sections · {p} paragraphes · premier chapitre : « {first} »', bkLang: 'Édition',
   bkUpload: 'Téléverser cette édition', bkUploading: 'Téléversement… {n} sur {total}', bkDone: 'Édition téléversée : {lang}.', bkErr: 'Téléversement impossible. Vérifiez la connexion et réessayez.',
   bkBad: 'Ce fichier ne ressemble pas à une édition d’Ecce Homo : aucun chapitre trouvé.', bkWarn: 'Attention : 73 sections étaient attendues (introduction, 70 chapitres, remerciements et chronologie).',
-  bkStatus: 'Téléversée le {date} · {s} sections', bkMissing: 'Pas encore téléversée', adBook: 'Livre intégral', bkReading: 'Lecture du fichier…',
+  bkStatus: 'Téléversée le {date} · {s} sections', bkMissing: 'Pas encore téléversée', adBook: 'Livre intégral', bkPdf: 'Ce fichier est un PDF. Choisissez la version Word (.docx) du livre.', bkNotWord: 'Ce fichier n’est pas un document Word (.docx). Choisissez le fichier Word du livre.', bkReading: 'Lecture du fichier…',
 });
 
 /* ---------- Reading a Word file in the browser ---------- */
 
-// The files inside a .docx (a zip), unpacked with the browser's own DecompressionStream.
-async function unzipEntries(buf, wanted) {
-  const v = new DataView(buf), u8 = new Uint8Array(buf), out = {};
-  let eocd = -1;
-  for (let i = buf.byteLength - 22; i >= Math.max(0, buf.byteLength - 66000); i--) if (v.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
-  if (eocd < 0) throw new Error('zip');
-  let p = v.getUint32(eocd + 16, true);
-  const n = v.getUint16(eocd + 10, true);
-  for (let k = 0; k < n; k++) {
-    const method = v.getUint16(p + 10, true), size = v.getUint32(p + 20, true), nameLen = v.getUint16(p + 28, true);
-    const extra = v.getUint16(p + 30, true), comment = v.getUint16(p + 32, true), local = v.getUint32(p + 42, true);
-    const name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nameLen));
-    if (wanted.includes(name)) {
-      const start = local + 30 + v.getUint16(local + 26, true) + v.getUint16(local + 28, true), data = u8.subarray(start, start + size);
-      const bytes = method === 0 ? data : new Uint8Array(await new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
-      out[name] = new TextDecoder().decode(bytes);
-    }
-    p += 46 + nameLen + extra + comment;
-  }
-  return out;
+// The Word file's text: a .docx is a zip, opened with fflate (vendor/fflate.js, loaded on first use; it works the
+// same in every browser, iPhone included). A PDF or another kind of file is reported as such.
+async function readDocx(buf) {
+  const u8 = new Uint8Array(buf), head = String.fromCharCode(...u8.subarray(0, 5));
+  if (head.startsWith('%PDF')) throw new Error('pdf');
+  if (!head.startsWith('PK')) throw new Error('notword');
+  if (typeof fflate === 'undefined') await new Promise((ok, fail) => { const sc = document.createElement('script'); sc.src = 'vendor/fflate.js'; sc.onload = ok; sc.onerror = () => fail(new Error('offline')); document.head.appendChild(sc); });
+  const want = ['word/document.xml', 'word/styles.xml'];
+  const files = fflate.unzipSync(u8, { filter: f => want.includes(f.name) });
+  if (!files['word/document.xml']) throw new Error('notword');
+  const dec = new TextDecoder();
+  return { doc: dec.decode(files['word/document.xml']), styles: files['word/styles.xml'] ? dec.decode(files['word/styles.xml']) : '' };
 }
 
 const BOOK_LANG_BY_HEADING = { 'CAPÍTULO': 'es', CHAPTER: 'en', CHAPITRE: 'fr', KAPITEL: 'de', 'ГЛАВА': 'ru', CAPITOLO: 'it' };
@@ -82,6 +74,35 @@ function parseBook(doc, styles) {
     if (style === 'Texto') { cur.blocks.push(['p', tx]); paragraphs++; }
     else if (style === 'Capítulo subtítulo') cur.blocks.push(['h', tx]);
     else if (style === 'Cronología año') cur.blocks.push(['y', tx]);
+  }
+  if (!chN) return parseBookByText(doc);
+  const word = firstHeading.split(/\s+/)[0].toUpperCase();
+  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: BOOK_LANG_BY_HEADING[word] || '', first: firstTitle };
+}
+
+// The same book without its Word styles: chapters are found by their headings ("CAPÍTULO IV", "KAPITEL IV"…),
+// the title is the paragraph after; the introduction, acknowledgements and chronology by their capitalised
+// headings in each language; chronology years are paragraphs that are just a year. Subheadings read as text.
+const BOOK_SECTION_HEADINGS = {
+  intro: ['INTRODUCCIÓN', 'INTRODUCTION', 'EINLEITUNG', 'ВВЕДЕНИЕ', 'INTRODUZIONE'],
+  ack: ['AGRADECIMIENTOS', 'ACKNOWLEDGMENTS', 'ACKNOWLEDGEMENTS', 'REMERCIEMENTS', 'DANKSAGUNG', 'БЛАГОДАРНОСТИ', 'RINGRAZIAMENTI'],
+  chrono: ['CRONOLOGÍA BIOGRÁFICA', 'BIOGRAPHICAL CHRONOLOGY', 'CHRONOLOGIE BIOGRAPHIQUE', 'BIOGRAFISCHE ZEITTAFEL', 'БИОГРАФИЧЕСКАЯ ХРОНИКА', 'CRONOLOGIA BIOGRAFICA'],
+};
+function parseBookByText(doc) {
+  const sections = []; let cur = null, chN = 0, firstHeading = '', firstTitle = '', paragraphs = 0, needTitle = false;
+  for (const m of doc.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)) {
+    const runs = m[0].replace(/<w:(br|cr)[^>]*\/>/g, '<w:t>\n</w:t>').replace(/<w:tab\/>/g, '<w:t> </w:t>');
+    const tx = xmlText([...runs.matchAll(/<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>/g)].map(x => x[1]).join('')).trim();
+    if (!tx) continue;
+    const sec = Object.keys(BOOK_SECTION_HEADINGS).find(k => BOOK_SECTION_HEADINGS[k].includes(tx));
+    if (sec) { cur = { key: sec, blocks: [] }; sections.push(cur); continue; }
+    if (/^(CAPÍTULO|CHAPTER|CHAPITRE|KAPITEL|ГЛАВА|CAPITOLO)\s+[IVXLC]+\.?$/.test(tx)) {
+      chN++; if (!firstHeading) firstHeading = tx; cur = { key: 'ch' + chN, blocks: [] }; sections.push(cur); needTitle = true; continue;
+    }
+    if (needTitle) { if (chN === 1) firstTitle = tx; needTitle = false; continue; }
+    if (!cur) continue;
+    if (cur.key === 'chrono' && /^\d{4}(\s*[–-]\s*\d{2,4})?$/.test(tx)) cur.blocks.push(['y', tx]);
+    else { cur.blocks.push(['p', tx]); paragraphs++; }
   }
   const word = firstHeading.split(/\s+/)[0].toUpperCase();
   return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: BOOK_LANG_BY_HEADING[word] || '', first: firstTitle };
@@ -113,11 +134,14 @@ document.addEventListener('change', async e => {
   const f = e.target.files[0], out = document.getElementById('bk-status');
   out.textContent = t('bkReading'); out.hidden = false;
   try {
-    const files = await unzipEntries(await f.arrayBuffer(), ['word/document.xml', 'word/styles.xml']);
-    const parsed = parseBook(files['word/document.xml'] || '', files['word/styles.xml'] || '');
-    if (!parsed.sections.some(s => /^ch\d/.test(s.key))) { bkParsed = null; bkMsg = t('bkBad'); }
+    const { doc, styles } = await readDocx(await f.arrayBuffer());
+    const parsed = parseBook(doc, styles);
+    if (!parsed.sections.some(s => /^ch\d/.test(s.key))) { bkParsed = null; bkMsg = t('bkBad') + ' (' + f.name + ')'; }
     else { bkParsed = { ...parsed, file: f.name }; bkMsg = ''; }
-  } catch (err) { bkParsed = null; bkMsg = t('bkBad'); }
+  } catch (err) {
+    bkParsed = null;
+    bkMsg = (err.message === 'pdf' ? t('bkPdf') : err.message === 'offline' ? t('bkErr') : t('bkNotWord')) + ' (' + f.name + ')';
+  }
   route();
 });
 EXTRA_FORMS.book = async form => {
