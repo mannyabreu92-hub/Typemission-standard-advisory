@@ -544,6 +544,8 @@ I18N.ar = {
   "waRsvpYes": "ردّ على الدعوة · {event}، {date} — {name} سيحضر بكل سرور{guests}. البريد الإلكتروني: {email}. واتساب: {phone}. {note}",
   "waRsvpNo": "ردّ على الدعوة · {event}، {date} — {name} يأسف لعدم الحضور. {note}",
   "rsvpWithGuests": "، برفقة {n} ضيف/ضيوف: {names}",
+  "includedBenefits": "المزايا المشمولة",
+  "buyNow": "اشترِ الآن",
 };
 TR.ar = {
   "2019": "2019",
@@ -971,4 +973,9 @@ TR.ar = {
   "An evening celebrating art, a remarkable personal journey, and five years of Museo Abreu.": "أمسية احتفاءً بالفن، وبمسيرة شخصية استثنائية، وبخمس سنوات من متحف أبرو.",
   "Dominican Republic": "جمهورية الدومينيكان",
   "Join us as we celebrate this milestone and the beginning of a new chapter.": "انضموا إلينا للاحتفال بهذه المحطة وبداية فصل جديد.",
+  "Seven days of ART GABANGI, July 7 to 14, with daily access to the fair.": "سبعة أيام من ART GABANGI، من 7 إلى 14 يوليو، مع دخول يومي إلى المعرض.",
+  "The complete ART GABANGI: the Gala Premier on July 6 and all seven festival days.": "ART GABANGI كاملاً: حفل Gala Premier في 6 يوليو وأيام المهرجان السبعة.",
+  "The closing evening on July 14: dinner, a live auction and the Artist of the Year Award.": "أمسية الختام في 14 يوليو: عشاء ومزاد مباشر وجائزة فنان العام.",
+  "The opening night of ART GABANGI on July 6.": "ليلة افتتاح ART GABANGI في 6 يوليو.",
+  "One day at the fair, any day from July 7 to 14.": "يوم واحد في المعرض، في أي يوم من 7 إلى 14 يوليو.",
 };

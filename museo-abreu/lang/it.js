@@ -544,6 +544,8 @@ I18N.it = {
   "waRsvpYes": "Risposta all’invito · {event}, {date} — {name} parteciperà con piacere{guests}. Email: {email}. WhatsApp: {phone}. {note}",
   "waRsvpNo": "Risposta all’invito · {event}, {date} — {name} è spiacente di non poter partecipare. {note}",
   "rsvpWithGuests": ", accompagnato/a da {n} ospite/i: {names}",
+  "includedBenefits": "Vantaggi inclusi",
+  "buyNow": "Acquista ora",
 };
 TR.it = {
   "2019": "2019",
@@ -959,4 +961,9 @@ TR.it = {
   "An evening celebrating art, a remarkable personal journey, and five years of Museo Abreu.": "Una serata per celebrare l’arte, un percorso personale straordinario e cinque anni del Museo Abreu.",
   "Dominican Republic": "Repubblica Dominicana",
   "Join us as we celebrate this milestone and the beginning of a new chapter.": "Unitevi a noi per celebrare questo traguardo e l’inizio di un nuovo capitolo.",
+  "Seven days of ART GABANGI, July 7 to 14, with daily access to the fair.": "Sette giorni di ART GABANGI, dal 7 al 14 luglio, con accesso quotidiano alla fiera.",
+  "The complete ART GABANGI: the Gala Premier on July 6 and all seven festival days.": "ART GABANGI al completo: la Gala Premier del 6 luglio e tutti i sette giorni del festival.",
+  "The closing evening on July 14: dinner, a live auction and the Artist of the Year Award.": "La serata di chiusura del 14 luglio: cena, asta dal vivo e il Premio Artista dell’Anno.",
+  "The opening night of ART GABANGI on July 6.": "La serata di apertura di ART GABANGI, il 6 luglio.",
+  "One day at the fair, any day from July 7 to 14.": "Un giorno alla fiera, a scelta dal 7 al 14 luglio.",
 };

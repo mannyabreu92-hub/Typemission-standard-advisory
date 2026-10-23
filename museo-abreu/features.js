@@ -68,6 +68,7 @@ Object.assign(I18N.es, {
   bookOn: 'Reservar en {provider}', buyOn: 'Comprar {price} en {provider}', bookWhatsApp: 'Reservar por WhatsApp',
   buyWhatsApp: 'Comprar {price} por WhatsApp', waTour: 'Hola, quiero reservar una visita al Museo Abreu.',
   waClass: 'Hola, quiero reservar: {name}.', waTicket: 'Hola, quiero comprar {name} para {event}.',
+  includedBenefits: 'Beneficios incluidos', buyNow: 'Comprar',
   passesLabel: 'Pases', singleLabel: 'Entradas individuales', fromPrice: 'Desde {price} (aprox.)',
   vipFreePro: 'VIP All-Access gratis para miembros Pro, con hasta 3 invitados', getProPass: 'Obtener mi {name} gratis',
   includedInPass: 'Incluido en tu pase VIP', includedInPro: 'Incluido con Pro (obtén tu VIP All-Access)',
@@ -137,6 +138,7 @@ Object.assign(I18N.en, {
   bookOn: 'Book on {provider}', buyOn: 'Buy {price} on {provider}', bookWhatsApp: 'Book via WhatsApp',
   buyWhatsApp: 'Buy {price} via WhatsApp', waTour: 'Hello, I would like to book a visit to Museo Abreu.',
   waClass: 'Hello, I would like to book: {name}.', waTicket: 'Hello, I would like to buy {name} for {event}.',
+  includedBenefits: 'Included benefits', buyNow: 'Buy now',
   passesLabel: 'Passes', singleLabel: 'Single tickets', fromPrice: 'From {price} (approx.)',
   vipFreePro: 'VIP All-Access free for Pro members, with up to 3 guests', getProPass: 'Get my free {name}',
   includedInPass: 'Included in your VIP pass', includedInPro: 'Included with Pro (get your VIP All-Access)',
@@ -260,6 +262,7 @@ Object.assign(I18N.fr, {
   waTour: 'Bonjour, je souhaite réserver une visite au Museo Abreu.',
   waClass: 'Bonjour, je souhaite réserver : {name}.',
   waTicket: 'Bonjour, je souhaite acheter {name} pour {event}.',
+  includedBenefits: 'Avantages inclus', buyNow: 'Acheter',
   passesLabel: 'Pass',
   singleLabel: 'Billets à l’unité',
   fromPrice: 'À partir de {price} (env.)',
@@ -444,22 +447,32 @@ const ANNUAL_EVENTS = [
       en: 'Every year Museo Abreu brings together Dominican artists and works by Oscar Abreu in a group exhibition.', fr: 'Chaque année, le Museo Abreu réunit des artistes dominicains et des œuvres d’Oscar Abreu dans une exposition collective.' } },
   { id: 'art-gabangi', annual: { m: 7, d: 6 }, vip: true, price: null, time: '18:00', lastDay: 8, tiers: [
     // Ticket options as published on gabangi.com for ART GABANGI 2026. "day" counts from July 6.
-    { id: 'festival', time: '10:00', group: 'pass', price: 50, day: 1, name: { es: 'Festival Pass', en: 'Festival Pass', fr: 'Festival Pass' },
+    { id: 'festival', time: '10:00', group: 'pass', price: 50, day: 1, img: 'img/petrichor.jpg', art: 'petrichor',
+      lead: { es: 'Siete días de ART GABANGI, del 7 al 14 de julio, con acceso diario a la feria.', en: 'Seven days of ART GABANGI, July 7 to 14, with daily access to the fair.', fr: 'Sept jours d’ART GABANGI, du 7 au 14 juillet, avec un accès quotidien à la foire.' },
+      name: { es: 'Festival Pass', en: 'Festival Pass', fr: 'Festival Pass' },
       tag: { es: '7 días · sin gala', en: '7 days · no gala', fr: '7 jours · sans gala' },
       items: { es: ['Válido del 7 al 14 de julio', 'Acceso diario 10:00 a. m. – 8:00 p. m.', 'El 14 de julio la feria cierra a las 5:00 p. m.', 'No incluye la Gala Premier'],
         en: ['Valid July 7–14', 'Daily access 10:00 AM – 8:00 PM', 'On July 14 the fair closes at 5:00 PM', 'Does not include the Gala Premier'], fr: ['Valable du 7 au 14 juillet', 'Accès quotidien de 10 h à 20 h', 'Le 14 juillet, la foire ferme à 17 h', 'N’inclut pas la Gala Premier'] } },
-    { id: 'vip', time: '18:00', group: 'pass', price: 140, day: 0, proFree: true, name: { es: 'VIP All-Access', en: 'VIP All-Access', fr: 'VIP All-Access' },
+    { id: 'vip', time: '18:00', group: 'pass', price: 140, day: 0, proFree: true, img: 'img/passion.jpg', art: 'passion',
+      lead: { es: 'ART GABANGI completo: la Gala Premier del 6 de julio y los siete días del festival.', en: 'The complete ART GABANGI: the Gala Premier on July 6 and all seven festival days.', fr: 'ART GABANGI au complet : la Gala Premier du 6 juillet et les sept jours du festival.' },
+      name: { es: 'VIP All-Access', en: 'VIP All-Access', fr: 'VIP All-Access' },
       tag: { es: 'Gala + 7 días', en: 'Gala + 7 days', fr: 'Gala + 7 jours' },
       items: { es: ['Incluye la Gala Premier del 6 de julio', 'Puertas 6:00 p. m. · evento principal 8:00 p. m.', 'Incluye el Festival Pass (7 al 14 de julio)'],
         en: ['Includes the Gala Premier on July 6', 'Doors 6:00 PM · main event 8:00 PM', 'Includes the Festival Pass (July 7–14)'], fr: ['Inclut la Gala Premier du 6 juillet', 'Portes 18 h · événement principal 20 h', 'Inclut le Festival Pass (7–14 juillet)'] } },
-    { id: 'dinner', time: '19:00', group: 'pass', price: 200, day: 8, name: { es: 'Cena de Subasta y Premios', en: 'Auction & Awards Dinner', fr: 'Dîner de vente aux enchères et remise des prix' },
+    { id: 'dinner', time: '19:00', group: 'pass', price: 200, day: 8, img: 'img/limerence.jpg', art: 'limerence',
+      lead: { es: 'La velada de clausura del 14 de julio: cena, subasta en vivo y el Premio Artista del Año.', en: 'The closing evening on July 14: dinner, a live auction and the Artist of the Year Award.', fr: 'La soirée de clôture du 14 juillet : dîner, vente aux enchères en direct et Prix de l’Artiste de l’année.' },
+      name: { es: 'Cena de Subasta y Premios', en: 'Auction & Awards Dinner', fr: 'Dîner de vente aux enchères et remise des prix' },
       tag: { es: '14 de julio · cena incluida', en: 'July 14 · dinner included', fr: '14 juillet · dîner inclus' },
       items: { es: ['Obras en exhibición del 6 al 14 de julio', 'La cena comienza a las 7:00 p. m.', 'Subasta en vivo durante la cena', 'Premio Artista del Año', 'Reconocimiento a líderes políticos, sociales y culturales'],
         en: ['Works on view July 6–14', 'Dinner starts 7:00 PM', 'Live auction during dinner', 'Artist of the Year Award', 'Recognition of political, social and cultural leaders'], fr: ['Œuvres exposées du 6 au 14 juillet', 'Le dîner commence à 19 h', 'Vente aux enchères en direct pendant le dîner', 'Prix de l’Artiste de l’année', 'Hommage à des personnalités politiques, sociales et culturelles'] } },
-    { id: 'gala', time: '18:00', group: 'single', price: 100, day: 0, name: { es: 'Gala Premier', en: 'Gala Premier', fr: 'Gala Premier' },
+    { id: 'gala', time: '18:00', group: 'single', price: 100, day: 0, img: 'img/resilience.jpg', art: 'resilience',
+      lead: { es: 'La noche de apertura de ART GABANGI, el 6 de julio.', en: 'The opening night of ART GABANGI on July 6.', fr: 'La soirée d’ouverture d’ART GABANGI, le 6 juillet.' },
+      name: { es: 'Gala Premier', en: 'Gala Premier', fr: 'Gala Premier' },
       tag: { es: '6 de julio', en: 'July 6', fr: '6 juillet' },
       items: { es: ['Puertas 6:00 p. m.', 'Evento principal 8:00 p. m.', 'Celebración de apertura'], en: ['Doors open 6:00 PM', 'Main event starts 8:00 PM', 'Opening celebration'], fr: ['Ouverture des portes à 18 h', 'Début de l’événement principal à 20 h', 'Célébration d’ouverture'] } },
-    { id: 'regular', time: '10:00', group: 'single', price: 10, day: 1, name: { es: 'Día regular', en: 'Regular Day', fr: 'Journée' },
+    { id: 'regular', time: '10:00', group: 'single', price: 10, day: 1, img: 'img/echoes-of-memory.jpg', art: 'echoes-of-memory',
+      lead: { es: 'Un día en la feria, cualquier día del 7 al 14 de julio.', en: 'One day at the fair, any day from July 7 to 14.', fr: 'Une journée à la foire, au choix du 7 au 14 juillet.' },
+      name: { es: 'Día regular', en: 'Regular Day', fr: 'Journée' },
       tag: { es: '7 al 14 de julio', en: 'July 7–14', fr: '7–14 juillet' },
       items: { es: ['Acceso diario 10:00 a. m. – 8:00 p. m.', 'El 14 de julio cierra a las 5:00 p. m.'], en: ['Daily access 10:00 AM – 8:00 PM', 'July 14 closes 5:00 PM'], fr: ['Accès quotidien de 10 h à 20 h', 'Le 14 juillet, fermeture à 17 h'] } },
   ],
@@ -610,16 +623,23 @@ function tierBlock(ev, tier, passes) {
   else {
     const ext = bookingLink('gabangi-' + tier.id);
     const wa = whatsappLink(t('waTicket', { name: L(tier.name), event: eventTitle(ev) }));
-    action = ext ? `<a class="btn ${tier.proFree ? 'primary' : ''}" href="${ext}" target="_blank" rel="noopener">${t('buyOn', { price: usd(tier.price), provider: BOOKING.provider })} ↗</a>`
-      : wa ? `<a class="btn wa" href="${wa}" target="_blank" rel="noopener">${t('buyWhatsApp', { price: usd(tier.price) })}</a>`
-      : `<button class="btn ${tier.proFree ? 'primary' : ''}" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}">${t('buyTicket', { price: usd(tier.price) })}</button>`;
+    // Art Basel-style call to action: a quiet "Buy now ›" link; the price is shown above it.
+    const label = `${t('buyNow')} <span class="arr" aria-hidden="true">›</span>`;
+    const aria = `${t('buyNow')} · ${L(tier.name)} · ${usd(tier.price)}`;
+    action = ext ? `<a class="buy-now" href="${ext}" target="_blank" rel="noopener" aria-label="${aria}">${label}</a>`
+      : wa ? `<a class="buy-now" href="${wa}" target="_blank" rel="noopener" aria-label="${aria} · WhatsApp">${label}</a>`
+      : `<button class="buy-now" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}" aria-label="${aria}">${label}</button>`;
   }
-  return `<div class="tier ${tier.proFree ? 'tier-vip' : ''}">
-    <div class="tier-head"><strong>${L(tier.name)}</strong><span class="tier-price">${usd(tier.price)}</span></div>
-    <span class="chip">${L(tier.tag)}</span>${tier.proFree ? ` <span class="status ok">${t('freeForPro')}</span>` : ''}
+  const art = tier.art && WORKS.find(w => w.id === tier.art);
+  return `<article class="tier pass-card ${tier.proFree ? 'tier-vip' : ''}">
+    ${art ? `<figure class="pass-img"><img src="${tier.img}" alt="" loading="lazy" width="1400" height="1400"><figcaption>Oscar Abreu · ${L(art.title)}</figcaption></figure>` : ''}
+    <h5 class="pass-name">${L(tier.name)}</h5>
+    <p class="pass-price">USD ${tier.price.toLocaleString('en-US')}${tier.proFree ? ` <span class="status ok">${t('freeForPro')}</span>` : ''}</p>
+    ${tier.lead ? `<p class="pass-lead">${L(tier.lead)}</p>` : `<span class="chip">${L(tier.tag)}</span>`}
+    <p class="pass-benefits">${t('includedBenefits')}</p>
     <ul>${L(tier.items).map(i => `<li>${i}</li>`).join('')}</ul>
     ${action}
-  </div>`;
+  </article>`;
 }
 
 function eventCard(ev, passes) {

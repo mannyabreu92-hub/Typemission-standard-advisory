@@ -450,3 +450,23 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .invite-by { font: italic 400 1.15rem/1.4 var(--serif); color: var(--ink); margin-top: .1rem; }
 .invite-close { font: italic 400 1.05rem/1.5 var(--serif); color: var(--ink); max-width: 34ch; margin-top: 1rem; text-wrap: balance; }
 :root[lang="ar"] .invite-caps { text-transform: none; letter-spacing: 0; }
+
+/* Ticket passes, after Art Basel's pass cards: image, name, USD price, italic lead, benefits, "Buy now ›" */
+.tier-group { font: 600 .82rem/1.2 var(--sans); letter-spacing: .32em; color: var(--ink); margin: 2rem 0 1rem; }
+.tiers:has(.pass-card) { gap: 2.4rem; }
+.pass-card { border: 0; border-radius: 0; padding: 0; background: none; gap: .35rem; }
+.pass-card.tier-vip { border: 0; background: none; }
+.pass-img { margin: 0 0 .9rem; position: relative; }
+.pass-img img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: var(--radius); }
+.pass-img figcaption { position: absolute; inset-block-end: .5rem; inset-inline-start: .6rem; font: 500 .66rem/1 var(--sans); letter-spacing: .08em; color: #fff; background: rgba(20,17,14,.55); padding: .3rem .5rem; border-radius: 3px; }
+.pass-name { font: 700 1.55rem/1.15 var(--sans); letter-spacing: -.01em; margin: 0; }
+.pass-price { font: 400 1.05rem/1.3 var(--sans); color: var(--ink); margin: 0; display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+.pass-lead { font: italic 400 1.15rem/1.5 var(--serif); color: var(--ink-2); margin: .7rem 0 .2rem; }
+.pass-benefits { font: 700 .95rem/1.3 var(--sans); margin: .8rem 0 .1rem; }
+.pass-card ul { font-size: .98rem; line-height: 1.55; color: var(--ink); padding-inline-start: 1.3rem; display: grid; gap: .3rem; }
+.pass-card ul li::marker { color: var(--ink); }
+.buy-now { justify-self: start; display: inline-flex; align-items: center; gap: .6rem; margin-top: .9rem; padding: .3rem 0; background: none; border: 0; font: 700 1rem/1 var(--sans); color: var(--ink); text-decoration: none; cursor: pointer; }
+.buy-now .arr { font-size: 1.5rem; line-height: .7; transition: transform .2s; }
+.buy-now:hover .arr, .buy-now:focus-visible .arr { transform: translateX(4px); }
+:root[dir="rtl"] .buy-now:hover .arr { transform: translateX(-4px) scaleX(-1); }
+.event-wide :is(.pass-card) .status { font-size: .8rem; }
