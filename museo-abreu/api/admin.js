@@ -58,6 +58,12 @@ module.exports = async (req, res) => {
       await writeJSON(path, doc);
       return res.status(200).json({ event: b.event, date: b.date, ...doc });
     }
+    // Mailing list (api/subscribe.js): remove one person.
+    if (b.action === 'list-remove') {
+      if (!/^list\/[0-9a-f]{64}\.json$/.test(String(b.id))) return res.status(400).json({ error: 'request' });
+      await del(b.id).catch(() => {});
+      return res.status(200).json({ ok: true });
+    }
     // Event photos (photos/<event>/<date>/<id>.jpg + photos/<event>/<date>.json index). The dashboard
     // sends each photo already resized to JPEG, as base64.
     if (b.action === 'photo-add' || b.action === 'photo-remove') {
@@ -116,5 +122,6 @@ module.exports = async (req, res) => {
   // Wishlist: how many devices saved each work (api/wish.js).
   const wishes = {};
   (await all('wish/', 3000)).forEach(w => ((w.data && w.data.items) || []).forEach(k => { wishes[k] = (wishes[k] || 0) + 1; }));
-  res.status(200).json({ auction, purchases, rsvps, invites, wishes, now: new Date().toISOString() });
+  const list = (await all('list/', 5000)).filter(r => r.data).map(r => ({ id: r.path, ...r.data }));
+  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list, now: new Date().toISOString() });
 };

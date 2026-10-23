@@ -216,6 +216,17 @@ collection, the reader and Pro stay in the top menu and on the home page.
   shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
   `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
   their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
+- **Auction alerts** (`alerts.js`, `api/push.js` lot actions): each piece's page has "Alert me on this phone" (Web Push,
+  same keys as the event reminders). Stored as `push/lots/<lot>/<hash>.json` with the messages in the guest's language
+  and locale. "You've been outbid" goes from `api/auction.js` to the previous highest bidder (matched by a hash of the
+  bid email; a bid refreshes the alert with that email) when someone else bids; the daily cron sends "Bidding is open"
+  once per piece and "Last day to bid" when a piece closes within 24 hours (not both the same day). The cron is daily
+  on the Hobby plan, so "last day" rather than "last hour". Closed pieces show no alerts.
+- **Mailing list** (`newsletter.js`, `api/subscribe.js`): "Keep me informed" on the home page, every event page and
+  the auction (name; email and/or WhatsApp; events / auction / book). One private file per person (`list/<hash>.json`,
+  signing up again updates it). Dashboard › Mailing list shows everyone with interest counts, "Remove" and a CSV
+  (name, email, phone, language, interests, source, date) for an email or WhatsApp tool. Unsubscribe requests
+  ("reply unsubscribe") are handled by removing the person in the dashboard.
 - **Wishlist** (`wishlist.js`, `api/wish.js`): a ♡ on artwork cards, in the artwork window, on auction cards and on each
   piece's page saves it to Account › "My saved works" (kept on the device, `ma.wish`), with "Remove" and "Ask the museum
   about these works" (WhatsApp with the list). The list is also sent under a random device id only

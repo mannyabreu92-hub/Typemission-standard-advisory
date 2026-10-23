@@ -54,17 +54,25 @@ const rmSay = msg => { const s = document.getElementById('rm-status'); if (s) { 
 const rmKey = b64 => { const s = atob((b64 + '='.repeat((4 - b64.length % 4) % 4)).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(s, c => c.charCodeAt(0)); };
 const rmPost = body => fetch('/api/push', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
 
+// This phone's push subscription, asking for permission first. Shared with alerts.js (auction alerts).
+// Returns null after saying why it could not (iPhone tab, notifications blocked).
+async function pushSubscription() {
+  if (rmIosTab() && !rmCanPush()) { rmSay(t('rmIos')); return null; }
+  if (await Notification.requestPermission() !== 'granted') { rmSay(t('rmBlocked')); return null; }
+  const reg = await navigator.serviceWorker.ready;
+  let sub = await reg.pushManager.getSubscription();
+  if (!sub) {
+    const { key } = await (await fetch('/api/push', { cache: 'no-store' })).json();
+    sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: rmKey(key) });
+  }
+  return sub;
+}
+
 async function rmTurnOn(ev) {
-  if (rmIosTab() && !rmCanPush()) return rmSay(t('rmIos'));
   const d = eventDate(ev), title = eventTitle(ev);
   try {
-    if (await Notification.requestPermission() !== 'granted') return rmSay(t('rmBlocked'));
-    const reg = await navigator.serviceWorker.ready;
-    let sub = await reg.pushManager.getSubscription();
-    if (!sub) {
-      const { key } = await (await fetch('/api/push', { cache: 'no-store' })).json();
-      sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: rmKey(key) });
-    }
+    const sub = await pushSubscription();
+    if (!sub) return;
     const r = await rmPost({ action: 'add', sub: sub.toJSON(), event: ev.id, date: d, url: `#/evento/${ev.id}`,
       title: t('rmTitle', { event: title }), body: t('rmBody', { date: fmtDate(d, { weekday: 'long', day: 'numeric', month: 'long' }), time: rsvpTime(ev.time) }),
       now: { title: t('rmNowTitle'), body: t('rmNowBody', { event: title }) } });

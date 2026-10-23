@@ -3,7 +3,9 @@
 // enough and the lot is open. Bids live in the private Blob store, one file per lot
 // (auction/<lot>.json), written with ETag checks so two bids at the same moment cannot overwrite
 // each other. Bidder details stay private: the museum reads them in Vercel › Storage.
+const crypto = require('crypto');
 const { put, get } = require('@vercel/blob');
+const { sendLotAlerts } = require('./push');
 const { AUCTION, lotOpen, lotMinBid } = require('../auction-config.js');
 
 const path = id => `auction/${id}.json`;
@@ -46,6 +48,11 @@ module.exports = async (req, res) => {
       await put(path(lot.id), JSON.stringify(data), { access: 'private', contentType: 'application/json', addRandomSuffix: false,
         ...(etag ? { allowOverwrite: true, ifMatch: etag } : { allowOverwrite: false }) });
       const next = publicState(data);
+      // Tell the previous highest bidder (if someone else, with alerts on) that they have been outbid.
+      const prev = data.bids[data.bids.length - 2], hash = e => crypto.createHash('sha256').update(String(e).trim().toLowerCase()).digest('hex');
+      if (prev && hash(prev.email) !== hash(email)) {
+        await Promise.race([sendLotAlerts(lot.id, 'outbid', { amount }, rec => rec.who === hash(prev.email)).catch(() => 0), new Promise(r => setTimeout(r, 4000))]);
+      }
       return res.status(200).json({ ok: true, ...next, min: lotMinBid(lot, next) });
     } catch (e) { /* someone else bid at the same moment: reload and check again */ }
   }
