@@ -193,6 +193,9 @@ collection, the reader and Pro stay in the top menu and on the home page.
   French (`?l=es|en|fr`; other languages get English), then open the event page. Its texts copy those in
   `features.js`; keep them in step when an event changes. Event titles on the events page and the home card
   open these pages.
+- **Share links for lots and the book**: each lot page and the Shop have a Share button. `/l/<lot>` and `/b`
+  (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
+  in Spanish, English or French, then open the lot or the Shop.
 
 ## French edition (`sample-fr.js`)
 

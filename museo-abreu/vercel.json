@@ -3,6 +3,14 @@
     {
       "source": "/e/:id",
       "destination": "/api/event-share?id=:id"
+    },
+    {
+      "source": "/l/:id",
+      "destination": "/api/share-item?type=lot&id=:id"
+    },
+    {
+      "source": "/b",
+      "destination": "/api/share-item?type=book"
     }
   ]
 }

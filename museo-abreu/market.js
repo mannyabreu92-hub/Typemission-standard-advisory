@@ -197,6 +197,8 @@ function pageLot(lot, fin) {
         ${s.last && s.last.length ? `<h2 class="h3" style="margin-top:1.4rem">${t('auHistory')}</h2>
           <ol class="bid-list">${s.last.map(b => `<li><strong>${auUSD(b.amount)}</strong> <span class="muted">${esc(b.who || '')} · ${dateTime(b.at)}</span></li>`).join('')}</ol>` : ''}
         <p class="muted" style="margin-top:1rem">${t('auWinner')}</p>
+        <div class="btn-row"><button class="btn" data-action="lotShare" data-lot="${lot.id}">${t('evShare')}</button></div>
+        <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
       </div>
     </section>
   </div>`;
@@ -246,7 +248,9 @@ function pageShop() {
   const price = p => p == null ? t('coPriceTbd') : auUSD(p);
   return `<div class="wrap">
     <section class="section"><p class="eyebrow">Museo Abreu</p><h1>${t('shTitle')}</h1><p class="lead" style="margin-top:.8rem">${t('shLead')}</p></section>
-    <section class="section"><h2 class="tier-group">${t('shBook')}</h2>
+    <section class="section"><div class="section-head"><h2 class="tier-group">${t('shBook')}</h2>
+        <button class="btn small" data-action="bookShare">${t('evShare')}</button></div>
+      <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
       <div class="shop-grid">
         ${PRINT_EDITIONS.map(p => `<article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>

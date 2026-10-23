@@ -29,6 +29,17 @@ const EVENT_ART = {
   'art-gabangi': { img: 'img/gabangi/gg-magazine-2025.jpg', cap: { es: 'GG Magazine · GABANGI 2025 Top 10', en: 'GG Magazine · GABANGI 2025 Top 10', fr: 'GG Magazine · GABANGI 2025 Top 10' } },
 };
 
+// Shares a link: the phone's share menu when there is one, otherwise copy the link and open WhatsApp.
+async function shareLink(title, text, url, statusId, data) {
+  if (typeof trackEvent === 'function') trackEvent('Share', data);
+  if (navigator.share) { try { await navigator.share({ title, text, url }); return; } catch (e) { if (e.name === 'AbortError') return; } }
+  const out = document.getElementById(statusId);
+  try { await navigator.clipboard.writeText(text + ' ' + url); if (out) out.textContent = t('evCopied'); }
+  catch (e) { if (out) out.textContent = url; }
+  if (out) out.hidden = false;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank');
+}
+
 const eventShareURL = ev => `${location.origin}/e/${ev.id}?l=${lang}`;
 const eventStart = ev => `${eventDate(ev)}T${ev.time}:00-04:00`; // Punta Cana time
 
@@ -102,17 +113,17 @@ Object.assign(EXTRA_ACTIONS, {
   // The hash is the router, so the tickets button scrolls instead of linking to #ev-tickets.
   evTickets: () => document.getElementById('ev-tickets').scrollIntoView({ behavior: 'smooth' }),
   evCal: el => rsvpICS(ANNUAL_EVENTS.find(e => e.id === el.dataset.id)),
-  evShare: async el => {
-    const ev = ANNUAL_EVENTS.find(e => e.id === el.dataset.id), url = eventShareURL(ev);
-    const text = t('evShareText', { event: eventTitle(ev), date: fmtDate(eventDate(ev)) });
-    if (typeof trackEvent === 'function') trackEvent('Share', { event: ev.id });
-    if (navigator.share) { try { await navigator.share({ title: eventTitle(ev), text, url }); return; } catch (e) { if (e.name === 'AbortError') return; } }
-    const out = document.getElementById('ev-status');
-    try { await navigator.clipboard.writeText(text + ' ' + url); out.textContent = t('evCopied'); }
-    catch (e) { out.textContent = url; }
-    out.hidden = false;
-    window.open('https://wa.me/?text=' + encodeURIComponent(text + ' ' + url), '_blank');
+  evShare: el => {
+    const ev = ANNUAL_EVENTS.find(e => e.id === el.dataset.id);
+    shareLink(eventTitle(ev), t('evShareText', { event: eventTitle(ev), date: fmtDate(eventDate(ev)) }), eventShareURL(ev), 'ev-status', { event: ev.id });
   },
+  // Auction lots and the book share links with their own preview (api/share-item.js).
+  lotShare: el => {
+    const lot = AUCTION.lots.find(l => l.id === el.dataset.lot);
+    const title = `${t('auLot', { n: lotNumber(lot) })} · ${lotTitle(lot)}`;
+    shareLink(title, `${title} · ${t('auTitle')}`, `${location.origin}/l/${lot.id}?l=${lang}`, 'share-status', { lot: lot.id });
+  },
+  bookShare: () => shareLink(`${t('bookTitle')} · ${t('bookSub')}`, `${t('bookTitle')} · ${t('bookSub')} · Oscar Abreu`, `${location.origin}/b?l=${lang}`, 'share-status', { item: 'book' }),
 });
 Object.assign(EXTRA_ROUTES, { evento: pageEvent });
 Object.assign(ROUTE_SECTION, { evento: 'eventos' });

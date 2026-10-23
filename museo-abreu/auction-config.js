@@ -9,14 +9,15 @@ var AUCTION = {
   increment: 50,                                  // USD; each bid must beat the current one by this much
   closesAt: null,                                 // default online close, e.g. '2027-07-14T12:00:00-04:00'
   lots: [
-    { id: 'resilience', kind: 'painting', work: 'resilience', img: 'img/resilience.jpg', startBid: null, example: true },
-    { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', img: 'img/echoes-of-memory.jpg', startBid: null, example: true },
-    { id: 'time-on-my-face', kind: 'painting', work: 'time-on-my-face', img: 'img/time-on-my-face.jpg', startBid: null, example: true },
+    { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: null, example: true },
+    { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: null, example: true },
+    { id: 'time-on-my-face', kind: 'painting', work: 'time-on-my-face', title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face', fr: 'Le temps sur mon visage' }, img: 'img/time-on-my-face.jpg', startBid: null, example: true },
     { id: 'sculpture-3', kind: 'sculpture', n: 3, img: 'img/sculpture/3.jpg', startBid: null, example: true },
     { id: 'sculpture-7', kind: 'sculpture', n: 7, img: 'img/sculpture/7.jpg', startBid: null, example: true },
   ],
 };
 
+// `title` (paintings) is used by the link previews (api/share-item.js); the app shows the title from WORKS.
 // A lot is open online when it has a starting bid and its closing time has not passed.
 function lotCloses(lot) { return lot.closesAt || AUCTION.closesAt || null; }
 function lotOpen(lot, now = Date.now()) { return lot.startBid != null && !!lotCloses(lot) && now < Date.parse(lotCloses(lot)); }
