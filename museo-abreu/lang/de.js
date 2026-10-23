@@ -648,6 +648,18 @@ I18N.de = {
   "phPrev": "Zurück",
   "phNext": "Weiter",
   "phOpen": "Foto {n} ansehen",
+  "rmBtn": "Am Vortag erinnern",
+  "rmOn": "Erinnerung aktiviert ✓",
+  "rmOff": "Erinnerung ausschalten",
+  "rmHelp": "Wir senden am Vortag um 10 Uhr eine Benachrichtigung an dieses Telefon.",
+  "rmIos": "Auf dem iPhone: Tippen Sie auf Teilen › „Zum Home-Bildschirm“, öffnen Sie die App vom Home-Bildschirm aus und tippen Sie erneut auf diese Schaltfläche.",
+  "rmBlocked": "Benachrichtigungen sind für diese Seite blockiert. Aktivieren Sie sie in den Browsereinstellungen.",
+  "rmErr": "Die Erinnerung konnte nicht aktiviert werden. Bitte versuchen Sie es erneut.",
+  "rmRemoved": "Erinnerung ausgeschaltet.",
+  "rmNowTitle": "Erinnerung aktiviert",
+  "rmNowBody": "Wir erinnern Sie am Vortag: {event}.",
+  "rmTitle": "Morgen: {event}",
+  "rmBody": "{date} um {time} · Museo Abreu, Bávaro, Punta Cana. Wir freuen uns auf Ihren Besuch!",
 };
 TR.de = {
   "2019": "2019",

@@ -12,5 +12,11 @@
       "source": "/b",
       "destination": "/api/share-item?type=book"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/push-cron",
+      "schedule": "0 14 * * *"
+    }
   ]
 }

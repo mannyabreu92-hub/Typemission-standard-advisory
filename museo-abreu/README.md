@@ -216,6 +216,14 @@ collection, the reader and Pro stay in the top menu and on the home page.
   shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
   `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
   their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
+- **Reminder the day before** (`remind.js`, `api/push.js`, `api/push-cron.js`): after replying yes to an invitation,
+  the reply (and the event page) offers "Remind me the day before". The app writes the reminder in the guest's language
+  and subscribes the phone with Web Push; a "Reminder set" notification arrives at once. Subscriptions are stored
+  privately as `push/subs/<date>/<event>/<hash>.json`; a Vercel cron (`vercel.json`, daily 14:00 UTC = 10:00 Punta Cana)
+  sends tomorrow's reminders and deletes them. The VAPID keys are made on first use and kept in the Blob store
+  (`push/vapid.json`) — no setup needed. Optional: a `CRON_SECRET` variable in Vercel makes the cron endpoint refuse
+  other callers (it already never sends at night and never twice). Changing the reply to "no" removes the reminder.
+  iPhone/iPad: notifications need the app added to the Home Screen (iOS 16.4+); the button explains this in a Safari tab.
 - **Overview** (`insights.js`, top of the dashboard): money received and number of sales on Whop (only
   `payment.succeeded`-type events count; membership and pending notices don't; refunds are taken off the sales,
   the money and the product), books sold, sales by product and money by month (last six months), each event date's

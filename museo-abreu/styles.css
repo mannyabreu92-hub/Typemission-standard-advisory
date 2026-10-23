@@ -629,3 +629,8 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .in-track { grid-area: track; height: 8px; border-radius: 4px; background: var(--paper-2); overflow: hidden; }
 .in-fill { display: block; height: 100%; border-radius: 4px; background: var(--gold-ink); }
 @media (forced-colors: active) { .in-fill { background: CanvasText; } }
+
+/* "Remind me the day before" (remind.js) */
+.remind { margin-top: 1rem; display: grid; gap: .4rem; justify-items: start; }
+.remind-on { color: var(--ok); font-weight: 600; }
+.remind-help { font-size: .85rem; margin: 0; }

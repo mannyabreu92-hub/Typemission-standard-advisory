@@ -1,0 +1,59 @@
+// Phone reminders the day before an event (Web Push). The app asks this function for the public key,
+// then sends the guest's subscription with the reminder already written in their language:
+//   GET                                   → { key }  (VAPID public key)
+//   POST { action: 'add', sub, event, date, title, body, url, now: { title, body } }
+//   POST { action: 'remove', endpoint, event, date }
+// Subscriptions are kept privately as push/subs/<date>/<event>/<hash>.json; api/push-cron.js sends
+// them the day before and deletes them. The VAPID keys are created on first use and kept in the
+// same private store (push/vapid.json), so nothing needs setting up in Vercel.
+const crypto = require('crypto');
+const webpush = require('web-push');
+const { put, del } = require('@vercel/blob');
+const { readJSON } = require('./_lib');
+
+async function vapid() {
+  let keys = await readJSON('push/vapid.json');
+  if (keys) return keys;
+  keys = webpush.generateVAPIDKeys();
+  // Two first calls at once: only one write wins, both then use the stored pair.
+  await put('push/vapid.json', JSON.stringify(keys), { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: false }).catch(() => {});
+  return readJSON('push/vapid.json');
+}
+function useKeys(keys) { webpush.setVapidDetails('https://museo-abreu.vercel.app', keys.publicKey, keys.privateKey); }
+
+const str = (v, max) => String(v == null ? '' : v).slice(0, max);
+const subPath = (date, event, endpoint) => `push/subs/${date}/${event}/${crypto.createHash('sha256').update(endpoint).digest('hex').slice(0, 32)}.json`;
+const validEndpoint = e => /^https:\/\/[^\s]+$/.test(String(e || '')) && String(e).length < 1000;
+
+module.exports = async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  if (req.method === 'GET') return res.status(200).json({ key: (await vapid()).publicKey });
+  if (req.method !== 'POST') return res.status(405).json({ error: 'GET or POST' });
+  const b = req.body || {};
+  if (!/^[a-z0-9-]+$/.test(String(b.event)) || !/^\d{4}-\d{2}-\d{2}$/.test(String(b.date))) return res.status(400).json({ error: 'request' });
+
+  if (b.action === 'remove') {
+    if (!validEndpoint(b.endpoint)) return res.status(400).json({ error: 'request' });
+    await del(subPath(b.date, b.event, b.endpoint)).catch(() => {});
+    return res.status(200).json({ ok: true });
+  }
+  const sub = b.sub || {};
+  if (b.action !== 'add' || !validEndpoint(sub.endpoint) || !sub.keys || typeof sub.keys.p256dh !== 'string' || typeof sub.keys.auth !== 'string')
+    return res.status(400).json({ error: 'request' });
+  // Reminders only for dates still ahead (Punta Cana time).
+  const today = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santo_Domingo' });
+  if (b.date <= today) return res.status(400).json({ error: 'date' });
+  const rec = { sub: { endpoint: sub.endpoint, keys: { p256dh: str(sub.keys.p256dh, 200), auth: str(sub.keys.auth, 100) } },
+    event: b.event, date: b.date, msg: { title: str(b.title, 120), body: str(b.body, 300), url: '/' + str(b.url, 100).replace(/^\/+/, '') }, at: new Date().toISOString() };
+  await put(subPath(b.date, b.event, sub.endpoint), JSON.stringify(rec), { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: true });
+  // A first notification straight away, so the guest sees that it works.
+  let confirmed = false;
+  if (b.now && b.now.title) {
+    useKeys(await vapid());
+    confirmed = await webpush.sendNotification(rec.sub, JSON.stringify({ title: str(b.now.title, 120), body: str(b.now.body, 300), url: rec.msg.url }), { TTL: 3600 })
+      .then(() => true, () => false);
+  }
+  res.status(200).json({ ok: true, confirmed });
+};
+module.exports.vapid = vapid;
+module.exports.useKeys = useKeys;

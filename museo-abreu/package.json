@@ -1,8 +1,11 @@
 {
   "private": true,
   "description": "Museo Abreu app: static PWA plus the Whop purchase functions in api/",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "dependencies": {
-    "@vercel/blob": "^2.8.2"
+    "@vercel/blob": "^2.8.2",
+    "web-push": "^3.6.7"
   }
 }

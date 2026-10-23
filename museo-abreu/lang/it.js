@@ -648,6 +648,18 @@ I18N.it = {
   "phPrev": "Precedente",
   "phNext": "Successiva",
   "phOpen": "Vedi la foto {n}",
+  "rmBtn": "Ricordamelo il giorno prima",
+  "rmOn": "Promemoria attivato ✓",
+  "rmOff": "Disattiva promemoria",
+  "rmHelp": "Invieremo una notifica a questo telefono il giorno prima, alle 10.",
+  "rmIos": "Su iPhone: tocca Condividi › «Aggiungi alla schermata Home», apri l’app dalla schermata Home e tocca di nuovo questo pulsante.",
+  "rmBlocked": "Le notifiche sono bloccate per questo sito. Attivale nelle impostazioni del browser.",
+  "rmErr": "Non è stato possibile attivare il promemoria. Riprova.",
+  "rmRemoved": "Promemoria disattivato.",
+  "rmNowTitle": "Promemoria attivato",
+  "rmNowBody": "Te lo ricorderemo il giorno prima: {event}.",
+  "rmTitle": "Domani: {event}",
+  "rmBody": "{date} alle {time} · Museo Abreu, Bávaro, Punta Cana. Ti aspettiamo!",
 };
 TR.it = {
   "2019": "2019",
