@@ -868,9 +868,9 @@ const EXTRA_ACTIONS = {
   buyEvent: el => {
     const ev = EVENTS.find(e => e.id === el.dataset.id);
     const tier = el.dataset.tier ? ev.tiers.find(x => x.id === el.dataset.tier) : null;
-    const link = bookingLink(tier ? 'gabangi-' + tier.id : ev.id);
+    const key = tier ? 'gabangi-' + tier.id : ev.id, whop = whopLink(key), link = whop || bookingLink(key);
     if (BOOKING.live || link) return checkout({ title: tier ? L(tier.name) : eventTitle(ev), sub: tier ? eventTitle(ev) : '',
-      when: tier ? L(tier.tag) : fmtDate(eventDate(ev)), img: tier && tier.img, price: tier ? tier.price : ev.price, qty: true, link, provider: BOOKING.provider });
+      when: tier ? L(tier.tag) : fmtDate(eventDate(ev)), img: tier && tier.img, price: tier ? tier.price : ev.price, qty: true, link, provider: whop ? 'Whop' : BOOKING.provider });
     const passes = fx.get('passes', []);
     if (passes.some(p => p.event === ev.id && (p.tier || null) === (tier ? tier.id : null))) return toast(t('alreadyRegistered'));
     passes.push({ code: newCode().replace('MA-', 'EV-'), event: ev.id, tier: tier ? tier.id : null, date: tier ? addDays(eventDate(ev), tier.day) : eventDate(ev), guests: 0, member: isPro(), paid: tier ? tier.price : ev.price });

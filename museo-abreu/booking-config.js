@@ -31,6 +31,12 @@ var BOOKING = {
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',
+    // ART GABANGI tickets (fixed dates, no time slots) are sold on Whop too.
+    'gabangi-festival': '',
+    'gabangi-vip': '',
+    'gabangi-dinner': '',
+    'gabangi-gala': '',
+    'gabangi-regular': '',
   },
   whatsapp: '18098409588', // Oscar Abreu / Museo Abreu WhatsApp Business
 };

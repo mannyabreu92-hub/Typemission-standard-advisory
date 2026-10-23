@@ -84,6 +84,14 @@ separately (bank transfer, instant or wire, each with its own fee). No monthly f
 | `book-en` | Ecce Homo, English digital edition | 60 | one-time |
 | `book-es` | Ecce Homo, Spanish digital edition | 60 | one-time |
 | `sponsor-25`, `sponsor-50`, `sponsor-100` | Sponsor a painting class | 25 / 50 / 100 | one-time |
+| `gabangi-festival` | ART GABANGI · Festival Pass | 50 | one-time |
+| `gabangi-vip` | ART GABANGI · VIP All-Access | 140 | one-time |
+| `gabangi-dinner` | ART GABANGI · Auction & Awards Dinner | 200 | one-time |
+| `gabangi-gala` | ART GABANGI · Gala Premier | 100 | one-time |
+| `gabangi-regular` | ART GABANGI · Regular Day | 10 | one-time |
+
+ART GABANGI tickets have fixed dates and no time slots, so they are sold on Whop (a Whop link wins over a
+Bókun link for the same ticket). Bókun stays for tours and classes.
 
 Until the app has its own server (Phase 2, step 3), Pro benefits and book access are checked by
 hand against Whop's member list.
