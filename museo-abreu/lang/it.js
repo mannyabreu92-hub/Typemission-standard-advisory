@@ -260,7 +260,7 @@ I18N.it = {
   "proEyebrow": "Abbonamento",
   "proTitle": "Membro Pro",
   "proLead": "Il modo più vicino di vivere l’opera di Oscar Abreu: eventi, lettura quotidiana ed esperienze esclusive.",
-  "proPrice": "Prezzo dell’abbonamento: da definire",
+  "proPrice": "Abbonamento: 25 USD al mese",
   "joinPro": "Richiedi l’abbonamento Pro via WhatsApp",
   "leavePro": "Annulla l’abbonamento (demo)",
   "joinedPro": "Benvenuto! Ora sei membro Pro (simulato).",

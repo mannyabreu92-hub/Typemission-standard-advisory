@@ -41,7 +41,7 @@ Object.assign(I18N.es, {
 
   proEyebrow: 'Membresía', proTitle: 'Miembro Pro',
   proLead: 'La forma más cercana de vivir la obra de Oscar Abreu: eventos, lectura diaria y experiencias exclusivas.',
-  proPrice: 'Precio de la membresía: por definir', joinPro: 'Hacerme Pro (simulación)', leavePro: 'Cancelar membresía (demo)',
+  proPrice: 'Membresía: USD 25 al mes', joinPro: 'Hacerme Pro (simulación)', leavePro: 'Cancelar membresía (demo)',
   joinedPro: '¡Bienvenido! Ya eres miembro Pro (simulación).', memberPass: 'Pase de miembro', memberPassHelp: 'Muéstralo en la entrada de cualquier evento del museo.',
   compare: 'Qué incluye', featureCol: 'Beneficio', freeCol: 'Usuario', proCol: 'Pro', 
   b1: 'Explorar el museo, la obra y el manifiesto', b2: 'Lectura del día (fragmento del libro)', b3: 'Sesión completa del libro cada día',
@@ -111,7 +111,7 @@ Object.assign(I18N.en, {
 
   proEyebrow: 'Membership', proTitle: 'Pro member',
   proLead: 'The closest way to live Oscar Abreu’s work: events, daily reading and exclusive experiences.',
-  proPrice: 'Membership price: to be defined', joinPro: 'Become Pro (simulated)', leavePro: 'Cancel membership (demo)',
+  proPrice: 'Membership: USD 25 per month', joinPro: 'Become Pro (simulated)', leavePro: 'Cancel membership (demo)',
   joinedPro: 'Welcome! You are now a Pro member (simulated).', memberPass: 'Member pass', memberPassHelp: 'Show it at the entrance of any museum event.',
   compare: 'What’s included', featureCol: 'Benefit', freeCol: 'User', proCol: 'Pro', 
   b1: 'Explore the museum, the work and the manifesto', b2: 'Daily reading (excerpt from the book)', b3: 'Full book session every day',
@@ -210,7 +210,7 @@ Object.assign(I18N.fr, {
   proEyebrow: 'Adhésion',
   proTitle: 'Membre Pro',
   proLead: 'La façon la plus proche de vivre l’œuvre d’Oscar Abreu : événements, lecture quotidienne et expériences exclusives.',
-  proPrice: 'Prix de l’adhésion : à définir',
+  proPrice: 'Adhésion : 25 USD par mois',
   joinPro: 'Devenir Pro (simulation)',
   leavePro: 'Annuler l’adhésion (démo)',
   joinedPro: 'Bienvenue ! Vous êtes maintenant membre Pro (simulation).',
@@ -914,7 +914,7 @@ const EXTRA_ACTIONS = {
   circleApprove: () => { fx.set('circle', { ...circle(), status: 'member', since: new Date().toISOString() }); route(); },
   circleReset: () => { fx.set('circle', null); route(); },
   joinPro: () => {
-    if (BOOKING.live || whopLink('pro')) return checkout({ title: 'Museo Abreu Pro', price: null, link: whopLink('pro'), provider: 'Whop' });
+    if (BOOKING.live || whopLink('pro')) return checkout({ title: 'Museo Abreu Pro', price: 25, period: 'month', link: whopLink('pro'), provider: 'Whop' });
     const name = profile.name.trim() || 'Miembro Pro';
     fx.set('member', { id: proCode(), name, since: new Date().toISOString() });
     toast(t('joinedPro'));

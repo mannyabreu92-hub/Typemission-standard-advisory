@@ -163,7 +163,7 @@ order summary, quantity for tickets, live total in USD.
   WhatsApp stays available as a fold-out alternative.
 - **Without a link** the sheet asks for name and phone (remembered on the device) and sends the order to
   WhatsApp already written, with quantity and total.
-- Pro has no published price yet, so its sheet says "Price confirmed by the museum".
+- Pro: USD 25 per month.
 
 ## Spanish edition (`sample-es.js`)
 

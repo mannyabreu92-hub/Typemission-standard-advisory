@@ -78,7 +78,7 @@ separately (bank transfer, instant or wire, each with its own fee). No monthly f
 
 | Key in `BOOKING.whop` | Product | Price (USD) | Billing |
 |---|---|---|---|
-| `pro` | Pro membership | to be defined | monthly or yearly |
+| `pro` | Pro membership | 25 | monthly |
 | `painting-club` | Painting club | 80 | monthly |
 | `art-club` | Art club | 30 | monthly |
 | `book-en` | Ecce Homo, English digital edition | 60 | one-time |

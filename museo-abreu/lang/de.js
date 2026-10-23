@@ -260,7 +260,7 @@ I18N.de = {
   "proEyebrow": "Mitgliedschaft",
   "proTitle": "Pro-Mitglied",
   "proLead": "Die engste Art, das Werk von Oscar Abreu zu erleben: Veranstaltungen, tägliche Lektüre und exklusive Erlebnisse.",
-  "proPrice": "Preis der Mitgliedschaft: noch festzulegen",
+  "proPrice": "Mitgliedschaft: 25 USD pro Monat",
   "joinPro": "Pro-Mitgliedschaft per WhatsApp anfragen",
   "leavePro": "Mitgliedschaft kündigen (Demo)",
   "joinedPro": "Willkommen! Sie sind jetzt Pro-Mitglied (simuliert).",
