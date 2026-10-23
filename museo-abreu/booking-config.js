@@ -28,7 +28,7 @@ var BOOKING = {
     'art-club': '', // on hold (family decision); was https://whop.com/museoabreu/art-club-5d
     'book-en': 'https://whop.com/museoabreu/ecce-homo-english-edition',
     'book-es': 'https://whop.com/museoabreu/ecce-homo-edicion-en-espanol',
-    'book-fr': '',
+    'book-fr': 'https://whop.com/museoabreu/ecce-homo-edition-francaise',
     'book-print-es': '', // printed Spanish edition (shop)
     'book-print-fr': '', // printed French edition (shop)
     'sponsor-25': '',
