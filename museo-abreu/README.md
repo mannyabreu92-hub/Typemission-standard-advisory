@@ -256,6 +256,19 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## German edition (`sample-de.js`)
+
+From `Ecce Homo — Deutsche Ausgabe` (Ediciones ARTFORO, 2026). Like the French edition it follows the Spanish
+paragraph by paragraph (same 71 sections, same paragraph counts):
+- `DAILY_QUOTES_DE` (`data.js`): the German counterpart of each of the 74 Spanish quotes (same sentence of the same
+  paragraph; two set by hand where "Dr." and "17. November" broke the sentence split); every one checked word for word
+  against the German text and in the right chapter. German, Spanish and French visitors see the same passage each day.
+- `SAMPLE_DE` (Einleitung and Kapitel I), `TOC_DE` (70 chapter titles as printed, used in the library and reader),
+  `CREDITS_DE` (credits page, under "Impressum der Ausgabe" in the library in German); the German `credits` line
+  follows the printed credits.
+- The German digital edition is listed as available (Whop key `book-de`, link to come; until then orders go to
+  WhatsApp), and the printed German edition is in the Shop (`book-print-de`, price pending).
+
 ## French edition (`sample-fr.js`)
 
 From `Ecce Homo — Édition française` (Ediciones ARTFORO, 2026). It follows the Spanish edition paragraph

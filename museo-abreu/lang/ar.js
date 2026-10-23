@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.ar = {
   "readEnSample": "اقرأ المقتطف بالإنجليزية",
-  "samplePending": "لا يتوفر بعد مقتطف مجاني بهذه اللغة. المقتطف المجاني متاح في الطبعات الإسبانية والإنجليزية والفرنسية.",
+  "samplePending": "لا يتوفر بعد مقتطف مجاني بهذه اللغة. المقتطف المجاني متاح في الطبعات الإسبانية والإنجليزية والفرنسية والألمانية.",
   "credits": "الطبعة الأولى، 2026 · ARTFORO Editions · الترجمة الإنجليزية: ريد نيوهول",
   "bookSub2": "ولادة التعبيرية النفسية",
   "bookSub": "الفن أنقذ حياتي",
@@ -1148,4 +1148,5 @@ TR.ar = {
   "French edition": "الطبعة الفرنسية",
   "Oscar Abreu · The Escaping Being": "أوسكار أبرو · الكائن الهارب",
   "Oscar Abreu · Resilience": "أوسكار أبرو · الصمود",
+  "German edition": "الطبعة الألمانية",
 };

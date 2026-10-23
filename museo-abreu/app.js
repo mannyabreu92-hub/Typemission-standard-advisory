@@ -158,8 +158,8 @@ function go(hash) {
 // A different quote from the book each day (Punta Cana date), in the book's order.
 function quoteOfTheDay() {
   const today = todayPC();
-  // Spanish and French visitors get the quote from their own edition; others the English one.
-  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR }[lang], list = own || DAILY_QUOTES;
+  // Spanish, French and German visitors get the quote from their own edition; others the English one.
+  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE }[lang], list = own || DAILY_QUOTES;
   const q = list[Math.floor(Date.parse(today) / 864e5) % list.length];
   const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
   return `<p class="eyebrow">${t('quoteOfDay')} · ${fmtDate(today, { day: 'numeric', month: 'long' })}</p>
@@ -678,11 +678,11 @@ const owns = l => purchases.some(p => p.lang === l && !p.refunded);
 const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typeof isPro === 'function' && isPro()));
 
 // Credits pages of the printed editions, shown in the library in their own language.
-const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR } };
+const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR }, de: { label: 'Impressum der Ausgabe', ...CREDITS_DE } };
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
-  // Sample text exists for the Spanish, English and French editions.
+  // Sample text exists for the Spanish, English, French and German editions.
   const readLang = owns(lang) ? lang : (purchases[0]?.lang || (hasSample(lang) ? lang : 'en'));
   const last = reading.last;
   return `<div class="wrap">
@@ -764,7 +764,7 @@ function buyEdition(l) {
 }
 
 const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
-const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR };
+const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE };
 const sampleFor = (l, c) => SAMPLES[l]?.[c.key] || null;
 const hasSample = l => l in SAMPLES;
 

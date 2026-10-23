@@ -4,8 +4,8 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.de = {
   "readEnSample": "Die englische Leseprobe lesen",
-  "samplePending": "In dieser Sprache gibt es noch keine kostenlose Leseprobe. Die kostenlose Leseprobe gibt es in der spanischen, englischen und französischen Ausgabe.",
-  "credits": "Erstausgabe, 2026 · ARTFORO Editions · Englische Übersetzung: Reed Newhall",
+  "samplePending": "In dieser Sprache gibt es noch keine kostenlose Leseprobe. Die kostenlose Leseprobe gibt es in der spanischen, englischen, französischen und deutschen Ausgabe.",
+  "credits": "Erste Auflage, 2026 · Ediciones ARTFORO · Konzeptionelle und redaktionelle Leitung: Cándido Gerón · Gedruckt von Amigo del Hogar, Santo Domingo",
   "bookSub2": "Die Geburt des Psycho-Expressionismus",
   "bookSub": "Die Kunst hat mir das Leben gerettet",
   "psicoQuoteNote": "Aus Ecce Homo (englische Ausgabe)",
@@ -1135,4 +1135,5 @@ TR.de = {
   "French edition": "Französische Ausgabe",
   "Oscar Abreu · The Escaping Being": "Oscar Abreu · Das entweichende Wesen",
   "Oscar Abreu · Resilience": "Oscar Abreu · Resilienz",
+  "German edition": "Deutsche Ausgabe",
 };
