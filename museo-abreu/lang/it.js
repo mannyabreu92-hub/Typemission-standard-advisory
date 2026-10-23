@@ -559,6 +559,17 @@ I18N.it = {
   "coLess": "Uno in meno",
   "coMore": "Uno in più",
   "coWaOrder": "Buongiorno, vorrei acquistare:\n{qty} × {item}{when}\nTotale: {total}\nNome: {name}\nTelefono: {phone}",
+  "tyTitle": "Grazie",
+  "tyLead": "Il tuo acquisto è completato. La ricevuta di Whop sta arrivando nella tua email.",
+  "tyClub": "Benvenuto nel {name}. Il museo ti contatterà con il calendario.",
+  "tyBook": "Il museo invierà l’accesso al libro all’email che hai usato per l’acquisto.",
+  "tyTicket": "Il tuo biglietto: {name}. Porta all’ingresso la ricevuta e il nome dell’acquisto.",
+  "tyPro": "Benvenuto in Museo Abreu Pro. Il museo attiverà i tuoi vantaggi da membro.",
+  "tySponsor": "Il tuo contributo offre una lezione di pittura a uno studente che non può permettersela.",
+  "tyQuestions": "Domande? Scrivi al museo su WhatsApp.",
+  "tyWa": "Scrivi al museo",
+  "tyHome": "Torna alla home",
+  "waAfterPurchase": "Buongiorno, ho appena completato un acquisto: {item}.",
 };
 TR.it = {
   "2019": "2019",
@@ -979,4 +990,5 @@ TR.it = {
   "The closing evening on July 14: dinner, a live auction and the Artist of the Year Award.": "La serata di chiusura del 14 luglio: cena, asta dal vivo e il Premio Artista dell’Anno.",
   "The opening night of ART GABANGI on July 6.": "La serata di apertura di ART GABANGI, il 6 luglio.",
   "One day at the fair, any day from July 7 to 14.": "Un giorno alla fiera, a scelta dal 7 al 14 luglio.",
+  "Fifth Anniversary · Launch of Ecce Homo": "Quinto anniversario · Presentazione di Ecce Homo",
 };

@@ -559,6 +559,17 @@ I18N.ar = {
   "coLess": "واحد أقل",
   "coMore": "واحد إضافي",
   "coWaOrder": "مرحبًا، أود شراء:\n{qty} × {item}{when}\nالإجمالي: {total}\nالاسم: {name}\nالهاتف: {phone}",
+  "tyTitle": "شكرًا لكم",
+  "tyLead": "اكتملت عملية الشراء. إيصالك من Whop في طريقه إلى بريدك الإلكتروني.",
+  "tyClub": "مرحبًا بك في {name}. سيتواصل معك المتحف بالجدول الزمني.",
+  "tyBook": "سيرسل المتحف رابط الوصول إلى الكتاب إلى البريد الإلكتروني الذي استخدمته في الشراء.",
+  "tyTicket": "تذكرتك: {name}. أحضر إيصالك والاسم المسجّل في الشراء إلى المدخل.",
+  "tyPro": "مرحبًا بك في Museo Abreu Pro. سيفعّل المتحف مزايا عضويتك.",
+  "tySponsor": "تبرعك يموّل درس رسم لطالب لا يستطيع تحمّل تكلفته.",
+  "tyQuestions": "لديك أسئلة؟ راسل المتحف عبر واتساب.",
+  "tyWa": "راسل المتحف",
+  "tyHome": "العودة إلى الرئيسية",
+  "waAfterPurchase": "مرحبًا، أكملت للتو عملية شراء: {item}.",
 };
 TR.ar = {
   "2019": "2019",
@@ -991,4 +1002,5 @@ TR.ar = {
   "The closing evening on July 14: dinner, a live auction and the Artist of the Year Award.": "أمسية الختام في 14 يوليو: عشاء ومزاد مباشر وجائزة فنان العام.",
   "The opening night of ART GABANGI on July 6.": "ليلة افتتاح ART GABANGI في 6 يوليو.",
   "One day at the fair, any day from July 7 to 14.": "يوم واحد في المعرض، في أي يوم من 7 إلى 14 يوليو.",
+  "Fifth Anniversary · Launch of Ecce Homo": "الذكرى السنوية الخامسة · إطلاق Ecce Homo",
 };

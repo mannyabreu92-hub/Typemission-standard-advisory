@@ -427,6 +427,8 @@ const ANNUAL_EVENTS = [
     // Invitation wording for the 2026 card (5th anniversary + Ecce Homo launch), English as written by the museum.
     invitation: {
       2026: {
+        // Title used for this year's event everywhere in the app (home card, events, calendar).
+        cardTitle: { es: 'Quinto aniversario · Presentación de Ecce Homo', en: 'Fifth Anniversary · Launch of Ecce Homo', fr: 'Cinquième anniversaire · Lancement d’Ecce Homo' },
         request: { es: 'le invita cordialmente a celebrar su', en: 'cordially invites you to celebrate its', fr: 'vous invite cordialement à célébrer son' },
         title: { es: 'Quinto aniversario', en: 'Fifth Anniversary', fr: 'Cinquième anniversaire' },
         launchOf: { es: 'y la presentación de', en: 'and the launch of', fr: 'et le lancement de' },
@@ -593,6 +595,7 @@ const eventDate = ev => (ev.annual ? nextAnnual(ev.annual) : addDays(todayPC(), 
 const daysUntil = iso => Math.round((Date.parse(iso) - Date.parse(todayPC())) / 864e5);
 const eventTitle = ev => ev.id === 'art-gabangi' ? `ART GABANGI ${eventDate(ev).slice(0, 4)}`
   : ev.id === 'group-exhibition' ? `${L(ev.name)} ${eventDate(ev).slice(0, 4)}`
+  : ev.invitation?.[eventDate(ev).slice(0, 4)]?.cardTitle ? L(ev.invitation[eventDate(ev).slice(0, 4)].cardTitle)
   : ev.since ? `${L(ev.name)} · ${t('nth', { n: Number(eventDate(ev).slice(0, 4)) - ev.since })}` : L(ev.name);
 const sortedEvents = () => EVENTS.slice().sort((a, b) => eventDate(a).localeCompare(eventDate(b)));
 

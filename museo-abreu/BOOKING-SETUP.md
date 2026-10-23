@@ -70,7 +70,10 @@ plan for the reasons and costs.
    the price and billing interval, create, and copy the link.
 5. Paste each link into `BOOKING.whop` in `booking-config.js` (or send them to the developer). The
    app's checkout sheet then shows "Pay USD … by card" for that product; empty keys stay on WhatsApp.
-6. Make one test purchase with a real card and refund it from the dashboard.
+6. **Redirect after purchase:** in each product's settings, set the redirect / success URL to
+   `https://museo-abreu.vercel.app/?gracias=<key>`, with the product's key from the table below
+   (e.g. `?gracias=painting-club`, `?gracias=gabangi-vip`). Buyers land on the app's thank-you page.
+7. Make one test purchase with a real card and refund it from the dashboard.
 
 Fees as reported in October 2026 (check docs.whop.com/fees before launch): about 2.7% + US$0.30 per
 card payment, more for international cards with currency conversion; payouts are charged

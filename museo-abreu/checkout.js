@@ -83,3 +83,71 @@ function checkout(o) {
   document.body.appendChild(dlg);
   dlg.showModal();
 }
+
+/* ---------- Thank-you page after paying on Whop (#/gracias/<key>) ----------
+   Each Whop product's "redirect after purchase" points to https://museo-abreu.vercel.app/?gracias=<key>
+   (the key used in BOOKING.whop). The query form survives redirects that drop the #fragment. */
+Object.assign(I18N.es, {
+  tyTitle: 'Gracias', tyLead: 'Su compra está completa. El recibo de Whop llega a su correo.',
+  tyClub: 'Bienvenido al {name}. El museo le escribirá con el calendario.',
+  tyBook: 'El museo enviará su acceso al libro al correo que usó en la compra.',
+  tyTicket: 'Su entrada: {name}. Lleve el recibo y el nombre de la compra a la entrada.',
+  tyPro: 'Bienvenido a Museo Abreu Pro. El museo activará sus beneficios de miembro.',
+  tySponsor: 'Su aporte patrocina una clase de pintura para un estudiante que no puede pagarla.',
+  tyQuestions: '¿Preguntas? Escriba al museo por WhatsApp.', tyWa: 'Escribir al museo', tyHome: 'Volver al inicio',
+  waAfterPurchase: 'Hola, acabo de completar una compra: {item}.',
+});
+Object.assign(I18N.en, {
+  tyTitle: 'Thank you', tyLead: 'Your purchase is complete. Your receipt from Whop is on its way to your email.',
+  tyClub: 'Welcome to the {name}. The museum will contact you with the schedule.',
+  tyBook: 'The museum will send your access to the book to the email you used for the purchase.',
+  tyTicket: 'Your ticket: {name}. Bring your receipt and the name on the purchase to the entrance.',
+  tyPro: 'Welcome to Museo Abreu Pro. The museum will activate your member benefits.',
+  tySponsor: 'Your contribution sponsors a painting class for a student who cannot afford it.',
+  tyQuestions: 'Questions? Write to the museum on WhatsApp.', tyWa: 'Message the museum', tyHome: 'Back to home',
+  waAfterPurchase: 'Hello, I just completed a purchase: {item}.',
+});
+Object.assign(I18N.fr, {
+  tyTitle: 'Merci', tyLead: 'Votre achat est terminé. Le reçu de Whop arrive dans votre boîte mail.',
+  tyClub: 'Bienvenue au {name}. Le musée vous écrira avec le calendrier.',
+  tyBook: 'Le musée enverra votre accès au livre à l’adresse e-mail utilisée pour l’achat.',
+  tyTicket: 'Votre billet : {name}. Présentez le reçu et le nom de l’achat à l’entrée.',
+  tyPro: 'Bienvenue dans Museo Abreu Pro. Le musée activera vos avantages de membre.',
+  tySponsor: 'Votre contribution offre un cours de peinture à un élève qui n’a pas les moyens de le payer.',
+  tyQuestions: 'Des questions ? Écrivez au musée sur WhatsApp.', tyWa: 'Écrire au musée', tyHome: 'Retour à l’accueil',
+  waAfterPurchase: 'Bonjour, je viens de finaliser un achat : {item}.',
+});
+
+function purchaseInfo(key) {
+  const club = CLUBS.find(c => c.id === key);
+  if (club) return { item: L(club.name), text: t('tyClub', { name: L(club.name) }) };
+  if (key.startsWith('book-') && LANG_NAMES[key.slice(5)]) return { item: 'Ecce Homo · ' + L(LANG_NAMES[key.slice(5)]), text: t('tyBook') };
+  const gb = EVENTS.find(e => e.id === 'art-gabangi'), tier = key.startsWith('gabangi-') && gb.tiers.find(x => x.id === key.slice(8));
+  if (tier) return { item: L(tier.name) + ' · ' + eventTitle(gb), text: t('tyTicket', { name: L(tier.name) + ' · ' + eventTitle(gb) }) };
+  if (key === 'pro') return { item: 'Museo Abreu Pro', text: t('tyPro') };
+  if (key.startsWith('sponsor-')) return { item: t('sponsorTitle') + ' · USD ' + key.slice(8), text: t('tySponsor') };
+  return { item: '', text: '' };
+}
+
+function pageThanks(key = '') {
+  const p = purchaseInfo(key);
+  const wa = whatsappLink(t('waAfterPurchase', { item: p.item || 'Museo Abreu' }));
+  return `<div class="wrap"><section class="section thanks">
+    <p class="eyebrow">Museo Abreu</p>
+    <h1>${t('tyTitle')}</h1>
+    ${p.item ? `<p class="thanks-item">${esc(p.item)}</p>` : ''}
+    <p class="lead">${t('tyLead')}</p>
+    ${p.text ? `<p>${esc(p.text)}</p>` : ''}
+    <p class="muted">${t('tyQuestions')}</p>
+    <div class="btn-row">${wa ? `<a class="btn wa" href="${wa}" target="_blank" rel="noopener">${t('tyWa')}</a>` : ''}<a class="btn primary" href="#/">${t('tyHome')}</a></div>
+  </section></div>`;
+}
+
+Object.assign(EXTRA_ROUTES, { gracias: pageThanks });
+(() => {
+  const key = new URLSearchParams(location.search).get('gracias');
+  if (key == null) return;
+  history.replaceState(null, '', location.pathname + '#/gracias/' + encodeURIComponent(key));
+  // trackEvent is defined in app.js, which loads after this file.
+  setTimeout(() => { if (typeof trackEvent === 'function') trackEvent('Purchase', { product: key }); }, 0);
+})();

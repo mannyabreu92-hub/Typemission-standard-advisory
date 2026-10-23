@@ -495,3 +495,10 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .co-wa-alt summary { cursor: pointer; font-size: .88rem; color: var(--ink-2); text-align: center; padding: .3rem 0; }
 .co-wa-alt[open] summary { margin-bottom: .6rem; }
 .co-close { width: 100%; }
+
+/* Thank-you page after a Whop purchase (checkout.js) */
+.thanks { max-width: 560px; margin-inline: auto; text-align: center; display: grid; gap: .8rem; justify-items: center; padding-block: 3rem; }
+.thanks h1 { font-size: clamp(2.4rem, 9vw, 3.4rem); }
+.thanks-item { font: 600 .8rem/1.5 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--gold-ink); }
+.thanks .btn-row { justify-content: center; }
+:root[lang="ar"] .thanks-item { text-transform: none; letter-spacing: 0; }

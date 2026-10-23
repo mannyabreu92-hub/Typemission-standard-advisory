@@ -172,7 +172,7 @@ Object.assign(EXTRA_FORMS, {
     profile.name = reply.name; profile.email = reply.email; save();
     if (BOOKING.live) {
       const date = rsvpLongDate(reply.date) + ' · ' + rsvpTime(ev.time);
-      const title = eventTitle(ev) + (ev.launchShort ? ' · ' + L(ev.launchShort) : '');
+      const title = eventTitle(ev) + (ev.launchShort && !ev.invitation?.[eventDate(ev).slice(0, 4)]?.cardTitle ? ' · ' + L(ev.launchShort) : '');
       openWhatsApp(att === 'yes'
         ? t('waRsvpYes', { event: title, date, name: reply.name, email: reply.email, phone: reply.phone, note: reply.note,
             guests: guests ? t('rsvpWithGuests', { n: guests, names: reply.guestNames || '—' }) : '' })
