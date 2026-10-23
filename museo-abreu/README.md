@@ -294,8 +294,7 @@ paragraph by paragraph (same 71 sections, same paragraph counts):
 - `SAMPLE_DE` (Einleitung and Kapitel I), `TOC_DE` (70 chapter titles as printed, used in the library and reader),
   `CREDITS_DE` (credits page, under "Impressum der Ausgabe" in the library in German); the German `credits` line
   follows the printed credits.
-- The German digital edition is listed as available (Whop key `book-de`, link to come; until then orders go to
-  WhatsApp), and the printed German edition is in the Shop (`book-print-de`, price pending).
+- The German digital edition is listed as available (Whop key `book-de`, https://whop.com/museoabreu/ecce-homo-deutsche-ausgabe), and the printed German edition is in the Shop (`book-print-de`, price pending).
 
 ## French edition (`sample-fr.js`)
 

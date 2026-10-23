@@ -31,7 +31,7 @@ var BOOKING = {
     'book-fr': 'https://whop.com/museoabreu/ecce-homo-edition-francaise',
     'book-print-es': '', // printed Spanish edition (shop)
     'book-print-fr': '', // printed French edition (shop)
-    'book-de': '', // German digital edition: Whop link to come
+    'book-de': 'https://whop.com/museoabreu/ecce-homo-deutsche-ausgabe',
     'book-print-de': '', // printed German edition (shop)
     'book-ru': '', // Russian digital edition: Whop link to come
     'book-print-ru': '', // printed Russian edition (shop)
