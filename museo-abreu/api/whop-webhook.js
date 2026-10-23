@@ -25,8 +25,9 @@ module.exports = async (req, res) => {
 
   // Access starts with a successful payment or a membership turning valid, and ends when a
   // membership turns invalid, is cancelled or refunded.
-  const ends = /invalid|deactivat|cancel|refund|expire|fail/i.test(type);
-  const starts = /succeeded|went_valid|activated|created|paid|completed/i.test(type);
+  // Only money actually received (or an active membership) unlocks; "created" / "pending" events do not.
+  const ends = /invalid|deactivat|cancel|refund|expire|dispute/i.test(type);
+  const starts = !ends && /payment\.succeeded|went_valid|membership\.activated|\.paid$|completed/i.test(type);
   if (!ends && !starts) return res.status(200).json({ ok: true, recorded: false });
 
   const path = `purchases/${emailHash(email)}.json`;
