@@ -27,7 +27,7 @@ var BOOKING = {
     'painting-club': 'https://whop.com/museoabreu/painting-club',
     'art-club': 'https://whop.com/museoabreu/art-club-5d',
     'book-en': 'https://whop.com/museoabreu/ecce-homo-english-edition',
-    'book-es': '',
+    'book-es': 'https://whop.com/museoabreu/ecce-homo-edicion-en-espanol',
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',
