@@ -39,6 +39,25 @@ module.exports = async (req, res) => {
   // Door check-in: POST { action: 'checkin', id, arrived } records how many of the party have arrived.
   if (req.method === 'POST') {
     const b = req.body || {};
+    // Invitation lists (invites/<event>/<date>.json): add guests, mark one as sent, remove one.
+    if (/^invite-(add|sent|remove)$/.test(b.action)) {
+      if (!/^[a-z0-9-]+$/.test(String(b.event)) || !/^\d{4}-\d{2}-\d{2}$/.test(String(b.date))) return res.status(400).json({ error: 'request' });
+      const path = `invites/${b.event}/${b.date}.json`, doc = (await readJSON(path)) || { list: [] };
+      const digits = p => String(p || '').replace(/\D/g, '');
+      if (b.action === 'invite-add') {
+        for (const g of (Array.isArray(b.list) ? b.list : []).slice(0, 500)) {
+          const name = String(g.name || '').trim().slice(0, 120), phone = String(g.phone || '').trim().slice(0, 40);
+          if (name.length < 2 || digits(phone).length < 7 || doc.list.some(x => digits(x.phone) === digits(phone))) continue;
+          doc.list.push({ id: crypto.randomBytes(6).toString('hex'), name, phone, lang: ['es', 'en', 'fr'].includes(g.lang) ? g.lang : 'es', sentAt: null });
+        }
+      } else {
+        const i = doc.list.findIndex(x => x.id === b.id);
+        if (i < 0) return res.status(404).json({ error: 'guest' });
+        if (b.action === 'invite-sent') doc.list[i].sentAt = new Date().toISOString(); else doc.list.splice(i, 1);
+      }
+      await writeJSON(path, doc);
+      return res.status(200).json({ event: b.event, date: b.date, ...doc });
+    }
     // Walk-in: POST { action: 'walkin', event, date, name, party, phone } adds a guest who came without
     // an RSVP, already checked in.
     if (b.action === 'walkin') {
@@ -70,5 +89,9 @@ module.exports = async (req, res) => {
       product: findProductKey(d), email: findEmail(d), amount: amountOf(d) };
   });
   const rsvps = (await all('rsvps/', 1000)).filter(r => r.data).map(r => ({ id: r.path, ...r.data }));
-  res.status(200).json({ auction, purchases, rsvps, now: new Date().toISOString() });
+  const invites = (await all('invites/', 100)).filter(r => r.data).map(r => {
+    const [, event, file] = r.path.split('/');
+    return { event, date: file.replace('.json', ''), list: r.data.list || [] };
+  });
+  res.status(200).json({ auction, purchases, rsvps, invites, now: new Date().toISOString() });
 };

@@ -157,15 +157,19 @@ const REMIND = {
     many: 'Bonjour {name}, petit rappel : {event}, le {date} à {time}, au Museo Abreu, Bávaro, Punta Cana. Votre réponse concerne {n} personnes. Au plaisir de vous accueillir !' },
 };
 const LOCALE = { es: 'es-DO', en: 'en-US', fr: 'fr-FR' };
-function reminderText(r) {
-  const gl = REMIND[r.lang] ? r.lang : 'en', ev = ANNUAL_EVENTS.find(e => e.id === r.event);
-  const inv = ev && ev.invitation && ev.invitation[r.date.slice(0, 4)];
-  const title = inv && inv.cardTitle ? inv.cardTitle[gl] : ev ? ev.name[gl] : r.event;
-  const date = new Date(r.date + 'T12:00:00').toLocaleDateString(LOCALE[gl], { weekday: 'long', day: 'numeric', month: 'long' });
+// An event's title, date and time written in a guest's language (es, en or fr), for WhatsApp messages.
+function eventWords(eventId, isoDate, gl) {
+  const ev = ANNUAL_EVENTS.find(e => e.id === eventId), inv = ev && ev.invitation && ev.invitation[isoDate.slice(0, 4)];
+  const title = inv && inv.cardTitle ? inv.cardTitle[gl] : ev ? ev.name[gl] + (ev.id === 'group-exhibition' ? ' ' + isoDate.slice(0, 4) : '') : eventId;
+  const date = new Date(isoDate + 'T12:00:00').toLocaleDateString(LOCALE[gl], { weekday: 'long', day: 'numeric', month: 'long' });
   const [h, m] = (ev ? ev.time : '19:00').split(':').map(Number), mm = String(m).padStart(2, '0');
   const time = gl === 'fr' ? `${h} h${m ? ' ' + mm : ''}` : `${h % 12 || 12}:${mm} ${h < 12 ? (gl === 'es' ? 'a. m.' : 'AM') : (gl === 'es' ? 'p. m.' : 'PM')}`;
+  return { title, date, time };
+}
+function reminderText(r) {
+  const gl = REMIND[r.lang] ? r.lang : 'en', w = eventWords(r.event, r.date, gl);
   const n = 1 + (r.guests || 0), tpl = n === 1 ? REMIND[gl].one : REMIND[gl].many;
-  return tpl.replace('{name}', (r.name || '').split(' ')[0]).replace('{event}', title).replace('{date}', date).replace('{time}', time).replace('{n}', n);
+  return tpl.replace('{name}', (r.name || '').split(' ')[0]).replace('{event}', w.title).replace('{date}', w.date).replace('{time}', w.time).replace('{n}', n);
 }
 // "Sent" marks are kept on this device, so the person sending can see where they left off.
 const adSentList = () => { try { return JSON.parse(localStorage.getItem('ma.adminSent') || '[]'); } catch (e) { return []; } };
@@ -251,3 +255,148 @@ EXTRA_FORMS.walkin = async form => {
     doorQuery = ''; route();
   } catch (e) { const out = document.getElementById('door-err'); if (out) { out.textContent = t('adSaveErr'); out.hidden = false; } btn.disabled = false; }
 };
+
+/* ---------- Invitations (#/admin/invitar/<event>/<date>) ----------
+   The museum pastes its guest list (a name and a phone per line, e.g. copied from a spreadsheet);
+   each guest gets a "Send invitation" button that opens WhatsApp with a personal invitation in
+   their language and the event's RSVP link. The list is kept on the server; replies are matched
+   to RSVPs by phone number (or name). */
+
+Object.assign(I18N.es, {
+  inTitle: 'Invitaciones', inLead: 'Pegue su lista de invitados: un nombre y un teléfono por línea (por ejemplo, copiados de una hoja de cálculo). Puede añadir es, en o fr al final para el idioma.',
+  inPaste: 'Lista de invitados', inLang: 'Idioma por defecto', inAdd: 'Añadir a la lista', inSend: 'Enviar invitación', inResend: 'Reenviar',
+  inInvited: '{n} invitados', inSentN: '{n} enviadas', inReplied: '{n} respondieron', inComing: '{n} personas vienen',
+  inStatusYes: 'Viene ({n})', inStatusNo: 'No viene', inStatusSent: 'Enviada', inStatusNew: 'Sin enviar', inRemove: 'Quitar',
+  inActions: 'Acciones', inSkipped: '{n} líneas sin nombre o teléfono válido, o repetidas.', inOpen: 'Invitar',
+  waInvite: '{name}, el Museo Abreu tiene el honor de invitarle a {event}, el {date} a las {time}, en Bávaro, Punta Cana. Por favor, confirme su asistencia aquí: {link}',
+});
+Object.assign(I18N.en, {
+  inTitle: 'Invitations', inLead: 'Paste your guest list: a name and a phone number per line (for example, copied from a spreadsheet). Add es, en or fr at the end for the language.',
+  inPaste: 'Guest list', inLang: 'Default language', inAdd: 'Add to the list', inSend: 'Send invitation', inResend: 'Send again',
+  inInvited: '{n} guests', inSentN: '{n} sent', inReplied: '{n} replied', inComing: '{n} people coming',
+  inStatusYes: 'Coming ({n})', inStatusNo: 'Not coming', inStatusSent: 'Sent', inStatusNew: 'Not sent', inRemove: 'Remove',
+  inActions: 'Actions', inSkipped: '{n} lines without a valid name or phone, or repeated.', inOpen: 'Invite',
+  waInvite: 'Dear {name}, Museo Abreu cordially invites you to {event}, {date} at {time}, in Bávaro, Punta Cana. Kindly RSVP here: {link}',
+});
+Object.assign(I18N.fr, {
+  inTitle: 'Invitations', inLead: 'Collez votre liste d’invités : un nom et un téléphone par ligne (par exemple copiés d’un tableur). Ajoutez es, en ou fr à la fin pour la langue.',
+  inPaste: 'Liste d’invités', inLang: 'Langue par défaut', inAdd: 'Ajouter à la liste', inSend: 'Envoyer l’invitation', inResend: 'Renvoyer',
+  inInvited: '{n} invités', inSentN: '{n} envoyées', inReplied: '{n} ont répondu', inComing: '{n} personnes viennent',
+  inStatusYes: 'Vient ({n})', inStatusNo: 'Ne vient pas', inStatusSent: 'Envoyée', inStatusNew: 'Non envoyée', inRemove: 'Retirer',
+  inActions: 'Actions', inSkipped: '{n} lignes sans nom ou téléphone valide, ou en double.', inOpen: 'Inviter',
+  waInvite: '{name}, le Museo Abreu a le plaisir de vous convier à {event}, le {date} à {time}, à Bávaro, Punta Cana. Merci de confirmer votre présence ici : {link}',
+});
+// The invitation text in the guest's language (I18N of that language, not the dashboard's).
+const INVITE_TPL = { es: I18N.es.waInvite, en: I18N.en.waInvite, fr: I18N.fr.waInvite };
+
+let inNote = '';
+const inDigits = p => String(p || '').replace(/\D/g, '');
+const inNorm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+// One guest per line: "Name, phone[, lang]" or tab/semicolon separated (spreadsheet copy).
+function parseGuests(text, defLang) {
+  const out = []; let skipped = 0;
+  for (const raw of text.split(/\r?\n/)) {
+    const line = raw.trim(); if (!line) continue;
+    const parts = line.split(/\t|;|,(?=\s*[+\d(])|,\s*(?=(?:es|en|fr)\s*$)/i).map(x => x.trim()).filter(Boolean);
+    const phone = parts.find(p => inDigits(p).length >= 7 && /^[+\d\s().-]+$/.test(p));
+    const lang = parts.find(p => /^(es|en|fr)$/i.test(p));
+    let name = parts.filter(p => p !== phone && p !== lang).join(' ').trim();
+    const flip = name.match(/^([^,]+),\s*([^,]+)$/); // "Pérez, Luis" → "Luis Pérez"
+    if (flip) name = `${flip[2]} ${flip[1]}`;
+    if (!phone || name.length < 2) { skipped++; continue; }
+    out.push({ name, phone, lang: lang ? lang.toLowerCase() : defLang });
+  }
+  return { list: out, skipped };
+}
+function inviteReply(g, ev, date) {
+  return adData.rsvps.find(r => r.event === ev && r.date === date && !r.walkin &&
+    ((inDigits(r.phone).length >= 7 && inDigits(r.phone).slice(-8) === inDigits(g.phone).slice(-8)) || inNorm(r.name) === inNorm(g.name)));
+}
+function inviteText(g, ev, date) {
+  const w = eventWords(ev, date, g.lang);
+  return INVITE_TPL[g.lang].replace('{name}', g.name.split(' ')[0]).replace('{event}', w.title).replace('{date}', w.date)
+    .replace('{time}', w.time).replace('{link}', `${location.origin}/e/${ev}?l=${g.lang}`);
+}
+
+function pageInvite(ev, date) {
+  const doc = (adData.invites || []).find(x => x.event === ev && x.date === date) || { list: [] };
+  const rows = doc.list.map(g => ({ g, r: inviteReply(g, ev, date) }));
+  const sent = rows.filter(x => x.g.sentAt).length, replied = rows.filter(x => x.r).length;
+  const coming = rows.filter(x => x.r && x.r.att === 'yes').reduce((s, x) => s + 1 + (x.r.guests || 0), 0);
+  return `<div class="wrap admin invite-page">
+    <a href="#/admin" class="btn small"><span class="arr">←</span> ${t('adBack')}</a>
+    <section class="section"><p class="eyebrow">${t('inTitle')}</p><h1 class="h2">${esc(adEventName(ev))}</h1><p class="muted">${fmtDate(date)}</p>
+      <div class="ad-tiles">
+        <div><strong>${doc.list.length}</strong><span>${t('inInvited', { n: '' }).trim()}</span></div>
+        <div><strong>${sent}</strong><span>${t('inSentN', { n: '' }).trim()}</span></div>
+        <div><strong>${coming}</strong><span>${t('inComing', { n: '' }).trim()}</span></div>
+      </div>
+      <p class="muted">${t('inReplied', { n: replied })}</p>
+    </section>
+    <section class="section">
+      <form data-form="invites" data-event="${esc(ev)}" data-date="${esc(date)}" class="unlock" novalidate>
+        <p class="muted">${t('inLead')}</p>
+        <label for="in-list">${t('inPaste')}</label>
+        <textarea id="in-list" rows="6" placeholder="Ana Pérez, +1 809 555 0100&#10;John Smith, +1 305 555 0199, en"></textarea>
+        <div class="unlock-row"><label for="in-lang" class="visually-hidden">${t('inLang')}</label>
+          <select id="in-lang">${['es', 'en', 'fr'].map(l => `<option value="${l}">${t('inLang')}: ${L(LANG_NAMES[l])}</option>`).join('')}</select>
+          <button class="btn primary" type="submit">${t('inAdd')}</button></div>
+        <p class="status" id="in-status" role="status" aria-live="polite"${inNote ? '' : ' hidden'}>${esc(inNote)}</p>
+      </form>
+    </section>
+    <section class="section">
+      <ul class="door-list invite-list">${rows.map(({ g, r }) => {
+        const status = r ? (r.att === 'yes' ? `<span class="status ok">${t('inStatusYes', { n: 1 + (r.guests || 0) })}</span>` : t('inStatusNo'))
+          : g.sentAt ? `${t('inStatusSent')} · ${adStamp(g.sentAt)}` : `<span class="muted">${t('inStatusNew')}</span>`;
+        const wa = `https://wa.me/${inDigits(g.phone)}?text=${encodeURIComponent(inviteText(g, ev, date))}`;
+        return `<li class="door-row${r && r.att === 'yes' ? ' here' : ''}">
+          <div><strong>${esc(g.name)}</strong> <small class="muted">${g.lang.toUpperCase()}</small><br><small>${esc(g.phone)}</small><br><small>${status}</small></div>
+          <div class="ad-actions">${r ? '' : `<a class="btn small ${g.sentAt ? '' : 'wa'}" href="${wa}" target="_blank" rel="noopener" data-action="inSent" data-id="${g.id}" data-event="${esc(ev)}" data-date="${esc(date)}">${g.sentAt ? t('inResend') : t('inSend')}</a>`}
+            <button class="btn small" data-action="inRemove" data-id="${g.id}" data-event="${esc(ev)}" data-date="${esc(date)}" aria-label="${t('inRemove')} ${esc(g.name)}">×</button></div>
+        </li>`;
+      }).join('') || `<li class="muted">${t('adNone')}</li>`}</ul>
+    </section>
+  </div>`;
+}
+
+async function inPost(body) {
+  const r = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adPassword() }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error(r.status);
+  const doc = await r.json();
+  adData.invites = [...(adData.invites || []).filter(x => !(x.event === doc.event && x.date === doc.date)), { event: doc.event, date: doc.date, list: doc.list }];
+}
+EXTRA_FORMS.invites = async form => {
+  const { list, skipped } = parseGuests($('#in-list', form).value, $('#in-lang', form).value);
+  const btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+  try {
+    const before = ((adData.invites || []).find(x => x.event === form.dataset.event && x.date === form.dataset.date) || { list: [] }).list.length;
+    await inPost({ action: 'invite-add', event: form.dataset.event, date: form.dataset.date, list });
+    const after = adData.invites.find(x => x.event === form.dataset.event && x.date === form.dataset.date).list.length;
+    const dup = list.length - (after - before), bad = skipped + dup;
+    inNote = bad ? t('inSkipped', { n: bad }) : '';
+    route();
+  } catch (e) { inNote = t('adSaveErr'); route(); }
+};
+Object.assign(EXTRA_ACTIONS, {
+  inSent: el => { inPost({ action: 'invite-sent', event: el.dataset.event, date: el.dataset.date, id: el.dataset.id }).then(() => setTimeout(route, 400)).catch(() => {}); },
+  inRemove: el => { inPost({ action: 'invite-remove', event: el.dataset.event, date: el.dataset.date, id: el.dataset.id }).then(route).catch(() => {}); },
+});
+
+// Dashboard: an "Invitations" block with one button per upcoming invitation event; route for the page.
+{
+  const admin = pageAdmin;
+  pageAdmin = () => {
+    const html = admin();
+    if (!adData) return html;
+    const evs = rsvpEvents().map(ev => ({ ev, d: eventDate(ev) }));
+    const block = `<section class="section"><h2>${t('inTitle')}</h2><div class="btn-row">${evs.map(({ ev, d }) => {
+      const doc = (adData.invites || []).find(x => x.event === ev.id && x.date === d);
+      return `<a class="btn" href="#/admin/invitar/${ev.id}/${d}">${t('inOpen')}: ${esc(eventTitle(ev))}${doc ? ` · ${doc.list.length}` : ''}</a>`;
+    }).join('')}</div></section>`;
+    const at = html.indexOf(`<section class="section"><div class="section-head"><h2>${t('adBids')}`);
+    return at > 0 ? html.slice(0, at) + block + html.slice(at) : html + block;
+  };
+  const route0 = EXTRA_ROUTES.admin;
+  EXTRA_ROUTES.admin = (sub, ev, date) => sub === 'invitar' && adData ? pageInvite(ev, date) : route0(sub, ev, date);
+}

@@ -210,6 +210,12 @@ collection, the reader and Pro stay in the top menu and on the home page.
   Note: if a guest changes their RSVP after checking in, the check-in is reset.
   "Add a walk-in guest" at the bottom of the door list adds someone without an RSVP (name, party size, optional phone),
   already checked in and marked "Walk-in"; walk-ins appear in the dashboard and the CSV like other guests.
+- **Invitations** (dashboard › Invitations, `#/admin/invitar/<event>/<date>`): paste the guest list (a name and a phone
+  per line, e.g. from a spreadsheet; optional es/en/fr at the end; "Last, First" is turned round). Each guest gets
+  "Send invitation", which opens WhatsApp with a personal invitation in their language and the event's link
+  (`/e/<event>?l=…`, with its preview and the RSVP button). The list is kept on the server (`invites/<event>/<date>.json`)
+  with when each was sent; replies are matched to RSVPs by phone (last 8 digits) or name, and the page shows invited /
+  sent / people coming. Duplicate phones and lines without a phone are skipped and counted.
 - **Share links for lots and the book**: each lot page and the Shop have a Share button. `/l/<lot>` and `/b`
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
