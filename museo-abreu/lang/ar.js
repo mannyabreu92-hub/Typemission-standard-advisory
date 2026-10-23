@@ -962,4 +962,13 @@ TR.ar = {
   "and the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu": "وإطلاق كتاب Ecce Homo: الفن أنقذ حياتي لأوسكار أبرو",
   "With the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu.": "مع إطلاق كتاب Ecce Homo: الفن أنقذ حياتي لأوسكار أبرو.",
   "Ecce Homo book launch": "إطلاق كتاب Ecce Homo",
+  "cordially invites you to celebrate its": "يدعوكم بكل سرور للاحتفال بـ",
+  "Fifth Anniversary": "ذكراه السنوية الخامسة",
+  "and the launch of": "وإطلاق كتاب",
+  "Art Saved My Life": "الفن أنقذ حياتي",
+  "The Birth of Psycho-Expressionism": "ولادة التعبيرية النفسية",
+  "by Oscar Abreu": "بقلم أوسكار أبرو",
+  "An evening celebrating art, a remarkable personal journey, and five years of Museo Abreu.": "أمسية احتفاءً بالفن، وبمسيرة شخصية استثنائية، وبخمس سنوات من متحف أبرو.",
+  "Dominican Republic": "جمهورية الدومينيكان",
+  "Join us as we celebrate this milestone and the beginning of a new chapter.": "انضموا إلينا للاحتفال بهذه المحطة وبداية فصل جديد.",
 };

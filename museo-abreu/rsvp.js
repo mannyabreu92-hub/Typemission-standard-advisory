@@ -66,7 +66,20 @@ function pageRsvp(id) {
     <div class="btn-row"><a class="btn" href="#/eventos">${t('eventsTitle')}</a></div></section></div>`;
   const d = eventDate(ev), reply = rsvpReplies()[ev.id];
   const current = reply && reply.date === d && !rsvpEditing.has(ev.id) ? reply : null;
-  const card = `<div class="invite"><div class="invite-inner">
+  const inv = ev.invitation?.[d.slice(0, 4)];
+  const card = inv ? `<div class="invite"><div class="invite-inner">
+      <p class="invite-host">${t('rsvpHost')}</p>
+      <p class="invite-request">${L(inv.request)}</p>
+      <h1 class="invite-title invite-caps">${L(inv.title)}</h1>
+      <p class="invite-also">${L(inv.launchOf)}</p>
+      <p class="invite-book"><span class="invite-book-title" lang="la">Ecce Homo</span><span>${L(inv.sub1)}</span><span>${L(inv.sub2)}</span></p>
+      <p class="invite-by">${L(inv.by)}</p>
+      <p class="invite-desc">${L(inv.lead)}</p>
+      <div class="invite-rule" aria-hidden="true"><span></span></div>
+      <p class="invite-date">${rsvpLongDate(d)}<br>${rsvpTime(ev.time)}</p>
+      <p class="invite-place">Museo Abreu<br>Bávaro, Punta Cana<br>${L(inv.country)}</p>
+      <p class="invite-close">${L(inv.close)}</p>
+    </div></div>` : `<div class="invite"><div class="invite-inner">
       <p class="invite-host">${t('rsvpHost')}</p>
       <p class="invite-request">${t('rsvpRequests')}</p>
       <h1 class="invite-title">${L(ev.name)}</h1>

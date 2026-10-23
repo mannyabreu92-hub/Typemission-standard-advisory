@@ -949,4 +949,13 @@ TR.de = {
   "and the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu": "und die Vorstellung des Buches Ecce Homo: Die Kunst hat mir das Leben gerettet von Oscar Abreu",
   "With the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu.": "Mit der Vorstellung des Buches Ecce Homo: Die Kunst hat mir das Leben gerettet von Oscar Abreu.",
   "Ecce Homo book launch": "Buchvorstellung Ecce Homo",
+  "cordially invites you to celebrate its": "lädt Sie herzlich ein zur Feier seines",
+  "Fifth Anniversary": "fünften Jubiläums",
+  "and the launch of": "und der Vorstellung von",
+  "Art Saved My Life": "Die Kunst hat mir das Leben gerettet",
+  "The Birth of Psycho-Expressionism": "Die Geburt des Psycho-Expressionismus",
+  "by Oscar Abreu": "von Oscar Abreu",
+  "An evening celebrating art, a remarkable personal journey, and five years of Museo Abreu.": "Ein Abend, der die Kunst feiert, einen bemerkenswerten persönlichen Weg und fünf Jahre Museo Abreu.",
+  "Dominican Republic": "Dominikanische Republik",
+  "Join us as we celebrate this milestone and the beginning of a new chapter.": "Feiern Sie mit uns diesen Meilenstein und den Beginn eines neuen Kapitels.",
 };

@@ -421,6 +421,20 @@ const ANNUAL_EVENTS = [
     launchCard: { es: 'Con la presentación del libro Ecce Homo: El arte me salvó la vida, de Oscar Abreu.',
       en: 'With the launch of the book Ecce Homo: Art Saved My Life, by Oscar Abreu.',
       fr: 'Avec la présentation du livre Ecce Homo : L’art m’a sauvé la vie, d’Oscar Abreu.' },
+    // Invitation wording for the 2026 card (5th anniversary + Ecce Homo launch), English as written by the museum.
+    invitation: {
+      2026: {
+        request: { es: 'le invita cordialmente a celebrar su', en: 'cordially invites you to celebrate its', fr: 'vous invite cordialement à célébrer son' },
+        title: { es: 'Quinto aniversario', en: 'Fifth Anniversary', fr: 'Cinquième anniversaire' },
+        launchOf: { es: 'y la presentación de', en: 'and the launch of', fr: 'et le lancement de' },
+        sub1: { es: 'El arte me salvó la vida', en: 'Art Saved My Life', fr: 'L’art m’a sauvé la vie' },
+        sub2: { es: 'El nacimiento del Psico-Expresionismo', en: 'The Birth of Psycho-Expressionism', fr: 'La naissance du Psycho-Expressionnisme' },
+        by: { es: 'de Oscar Abreu', en: 'by Oscar Abreu', fr: 'd’Oscar Abreu' },
+        lead: { es: 'Una velada para celebrar el arte, un extraordinario recorrido personal y cinco años del Museo Abreu.', en: 'An evening celebrating art, a remarkable personal journey, and five years of Museo Abreu.', fr: 'Une soirée pour célébrer l’art, un parcours personnel remarquable et cinq années du Museo Abreu.' },
+        country: { es: 'República Dominicana', en: 'Dominican Republic', fr: 'République dominicaine' },
+        close: { es: 'Acompáñenos a celebrar este hito y el comienzo de un nuevo capítulo.', en: 'Join us as we celebrate this milestone and the beginning of a new chapter.', fr: 'Joignez-vous à nous pour célébrer cette étape et le début d’un nouveau chapitre.' }
+      },
+    },
     launchShort: { es: 'presentación del libro Ecce Homo', en: 'Ecce Homo book launch', fr: 'présentation du livre Ecce Homo' },
     desc: { es: 'Celebramos la apertura del museo, inaugurado el 17 de noviembre de 2021 con la retrospectiva Memoria del Psico-Expresionismo.',
       en: 'We celebrate the opening of the museum, inaugurated on November 17, 2021 with the retrospective Memoria del Psico-Expresionismo.', fr: 'Nous célébrons l’ouverture du musée, inauguré le 17 novembre 2021 avec la rétrospective Memoria del Psico-Expresionismo.' } },
