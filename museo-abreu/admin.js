@@ -47,7 +47,7 @@ async function adLoad() {
 
 function adTable(head, rows) {
   if (!rows.length) return `<p class="muted">${t('adNone')}</p>`;
-  return `<div class="table-wrap"><table class="ad-table"><thead><tr>${head.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead>
+  return `<div class="table-wrap" tabindex="0"><table class="ad-table"><thead><tr>${head.map(h => `<th scope="col">${h}</th>`).join('')}</tr></thead>
     <tbody>${rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 

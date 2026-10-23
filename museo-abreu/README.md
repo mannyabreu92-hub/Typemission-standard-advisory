@@ -216,6 +216,12 @@ collection, the reader and Pro stay in the top menu and on the home page.
   shows "Photos of the evening" (latest date with photos) with a full-screen viewer; photos are served by
   `api/photos.js`. On the door list, each guest who arrived and left a phone gets "Send thank-you": a WhatsApp message in
   their language thanking them and linking to the event page with the photos ("Thanked ✓" kept on the device).
+- **Overview** (`insights.js`, top of the dashboard): money received and number of sales on Whop (only
+  `payment.succeeded`-type events count; membership and pending notices don't; refunds are taken off the sales,
+  the money and the product), books sold, sales by product and money by month (last six months), each event date's
+  invited / confirmed / arrived, and the auction (highest bids added up, bidders, pieces with bids). Worked out in the
+  browser from the dashboard data; the server reads the latest 1,000 Whop events. Amounts are read from the Whop
+  payload as dollars — confirm with the first test purchase.
 - **Invitations** (dashboard › Invitations, `#/admin/invitar/<event>/<date>`): paste the guest list (a name and a phone
   per line, e.g. from a spreadsheet; optional es/en/fr at the end; "Last, First" is turned round). Each guest gets
   "Send invitation", which opens WhatsApp with a personal invitation in their language and the event's link

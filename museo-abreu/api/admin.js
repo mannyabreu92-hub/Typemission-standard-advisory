@@ -103,7 +103,7 @@ module.exports = async (req, res) => {
     return { lot: l.id, example: !!l.example, startBid: l.startBid, bids: ((d && d.bids) || []).slice().reverse()
       .map(b => ({ amount: b.amount, at: b.at, name: b.name, email: b.email, phone: b.phone })) };
   }));
-  const purchases = (await all('events/')).filter(e => e.data).map(({ data, at }) => {
+  const purchases = (await all('events/', 1000)).filter(e => e.data).map(({ data, at }) => {
     const d = data.data || data;
     return { at, type: String(data.type || data.action || ''),
       product: findProductKey(d), email: findEmail(d), amount: amountOf(d) };
