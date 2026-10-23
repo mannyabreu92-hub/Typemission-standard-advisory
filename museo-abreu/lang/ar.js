@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.ar = {
   "readEnSample": "اقرأ المقتطف بالإنجليزية",
-  "samplePending": "لا يتوفر بعد مقتطف مجاني بهذه اللغة. المقتطف المجاني متاح في الطبعتين الإسبانية والإنجليزية.",
+  "samplePending": "لا يتوفر بعد مقتطف مجاني بهذه اللغة. المقتطف المجاني متاح في الطبعات الإسبانية والإنجليزية والفرنسية.",
   "credits": "الطبعة الأولى، 2026 · ARTFORO Editions · الترجمة الإنجليزية: ريد نيوهول",
   "bookSub2": "ولادة التعبيرية النفسية",
   "bookSub": "الفن أنقذ حياتي",
@@ -1058,4 +1058,6 @@ TR.ar = {
   "The opening night of ART GABANGI on July 6.": "ليلة افتتاح ART GABANGI في 6 يوليو.",
   "One day at the fair, any day from July 7 to 14.": "يوم واحد في المعرض، في أي يوم من 7 إلى 14 يوليو.",
   "Fifth Anniversary · Launch of Ecce Homo": "الذكرى السنوية الخامسة · إطلاق Ecce Homo",
+  "Spanish edition": "الطبعة الإسبانية",
+  "French edition": "الطبعة الفرنسية",
 };

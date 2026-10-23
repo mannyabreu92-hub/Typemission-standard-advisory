@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.it = {
   "readEnSample": "Leggi l’estratto in inglese",
-  "samplePending": "Non c’è ancora un estratto gratuito in questa lingua. L’estratto gratuito è disponibile nelle edizioni spagnola e inglese.",
+  "samplePending": "Non c’è ancora un estratto gratuito in questa lingua. L’estratto gratuito è disponibile nelle edizioni spagnola, inglese e francese.",
   "credits": "Prima edizione, 2026 · ARTFORO Editions · Traduzione inglese: Reed Newhall",
   "bookSub2": "La nascita dello Psico-Espressionismo",
   "bookSub": "L’arte mi ha salvato la vita",
@@ -1046,4 +1046,6 @@ TR.it = {
   "The opening night of ART GABANGI on July 6.": "La serata di apertura di ART GABANGI, il 6 luglio.",
   "One day at the fair, any day from July 7 to 14.": "Un giorno alla fiera, a scelta dal 7 al 14 luglio.",
   "Fifth Anniversary · Launch of Ecce Homo": "Quinto anniversario · Presentazione di Ecce Homo",
+  "Spanish edition": "Edizione spagnola",
+  "French edition": "Edizione francese",
 };

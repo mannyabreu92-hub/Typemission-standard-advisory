@@ -74,9 +74,14 @@ Object.assign(I18N.fr, {
   shAuctionTitle: 'Aux enchères', shAllLots: 'Voir la vente',
 });
 
-// The printed Ecce Homo (Spanish edition, printed by Amigo del Hogar). Price pending: until it is
-// set, orders go to WhatsApp with "Price confirmed by the museum". Whop key: book-print-es.
-const PRINT_EDITIONS = [{ lang: 'es', price: null, key: 'book-print-es' }];
+// The printed Ecce Homo (Spanish and French editions, both printed by Amigo del Hogar per their
+// credits pages). Prices pending: until set, orders go to WhatsApp with "Price confirmed by the
+// museum". Whop keys: book-print-es, book-print-fr.
+const PRINT_EDITIONS = [
+  { lang: 'es', price: null, key: 'book-print-es', name: { es: 'Edición en español', en: 'Spanish edition', fr: 'Édition espagnole' } },
+  { lang: 'fr', price: null, key: 'book-print-fr', name: { es: 'Edición en francés', en: 'French edition', fr: 'Édition française' } },
+];
+const printSub = p => L(p.name) + ' · Ediciones ARTFORO';
 
 /* ---------- Auction ---------- */
 
@@ -246,7 +251,7 @@ function pageShop() {
         ${PRINT_EDITIONS.map(p => `<article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
           <h3 class="pass-name">${t('shPrint')}</h3>
-          <p class="muted">${t('shPrintSub')}</p>
+          <p class="muted">${printSub(p)}</p>
           <p class="pass-price">${price(p.price)}</p>
           <p class="muted">${t('shPrintNote')}</p>
           <button class="buy-now" data-action="buyPrint" data-l="${p.lang}">${t('shOrder')} <span class="arr" aria-hidden="true">›</span></button>
@@ -269,7 +274,7 @@ function pageShop() {
 
 EXTRA_ACTIONS.buyPrint = el => {
   const p = PRINT_EDITIONS.find(x => x.lang === el.dataset.l);
-  checkout({ title: 'Ecce Homo · ' + t('shPrint'), sub: t('shPrintSub'), price: p.price, qty: true, link: whopLink(p.key), provider: 'Whop' });
+  checkout({ title: 'Ecce Homo · ' + t('shPrint'), sub: printSub(p), price: p.price, qty: true, link: whopLink(p.key), provider: 'Whop' });
 };
 
 /* ---------- Home: auction and shop right after the next event ---------- */
@@ -288,8 +293,11 @@ EXTRA_ACTIONS.buyPrint = el => {
 Object.assign(EXTRA_ROUTES, { subasta: pageAuction, tienda: pageShop });
 Object.assign(ROUTE_SECTION, { rsvp: 'eventos', gracias: 'tienda' });
 
-// Thank-you page wording for the printed book.
+// Thank-you page wording for the printed books.
 {
   const info = purchaseInfo;
-  purchaseInfo = key => key === 'book-print-es' ? { item: 'Ecce Homo · ' + t('shPrint'), text: t('shPrintNote') } : info(key);
+  purchaseInfo = key => {
+    const p = PRINT_EDITIONS.find(x => x.key === key);
+    return p ? { item: 'Ecce Homo · ' + t('shPrint') + ' · ' + L(p.name), text: t('shPrintNote') } : info(key);
+  };
 }

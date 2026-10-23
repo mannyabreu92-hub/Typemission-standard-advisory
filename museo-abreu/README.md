@@ -187,6 +187,18 @@ collection, the reader and Pro stay in the top menu and on the home page.
   sheet, Whop key `book-print-es`), the digital editions and the auction lots.
 - **Home**: the next event, then the auction lots and the shop.
 
+## French edition (`sample-fr.js`)
+
+From `Ecce Homo — Édition française` (Ediciones ARTFORO, 2026). It follows the Spanish edition paragraph
+by paragraph (same 71 sections, same paragraph counts), which made an exact match possible:
+- `DAILY_QUOTES_FR` (`data.js`): the French counterpart of each of the 74 Spanish quotes, the sentence in the
+  same place of the same paragraph; every one checked word for word against the French text. French and
+  Spanish visitors see the same passage on the same day.
+- `SAMPLE_FR` (Introduction and Chapter I), `TOC_FR` (70 chapter titles), `CREDITS_FR` (credits page as
+  printed, under "Crédits de l’édition" in the library in French).
+- The French digital edition is listed as available (Whop key `book-fr`), and the printed French edition is in
+  the Shop next to the Spanish one (`book-print-fr`, price pending).
+
 ## Spanish edition (`sample-es.js`)
 
 From `Ecce Homo Español` (Ediciones ARTFORO, 2026, published for the museum's anniversary):
@@ -251,7 +263,8 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
   there is only one Art club product (its link ends in `art-club-5d`). Payouts in USD to be confirmed with
   Whop. Delivery of the digital book after purchase (file in Whop "Content", or access sent by email).
 - Class, tour and club prices (several are illustrative).
-- Auction: the real lots, starting bids, online closing time and bid increment; printed book price.
+- Auction: the real lots, starting bids, online closing time and bid increment; printed book prices (Spanish, French);
+  Whop products for the French digital edition and the printed editions.
 - Nov 17 anniversary and June 13 group exhibition: ticket prices and times.
 - Museum hours (WhatsApp profile says "by appointment only"), address, accessibility.
 - Editorial notes to remove before chapters V, XIV, XVI of the English manuscript.

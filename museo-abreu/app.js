@@ -156,12 +156,13 @@ function go(hash) {
 // A different quote from the book each day (Punta Cana date), in the book's order.
 function quoteOfTheDay() {
   const today = todayPC();
-  const es = lang === 'es', list = es ? DAILY_QUOTES_ES : DAILY_QUOTES;
+  // Spanish and French visitors get the quote from their own edition; others the English one.
+  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR }[lang], list = own || DAILY_QUOTES;
   const q = list[Math.floor(Date.parse(today) / 864e5) % list.length];
   const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
   return `<p class="eyebrow">${t('quoteOfDay')} · ${fmtDate(today, { day: 'numeric', month: 'long' })}</p>
-      <figure class="hero-quote"><blockquote lang="${es ? 'es' : 'en'}" dir="ltr">“${esc(q.q)}”</blockquote>
-        <figcaption>— Oscar Abreu · <cite>Ecce Homo</cite>, ${where}${lang !== 'en' && !es ? ` · ${t('englishEdition')}` : ''}</figcaption></figure>`;
+      <figure class="hero-quote"><blockquote lang="${own ? lang : 'en'}" dir="ltr">“${esc(q.q)}”</blockquote>
+        <figcaption>— Oscar Abreu · <cite>Ecce Homo</cite>, ${where}${lang !== 'en' && !own ? ` · ${t('englishEdition')}` : ''}</figcaption></figure>`;
 }
 
 function pageHome() {
@@ -674,9 +675,12 @@ function downloadICS(code) {
 const owns = l => purchases.some(p => p.lang === l && !p.refunded);
 const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typeof isPro === 'function' && isPro()));
 
+// Credits pages of the printed editions, shown in the library in their own language.
+const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR } };
+
 function pageLibrary() {
   const bookTitle = t('bookTitle');
-  // Sample text exists for the Spanish and English editions.
+  // Sample text exists for the Spanish, English and French editions.
   const readLang = owns(lang) ? lang : (purchases[0]?.lang || (hasSample(lang) ? lang : 'en'));
   const last = reading.last;
   return `<div class="wrap">
@@ -690,9 +694,9 @@ function pageLibrary() {
         <h2 class="h3">${t('synopsis')}</h2>
         <p>${t('synopsisText')}</p>
         <p class="muted" style="margin-top:.6rem">${t('credits')}</p>
-        ${lang === 'es' && typeof CREDITS_ES !== 'undefined' ? `<details class="ed-credits"><summary>Créditos de la edición</summary>
-          <dl>${CREDITS_ES.roles.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-          ${CREDITS_ES.notes.map(n => `<p>${esc(n)}</p>`).join('')}</details>` : ''}
+        ${EDITION_CREDITS[lang] ? `<details class="ed-credits"><summary>${EDITION_CREDITS[lang].label}</summary>
+          <dl>${EDITION_CREDITS[lang].roles.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+          ${EDITION_CREDITS[lang].notes.map(n => `<p>${esc(n)}</p>`).join('')}</details>` : ''}
         <div class="btn-row">
           ${last ? `<a class="btn primary" href="#/leer/${last.lang}/${last.ch}">${t('resume')}</a>` : ''}
           <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : readLang !== lang ? t('readEnSample') : t('readSample')}</a>
@@ -758,7 +762,7 @@ function buyEdition(l) {
 }
 
 const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
-const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES };
+const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR };
 const sampleFor = (l, c) => SAMPLES[l]?.[c.key] || null;
 const hasSample = l => l in SAMPLES;
 

@@ -5,7 +5,7 @@
 const I18N = {
   es: {
     readEnSample: 'Leer muestra en inglés',
-    samplePending: 'Todavía no hay muestra gratuita en este idioma. La muestra gratuita está disponible en las ediciones en español e inglés.',
+    samplePending: 'Todavía no hay muestra gratuita en este idioma. La muestra gratuita está disponible en las ediciones en español, inglés y francés.',
     credits: 'Primera edición, 2026 · Ediciones ARTFORO · Dirección conceptual y editorial: Cándido Gerón · Impreso por Amigo del Hogar, Santo Domingo',
     bookSub2: 'El nacimiento del Psico-Expresionismo',
     bookSub: 'El arte me salvó la vida',
@@ -144,7 +144,7 @@ const I18N = {
   },
   en: {
     readEnSample: 'Read the English sample',
-    samplePending: 'There is no free sample in this language yet. The free sample is available in the Spanish and English editions.',
+    samplePending: 'There is no free sample in this language yet. The free sample is available in the Spanish, English and French editions.',
     credits: 'First edition, 2026 · ARTFORO Editions · English translation: Reed Newhall',
     bookSub2: 'The Birth of Psycho-Expressionism',
     bookSub: 'Art Saved My Life',
@@ -283,8 +283,8 @@ const I18N = {
   },
   fr: {
     readEnSample: 'Lire l’extrait en anglais',
-    samplePending: 'Il n’y a pas encore d’extrait gratuit dans cette langue. L’extrait gratuit est disponible dans les éditions espagnole et anglaise.',
-    credits: 'Première édition, 2026 · ARTFORO Editions · Traduction anglaise : Reed Newhall',
+    samplePending: 'Il n’y a pas encore d’extrait gratuit dans cette langue. L’extrait gratuit est disponible dans les éditions espagnole, anglaise et française.',
+    credits: 'Première édition, 2026 · Ediciones ARTFORO · Direction conceptuelle et éditoriale : Cándido Gerón · Imprimé par Amigo del Hogar, Saint-Domingue',
     bookSub2: 'La naissance du Psycho-Expressionnisme',
     bookSub: 'L’art m’a sauvé la vie',
     psicoQuoteNote: 'Extrait d’Ecce Homo (édition anglaise)',
