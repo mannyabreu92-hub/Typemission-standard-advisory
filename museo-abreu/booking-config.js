@@ -25,7 +25,7 @@ var BOOKING = {
   whop: {
     pro: '',
     'painting-club': 'https://whop.com/museoabreu/painting-club',
-    'art-club': '',
+    'art-club': 'https://whop.com/museoabreu/art-club-5d',
     'book-en': '',
     'book-es': '',
     'sponsor-25': '',
