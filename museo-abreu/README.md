@@ -193,6 +193,9 @@ collection, the reader and Pro stay in the top menu and on the home page.
   French (`?l=es|en|fr`; other languages get English), then open the event page. Its texts copy those in
   `features.js`; keep them in step when an event changes. Event titles on the events page and the home card
   open these pages.
+- **Instagram images** (`story.js`): an "Instagram image" button next to Share on each event page, lot page and
+  the Shop draws a 1080 × 1920 story image in the browser (the painting with its credit, title, date and place,
+  and the share link). On phones it opens the share sheet with the image; elsewhere it downloads the PNG.
 - **Museum dashboard** (`#/admin`, `admin.js`, `api/admin.js`; not in the menus): all auction bids with the
   bidders' names, phones (call / WhatsApp) and emails, Whop purchases (from the webhook log) and RSVPs with the
   headcount per event, each downloadable as CSV. Protected by `ADMIN_PASSWORD` (Vercel › Settings ›

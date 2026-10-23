@@ -640,6 +640,9 @@ I18N.de = {
   "evSeeInvite": "Einladung ansehen",
   "evTickets": "Tickets",
   "evShareText": "{event} · {date} · Museo Abreu, Punta Cana",
+  "igBtn": "Bild für Instagram",
+  "igReady": "Bild fertig: teilen oder speichern.",
+  "igErr": "Das Bild konnte nicht erstellt werden.",
 };
 TR.de = {
   "2019": "2019",

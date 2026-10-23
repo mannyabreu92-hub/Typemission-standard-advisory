@@ -640,6 +640,9 @@ I18N.ar = {
   "evSeeInvite": "عرض الدعوة",
   "evTickets": "التذاكر",
   "evShareText": "{event} · {date} · Museo Abreu، بونتا كانا",
+  "igBtn": "صورة لإنستغرام",
+  "igReady": "الصورة جاهزة: شاركها أو احفظها.",
+  "igErr": "تعذّر إنشاء الصورة.",
 };
 TR.ar = {
   "2019": "2019",
