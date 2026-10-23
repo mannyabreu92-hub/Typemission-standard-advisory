@@ -625,6 +625,21 @@ I18N.it = {
   "shAuctionTitle": "All’asta",
   "shAllLots": "Vedi l’asta",
   "auBid1": "1 offerta",
+  "evDays": "giorni",
+  "evHours": "ore",
+  "evMins": "min",
+  "evSecs": "sec",
+  "evWhen": "Quando",
+  "evWhere": "Dove",
+  "evProgram": "Programma",
+  "evShare": "Condividi",
+  "evCopy": "Copia link",
+  "evCopied": "Link copiato",
+  "evAll": "Tutti gli eventi",
+  "evOpen": "Vedi l’evento",
+  "evSeeInvite": "Vedi l’invito",
+  "evTickets": "Biglietti",
+  "evShareText": "{event} · {date} · Museo Abreu, Punta Cana",
 };
 TR.it = {
   "2019": "2019",
@@ -1048,4 +1063,6 @@ TR.it = {
   "Fifth Anniversary · Launch of Ecce Homo": "Quinto anniversario · Presentazione di Ecce Homo",
   "Spanish edition": "Edizione spagnola",
   "French edition": "Edizione francese",
+  "Oscar Abreu · The Escaping Being": "Oscar Abreu · L’essere che sfugge",
+  "Oscar Abreu · Resilience": "Oscar Abreu · Resilienza",
 };

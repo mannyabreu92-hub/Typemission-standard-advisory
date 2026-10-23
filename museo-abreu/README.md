@@ -186,6 +186,13 @@ collection, the reader and Pro stay in the top menu and on the home page.
 - **Shop** (`#/tienda`): the printed Ecce Homo (Spanish edition; price pending, orders via the checkout
   sheet, Whop key `book-print-es`), the digital editions and the auction lots.
 - **Home**: the next event, then the auction lots and the shop.
+- **Event pages** (`#/evento/<id>`, `events-page.js`): one page per yearly event with an image, a live countdown,
+  date and place, programme, tickets (ART GABANGI pass cards) or RSVP, "Add to calendar" and **Share**. The
+  share link is `https://museo-abreu.vercel.app/e/<id>` (`api/event-share.js`, rewrite in `vercel.json`): WhatsApp,
+  Instagram and others show that event's own title, date, description and image, in Spanish, English or
+  French (`?l=es|en|fr`; other languages get English), then open the event page. Its texts copy those in
+  `features.js`; keep them in step when an event changes. Event titles on the events page and the home card
+  open these pages.
 
 ## French edition (`sample-fr.js`)
 

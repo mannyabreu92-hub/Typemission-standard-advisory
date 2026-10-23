@@ -549,3 +549,27 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .section-head .buy-now { margin-top: 0; }
 .shop-banner { display: grid; grid-template-columns: 90px 1fr; gap: 1.2rem; align-items: center; text-decoration: none; color: inherit; }
 .shop-banner .cover { width: 90px; }
+
+/* Event pages (events-page.js) */
+.event-page > .btn { margin-top: 1rem; }
+.ev-hero { display: grid; gap: 1.4rem; }
+@media (min-width: 860px) { .ev-hero { grid-template-columns: 1fr 1fr; align-items: center; } }
+.ev-figure { margin: 0; }
+.ev-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.ev-figure figcaption { font-size: .8rem; color: var(--ink-3); margin-top: .4rem; }
+.ev-head { display: grid; gap: .8rem; align-content: start; }
+.ev-title { font-size: clamp(2.1rem, 8vw, 3.2rem); line-height: 1.05; margin: 0; text-wrap: balance; }
+.ev-sub { font: italic 400 1.2rem/1.4 var(--serif); color: var(--ink-2); margin: -.3rem 0 0; }
+.countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; max-width: 420px; }
+.countdown span { display: grid; justify-items: center; padding: .7rem .3rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.countdown strong { font: 600 clamp(1.5rem, 6vw, 2rem)/1 var(--serif); font-variant-numeric: tabular-nums; }
+.countdown small { font: 600 .66rem/1.6 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); margin-top: .2rem; }
+:root[lang="ar"] .countdown small { letter-spacing: 0; }
+.ev-facts { display: grid; gap: .5rem; margin: 0; }
+.ev-facts div { display: grid; grid-template-columns: 5.5rem 1fr; gap: .6rem; }
+.ev-facts dt { font: 600 .72rem/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); }
+.ev-facts dd { margin: 0; }
+.ev-program ul { margin: .3rem 0 0; padding-inline-start: 1.1rem; color: var(--ink-2); }
+.ev-body { display: grid; gap: 1rem; max-width: 760px; }
+.event h3 a { color: inherit; text-decoration: none; }
+.event h3 a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }

@@ -625,6 +625,21 @@ I18N.ar = {
   "shAuctionTitle": "في المزاد",
   "shAllLots": "عرض المزاد",
   "auBid1": "عرض واحد",
+  "evDays": "يوم",
+  "evHours": "ساعة",
+  "evMins": "دقيقة",
+  "evSecs": "ثانية",
+  "evWhen": "متى",
+  "evWhere": "أين",
+  "evProgram": "البرنامج",
+  "evShare": "مشاركة",
+  "evCopy": "نسخ الرابط",
+  "evCopied": "تم نسخ الرابط",
+  "evAll": "كل الفعاليات",
+  "evOpen": "عرض الفعالية",
+  "evSeeInvite": "عرض الدعوة",
+  "evTickets": "التذاكر",
+  "evShareText": "{event} · {date} · Museo Abreu، بونتا كانا",
 };
 TR.ar = {
   "2019": "2019",
@@ -1060,4 +1075,6 @@ TR.ar = {
   "Fifth Anniversary · Launch of Ecce Homo": "الذكرى السنوية الخامسة · إطلاق Ecce Homo",
   "Spanish edition": "الطبعة الإسبانية",
   "French edition": "الطبعة الفرنسية",
+  "Oscar Abreu · The Escaping Being": "أوسكار أبرو · الكائن الهارب",
+  "Oscar Abreu · Resilience": "أوسكار أبرو · الصمود",
 };
