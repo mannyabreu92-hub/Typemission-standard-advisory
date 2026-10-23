@@ -59,12 +59,22 @@ Bókun keeps everything with a date and a time. Whop sells what has no date: the
 the two monthly clubs, the digital editions of Ecce Homo and class sponsorships. See the Phase 2
 plan for the reasons and costs.
 
-1. Before signing up, confirm with Whop that it can pay out to the museum's bank account in the
-   Dominican Republic, and the all-in fees (card, payout, currency).
-2. Create the account in the museum's name and one product per row below.
-3. Copy each product's checkout link into `BOOKING.whop` in `booking-config.js`. An empty value
-   keeps the WhatsApp request; a filled one sends the button straight to Whop's checkout and drops
-   "via WhatsApp" from its label.
+1. **Sign up** at whop.com in the museum's name and create the business ("Museo Abreu").
+2. **Payouts first:** start Whop's payout setup and check that the Dominican Republic appears in the
+   country list. Whop pays only to a bank account in the country the account is registered in, in
+   that country's currency. Complete identity verification (KYC) with the account holder's ID.
+3. **Products** (Dashboard › Products › Add product): one per row below. Name, short description,
+   an image (a painting works), price; "Recurring" with a monthly billing cycle for Pro and the
+   clubs, "One-time" for the book and sponsorships.
+4. **Checkout links** (Dashboard › Checkout links › Create checkout link): pick the product, check
+   the price and billing interval, create, and copy the link.
+5. Paste each link into `BOOKING.whop` in `booking-config.js` (or send them to the developer). The
+   app's checkout sheet then shows "Pay USD … by card" for that product; empty keys stay on WhatsApp.
+6. Make one test purchase with a real card and refund it from the dashboard.
+
+Fees as reported in October 2026 (check docs.whop.com/fees before launch): about 2.7% + US$0.30 per
+card payment, more for international cards with currency conversion; payouts are charged
+separately (bank transfer, instant or wire, each with its own fee). No monthly fee.
 
 | Key in `BOOKING.whop` | Product | Price (USD) | Billing |
 |---|---|---|---|
@@ -72,7 +82,7 @@ plan for the reasons and costs.
 | `painting-club` | Painting club | 80 | monthly |
 | `art-club` | Art club | 30 | monthly |
 | `book-en` | Ecce Homo, English digital edition | 60 | one-time |
-| `book-es` | Ecce Homo, Spanish digital edition | 60 (when the text is ready) | one-time |
+| `book-es` | Ecce Homo, Spanish digital edition | 60 | one-time |
 | `sponsor-25`, `sponsor-50`, `sponsor-100` | Sponsor a painting class | 25 / 50 / 100 | one-time |
 
 Until the app has its own server (Phase 2, step 3), Pro benefits and book access are checked by
