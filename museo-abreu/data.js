@@ -42,6 +42,7 @@ const LANG_NAMES = {
   en: { es: 'Inglés', en: 'English', fr: 'Anglais' },
   fr: { es: 'Francés', en: 'French', fr: 'Français' },
   de: { es: 'Alemán', en: 'German', fr: 'Allemand' },
+  ru: { es: 'Ruso', en: 'Russian', fr: 'Russe' },
   pt: { es: 'Portugués', en: 'Portuguese', fr: 'Portugais' },
 };
 
@@ -100,18 +101,19 @@ const EDITIONS = [
   { lang: 'en', price: 25, status: 'available' },
   { lang: 'fr', price: 25, status: 'available' },
   { lang: 'de', price: 25, status: 'available' },
+  { lang: 'ru', price: 25, status: 'available' },
   { lang: 'pt', price: 25, status: 'soon' },
 ];
 
 // Table of contents of ECCE HOMO. Introduction and Chapter I are the free sample.
 const CHAPTERS = [
-  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction', fr: 'Introduction', de: 'Einleitung' } },
+  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction', fr: 'Introduction', de: 'Einleitung', ru: 'Введение' } },
   ...TOC_EN.nums.map((n, i) => ({
     key: 'ch' + (i + 1), free: i === 0,
-    title: { es: 'Capítulo ' + n + ' — ' + TOC_ES.titles[i], en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i], fr: 'Chapitre ' + n + ' — ' + TOC_FR.titles[i], de: 'Kapitel ' + n + ' — ' + TOC_DE.titles[i] },
+    title: { es: 'Capítulo ' + n + ' — ' + TOC_ES.titles[i], en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i], fr: 'Chapitre ' + n + ' — ' + TOC_FR.titles[i], de: 'Kapitel ' + n + ' — ' + TOC_DE.titles[i], ru: 'Глава ' + n + ' — ' + TOC_RU.titles[i] },
   })),
-  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments', fr: 'Remerciements', de: 'Danksagung' } },
-  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology', fr: 'Chronologie biographique', de: 'Biografische Zeittafel' } },
+  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments', fr: 'Remerciements', de: 'Danksagung', ru: 'Благодарности' } },
+  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology', fr: 'Chronologie biographique', de: 'Biografische Zeittafel', ru: 'Биографическая хроника' } },
 ];
 
 // Selected milestones from the book's Biographical Chronology (updated manuscript, 1978–2026).

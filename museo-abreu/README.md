@@ -256,6 +256,18 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## Russian edition (`sample-ru.js`)
+
+From `Ecce Homo — Русское издание` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph.
+The app's interface is not in Russian, so the edition is reached from the library in any language:
+- `SAMPLE_RU` (Введение and Глава I) and `TOC_RU` (70 chapter titles as printed); the library's editions list has
+  "Read free sample" for each edition in another language than the one shown, and the reader shows the text left to right.
+- `CREDITS_RU` (credits page as printed): at the end of its Introduction in the reader, under "Выходные данные"
+  (edition credits are shown there for any edition read in another language than the app's).
+- Digital edition listed as available (Whop key `book-ru`, link to come; until then orders go to WhatsApp); printed
+  Russian edition in the Shop (`book-print-ru`, price pending).
+- If Russian becomes a full app language later, the daily quotes can be matched the same way as the German ones.
+
 ## German edition (`sample-de.js`)
 
 From `Ecce Homo — Deutsche Ausgabe` (Ediciones ARTFORO, 2026). Like the French edition it follows the Spanish

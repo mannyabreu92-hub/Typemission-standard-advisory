@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.it = {
   "readEnSample": "Leggi l’estratto in inglese",
-  "samplePending": "Non c’è ancora un estratto gratuito in questa lingua. L’estratto gratuito è disponibile nelle edizioni spagnola, inglese, francese e tedesca.",
+  "samplePending": "Non c’è ancora un estratto gratuito in questa lingua. L’estratto gratuito è disponibile nelle edizioni spagnola, inglese, francese, tedesca e russa.",
   "credits": "Prima edizione, 2026 · ARTFORO Editions · Traduzione inglese: Reed Newhall",
   "bookSub2": "La nascita dello Psico-Espressionismo",
   "bookSub": "L’arte mi ha salvato la vita",
@@ -1137,4 +1137,6 @@ TR.it = {
   "Oscar Abreu · The Escaping Being": "Oscar Abreu · L’essere che sfugge",
   "Oscar Abreu · Resilience": "Oscar Abreu · Resilienza",
   "German edition": "Edizione tedesca",
+  "Russian": "Russo",
+  "Russian edition": "Edizione russa",
 };

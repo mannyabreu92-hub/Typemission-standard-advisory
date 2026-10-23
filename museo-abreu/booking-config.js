@@ -33,6 +33,8 @@ var BOOKING = {
     'book-print-fr': '', // printed French edition (shop)
     'book-de': '', // German digital edition: Whop link to come
     'book-print-de': '', // printed German edition (shop)
+    'book-ru': '', // Russian digital edition: Whop link to come
+    'book-print-ru': '', // printed Russian edition (shop)
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',

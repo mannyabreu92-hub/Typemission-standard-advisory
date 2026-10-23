@@ -678,11 +678,12 @@ const owns = l => purchases.some(p => p.lang === l && !p.refunded);
 const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typeof isPro === 'function' && isPro()));
 
 // Credits pages of the printed editions, shown in the library in their own language.
-const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR }, de: { label: 'Impressum der Ausgabe', ...CREDITS_DE } };
+const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR }, de: { label: 'Impressum der Ausgabe', ...CREDITS_DE },
+  ru: { label: 'Выходные данные', ...CREDITS_RU } };
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
-  // Sample text exists for the Spanish, English, French and German editions.
+  // Sample text exists for the Spanish, English, French, German and Russian editions.
   const readLang = owns(lang) ? lang : (purchases[0]?.lang || (hasSample(lang) ? lang : 'en'));
   const last = reading.last;
   return `<div class="wrap">
@@ -712,7 +713,8 @@ function pageLibrary() {
         <p class="muted" style="margin-bottom:.8rem">${t('oneTime')}</p>
         <div class="editions">${EDITIONS.map(ed => `
           <div class="edition">
-            <div><strong>${L(LANG_NAMES[ed.lang])}</strong><br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span></div>
+            <div><strong>${L(LANG_NAMES[ed.lang])}</strong><br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span>
+              ${hasSample(ed.lang) && ed.lang !== readLang && !owns(ed.lang) ? `<br><a class="ed-sample" href="#/leer/${ed.lang}/0" aria-label="${esc(t('readSample') + ' · ' + L(LANG_NAMES[ed.lang]))}">${t('readSample')}</a>` : ''}</div>
             ${owns(ed.lang) ? `<a class="btn small dark" href="#/leer/${ed.lang}/0">${t('owned')} · ${t('read')}</a>`
               : ed.status === 'available' ? `<button class="btn small primary" data-action="buy" data-l="${ed.lang}">${t(BOOKING.live || whopLink('book-' + ed.lang) ? 'buyOnline' : 'buy', { price: usd(ed.price) })}</button>`
               : `<span class="chip">${t('comingSoon')}</span>`}
@@ -764,7 +766,7 @@ function buyEdition(l) {
 }
 
 const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
-const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE };
+const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE, ru: SAMPLE_RU };
 const sampleFor = (l, c) => SAMPLES[l]?.[c.key] || null;
 const hasSample = l => l in SAMPLES;
 
@@ -798,7 +800,9 @@ function pageReader(l = 'es', chStr = '0') {
         <button class="btn small" data-action="bookmark" data-l="${l}" data-ch="${ch}" aria-pressed="${marked}">${marked ? '★' : '☆'} ${t('bookmark')}</button>
       </div>
     </div>
-    <article class="reader-text" lang="${l}">${text}</article>
+    <article class="reader-text" lang="${l}" dir="ltr">${text}${ch === 0 && l !== lang && EDITION_CREDITS[l] && canRead(l, 0) ? `<details class="ed-credits"><summary>${EDITION_CREDITS[l].label}</summary>
+      <dl>${EDITION_CREDITS[l].roles.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+      ${EDITION_CREDITS[l].notes.map(n => `<p>${esc(n)}</p>`).join('')}</details>` : ''}</article>
     <nav class="reader-nav">
       ${ch > 0 ? `<a class="btn small" href="#/leer/${l}/${ch - 1}"><span class="arr">←</span> ${t('prev')}</a>` : '<span></span>'}
       ${ch < CHAPTERS.length - 1 ? `<a class="btn small dark" href="#/leer/${l}/${ch + 1}">${t('next')} <span class="arr">→</span></a>` : ''}
