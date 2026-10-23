@@ -53,4 +53,27 @@ const writeJSON = (pathname, obj) => put(pathname, JSON.stringify(obj), {
   access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: true,
 });
 
-module.exports = { emailHash, verifyWebhook, findEmail, findProductKey, readJSON, writeJSON };
+// Event tickets (ART GABANGI keys "gabangi-…"): each paid purchase gets a code for its QR, made from the
+// payment id with a secret kept in the private store (tickets/secret.json, created on first use), so the
+// same payment always gives the same code and codes cannot be guessed.
+const isTicketKey = key => /^gabangi-/.test(key);
+async function ticketCode(paymentId) {
+  let s = await readJSON('tickets/secret.json');
+  if (!s) {
+    await put('tickets/secret.json', JSON.stringify({ secret: crypto.randomBytes(32).toString('hex') }), { access: 'private', contentType: 'application/json', addRandomSuffix: false, allowOverwrite: false }).catch(() => {});
+    s = await readJSON('tickets/secret.json');
+  }
+  const h = crypto.createHmac('sha256', s.secret).update(String(paymentId)).digest();
+  const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let c = '';
+  for (let i = 0; i < 8; i++) c += A[h[i] % 32];
+  return `GB-${c.slice(0, 4)}-${c.slice(4)}`;
+}
+// The quantity of a payment, wherever the payload keeps it (1 if none).
+function quantityOf(data) {
+  let q = null;
+  (function walk(v, k) { if (q != null || !v) return; if (typeof v === 'object') return Object.entries(v).forEach(([kk, vv]) => walk(vv, kk));
+    if (/^quantity$/i.test(k) && Number.isInteger(Number(v)) && Number(v) > 0) q = Number(v); })(data, '');
+  return Math.min(q || 1, 20);
+}
+
+module.exports = { emailHash, verifyWebhook, findEmail, findProductKey, readJSON, writeJSON, isTicketKey, ticketCode, quantityOf };

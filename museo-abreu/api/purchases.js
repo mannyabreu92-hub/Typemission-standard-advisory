@@ -1,5 +1,5 @@
-// The app asks what an email owns: POST { email } → { keys: ['book-en', 'pro', …] }.
-// Only product keys go back, never other details of the purchase.
+// The app asks what an email owns: POST { email } → { keys: ['book-en', 'pro', …], tickets: [{ code, key, qty }] }.
+// Only product keys and ticket codes (for the QR) go back, never other details of the purchase.
 const { emailHash, readJSON } = require('./_lib');
 
 module.exports = async (req, res) => {
@@ -9,5 +9,6 @@ module.exports = async (req, res) => {
   const rec = await readJSON(`purchases/${emailHash(email)}.json`);
   const keys = rec ? Object.entries(rec.items).filter(([, v]) => v.active).map(([k]) => k) : [];
   res.setHeader('Cache-Control', 'no-store');
-  res.status(200).json({ keys });
+  const tickets = rec && rec.tickets ? rec.tickets.filter(x => !x.void).map(({ code, key, qty }) => ({ code, key, qty })) : [];
+  res.status(200).json({ keys, tickets });
 };

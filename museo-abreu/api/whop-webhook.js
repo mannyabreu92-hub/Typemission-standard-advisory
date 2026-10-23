@@ -1,7 +1,7 @@
 // Whop calls this after payments and membership changes (Whop › Developer › Webhooks, URL
 // https://museo-abreu.vercel.app/api/whop-webhook). It records what each buyer owns so the app
 // can unlock it. Needs WHOP_WEBHOOK_SECRET (the webhook's secret) in the Vercel project.
-const { verifyWebhook, findEmail, findProductKey, emailHash, readJSON, writeJSON } = require('./_lib');
+const { verifyWebhook, findEmail, findProductKey, emailHash, readJSON, writeJSON, isTicketKey, ticketCode, quantityOf } = require('./_lib');
 
 async function rawBody(req) {
   const chunks = [];
@@ -34,6 +34,24 @@ module.exports = async (req, res) => {
   const rec = (await readJSON(path)) || { items: {} };
   if (rec.seen && rec.seen.includes(id)) return res.status(200).json({ ok: true, duplicate: true });
   rec.items[key] = { active: !ends, type, at: new Date().toISOString() };
+  // Event tickets: a paid ticket gets its code (tickets/<code>.json, checked at the door); a refund voids them.
+  if (isTicketKey(key)) {
+    rec.tickets = rec.tickets || [];
+    const payId = (event.data && event.data.id) || id;
+    if (starts && /payment|paid|completed/i.test(type)) {
+      const code = await ticketCode(payId);
+      if (!rec.tickets.some(t => t.code === code)) {
+        const qty = quantityOf(event.data || event);
+        rec.tickets.push({ code, key, qty });
+        await writeJSON(`tickets/${code}.json`, { code, key, qty, email, payment: payId, at: new Date().toISOString(), usedAt: null, void: false });
+      }
+    }
+    if (ends) for (const tk of rec.tickets.filter(x => x.key === key && !x.void)) {
+      tk.void = true;
+      const doc = await readJSON(`tickets/${tk.code}.json`);
+      if (doc) await writeJSON(`tickets/${tk.code}.json`, { ...doc, void: true });
+    }
+  }
   rec.seen = [...(rec.seen || []), id].slice(-50); // Whop may deliver an event more than once
   await writeJSON(path, rec);
   res.status(200).json({ ok: true, recorded: true });

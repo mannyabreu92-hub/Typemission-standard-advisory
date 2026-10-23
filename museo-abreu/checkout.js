@@ -181,8 +181,17 @@ function unlockForm(id) {
 }
 
 // Turns on in this app what the server says the email owns.
-function applyPurchases(keys, email) {
+function applyPurchases(keys, email, tickets = []) {
   const names = [];
+  // ART GABANGI tickets bought on Whop: each comes with the museum's code, shown as the pass's QR at the door.
+  const gb = EVENTS.find(e => e.id === 'art-gabangi'), passes = fx.get('passes', []);
+  for (const tk of tickets) {
+    const tier = gb && gb.tiers.find(x => x.id === tk.key.slice(8));
+    if (!tier) continue;
+    if (!passes.some(p => p.code === tk.code)) passes.push({ code: tk.code, event: gb.id, tier: tier.id, date: addDays(eventDate(gb), tier.day || 0), guests: (tk.qty || 1) - 1, paid: tier.price, source: 'whop' });
+    names.push(L(tier.name) + ' · ' + eventTitle(gb));
+  }
+  fx.set('passes', passes);
   for (const key of keys) {
     const l = key.startsWith('book-') && key.slice(5);
     if (l && LANG_NAMES[l]) {
@@ -210,8 +219,8 @@ EXTRA_FORMS.unlock = async form => {
   try {
     const r = await fetch('/api/purchases', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value.trim() }) });
     if (!r.ok) throw new Error(r.status);
-    const { keys } = await r.json();
-    const names = applyPurchases(keys || [], input.value.trim());
+    const { keys, tickets } = await r.json();
+    const names = applyPurchases((keys || []).filter(k => !/^gabangi-/.test(k)), input.value.trim(), tickets || []);
     say(names.length ? t('unDone', { items: names.join(' · ') }) : t('unNone'), names.length);
   } catch (e) { say(t('unError')); }
   btn.disabled = false;

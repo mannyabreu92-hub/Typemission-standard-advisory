@@ -660,3 +660,23 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .nl-topics input { width: 20px; height: 20px; accent-color: var(--accent); }
 .ed-sample { font-size: .85rem; }
 :root[lang="ru"] { --sans: 'Golos Text', 'Work Sans', system-ui, sans-serif; }
+
+/* Door scanner (scanner.js) */
+.sc-view { display: grid; gap: .6rem; margin: 1rem 0; }
+.sc-view video { width: 100%; max-width: 420px; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius); background: var(--ink); }
+.sc-form { max-width: 420px; }
+.sc-form input { font-family: ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; }
+.sc-result:empty { display: none; }
+.sc-result { margin-top: 1rem; padding: 1rem 1.1rem; border-radius: var(--radius); border: 2px solid var(--line); background: var(--card); max-width: 420px; }
+.sc-result p { margin: .2rem 0; }
+.sc-big { font: 600 1.6rem/1.2 var(--serif); }
+.sc-admitted { border-color: var(--ok); background: #e9f5ec; }
+.sc-admitted .sc-big { color: var(--ok); }
+.sc-used { border-color: var(--warn); background: #fbf1e1; }
+.sc-used .sc-big { color: var(--warn); }
+.sc-void, .sc-unknown, .sc-err { border-color: #b42318; background: #fdecea; }
+.sc-void .sc-big, .sc-unknown .sc-big { color: #b42318; }
+.sc-recent { list-style: none; padding: 0; display: grid; gap: .3rem; font-size: .9rem; }
+.sc-recent li { padding-inline-start: .6rem; border-inline-start: 4px solid var(--line); }
+.sc-recent .sc-admitted { border-color: var(--ok); } .sc-recent .sc-used { border-color: var(--warn); }
+.sc-recent .sc-void, .sc-recent .sc-unknown { border-color: #b42318; }

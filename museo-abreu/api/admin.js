@@ -58,6 +58,19 @@ module.exports = async (req, res) => {
       await writeJSON(path, doc);
       return res.status(200).json({ event: b.event, date: b.date, ...doc });
     }
+    // Ticket check at the door (scanner.js): POST { action: 'ticket-check', code, admit } reads a ticket and,
+    // with admit, marks it used. 'ticket-undo' clears the check-in.
+    if (b.action === 'ticket-check' || b.action === 'ticket-undo') {
+      const code = String(b.code || '').trim().toUpperCase();
+      if (!/^GB-[A-Z2-9]{4}-[A-Z2-9]{4}$/.test(code)) return res.status(400).json({ error: 'code' });
+      const tk = await readJSON(`tickets/${code}.json`);
+      if (!tk) return res.status(404).json({ status: 'unknown', code });
+      if (b.action === 'ticket-undo') { tk.usedAt = null; await writeJSON(`tickets/${code}.json`, tk); return res.status(200).json({ status: 'undone', ...tk }); }
+      if (tk.void) return res.status(200).json({ status: 'void', ...tk });
+      if (tk.usedAt) return res.status(200).json({ status: 'used', ...tk });
+      if (b.admit) { tk.usedAt = new Date().toISOString(); await writeJSON(`tickets/${code}.json`, tk); return res.status(200).json({ status: 'admitted', ...tk }); }
+      return res.status(200).json({ status: 'valid', ...tk });
+    }
     // Mailing list (api/subscribe.js): remove one person.
     if (b.action === 'list-remove') {
       if (!/^list\/[0-9a-f]{64}\.json$/.test(String(b.id))) return res.status(400).json({ error: 'request' });
@@ -123,5 +136,6 @@ module.exports = async (req, res) => {
   const wishes = {};
   (await all('wish/', 3000)).forEach(w => ((w.data && w.data.items) || []).forEach(k => { wishes[k] = (wishes[k] || 0) + 1; }));
   const list = (await all('list/', 5000)).filter(r => r.data).map(r => ({ id: r.path, ...r.data }));
-  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list, now: new Date().toISOString() });
+  const tickets = (await all('tickets/', 5000)).filter(r => r.data && r.data.code).map(r => r.data);
+  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list, tickets, now: new Date().toISOString() });
 };

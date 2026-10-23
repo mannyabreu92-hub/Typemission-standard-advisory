@@ -1,6 +1,6 @@
 // Offline shell: the app opens without a connection (e.g. to show a ticket QR).
-const CACHE = 'museo-abreu-v66';
-const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'sample-es.js', 'sample-fr.js', 'sample-de.js', 'sample-ru.js', 'data.js', 'manifestos.js', 'manifestos-text.js', 'booking-config.js', 'features.js', 'gabangi.js', 'content.js', 'rsvp.js', 'checkout.js', 'auction-config.js', 'market.js', 'events-page.js', 'admin.js', 'story.js', 'aftercare.js', 'insights.js', 'remind.js', 'wishlist.js', 'alerts.js', 'newsletter.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
+const CACHE = 'museo-abreu-v67';
+const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'sample-es.js', 'sample-fr.js', 'sample-de.js', 'sample-ru.js', 'data.js', 'manifestos.js', 'manifestos-text.js', 'booking-config.js', 'features.js', 'gabangi.js', 'content.js', 'rsvp.js', 'checkout.js', 'auction-config.js', 'market.js', 'events-page.js', 'admin.js', 'story.js', 'aftercare.js', 'insights.js', 'remind.js', 'wishlist.js', 'alerts.js', 'newsletter.js', 'scanner.js', 'app.js', 'icon.svg', 'manifest.webmanifest',
   'qrcode.js', 'img/escaping-being.jpg', 'img/passion.jpg', 'img/petrichor.jpg', 'img/resilience.jpg', 'img/limerence.jpg', 'img/echoes-of-memory.jpg',
   'img/time-on-my-face.jpg',
   'img/escaping-being-800.jpg', 'img/icon-180.png', 'img/icon-192.png', 'img/icon-512.png', 'img/icon-maskable-512.png'];
