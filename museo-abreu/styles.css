@@ -470,3 +470,28 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .buy-now:hover .arr, .buy-now:focus-visible .arr { transform: translateX(4px); }
 :root[dir="rtl"] .buy-now:hover .arr { transform: translateX(-4px) scaleX(-1); }
 .event-wide :is(.pass-card) .status { font-size: .8rem; }
+
+/* Checkout sheet (checkout.js): slides up from the bottom on phones */
+.co-sheet { max-width: 480px; }
+@media (max-width: 600px) {
+  .co-sheet { margin: auto auto 0; max-width: 100vw; width: 100vw; border-radius: 14px 14px 0 0; max-height: 92vh; overflow-y: auto; }
+  .co-sheet .dlg-body { padding-bottom: calc(1.2rem + env(safe-area-inset-bottom)); }
+}
+.co-sheet .dlg-body { display: grid; gap: .8rem; }
+.co-item { display: flex; gap: .9rem; align-items: center; }
+.co-item img { width: 72px; height: 72px; object-fit: cover; border-radius: var(--radius); flex: none; }
+.co-item h3 { font: 700 1.25rem/1.2 var(--sans); margin: 0; }
+.co-item .muted { margin: .15rem 0 0; }
+.co-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .7rem 0; border-top: 1px solid var(--line); }
+.co-total { font-size: 1.1rem; }
+.co-total strong { font: 600 1.35rem/1 var(--sans); }
+.co-stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; }
+.co-step { width: 44px; height: 44px; border: 0; background: none; font-size: 1.3rem; cursor: pointer; color: var(--ink); border-radius: 999px; }
+.co-step:hover { background: var(--paper-2, rgba(0,0,0,.05)); }
+.co-stepper output { min-width: 2ch; text-align: center; font-weight: 600; font-size: 1.05rem; }
+.co-pay { width: 100%; min-height: 52px; font-size: 1rem; }
+.co-secure, .co-note { font-size: .82rem; margin: 0; text-align: center; }
+.co-wa { display: grid; gap: .6rem; }
+.co-wa-alt summary { cursor: pointer; font-size: .88rem; color: var(--ink-2); text-align: center; padding: .3rem 0; }
+.co-wa-alt[open] summary { margin-bottom: .6rem; }
+.co-close { width: 100%; }

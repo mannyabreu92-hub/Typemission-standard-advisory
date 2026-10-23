@@ -575,10 +575,10 @@ function pageClasses() {
     <section class="section"><h2>${t('clubsSection')}</h2><div class="grid two">${CLUBS.map(c => `
       <div class="card"><span style="float:right;font-weight:600">${usd(c.price)} <small class="muted">${t('perMonth')}</small></span>
         <h3>${L(c.name)}</h3><p class="muted">${L(c.when)}</p><p>${L(c.desc)}</p>
-        <div class="btn-row">${clubs.includes(c.id) ? `<span class="status ok">${t('clubMember')}</span>` : `<button class="btn" data-action="joinClub" data-id="${c.id}">${t(whopLink(c.id) ? 'joinClubOnline' : 'joinClub')}</button>`}</div></div>`).join('')}</div></section>
+        <div class="btn-row">${clubs.includes(c.id) ? `<span class="status ok">${t('clubMember')}</span>` : `<button class="btn" data-action="joinClub" data-id="${c.id}">${t(BOOKING.live || whopLink(c.id) ? 'joinClubOnline' : 'joinClub')}</button>`}</div></div>`).join('')}</div></section>
     <section class="section"><div class="card" style="max-width:640px">
       <h2>${t('sponsorTitle')}</h2><p>${t('sponsorText')}</p>
-      <div class="btn-row">${[25, 50, 100].map(a => `<button class="btn ${a === 50 ? 'primary' : ''}" data-action="sponsor" data-amount="${a}">${t(whopLink('sponsor-' + a) ? 'sponsorOnline' : 'sponsorBtn', { amount: usd(a) })}</button>`).join('')}</div>
+      <div class="btn-row">${[25, 50, 100].map(a => `<button class="btn ${a === 50 ? 'primary' : ''}" data-action="sponsor" data-amount="${a}">${t(BOOKING.live || whopLink('sponsor-' + a) ? 'sponsorOnline' : 'sponsorBtn', { amount: usd(a) })}</button>`).join('')}</div>
     </div></section>
   </div>`;
 }
@@ -621,14 +621,8 @@ function tierBlock(ev, tier, passes) {
       <button class="btn primary" data-action="getPass" data-id="${ev.id}" data-tier="${tier.id}">${t('getProPass', { name: L(tier.name) })}</button></div>`;
   else if (isPro() && tier.id !== 'dinner') action = `<p class="status ok">${proHasVip ? t('includedInPass') : t('includedInPro')}</p>`;
   else {
-    const ext = bookingLink('gabangi-' + tier.id);
-    const wa = whatsappLink(t('waTicket', { name: L(tier.name), event: eventTitle(ev) }));
-    // Art Basel-style call to action: a quiet "Buy now ›" link; the price is shown above it.
-    const label = `${t('buyNow')} <span class="arr" aria-hidden="true">›</span>`;
-    const aria = `${t('buyNow')} · ${L(tier.name)} · ${usd(tier.price)}`;
-    action = ext ? `<a class="buy-now" href="${ext}" target="_blank" rel="noopener" aria-label="${aria}">${label}</a>`
-      : wa ? `<a class="buy-now" href="${wa}" target="_blank" rel="noopener" aria-label="${aria} · WhatsApp">${label}</a>`
-      : `<button class="buy-now" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}" aria-label="${aria}">${label}</button>`;
+    // Art Basel-style call to action: a quiet "Buy now ›"; it opens the checkout sheet (checkout.js).
+    action = `<button class="buy-now" data-action="buyEvent" data-id="${ev.id}" data-tier="${tier.id}" aria-label="${t('buyNow')} · ${L(tier.name)} · ${usd(tier.price)}">${t('buyNow')} <span class="arr" aria-hidden="true">›</span></button>`;
   }
   const art = tier.art && WORKS.find(w => w.id === tier.art);
   return `<article class="tier pass-card ${tier.proFree ? 'tier-vip' : ''}">
@@ -784,7 +778,7 @@ function pagePro() {
       <p class="eyebrow">${t('proEyebrow')}</p><h1>${t('proTitle')}</h1>
       <p class="lead" style="margin-top:.8rem">${t('proLead')}</p>
       <p style="margin-top:.8rem"><strong>${t('proPrice')}</strong></p>
-      ${m ? `<p class="status ok" style="margin-top:.8rem">${t('youArePro')} · ${m.id}</p>` : `<div class="btn-row"><button class="btn primary" data-action="joinPro">${t(whopLink('pro') ? 'joinProOnline' : 'joinPro')}</button></div>`}
+      ${m ? `<p class="status ok" style="margin-top:.8rem">${t('youArePro')} · ${m.id}</p>` : `<div class="btn-row"><button class="btn primary" data-action="joinPro">${t(BOOKING.live || whopLink('pro') ? 'joinProOnline' : 'joinPro')}</button></div>`}
     </section>
     ${m ? `<section class="section"><h2>${t('memberPass')}</h2><p class="muted" style="margin-bottom:1rem">${t('memberPassHelp')}</p>${memberCard(m)}
       <div class="btn-row"><a class="btn dark" href="#/eventos">${t('navEvents')}</a><button class="btn small" data-action="leavePro">${t('leavePro')}</button></div></section>` : ''}
@@ -843,8 +837,8 @@ const EXTRA_ACTIONS = {
     location.hash = '#/visita';
   },
   joinClub: el => {
-    if (whopLink(el.dataset.id)) return openCheckout(whopLink(el.dataset.id));
-    if (BOOKING.live) return openWhatsApp(t('waClub', { club: L(CLUBS.find(c => c.id === el.dataset.id).name) }));
+    const club = CLUBS.find(c => c.id === el.dataset.id);
+    if (BOOKING.live || whopLink(club.id)) return checkout({ title: L(club.name), sub: L(club.when), price: club.price, period: 'month', link: whopLink(club.id), provider: 'Whop' });
     const clubs = fx.get('clubs', []);
     if (!clubs.includes(el.dataset.id)) clubs.push(el.dataset.id);
     fx.set('clubs', clubs);
@@ -852,8 +846,8 @@ const EXTRA_ACTIONS = {
     route();
   },
   sponsor: el => {
-    if (whopLink('sponsor-' + el.dataset.amount)) return openCheckout(whopLink('sponsor-' + el.dataset.amount));
-    if (BOOKING.live) return openWhatsApp(t('waSponsor', { amount: usd(Number(el.dataset.amount)) }));
+    const link = whopLink('sponsor-' + el.dataset.amount);
+    if (BOOKING.live || link) return checkout({ title: t('sponsorTitle'), price: Number(el.dataset.amount), link, provider: 'Whop' });
     const gifts = fx.get('sponsorships', []);
     gifts.push({ amount: Number(el.dataset.amount), at: new Date().toISOString() });
     fx.set('sponsorships', gifts);
@@ -874,6 +868,9 @@ const EXTRA_ACTIONS = {
   buyEvent: el => {
     const ev = EVENTS.find(e => e.id === el.dataset.id);
     const tier = el.dataset.tier ? ev.tiers.find(x => x.id === el.dataset.tier) : null;
+    const link = bookingLink(tier ? 'gabangi-' + tier.id : ev.id);
+    if (BOOKING.live || link) return checkout({ title: tier ? L(tier.name) : eventTitle(ev), sub: tier ? eventTitle(ev) : '',
+      when: tier ? L(tier.tag) : fmtDate(eventDate(ev)), img: tier && tier.img, price: tier ? tier.price : ev.price, qty: true, link, provider: BOOKING.provider });
     const passes = fx.get('passes', []);
     if (passes.some(p => p.event === ev.id && (p.tier || null) === (tier ? tier.id : null))) return toast(t('alreadyRegistered'));
     passes.push({ code: newCode().replace('MA-', 'EV-'), event: ev.id, tier: tier ? tier.id : null, date: tier ? addDays(eventDate(ev), tier.day) : eventDate(ev), guests: 0, member: isPro(), paid: tier ? tier.price : ev.price });
@@ -917,8 +914,7 @@ const EXTRA_ACTIONS = {
   circleApprove: () => { fx.set('circle', { ...circle(), status: 'member', since: new Date().toISOString() }); route(); },
   circleReset: () => { fx.set('circle', null); route(); },
   joinPro: () => {
-    if (whopLink('pro')) return openCheckout(whopLink('pro'));
-    if (BOOKING.live) return openWhatsApp(t('waPro'));
+    if (BOOKING.live || whopLink('pro')) return checkout({ title: 'Museo Abreu Pro', price: null, link: whopLink('pro'), provider: 'Whop' });
     const name = profile.name.trim() || 'Miembro Pro';
     fx.set('member', { id: proCode(), name, since: new Date().toISOString() });
     toast(t('joinedPro'));

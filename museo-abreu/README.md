@@ -154,6 +154,17 @@ and Arabic load only when a visitor picks them from the language menu:
 - Book quotes and the reader stay in the language of an edition: Spanish visitors read the Spanish edition, the
   others the English one.
 
+## Checkout (`checkout.js`)
+
+Every purchase (ART GABANGI tickets, clubs, Pro, the book, class sponsorships) opens one checkout sheet:
+order summary, quantity for tickets, live total in USD.
+- **With a payment link** in `booking-config.js` (`BOOKING.links` for Bókun, `BOOKING.whop` for Whop) the main
+  button is "Pay USD … by card" and goes straight to that secure checkout (which asks for the quantity itself).
+  WhatsApp stays available as a fold-out alternative.
+- **Without a link** the sheet asks for name and phone (remembered on the device) and sends the order to
+  WhatsApp already written, with quantity and total.
+- Pro has no published price yet, so its sheet says "Price confirmed by the museum".
+
 ## Spanish edition (`sample-es.js`)
 
 From `Ecce Homo Español` (Ediciones ARTFORO, 2026, published for the museum's anniversary):
