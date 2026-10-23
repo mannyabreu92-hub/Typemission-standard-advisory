@@ -96,5 +96,22 @@ separately (bank transfer, instant or wire, each with its own fee). No monthly f
 ART GABANGI tickets have fixed dates and no time slots, so they are sold on Whop (a Whop link wins over a
 Bókun link for the same ticket). Bókun stays for tours and classes.
 
-Until the app has its own server (Phase 2, step 3), Pro benefits and book access are checked by
-hand against Whop's member list.
+### Unlocking purchases automatically (webhook)
+
+The app has a small server (`api/`, Vercel Functions) that Whop notifies after each payment:
+1. Whop › **Developer › Webhooks › Create webhook**. URL: `https://museo-abreu.vercel.app/api/whop-webhook`.
+   Events: payments succeeded and memberships becoming valid / invalid (cancelled, refunded).
+2. Copy the webhook's **secret** and add it in Vercel › museo-abreu › Settings › Environment Variables as
+   `WHOP_WEBHOOK_SECRET` (Production), then redeploy.
+3. Buyers enter the email they paid with on the thank-you page or in Account ("Purchases made on Whop"),
+   and the app unlocks what that email owns: book editions, Pro, clubs. Cancelled or refunded
+   memberships stop unlocking.
+
+Storage: the private Vercel Blob store `museo-abreu-purchases` (`BLOB_READ_WRITE_TOKEN`, already set).
+`purchases/` holds one file per buyer (named by a hash of the email); `events/` keeps every Whop event
+as received, the museum's own record of sales. Products are matched by the last part of each checkout
+link in `BOOKING.whop`; an event for an unknown product is kept in `events/` but unlocks nothing.
+
+Limit: anyone who knows a buyer's email could unlock the same items in their own copy of the app.
+Pro members and passes should still be checked against Whop's customer list at the door. A code sent by
+email would close this gap later (needs an email service).

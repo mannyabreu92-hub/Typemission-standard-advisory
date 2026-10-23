@@ -151,3 +151,77 @@ Object.assign(EXTRA_ROUTES, { gracias: pageThanks });
   // trackEvent is defined in app.js, which loads after this file.
   setTimeout(() => { if (typeof trackEvent === 'function') trackEvent('Purchase', { product: key }); }, 0);
 })();
+
+/* ---------- Unlock Whop purchases in this app ----------
+   Whop tells the server (api/whop-webhook.js) about each payment; here the buyer enters the email
+   used on Whop and the app turns on what that email owns: book editions, Pro, clubs. */
+Object.assign(I18N.es, {
+  unTitle: 'Activar en esta app', unLead: 'Escriba el correo que usó para pagar en Whop.', unBtn: 'Activar',
+  unDone: 'Activado: {items}.', unNone: 'Aún no encontramos una compra con este correo. Si acaba de pagar, espere un minuto e inténtelo de nuevo.',
+  unError: 'No se pudo comprobar ahora. Inténtelo de nuevo.', unAccountTitle: 'Compras hechas en Whop',
+});
+Object.assign(I18N.en, {
+  unTitle: 'Unlock in this app', unLead: 'Enter the email you used to pay on Whop.', unBtn: 'Unlock',
+  unDone: 'Unlocked: {items}.', unNone: 'We can’t find a purchase for this email yet. If you just paid, wait a minute and try again.',
+  unError: 'Could not check right now. Please try again.', unAccountTitle: 'Purchases made on Whop',
+});
+Object.assign(I18N.fr, {
+  unTitle: 'Activer dans cette app', unLead: 'Saisissez l’e-mail utilisé pour payer sur Whop.', unBtn: 'Activer',
+  unDone: 'Activé : {items}.', unNone: 'Nous ne trouvons pas encore d’achat pour cet e-mail. Si vous venez de payer, patientez une minute et réessayez.',
+  unError: 'Vérification impossible pour le moment. Réessayez.', unAccountTitle: 'Achats effectués sur Whop',
+});
+
+function unlockForm(id) {
+  return `<form class="unlock" data-form="unlock" novalidate>
+    <label for="un-${id}">${t('unLead')}</label>
+    <div class="unlock-row"><input id="un-${id}" type="email" required autocomplete="email" value="${esc(profile.email || '')}">
+      <button class="btn primary" type="submit">${t('unBtn')}</button></div>
+    <p class="status" role="status" aria-live="polite" hidden></p>
+  </form>`;
+}
+
+// Turns on in this app what the server says the email owns.
+function applyPurchases(keys, email) {
+  const names = [];
+  for (const key of keys) {
+    const l = key.startsWith('book-') && key.slice(5);
+    if (l && LANG_NAMES[l]) {
+      if (!owns(l)) purchases.push({ lang: l, price: EDITIONS.find(e => e.lang === l)?.price || 0, source: 'whop', date: new Date().toISOString() });
+      names.push('Ecce Homo · ' + L(LANG_NAMES[l]));
+    } else if (key === 'pro') {
+      if (!isPro()) fx.set('member', { id: proCode(), name: profile.name.trim() || email, since: new Date().toISOString(), source: 'whop' });
+      names.push('Museo Abreu Pro');
+    } else if (CLUBS.some(c => c.id === key)) {
+      const clubs = fx.get('clubs', []);
+      if (!clubs.includes(key)) fx.set('clubs', [...clubs, key]);
+      names.push(L(CLUBS.find(c => c.id === key).name));
+    }
+  }
+  profile.email = email;
+  save();
+  return names;
+}
+
+EXTRA_FORMS.unlock = async form => {
+  const input = form.querySelector('input'), out = form.querySelector('.status'), btn = form.querySelector('button');
+  const say = (msg, ok) => { out.textContent = msg; out.hidden = false; out.classList.toggle('ok', !!ok); };
+  if (!input.checkValidity()) { input.focus(); return say(input.validationMessage); }
+  btn.disabled = true;
+  try {
+    const r = await fetch('/api/purchases', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: input.value.trim() }) });
+    if (!r.ok) throw new Error(r.status);
+    const { keys } = await r.json();
+    const names = applyPurchases(keys || [], input.value.trim());
+    say(names.length ? t('unDone', { items: names.join(' · ') }) : t('unNone'), names.length);
+  } catch (e) { say(t('unError')); }
+  btn.disabled = false;
+};
+
+// The unlock form appears on the thank-you page and in Account.
+{
+  const thanks = pageThanks;
+  pageThanks = key => thanks(key).replace('</section></div>', `<div class="unlock-box"><h2 class="h3">${t('unTitle')}</h2>${unlockForm('ty')}</div></section></div>`);
+  EXTRA_ROUTES.gracias = pageThanks;
+  const acc = accountExtras;
+  accountExtras = () => acc() + `<section class="section"><h2>${t('unAccountTitle')}</h2>${unlockForm('acc')}</section>`;
+}

@@ -570,6 +570,13 @@ I18N.de = {
   "tyWa": "Dem Museum schreiben",
   "tyHome": "Zur Startseite",
   "waAfterPurchase": "Hallo, ich habe gerade einen Kauf abgeschlossen: {item}.",
+  "unTitle": "In dieser App freischalten",
+  "unLead": "Geben Sie die E-Mail-Adresse ein, mit der Sie bei Whop bezahlt haben.",
+  "unBtn": "Freischalten",
+  "unDone": "Freigeschaltet: {items}.",
+  "unNone": "Wir finden noch keinen Kauf mit dieser E-Mail-Adresse. Wenn Sie gerade bezahlt haben, warten Sie eine Minute und versuchen Sie es erneut.",
+  "unError": "Die Prüfung ist gerade nicht möglich. Bitte versuchen Sie es erneut.",
+  "unAccountTitle": "Käufe bei Whop",
 };
 TR.de = {
   "2019": "2019",

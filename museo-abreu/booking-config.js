@@ -71,3 +71,6 @@ function openWhatsApp(text) {
   if (w) w.opener = null; else location.href = url;
   return true;
 }
+
+// Lets the purchase server (api/) read the same product list.
+if (typeof module !== 'undefined') module.exports = { BOOKING };

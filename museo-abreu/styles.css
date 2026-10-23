@@ -502,3 +502,9 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .thanks-item { font: 600 .8rem/1.5 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--gold-ink); }
 .thanks .btn-row { justify-content: center; }
 :root[lang="ar"] .thanks-item { text-transform: none; letter-spacing: 0; }
+.unlock-box { width: 100%; margin-top: 1.4rem; padding-top: 1.4rem; border-top: 1px solid var(--line); display: grid; gap: .6rem; }
+.unlock { display: grid; gap: .5rem; max-width: 520px; text-align: start; }
+.thanks .unlock { margin-inline: auto; }
+.unlock-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+.unlock-row input { flex: 1 1 220px; min-height: 48px; }
+.unlock .status.ok { color: var(--ok); }

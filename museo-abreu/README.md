@@ -164,6 +164,8 @@ order summary, quantity for tickets, live total in USD.
 - **Without a link** the sheet asks for name and phone (remembered on the device) and sends the order to
   WhatsApp already written, with quantity and total.
 - Pro: USD 25 per month.
+- **Purchase server** (`api/`): Whop's webhook records each payment in a private Vercel Blob store; buyers
+  unlock books, Pro and clubs with the email they paid with. Setup in `BOOKING-SETUP.md` (needs `WHOP_WEBHOOK_SECRET`).
 - **Thank-you page** (`#/gracias/<key>`): Whop's redirect after purchase goes to
   `https://museo-abreu.vercel.app/?gracias=<key>`; the page names what was bought and what happens next.
 
