@@ -2,7 +2,7 @@
 // POST { event, date, att, name, email, phone, guests, guestNames, note }. One file per guest and event
 // date (rsvps/<event>/<date>/<hash of email>.json): a changed reply replaces the earlier one.
 const { emailHash, writeJSON } = require('./_lib');
-const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar'];
+const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar', 'ru'];
 
 const str = (v, max) => String(v == null ? '' : v).trim().slice(0, max);
 

@@ -31,7 +31,7 @@ Object.assign(I18N.fr, {
   alCloseTitle: 'Dernier jour pour enchérir', alCloseBody: 'Les enchères en ligne pour « {title} » se terminent le {when}',
 });
 
-const AL_LOCALE = { es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar' };
+const AL_LOCALE = { es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar', ru: 'ru-RU' };
 const alList = () => { try { return JSON.parse(localStorage.getItem('ma.lotAlerts') || '[]'); } catch (e) { return []; } };
 const alSave = list => { try { localStorage.setItem('ma.lotAlerts', JSON.stringify(list)); } catch (e) {} };
 // Pieces closed online get no alerts.

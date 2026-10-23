@@ -7,10 +7,10 @@ const store = {
   set(k, v) { try { localStorage.setItem('ma.' + k, JSON.stringify(v)); } catch { /* private mode: keep in memory only */ } },
 };
 
-const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar'];
+const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar', 'ru'];
 // German, Italian and Arabic live in lang/<code>.js, loaded when chosen: their UI strings go
 // into I18N, and their content into TR as English text → translation.
-const LAZY_LANGS = ['de', 'it', 'ar'];
+const LAZY_LANGS = ['de', 'it', 'ar', 'ru'];
 const TR = {};
 const browserLang = (navigator.language || 'es').slice(0, 2).toLowerCase();
 let lang = store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
@@ -68,7 +68,7 @@ function addDays(iso, n) {
 function dow(iso) { const [y, m, d] = iso.split('-').map(Number); return new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay(); }
 function fmtDate(iso, opts = { weekday: 'long', day: 'numeric', month: 'long' }) {
   const [y, m, d] = iso.split('-').map(Number);
-  return new Intl.DateTimeFormat({ es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar-u-nu-latn' }[lang], { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
+  return new Intl.DateTimeFormat({ es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar-u-nu-latn', ru: 'ru-RU' }[lang], { ...opts, timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d, 12)));
 }
 
 /* ---------- Availability ---------- */
@@ -158,8 +158,8 @@ function go(hash) {
 // A different quote from the book each day (Punta Cana date), in the book's order.
 function quoteOfTheDay() {
   const today = todayPC();
-  // Spanish, French and German visitors get the quote from their own edition; others the English one.
-  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE }[lang], list = own || DAILY_QUOTES;
+  // Spanish, French, German and Russian visitors get the quote from their own edition; others the English one.
+  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU }[lang], list = own || DAILY_QUOTES;
   const q = list[Math.floor(Date.parse(today) / 864e5) % list.length];
   const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
   return `<p class="eyebrow">${t('quoteOfDay')} · ${fmtDate(today, { day: 'numeric', month: 'long' })}</p>
@@ -997,6 +997,9 @@ function setLang(l) {
   // Arabic text uses Noto fonts, fetched only for Arabic readers.
   if (l === 'ar' && !document.getElementById('font-ar')) document.head.insertAdjacentHTML('beforeend',
     '<link id="font-ar" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600&family=Noto+Sans+Arabic:wght@400;500;600&display=swap">');
+  // Work Sans has no Cyrillic: Russian body text uses Golos Text (Cormorant Garamond covers Cyrillic).
+  if (l === 'ru' && !document.getElementById('font-ru')) document.head.insertAdjacentHTML('beforeend',
+    '<link id="font-ru" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&display=swap">');
   loadLang(l).then(() => applyLang(l), () => {
     langSelect.value = lang;
     if (!main.firstChild) applyLang(lang = 'en', false); // first visit offline: show English

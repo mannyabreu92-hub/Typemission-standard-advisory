@@ -60,7 +60,7 @@ module.exports = async (req, res) => {
 // bidder's language. "outbid" goes to the previous highest bidder when a new bid comes in (api/auction.js,
 // matched by a hash of the email used to bid); "open" and "closing" go out with the daily job
 // (api/push-cron.js). {amount} and {when} are filled in when sent, in the bidder's locale.
-const LOCALES = ['es-DO', 'en-US', 'fr-FR', 'de-DE', 'it-IT', 'ar'];
+const LOCALES = ['es-DO', 'en-US', 'fr-FR', 'de-DE', 'it-IT', 'ar', 'ru-RU'];
 async function lotAlerts(b, res) {
   const { AUCTION } = require('../auction-config.js');
   if (!AUCTION.lots.some(l => l.id === b.lot)) return res.status(400).json({ error: 'request' });

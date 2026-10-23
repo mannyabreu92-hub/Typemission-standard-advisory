@@ -3,7 +3,7 @@
 // The museum sees and exports the list in the dashboard (api/admin.js).
 const crypto = require('crypto');
 const { writeJSON } = require('./_lib');
-const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar'], TOPICS = ['events', 'auction', 'book'];
+const LANGS = ['es', 'en', 'fr', 'de', 'it', 'ar', 'ru'], TOPICS = ['events', 'auction', 'book'];
 const str = (v, max) => String(v == null ? '' : v).trim().slice(0, max);
 
 module.exports = async (req, res) => {

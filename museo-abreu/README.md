@@ -266,7 +266,11 @@ The app's interface is not in Russian, so the edition is reached from the librar
   (edition credits are shown there for any edition read in another language than the app's).
 - Digital edition listed as available (Whop key `book-ru`, link to come; until then orders go to WhatsApp); printed
   Russian edition in the Shop (`book-print-ru`, price pending).
-- If Russian becomes a full app language later, the daily quotes can be matched the same way as the German ones.
+- Russian is also a full app language (`lang/ru.js`, loaded on demand like German, Italian and Arabic): interface and
+  content translated by the app (pending review by a native speaker), chapter titles and book texts from the Russian
+  edition, `DAILY_QUOTES_RU` matched sentence by sentence (all 74, checked word for word). oscarabreu.com has no Russian,
+  so its biography, manifestos, reviews and press texts show in English. Body text uses Golos Text (Work Sans has no
+  Cyrillic). Translation sources: `ml/ru-*.json` in the build scratchpad (`buildlang.js`).
 
 ## German edition (`sample-de.js`)
 

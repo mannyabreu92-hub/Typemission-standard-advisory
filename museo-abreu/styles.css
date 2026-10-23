@@ -659,3 +659,4 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .nl-topics label { display: inline-flex; align-items: center; gap: .45rem; min-height: 44px; }
 .nl-topics input { width: 20px; height: 20px; accent-color: var(--accent); }
 .ed-sample { font-size: .85rem; }
+:root[lang="ru"] { --sans: 'Golos Text', 'Work Sans', system-ui, sans-serif; }

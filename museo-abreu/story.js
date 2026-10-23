@@ -9,9 +9,9 @@ Object.assign(I18N.fr, { igBtn: 'Image pour Instagram', igReady: 'Image prête :
 const STORY = { w: 1080, h: 1920, ink: '#16120f', paper: '#f6f1e9', gold: '#c4a76c', soft: '#d8c196' };
 
 function storyFonts() {
-  const ar = lang === 'ar';
+  const ar = lang === 'ar', ru = lang === 'ru';
   return { serif: ar ? '"Noto Naskh Arabic", "Cormorant Garamond", Georgia, serif' : '"Cormorant Garamond", Georgia, serif',
-    sans: ar ? '"Noto Sans Arabic", "Work Sans", system-ui, sans-serif' : '"Work Sans", system-ui, sans-serif' };
+    sans: ar ? '"Noto Sans Arabic", "Work Sans", system-ui, sans-serif' : ru ? '"Golos Text", "Work Sans", system-ui, sans-serif' : '"Work Sans", system-ui, sans-serif' };
 }
 
 // Breaks text into lines that fit `max` pixels (at most `limit` lines, the last one shortened with …).

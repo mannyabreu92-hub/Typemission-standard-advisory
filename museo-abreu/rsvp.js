@@ -55,7 +55,7 @@ const rsvpEvents = () => ANNUAL_EVENTS.filter(ev => !ev.tiers && !ev.price);
 const rsvpReplies = () => fx.get('rsvps', {});
 const rsvpTime = time => {
   const [h, m] = time.split(':').map(Number);
-  const loc = { es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar-u-nu-latn' }[lang];
+  const loc = { es: 'es-DO', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', ar: 'ar-u-nu-latn', ru: 'ru-RU' }[lang];
   return new Intl.DateTimeFormat(loc, { hour: 'numeric', minute: '2-digit', timeZone: 'UTC' }).format(Date.UTC(2000, 0, 1, h, m));
 };
 const rsvpLongDate = iso => fmtDate(iso, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
