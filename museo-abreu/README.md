@@ -202,6 +202,12 @@ collection, the reader and Pro stay in the top menu and on the home page.
   Environment Variables, Production; redeploy after setting it); without it the dashboard stays closed. The
   password is kept for the browser tab only. RSVPs are now also saved on the server (`api/rsvp.js`,
   `rsvps/<event>/<date>/`), one per guest, a changed reply replacing the earlier one.
+- **Reminders and door list** (dashboard): each confirmed guest with a phone has a "Send on WhatsApp" button that
+  opens a ready reminder in the guest's language (Spanish, English or French; others English) with the event,
+  date, time and party size; "Sent ✓" is remembered on that device. "Door list" (`#/admin/puerta/<event>/<date>`)
+  lists confirmed guests with search by name; "Arrived" checks in the whole party (saved on the server, so several
+  staff phones can work at once; "Refresh" shows the others' check-ins) and the count shows arrivals of the total.
+  Note: if a guest changes their RSVP after checking in, the check-in is reset.
 - **Share links for lots and the book**: each lot page and the Shop have a Share button. `/l/<lot>` and `/b`
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.

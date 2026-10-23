@@ -4,7 +4,7 @@
 const crypto = require('crypto');
 const { list } = require('@vercel/blob');
 const { AUCTION } = require('../auction-config.js');
-const { readJSON, findEmail, findProductKey } = require('./_lib');
+const { readJSON, writeJSON, findEmail, findProductKey } = require('./_lib');
 
 const same = (a, b) => crypto.timingSafeEqual(crypto.createHash('sha256').update(a).digest(), crypto.createHash('sha256').update(b).digest());
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -36,6 +36,18 @@ module.exports = async (req, res) => {
   const given = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
   if (!given || !same(given, pass)) { await wait(800); return res.status(401).json({ error: 'password' }); }
 
+  // Door check-in: POST { action: 'checkin', id, arrived } records how many of the party have arrived.
+  if (req.method === 'POST') {
+    const b = req.body || {};
+    if (b.action !== 'checkin' || !/^rsvps\/[a-z0-9-]+\/\d{4}-\d{2}-\d{2}\/[0-9a-f]{64}\.json$/.test(String(b.id))) return res.status(400).json({ error: 'request' });
+    const r = await readJSON(b.id);
+    if (!r) return res.status(404).json({ error: 'rsvp' });
+    r.arrived = Math.max(0, Math.min(1 + (r.guests || 0), Number(b.arrived) || 0));
+    r.arrivedAt = r.arrived ? new Date().toISOString() : null;
+    await writeJSON(b.id, r);
+    return res.status(200).json({ id: b.id, ...r });
+  }
+
   const auction = await Promise.all(AUCTION.lots.map(async l => {
     const d = await readJSON(`auction/${l.id}.json`);
     return { lot: l.id, example: !!l.example, startBid: l.startBid, bids: ((d && d.bids) || []).slice().reverse()
@@ -46,6 +58,6 @@ module.exports = async (req, res) => {
     return { at, type: String(data.type || data.action || ''),
       product: findProductKey(d), email: findEmail(d), amount: amountOf(d) };
   });
-  const rsvps = (await all('rsvps/', 1000)).map(r => r.data).filter(Boolean);
+  const rsvps = (await all('rsvps/', 1000)).filter(r => r.data).map(r => ({ id: r.path, ...r.data }));
   res.status(200).json({ auction, purchases, rsvps, now: new Date().toISOString() });
 };

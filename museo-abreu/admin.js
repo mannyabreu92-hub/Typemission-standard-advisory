@@ -73,9 +73,13 @@ function pageAdmin() {
   d.rsvps.forEach(r => { (groups[r.event + ' ' + r.date] ||= []).push(r); });
   const rsvps = Object.entries(groups).map(([k, rs]) => {
     const [ev, date] = k.split(' '), n = rs.filter(r => r.att === 'yes').reduce((s, r) => s + 1 + (r.guests || 0), 0);
-    return `<article class="ad-lot"><h3>${esc(adEventName(ev))} · ${fmtDate(date)}</h3><p class="muted">${t('adAttending', { n })}</p>
-      ${adTable([t('name'), t('adAtt'), t('adGuests'), t('contact'), t('adNote')], rs.map(r => [esc(r.name), r.att === 'yes' ? t('adYes') : t('adNo'),
-        r.guests ? `${r.guests}${r.guestNames ? ` · ${esc(r.guestNames)}` : ''}` : '—', adContact(r.phone, r.email), esc(r.note || '')]))}</article>`;
+    const arrived = rs.reduce((s, r) => s + (r.arrived || 0), 0);
+    return `<article class="ad-lot"><h3>${esc(adEventName(ev))} · ${fmtDate(date)}</h3>
+      <p class="muted">${t('adAttending', { n })}${arrived ? ` · ${t('adArrivedN', { a: arrived, b: n })}` : ''}</p>
+      <div class="btn-row"><a class="btn small primary" href="#/admin/puerta/${ev}/${date}">${t('adDoor')}</a></div>
+      <p class="muted ad-help">${t('adRemindHelp')}</p>
+      ${adTable([t('name'), t('adAtt'), t('adGuests'), t('contact'), t('adRemind')], rs.map(r => [esc(r.name) + (r.note ? `<br><small class="muted">${esc(r.note)}</small>` : ''), r.att === 'yes' ? t('adYes') : t('adNo'),
+        r.guests ? `${r.guests}${r.guestNames ? ` · ${esc(r.guestNames)}` : ''}` : '—', adContact(r.phone, r.email), adRemindCell(r)]))}</article>`;
   }).join('') || `<p class="muted">${t('adNone')}</p>`;
   return `<div class="wrap admin">
     <section class="section"><p class="eyebrow">Museo Abreu</p><h1>${t('adTitle')}</h1>
@@ -118,4 +122,106 @@ Object.assign(EXTRA_ACTIONS, {
   adLogout: () => { try { sessionStorage.removeItem('ma.admin'); } catch (e) {} adData = null; adMsg = ''; route(); },
   adCsv: el => adCsv(el.dataset.what),
 });
-Object.assign(EXTRA_ROUTES, { admin: () => { if (!adData && adPassword() && !adTried) { adTried = true; setTimeout(adLoad, 0); } return pageAdmin(); } });
+Object.assign(EXTRA_ROUTES, { admin: (sub, ev, date) => { if (!adData && adPassword() && !adTried) { adTried = true; setTimeout(adLoad, 0); }
+  return sub === 'puerta' && adData ? pageDoor(ev, date) : pageAdmin(); } });
+
+/* ---------- Reminders and the door list ---------- */
+
+Object.assign(I18N.es, {
+  adRemind: 'Recordatorio', adRemindBtn: 'Enviar por WhatsApp', adSent: 'Enviado ✓', adNoPhone: 'Sin teléfono',
+  adRemindHelp: 'El día antes, toque «Enviar por WhatsApp» en cada invitado: el mensaje va escrito en su idioma.',
+  adDoor: 'Lista en la puerta', adSearch: 'Buscar por nombre', adArrived: 'Llegó', adUndo: 'Deshacer',
+  adArrivedN: '{a} de {b} han llegado', adParty: '{n} pers.', adBack: 'Volver al panel', adSaveErr: 'No se guardó. Revise la conexión.',
+});
+Object.assign(I18N.en, {
+  adRemind: 'Reminder', adRemindBtn: 'Send on WhatsApp', adSent: 'Sent ✓', adNoPhone: 'No phone',
+  adRemindHelp: 'The day before, tap “Send on WhatsApp” for each guest: the message is written in their language.',
+  adDoor: 'Door list', adSearch: 'Search by name', adArrived: 'Arrived', adUndo: 'Undo',
+  adArrivedN: '{a} of {b} have arrived', adParty: '{n} ppl', adBack: 'Back to the dashboard', adSaveErr: 'Not saved. Check the connection.',
+});
+Object.assign(I18N.fr, {
+  adRemind: 'Rappel', adRemindBtn: 'Envoyer sur WhatsApp', adSent: 'Envoyé ✓', adNoPhone: 'Pas de téléphone',
+  adRemindHelp: 'La veille, touchez « Envoyer sur WhatsApp » pour chaque invité : le message est rédigé dans sa langue.',
+  adDoor: 'Liste à l’entrée', adSearch: 'Rechercher par nom', adArrived: 'Arrivé', adUndo: 'Annuler',
+  adArrivedN: '{a} sur {b} sont arrivés', adParty: '{n} pers.', adBack: 'Retour au tableau de bord', adSaveErr: 'Non enregistré. Vérifiez la connexion.',
+});
+
+// The reminder is written in the guest's own language (saved with the RSVP); German, Italian and
+// Arabic guests get English.
+const REMIND = {
+  es: { one: 'Hola {name}, le recordamos con gusto: {event}, {date} a las {time}, en el Museo Abreu, Bávaro, Punta Cana. Su confirmación es para 1 persona. ¡Le esperamos!',
+    many: 'Hola {name}, le recordamos con gusto: {event}, {date} a las {time}, en el Museo Abreu, Bávaro, Punta Cana. Su confirmación es para {n} personas. ¡Les esperamos!' },
+  en: { one: 'Hello {name}, a kind reminder: {event}, {date} at {time}, at Museo Abreu, Bávaro, Punta Cana. Your reply is for 1 person. We look forward to welcoming you!',
+    many: 'Hello {name}, a kind reminder: {event}, {date} at {time}, at Museo Abreu, Bávaro, Punta Cana. Your reply is for {n} people. We look forward to welcoming you!' },
+  fr: { one: 'Bonjour {name}, petit rappel : {event}, le {date} à {time}, au Museo Abreu, Bávaro, Punta Cana. Votre réponse concerne 1 personne. Au plaisir de vous accueillir !',
+    many: 'Bonjour {name}, petit rappel : {event}, le {date} à {time}, au Museo Abreu, Bávaro, Punta Cana. Votre réponse concerne {n} personnes. Au plaisir de vous accueillir !' },
+};
+const LOCALE = { es: 'es-DO', en: 'en-US', fr: 'fr-FR' };
+function reminderText(r) {
+  const gl = REMIND[r.lang] ? r.lang : 'en', ev = ANNUAL_EVENTS.find(e => e.id === r.event);
+  const inv = ev && ev.invitation && ev.invitation[r.date.slice(0, 4)];
+  const title = inv && inv.cardTitle ? inv.cardTitle[gl] : ev ? ev.name[gl] : r.event;
+  const date = new Date(r.date + 'T12:00:00').toLocaleDateString(LOCALE[gl], { weekday: 'long', day: 'numeric', month: 'long' });
+  const [h, m] = (ev ? ev.time : '19:00').split(':').map(Number), mm = String(m).padStart(2, '0');
+  const time = gl === 'fr' ? `${h} h${m ? ' ' + mm : ''}` : `${h % 12 || 12}:${mm} ${h < 12 ? (gl === 'es' ? 'a. m.' : 'AM') : (gl === 'es' ? 'p. m.' : 'PM')}`;
+  const n = 1 + (r.guests || 0), tpl = n === 1 ? REMIND[gl].one : REMIND[gl].many;
+  return tpl.replace('{name}', (r.name || '').split(' ')[0]).replace('{event}', title).replace('{date}', date).replace('{time}', time).replace('{n}', n);
+}
+// "Sent" marks are kept on this device, so the person sending can see where they left off.
+const adSentList = () => { try { return JSON.parse(localStorage.getItem('ma.adminSent') || '[]'); } catch (e) { return []; } };
+function adRemindCell(r) {
+  if (r.att !== 'yes') return '—';
+  const phone = (r.phone || '').replace(/\D/g, '');
+  if (!phone) return `<small class="muted">${t('adNoPhone')}</small>`;
+  const sent = adSentList().includes(r.id);
+  return `<a class="btn small ${sent ? '' : 'wa'}" data-action="adRemind" data-id="${esc(r.id)}" href="https://wa.me/${phone}?text=${encodeURIComponent(reminderText(r))}" target="_blank" rel="noopener">${sent ? t('adSent') : t('adRemindBtn')}</a>`;
+}
+
+let doorQuery = '';
+function doorRow(r) {
+  const party = 1 + (r.guests || 0), here = r.arrived || 0;
+  return `<li class="door-row${here ? ' here' : ''}" data-name="${esc((r.name + ' ' + (r.guestNames || '')).toLowerCase())}">
+    <div><strong>${esc(r.name)}</strong> <span class="muted">· ${t('adParty', { n: party })}</span>
+      ${r.guestNames ? `<br><small class="muted">${esc(r.guestNames)}</small>` : ''}${r.note ? `<br><small class="muted">${esc(r.note)}</small>` : ''}</div>
+    <button class="btn small ${here ? '' : 'primary'}" data-action="adCheckin" data-id="${esc(r.id)}" data-n="${here ? 0 : party}">${here ? t('adUndo') : t('adArrived')}</button>
+  </li>`;
+}
+function pageDoor(ev, date) {
+  const rs = adData.rsvps.filter(r => r.event === ev && r.date === date && r.att === 'yes').sort((a, b) => a.name.localeCompare(b.name));
+  const total = rs.reduce((s, r) => s + 1 + (r.guests || 0), 0), here = rs.reduce((s, r) => s + (r.arrived || 0), 0);
+  return `<div class="wrap admin door">
+    <a href="#/admin" class="btn small"><span class="arr">←</span> ${t('adBack')}</a>
+    <section class="section"><p class="eyebrow">${t('adDoor')}</p><h1 class="h2">${esc(adEventName(ev))}</h1><p class="muted">${fmtDate(date)}</p>
+      <p class="door-count" id="door-count">${t('adArrivedN', { a: here, b: total })}</p>
+      <label class="visually-hidden" for="door-q">${t('adSearch')}</label>
+      <input id="door-q" type="search" placeholder="${t('adSearch')}" value="${esc(doorQuery)}" autocomplete="off">
+      <p class="status" id="door-err" role="status" aria-live="polite" hidden></p>
+      <ul class="door-list">${rs.map(doorRow).join('') || `<li class="muted">${t('adNone')}</li>`}</ul>
+      <div class="btn-row"><button class="btn" data-action="adRefresh">${t('adRefresh')}</button></div>
+    </section></div>`;
+}
+function doorFilter() {
+  const q = doorQuery.trim().toLowerCase();
+  document.querySelectorAll('.door-row').forEach(li => { li.hidden = q && !li.dataset.name.includes(q); });
+}
+document.addEventListener('input', e => { if (e.target.id === 'door-q') { doorQuery = e.target.value; doorFilter(); } });
+
+Object.assign(EXTRA_ACTIONS, {
+  adRemind: el => {
+    const list = adSentList();
+    if (!list.includes(el.dataset.id)) { list.push(el.dataset.id); try { localStorage.setItem('ma.adminSent', JSON.stringify(list)); } catch (e) {} }
+    setTimeout(() => { el.textContent = t('adSent'); el.classList.remove('wa'); }, 300);
+  },
+  adCheckin: async el => {
+    el.disabled = true;
+    try {
+      const r = await fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adPassword() },
+        body: JSON.stringify({ action: 'checkin', id: el.dataset.id, arrived: Number(el.dataset.n) }) });
+      if (!r.ok) throw new Error(r.status);
+      const rec = await r.json(), i = adData.rsvps.findIndex(x => x.id === rec.id);
+      if (i >= 0) adData.rsvps[i] = rec;
+      route(); doorFilter();
+      const q = document.getElementById('door-q'); if (q && doorQuery) q.focus();
+    } catch (e) { const out = document.getElementById('door-err'); if (out) { out.textContent = t('adSaveErr'); out.hidden = false; } el.disabled = false; }
+  },
+});
