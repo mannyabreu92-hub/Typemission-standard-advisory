@@ -625,7 +625,7 @@ function eventCard(ev, passes) {
         <h3>${eventTitle(ev)}</h3>
         <p class="muted">${fmtDate(d)} · ${ev.time} (UTC−4)${ev.annual ? ` · <strong>${n === 0 ? t('today') : t('inNDays', { n })}</strong>` : ''}</p>
         <p style="margin-top:.4rem">${L(ev.desc)}</p>
-        <p style="margin-top:.6rem"><strong>${ev.price ? usd(ev.price) : t('priceTbc')}</strong> · <span class="status ok">${t('freeForPro')}</span></p>
+        <p style="margin-top:.6rem"><strong>${ev.price ? usd(ev.price) : invite ? t('ciByInvitation') : t('priceTbc')}</strong> · <span class="status ok">${t('freeForPro')}</span></p>
         ${pass ? `<div style="margin-top:.8rem">${passHTML(pass)}</div>` : isPro() ? `
           <div class="event-form" style="margin-top:.8rem">
             ${ev.vip ? `<label class="field"><span>${t('guests')}</span>
@@ -646,7 +646,7 @@ function passHTML(p) {
   const ev = EVENTS.find(e => e.id === p.event);
   const tier = p.tier && ev.tiers ? ev.tiers.find(x => x.id === p.tier) : null;
   return `<div class="ticket" style="max-width:320px">
-    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">${p.member ? 'Pro' : 'Museo Abreu'}</p><h3>${eventTitle(ev)}${tier ? ` · ${L(tier.name)}` : ''}</h3></div>
+    <div class="ticket-head"><p class="eyebrow ticket-kicker">${p.member ? 'Pro' : 'Museo Abreu'}</p><h3>${eventTitle(ev)}${tier ? ` · ${L(tier.name)}` : ''}</h3></div>
     <div class="ticket-body"><div class="qr" data-qr="${p.code}"></div><p class="code">${p.code}</p>
       <p class="muted" style="text-align:center">${fmtDate(p.date)} · ${(tier && tier.time) || ev.time} · ${t('passFor', { n: 1 + p.guests })}</p></div></div>`;
 }
@@ -754,7 +754,7 @@ function pagePro() {
 
 function memberCard(m) {
   return `<div class="ticket member-card" style="max-width:340px">
-    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">Museo Abreu · Pro</p><h3>${esc(m.name)}</h3></div>
+    <div class="ticket-head"><p class="eyebrow ticket-kicker">Museo Abreu · Pro</p><h3>${esc(m.name)}</h3></div>
     <div class="ticket-body"><div class="qr" data-qr="${m.id}"></div><p class="code">${m.id}</p></div></div>`;
 }
 

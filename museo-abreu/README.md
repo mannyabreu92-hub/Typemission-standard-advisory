@@ -14,6 +14,13 @@ updated the table of contents (chapters XX–LXX were renumbered and retitled), 
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
 
+## Look
+
+Ink, ivory and gold (`styles.css`, "Luxury pass" at the end): the house accent is an antique gold
+(`--accent: #75602f`, readable as text), champagne (`--champagne`) for buttons and labels on dark surfaces, and
+`--gold` for hairlines. Buttons are squared and letterspaced; tickets, the Pro member card, the Collectors' Circle
+panel, the event banner and the RSVP invitation carry a fine gold rule. Terracotta is no longer used.
+
 ## RSVP (`rsvp.js`, `#/rsvp/<event>`)
 
 The museum's own yearly invitations without a ticket price (the anniversary on November 17, the group
@@ -145,6 +152,13 @@ every language, marked "English edition", until the Spanish edition text is deli
 updated the table of contents (chapters XX–LXX were renumbered and retitled), the free Chapter I in `sample-en.js`
 and the timeline (`TIMELINE`, 22 milestones from its Biographical Chronology 1978–2026; Spanish, French, German,
 Italian and Arabic wording is the app's, pending the Spanish edition).
+
+## Look
+
+Ink, ivory and gold (`styles.css`, "Luxury pass" at the end): the house accent is an antique gold
+(`--accent: #75602f`, readable as text), champagne (`--champagne`) for buttons and labels on dark surfaces, and
+`--gold` for hairlines. Buttons are squared and letterspaced; tickets, the Pro member card, the Collectors' Circle
+panel, the event banner and the RSVP invitation carry a fine gold rule. Terracotta is no longer used.
 
 ## RSVP (`rsvp.js`, `#/rsvp/<event>`)
 

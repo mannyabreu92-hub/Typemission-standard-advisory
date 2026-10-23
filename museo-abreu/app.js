@@ -620,7 +620,7 @@ function ticketHTML(tk) {
   const exp = EXPERIENCES.find(e => e.id === tk.exp);
   const st = { valid: ['ok', 'statusValid'], used: ['used', 'statusUsed'], refunded: ['bad', 'statusRefunded'] }[tk.status];
   return `<article class="ticket">
-    <div class="ticket-head"><p class="eyebrow" style="color:#f59e6b;margin:0">Museo Abreu</p><h3>${L(exp.name)}</h3></div>
+    <div class="ticket-head"><p class="eyebrow ticket-kicker">Museo Abreu</p><h3>${L(exp.name)}</h3></div>
     <div class="ticket-body">
       <div class="qr" data-qr="${tk.code}"></div>
       <p class="code">${tk.code}</p>
