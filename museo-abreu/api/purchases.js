@@ -11,6 +11,6 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const tickets = rec && rec.tickets ? rec.tickets.filter(x => !x.void).map(({ code, key, qty }) => ({ code, key, qty })) : [];
   // A reading token for the full book (api/book.js) when the email owns an edition or Pro.
-  const reader = keys.some(k => /^book-|^pro$/.test(k)) ? { e: emailHash(email), t: await readerToken(emailHash(email)) } : null;
+  const reader = keys.some(k => /^book-|^fund-|^pro$/.test(k)) ? { e: emailHash(email), t: await readerToken(emailHash(email)) } : null;
   res.status(200).json({ keys, tickets, reader });
 };

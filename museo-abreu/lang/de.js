@@ -781,6 +781,14 @@ I18N.de = {
   "nfTitle": "Seite nicht gefunden",
   "nfLead": "Diese Adresse ist keine Seite des Museo Abreu.",
   "nfHome": "Zur Startseite",
+  "fuEyebrow": "Neues Buch von Oscar Abreu",
+  "fuAlso": "Vom selben Autor",
+  "fuLead": "Oscar Abreu untersucht die Prinzipien, das Bildvokabular, die Verfahren und die Grenzen des Psycho-Expressionismus. Ein Begleiter zu Ecce Homo, der sich auch einzeln lesen lässt.",
+  "fuEdition": "Spanische Ausgabe · ARTFORO Editions, 2026",
+  "fuCredits": "Impressum der Ausgabe",
+  "fuWords": "In den Worten des Autors",
+  "fuPro": "In Pro enthalten",
+  "waFund": "Hallo, ich möchte ein Exemplar von Fundamentos del Psico-Expresionismo.",
 };
 TR.de = {
   "2019": "2019",

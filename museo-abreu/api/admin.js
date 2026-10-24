@@ -73,18 +73,20 @@ module.exports = async (req, res) => {
     }
     // The full book (fullbook.js uploads each edition from its Word file): 'book-put' stores sections as
     // book/<lang>/<key>.json; 'book-done' writes book/<lang>/index.json with the count and date.
+    // book: 'fu' is Fundamentos del Psico-Expresionismo, stored the same way under fund/<lang>/ (sections s0…s39).
     if (b.action === 'book-put' || b.action === 'book-done') {
       if (!/^[a-z]{2}$/.test(String(b.lang))) return res.status(400).json({ error: 'lang' });
+      const fu = b.book === 'fu', dir = fu ? 'fund' : 'book';
       if (b.action === 'book-done') {
         const doc = { lang: b.lang, sections: Number(b.sections) || 0, paragraphs: Number(b.paragraphs) || 0, file: String(b.file || '').slice(0, 120), at: new Date().toISOString() };
-        await writeJSON(`book/${b.lang}/index.json`, doc);
+        await writeJSON(`${dir}/${b.lang}/index.json`, doc);
         return res.status(200).json(doc);
       }
       const secs = Array.isArray(b.sections) ? b.sections.slice(0, 20) : [];
       const okBlock = x => Array.isArray(x) && ['p', 'h', 'y'].includes(x[0]) && typeof x[1] === 'string' && x[1].length <= 20000;
-      if (!secs.length || secs.some(s => !/^(intro|ch\d{1,2}|ack|chrono)$/.test(String(s.key)) || !Array.isArray(s.blocks) || s.blocks.length > 3000 || !s.blocks.every(okBlock)))
+      if (!secs.length || secs.some(s => !(fu ? /^s\d{1,2}$/ : /^(intro|ch\d{1,2}|ack|chrono)$/).test(String(s.key)) || !Array.isArray(s.blocks) || s.blocks.length > 3000 || !s.blocks.every(okBlock)))
         return res.status(400).json({ error: 'sections' });
-      await Promise.all(secs.map(s => writeJSON(`book/${b.lang}/${s.key}.json`, { blocks: s.blocks })));
+      await Promise.all(secs.map(s => writeJSON(`${dir}/${b.lang}/${s.key}.json`, { blocks: s.blocks })));
       return res.status(200).json({ ok: true, stored: secs.length });
     }
     // Mailing list (api/subscribe.js): remove one person.
@@ -164,6 +166,7 @@ module.exports = async (req, res) => {
   const bookBlobs = []; let cur;
   do { const r = await list({ prefix: 'book/', cursor: cur, limit: 1000 }); bookBlobs.push(...r.blobs); cur = r.hasMore ? r.cursor : null; } while (cur);
   const books = (await Promise.all(bookBlobs.filter(x => /^book\/[a-z]{2}\/index\.json$/.test(x.pathname)).map(x => readJSON(x.pathname)))).filter(Boolean);
+  const fund = (await Promise.all(['es'].map(l => readJSON(`fund/${l}/index.json`)))).filter(Boolean);
   // Reading statistics per edition (api/reading.js): readers, buyers, sample-only, finished, bought after the
   // sample, and how far buyers got (furthest section in groups: intro, chapters 1–10 … 61–70, the end).
   const reading = {};
@@ -174,5 +177,5 @@ module.exports = async (req, res) => {
     if (d.owner) { s.buyers++; if (d.startedFree) s.converted++; s.reached[d.max === 0 ? 0 : d.max >= 70 ? 8 : Math.ceil(d.max / 10)]++; if (d.max >= 70) s.finished++; }
     else s.sample++;
   }
-  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list: people, messages, tickets, books, reading, now: new Date().toISOString() });
+  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list: people, messages, tickets, books, fund, reading, now: new Date().toISOString() });
 };

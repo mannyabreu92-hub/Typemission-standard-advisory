@@ -125,6 +125,7 @@ function purchaseInfo(key) {
   const gb = EVENTS.find(e => e.id === 'art-gabangi'), tier = key.startsWith('gabangi-') && gb.tiers.find(x => x.id === key.slice(8));
   if (tier) return { item: L(tier.name) + ' · ' + eventTitle(gb), text: t('tyTicket', { name: L(tier.name) + ' · ' + eventTitle(gb) }) };
   if (key === 'pro') return { item: 'Museo Abreu Pro', text: t('tyPro') };
+  if (key === 'fund-es') return { item: 'Fundamentos del Psico-Expresionismo', text: t('tyBook') };
   if (key.startsWith('sponsor-')) return { item: t('sponsorTitle') + ' · USD ' + key.slice(8), text: t('tySponsor') };
   return { item: '', text: '' };
 }
@@ -197,6 +198,11 @@ function applyPurchases(keys, email, tickets = []) {
     if (l && LANG_NAMES[l]) {
       if (!owns(l)) purchases.push({ lang: l, price: EDITIONS.find(e => e.lang === l)?.price || 0, source: 'whop', date: new Date().toISOString() });
       names.push('Ecce Homo · ' + L(LANG_NAMES[l]));
+    } else if (key === 'fund-es') {
+      // The second book (fundamentos.js), kept apart from the Ecce Homo editions.
+      const b2 = fx.get('books2', []);
+      if (!b2.includes(key)) fx.set('books2', [...b2, key]);
+      names.push('Fundamentos del Psico-Expresionismo');
     } else if (key === 'pro') {
       if (!isPro()) fx.set('member', { id: proCode(), name: profile.name.trim() || email, since: new Date().toISOString(), source: 'whop' });
       names.push('Museo Abreu Pro');
