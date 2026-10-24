@@ -157,5 +157,15 @@ module.exports = async (req, res) => {
   const bookBlobs = []; let cur;
   do { const r = await list({ prefix: 'book/', cursor: cur, limit: 1000 }); bookBlobs.push(...r.blobs); cur = r.hasMore ? r.cursor : null; } while (cur);
   const books = (await Promise.all(bookBlobs.filter(x => /^book\/[a-z]{2}\/index\.json$/.test(x.pathname)).map(x => readJSON(x.pathname)))).filter(Boolean);
-  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list: people, tickets, books, now: new Date().toISOString() });
+  // Reading statistics per edition (api/reading.js): readers, buyers, sample-only, finished, bought after the
+  // sample, and how far buyers got (furthest section in groups: intro, chapters 1–10 … 61–70, the end).
+  const reading = {};
+  for (const r of await all('reading/', 5000)) {
+    if (!r.data) continue;
+    const l = r.path.split('/')[1], d = r.data, s = (reading[l] ||= { readers: 0, buyers: 0, sample: 0, finished: 0, converted: 0, reached: [0, 0, 0, 0, 0, 0, 0, 0, 0] });
+    s.readers++;
+    if (d.owner) { s.buyers++; if (d.startedFree) s.converted++; s.reached[d.max === 0 ? 0 : d.max >= 70 ? 8 : Math.ceil(d.max / 10)]++; if (d.max >= 70) s.finished++; }
+    else s.sample++;
+  }
+  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list: people, tickets, books, reading, now: new Date().toISOString() });
 };

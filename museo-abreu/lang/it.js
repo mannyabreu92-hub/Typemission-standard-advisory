@@ -730,6 +730,15 @@ I18N.it = {
   "fbUnlockBtn": "Attiva il mio acquisto",
   "fbErr": "Non è stato possibile caricare il capitolo. Controlla la connessione.",
   "fbNotOwned": "Il tuo acquisto non include questa edizione.",
+  "fbOfflineTitle": "Leggi offline",
+  "fbOfflineHelp": "Salva la tua edizione su questo telefono e leggila senza internet, in aereo o in spiaggia.",
+  "fbSave": "Salva su questo telefono",
+  "fbSaving": "Salvataggio…",
+  "fbSaved": "Salvata su questo telefono ✓",
+  "fbRemove": "Rimuovi dal telefono",
+  "fbSaveErr": "Impossibile salvare. Controlla la connessione e riprova.",
+  "fbRemoved": "Rimossa da questo telefono.",
+  "fbSize": "{mb} MB",
 };
 TR.it = {
   "2019": "2019",

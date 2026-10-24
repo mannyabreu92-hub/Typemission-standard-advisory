@@ -730,6 +730,15 @@ I18N.de = {
   "fbUnlockBtn": "Meinen Kauf aktivieren",
   "fbErr": "Das Kapitel konnte nicht geladen werden. Prüfen Sie Ihre Verbindung.",
   "fbNotOwned": "Ihr Kauf umfasst diese Ausgabe nicht.",
+  "fbOfflineTitle": "Offline lesen",
+  "fbOfflineHelp": "Speichern Sie Ihre Ausgabe auf diesem Telefon und lesen Sie sie ohne Internet, im Flugzeug oder am Strand.",
+  "fbSave": "Auf diesem Telefon speichern",
+  "fbSaving": "Wird gespeichert…",
+  "fbSaved": "Auf diesem Telefon gespeichert ✓",
+  "fbRemove": "Vom Telefon entfernen",
+  "fbSaveErr": "Speichern nicht möglich. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
+  "fbRemoved": "Von diesem Telefon entfernt.",
+  "fbSize": "{mb} MB",
 };
 TR.de = {
   "2019": "2019",

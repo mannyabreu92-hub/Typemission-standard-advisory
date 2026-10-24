@@ -228,6 +228,15 @@ collection, the reader and Pro stay in the top menu and on the home page.
   reading token (HMAC of the email hash with `book/secret.json`) when the purchase is unlocked, and each request checks
   the token and that the edition (or Pro) is active, so a refund ends access. As with unlocking, the proof is the
   purchase email; a one-time email code would make it stricter.
+- **Offline reading** (`fullbook.js`): in the library, owners with a reading token get "Read offline" → "Save on this
+  phone": the whole edition (`api/book.js?ch=all`, about 0.7 MB) is kept in IndexedDB (`museo-abreu` › `books`). The
+  reader uses it when offline or if the server can't be reached; online, the server is still asked first, and a 403
+  (refund, invalid token) deletes the copy.
+- **Reading statistics** (`api/reading.js`, Dashboard › Overview › Reading the book): each chapter opened in the reader
+  posts the phone's random id (the wishlist's), the edition, the section index and whether the phone owns it; one
+  private file per phone and edition (`reading/<lang>/<device>.json`: furthest section, sections opened, owner,
+  started with the free sample). Per edition: readers, buyers, sample only, finished (chapter 70 or later), read the
+  sample then bought, and how far buyers got (introduction, chapters 1–10 … 61–69, to the end). No names or emails.
 - **QR check-in for ART GABANGI tickets** (`scanner.js`, `api/_lib.js` tickets, `api/admin.js`): when Whop confirms a
   payment for a `gabangi-…` product, the webhook issues a code (`GB-XXXX-XXXX`, from the payment id and a private
   secret in `tickets/secret.json`) stored as `tickets/<code>.json` with the quantity; a refund voids it. `api/purchases`

@@ -703,3 +703,4 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .reader-text .chrono-year { font: 600 1.4rem/1.2 var(--serif); color: var(--gold-ink); margin: 1.4rem 0 .3rem; }
 .bk-status { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: .3rem; }
 .bk-form { max-width: 520px; }
+.fb-offline .bk-status li { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; }

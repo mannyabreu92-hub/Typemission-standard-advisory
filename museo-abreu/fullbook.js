@@ -174,28 +174,116 @@ EXTRA_FORMS.book = async form => {
 
 /* ---------- The reader: full chapters for owners ---------- */
 
+Object.assign(I18N.es, {
+  fbOfflineTitle: 'Leer sin conexión', fbOfflineHelp: 'Guarde su edición en este teléfono y léala sin internet, en un avión o en la playa.',
+  fbSave: 'Guardar en este teléfono', fbSaving: 'Guardando…', fbSaved: 'Guardada en este teléfono ✓', fbRemove: 'Quitar del teléfono',
+  fbSaveErr: 'No se pudo guardar. Revise la conexión e inténtelo de nuevo.', fbRemoved: 'Quitada de este teléfono.', fbSize: '{mb} MB',
+  rsTitle: 'Lectura del libro', rsHelp: 'Teléfonos que abrieron el libro en la app, sin nombres. «Compradores» tienen la edición; el resto lee la muestra gratuita.',
+  rsReaders: 'Lectores', rsBuyers: 'Compradores', rsSample: 'Solo la muestra', rsFinished: 'Terminaron el libro', rsConverted: 'Leyeron la muestra y luego compraron',
+  rsReached: 'Hasta dónde llegaron los compradores', rsIntro: 'Introducción', rsChapters: 'Capítulos {a}–{b}', rsEnd: 'Hasta el final',
+});
+Object.assign(I18N.en, {
+  fbOfflineTitle: 'Read offline', fbOfflineHelp: 'Save your edition on this phone and read it without internet, on a plane or at the beach.',
+  fbSave: 'Save on this phone', fbSaving: 'Saving…', fbSaved: 'Saved on this phone ✓', fbRemove: 'Remove from phone',
+  fbSaveErr: 'Could not save. Check the connection and try again.', fbRemoved: 'Removed from this phone.', fbSize: '{mb} MB',
+  rsTitle: 'Reading the book', rsHelp: 'Phones that opened the book in the app, without names. “Buyers” own the edition; the others read the free sample.',
+  rsReaders: 'Readers', rsBuyers: 'Buyers', rsSample: 'Sample only', rsFinished: 'Finished the book', rsConverted: 'Read the sample, then bought',
+  rsReached: 'How far buyers got', rsIntro: 'Introduction', rsChapters: 'Chapters {a}–{b}', rsEnd: 'To the end',
+});
+Object.assign(I18N.fr, {
+  fbOfflineTitle: 'Lire hors connexion', fbOfflineHelp: 'Enregistrez votre édition sur ce téléphone et lisez-la sans internet, en avion ou à la plage.',
+  fbSave: 'Enregistrer sur ce téléphone', fbSaving: 'Enregistrement…', fbSaved: 'Enregistrée sur ce téléphone ✓', fbRemove: 'Retirer du téléphone',
+  fbSaveErr: 'Enregistrement impossible. Vérifiez la connexion et réessayez.', fbRemoved: 'Retirée de ce téléphone.', fbSize: '{mb} Mo',
+  rsTitle: 'Lecture du livre', rsHelp: 'Téléphones qui ont ouvert le livre dans l’app, sans noms. Les « acheteurs » possèdent l’édition ; les autres lisent l’extrait gratuit.',
+  rsReaders: 'Lecteurs', rsBuyers: 'Acheteurs', rsSample: 'Extrait seulement', rsFinished: 'Ont terminé le livre', rsConverted: 'Ont lu l’extrait, puis acheté',
+  rsReached: 'Jusqu’où sont allés les acheteurs', rsIntro: 'Introduction', rsChapters: 'Chapitres {a} à {b}', rsEnd: 'Jusqu’à la fin',
+});
+
 const fbCache = {};
 const fbReader = () => fx.get('reader', null);
 const fbBlocks = blocks => blocks.map(([k, x]) => k === 'p' ? `<p>${esc(x)}</p>` : k === 'y' ? `<h2 class="chrono-year">${esc(x)}</h2>` : `<h2 class="ch-sub">${esc(x)}</h2>`).join('');
+
+// Offline copies of whole editions live in IndexedDB on the phone ("museo-abreu" › books, keyed by edition);
+// which editions are saved is also noted in localStorage, so the library can show it at once.
+function fbIdb(mode, fn) {
+  return new Promise((ok, fail) => {
+    const open = indexedDB.open('museo-abreu', 1);
+    open.onupgradeneeded = () => open.result.createObjectStore('books');
+    open.onerror = () => fail(open.error);
+    open.onsuccess = () => { const tx = open.result.transaction('books', mode), req = fn(tx.objectStore('books')); tx.oncomplete = () => ok(req.result); tx.onerror = () => fail(tx.error); };
+  });
+}
+const fbSavedList = () => { try { return JSON.parse(localStorage.getItem('ma.offline') || '[]'); } catch (e) { return []; } };
+const fbSetSaved = list => { try { localStorage.setItem('ma.offline', JSON.stringify(list)); } catch (e) {} };
+const fbOfflineGet = l => fbSavedList().includes(l) ? fbIdb('readonly', st => st.get(l)).catch(() => null) : Promise.resolve(null);
+async function fbOfflineDrop(l) { fbSetSaved(fbSavedList().filter(x => x !== l)); await fbIdb('readwrite', st => st.delete(l)).catch(() => {}); }
+
+const fbMsg = (msg, unlock) => `<div class="empty"><p>${msg}</p>${unlock ? `<div class="btn-row" style="justify-content:center"><a class="btn primary" href="#/cuenta">${t('fbUnlockBtn')}</a></div>` : ''}</div>`;
 async function fbLoad(l, key) {
   const box = document.getElementById('fb-text'); if (!box) return;
+  const show = blocks => { fbCache[l + ':' + key] = blocks; if (box.isConnected) box.innerHTML = fbBlocks(blocks); };
+  const copy = await fbOfflineGet(l), saved = copy && copy.sections && copy.sections[key];
   const rd = fbReader();
-  if (!rd) { box.innerHTML = `<div class="empty"><p>${t('fbNeedUnlock')}</p><div class="btn-row" style="justify-content:center"><a class="btn primary" href="#/cuenta">${t('fbUnlockBtn')}</a></div></div>`; return; }
+  if (!rd) return saved ? show(saved) : (box.innerHTML = fbMsg(t('fbNeedUnlock'), true));
+  if (!navigator.onLine && saved) return show(saved);
   try {
     const r = await fetch(`/api/book?lang=${l}&ch=${key}&e=${rd.e}&t=${rd.t}`, { cache: 'no-store' });
     const d = await r.json().catch(() => ({}));
-    if (r.ok) { fbCache[l + ':' + key] = d.blocks; if (box.isConnected) box.innerHTML = fbBlocks(d.blocks); return; }
-    box.innerHTML = `<div class="empty"><p>${d.error === 'not-uploaded' ? t('fbNotYet') : d.error === 'not-owned' ? t('fbNotOwned') : d.error === 'token' ? t('fbNeedUnlock') : t('fbErr')}</p>
-      ${d.error === 'token' || d.error === 'not-owned' ? `<div class="btn-row" style="justify-content:center"><a class="btn primary" href="#/cuenta">${t('fbUnlockBtn')}</a></div>` : ''}</div>`;
-  } catch (e) { box.innerHTML = `<div class="empty"><p>${t('fbErr')}</p></div>`; }
+    if (r.ok) return show(d.blocks);
+    // Access ended (refund) or the token no longer holds: the copy on the phone goes too.
+    if (r.status === 403) { await fbOfflineDrop(l); return (box.innerHTML = fbMsg(d.error === 'not-owned' ? t('fbNotOwned') : t('fbNeedUnlock'), true)); }
+    if (saved) return show(saved);
+    box.innerHTML = fbMsg(d.error === 'not-uploaded' ? t('fbNotYet') : t('fbErr'));
+  } catch (e) { if (saved) show(saved); else box.innerHTML = fbMsg(t('fbErr')); }
 }
-// pageReader is defined in app.js, which loads last: it is wrapped from app.js's hook, and the route updated.
+
+// Reading statistics: each chapter opened is reported once per visit, with the phone's random id only.
+const fbSent = new Set();
+function fbTrack(l, ch) {
+  if (!EDITIONS.some(e => e.lang === l) || fbSent.has(l + ch) || typeof wsDevice !== 'function') return;
+  fbSent.add(l + ch);
+  const device = wsDevice();
+  if (device) fetch('/api/reading', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ device, lang: l, ch, owner: owns(l) }) }).catch(() => {});
+}
+
+// The library: "Read offline" for each edition this phone owns (and can open with its reading token).
+function fbOfflineBlock() {
+  if (!fbReader()) return '';
+  const mine = EDITIONS.filter(e => owns(e.lang));
+  if (!mine.length) return '';
+  const saved = fbSavedList();
+  return `<section class="section fb-offline"><h2>${t('fbOfflineTitle')}</h2><p class="muted">${t('fbOfflineHelp')}</p>
+    <ul class="bk-status">${mine.map(e => `<li><strong>Ecce Homo · ${L(LANG_NAMES[e.lang])}</strong>
+      ${saved.includes(e.lang) ? `<span class="remind-on">${t('fbSaved')}</span> <button class="btn small" data-action="fbDrop" data-l="${e.lang}">${t('fbRemove')}</button>`
+        : `<button class="btn small primary" data-action="fbSave" data-l="${e.lang}">${t('fbSave')}</button>`}</li>`).join('')}</ul>
+    <p class="status" id="fb-status" role="status" aria-live="polite" hidden></p></section>`;
+}
+const fbSay = msg => { const o = document.getElementById('fb-status'); if (o) { o.textContent = msg; o.hidden = false; } };
+Object.assign(EXTRA_ACTIONS, {
+  fbSave: async el => {
+    const l = el.dataset.l, rd = fbReader(); el.disabled = true; fbSay(t('fbSaving'));
+    try {
+      const r = await fetch(`/api/book?lang=${l}&ch=all&e=${rd.e}&t=${rd.t}`, { cache: 'no-store' });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) { el.disabled = false; return fbSay(d.error === 'not-uploaded' ? t('fbNotYet') : r.status === 403 ? t('fbNeedUnlock') : t('fbSaveErr')); }
+      await fbIdb('readwrite', st => st.put({ sections: d.sections, at: new Date().toISOString() }, l));
+      fbSetSaved([...fbSavedList().filter(x => x !== l), l]);
+      if (typeof trackEvent === 'function') trackEvent('Book saved offline', { lang: l });
+      const y = window.scrollY; route(); window.scrollTo(0, y);
+      fbSay(t('fbSize', { mb: (JSON.stringify(d.sections).length / 1e6).toFixed(1) }));
+    } catch (e) { el.disabled = false; fbSay(t('fbSaveErr')); }
+  },
+  fbDrop: async el => { await fbOfflineDrop(el.dataset.l); const y = window.scrollY; route(); window.scrollTo(0, y); fbSay(t('fbRemoved')); },
+});
+
+// pageReader and pageLibrary are defined in app.js, which loads last: they are wrapped from app.js's hook.
 (window.APP_HOOKS ||= []).push(() => {
   const reader = pageReader;
   pageReader = (l = 'es', chStr = '0') => {
     const html = reader(l, chStr);
     const ch = Math.min(Math.max(0, parseInt(chStr, 10) || 0), CHAPTERS.length - 1), c = CHAPTERS[ch];
     if (!LANG_NAMES[l]) l = 'es';
+    if (canRead(l, ch)) fbTrack(l, ch);
     const mark = `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`;
     if (!html.includes(mark)) return html;
     const cached = fbCache[l + ':' + c.key];
@@ -203,4 +291,25 @@ async function fbLoad(l, key) {
     return html.replace(mark, `<div id="fb-text">${cached ? fbBlocks(cached) : `<p class="muted">${t('loadingText')}</p>`}</div>`);
   };
   routes.leer = pageReader;
+  const library = pageLibrary;
+  pageLibrary = () => library().replace('<section class="section grid two">', fbOfflineBlock() + '<section class="section grid two">');
+  routes.biblioteca = pageLibrary;
 });
+
+// Dashboard › Overview: reading statistics per edition (api/admin.js "reading").
+{
+  const ins = insightsHTML;
+  insightsHTML = d => {
+    const html = ins(d), rd = d.reading || {}, langs = Object.keys(rd).sort((a, b) => rd[b].readers - rd[a].readers);
+    const labels = [t('rsIntro'), ...[1, 11, 21, 31, 41, 51, 61].map(a => t('rsChapters', { a, b: a === 61 ? 69 : a + 9 })), t('rsEnd')];
+    const block = `<h3>${t('rsTitle')}</h3><p class="muted ad-help">${t('rsHelp')}</p>
+      ${langs.length ? `<div class="in-grid">${langs.map(l => { const s = rd[l], top = Math.max(1, ...s.reached);
+        return `<article class="in-event"><h4>Ecce Homo · ${L(LANG_NAMES[l] || { en: l })}</h4>
+          <ul class="in-bars">${[['rsReaders', s.readers], ['rsBuyers', s.buyers], ['rsSample', s.sample], ['rsFinished', s.finished], ['rsConverted', s.converted]]
+            .map(([k, n]) => inBar(t(k), n, n / Math.max(1, s.readers))).join('')}</ul>
+          ${s.buyers ? `<p class="muted" style="margin:.8rem 0 .4rem">${t('rsReached')}</p><ul class="in-bars">${s.reached.map((n, i) => inBar(labels[i], n, n / top)).join('')}</ul>` : ''}</article>`; }).join('')}</div>`
+        : `<p class="muted">${t('adNone')}</p>`}`;
+    const at = html.lastIndexOf('</section>');
+    return html.slice(0, at) + block + html.slice(at);
+  };
+}
