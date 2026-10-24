@@ -18,7 +18,7 @@ Object.assign(I18N.es, {
   classesEyebrow: 'Aprende', classesTitle: 'Clases y clubes',
   classesLead: 'Talleres en el museo para aprender los procesos del Psico-Expresionismo: capas, raspados, rasgados y materia.',
   classesSection: 'Clases', clubsSection: 'Clubes', bookClass: 'Reservar clase',
-  perMonth: 'al mes', joinClub: 'Unirme al club', joinedClub: 'Te has unido al club (simulación). El museo te escribirá con el calendario.',
+  perMonth: 'al mes', perWeek: 'a la semana', joinClub: 'Unirme al club', joinedClub: 'Te has unido al club (simulación). El museo te escribirá con el calendario.',
   clubMember: 'Ya eres miembro', proPriority: 'Los miembros Pro tienen prioridad en clases y clubes.',
   sponsorTitle: 'Apoya una clase de pintura',
   sponsorText: 'Patrocina la clase de un estudiante que no puede pagarla. Cada aporte cubre materiales y la sesión con un instructor.',
@@ -41,7 +41,7 @@ Object.assign(I18N.es, {
 
   proEyebrow: 'Membresía', proTitle: 'Miembro Pro',
   proLead: 'La forma más cercana de vivir la obra de Oscar Abreu: eventos, lectura diaria y experiencias exclusivas.',
-  proPrice: 'Membresía: USD 25 al mes', joinPro: 'Hacerme Pro (simulación)', leavePro: 'Cancelar membresía (demo)',
+  proPrice: 'Membresía: USD 5.99 a la semana', joinPro: 'Hacerme Pro (simulación)', leavePro: 'Cancelar membresía (demo)',
   joinedPro: '¡Bienvenido! Ya eres miembro Pro (simulación).', memberPass: 'Pase de miembro', memberPassHelp: 'Muéstralo en la entrada de cualquier evento del museo.',
   compare: 'Qué incluye', featureCol: 'Beneficio', freeCol: 'Usuario', proCol: 'Pro', 
   b1: 'Explorar el museo, la obra y el manifiesto', b2: 'Lectura del día (fragmento del libro)', b3: 'Sesión completa del libro cada día',
@@ -88,7 +88,7 @@ Object.assign(I18N.en, {
   classesEyebrow: 'Learn', classesTitle: 'Classes and clubs',
   classesLead: 'Workshops at the museum to learn the processes of Psycho-Expressionism: layers, scraping, tearing and matter.',
   classesSection: 'Classes', clubsSection: 'Clubs', bookClass: 'Book a class',
-  perMonth: 'per month', joinClub: 'Join the club', joinedClub: 'You joined the club (simulated). The museum will email you the schedule.',
+  perMonth: 'per month', perWeek: 'per week', joinClub: 'Join the club', joinedClub: 'You joined the club (simulated). The museum will email you the schedule.',
   clubMember: 'Already a member', proPriority: 'Pro members get priority in classes and clubs.',
   sponsorTitle: 'Support a painting class',
   sponsorText: 'Sponsor a class for a student who cannot afford it. Each contribution covers materials and a session with an instructor.',
@@ -111,7 +111,7 @@ Object.assign(I18N.en, {
 
   proEyebrow: 'Membership', proTitle: 'Pro member',
   proLead: 'The closest way to live Oscar Abreu’s work: events, daily reading and exclusive experiences.',
-  proPrice: 'Membership: USD 25 per month', joinPro: 'Become Pro (simulated)', leavePro: 'Cancel membership (demo)',
+  proPrice: 'Membership: USD 5.99 per week', joinPro: 'Become Pro (simulated)', leavePro: 'Cancel membership (demo)',
   joinedPro: 'Welcome! You are now a Pro member (simulated).', memberPass: 'Member pass', memberPassHelp: 'Show it at the entrance of any museum event.',
   compare: 'What’s included', featureCol: 'Benefit', freeCol: 'User', proCol: 'Pro', 
   b1: 'Explore the museum, the work and the manifesto', b2: 'Daily reading (excerpt from the book)', b3: 'Full book session every day',
@@ -170,7 +170,7 @@ Object.assign(I18N.fr, {
   classesSection: 'Cours',
   clubsSection: 'Clubs',
   bookClass: 'Réserver un cours',
-  perMonth: 'par mois',
+  perMonth: 'par mois', perWeek: 'par semaine',
   joinClub: 'Rejoindre le club',
   joinedClub: 'Vous avez rejoint le club (simulation). Le musée vous enverra le calendrier par e-mail.',
   clubMember: 'Déjà membre',
@@ -210,7 +210,7 @@ Object.assign(I18N.fr, {
   proEyebrow: 'Adhésion',
   proTitle: 'Membre Pro',
   proLead: 'La façon la plus proche de vivre l’œuvre d’Oscar Abreu : événements, lecture quotidienne et expériences exclusives.',
-  proPrice: 'Adhésion : 25 USD par mois',
+  proPrice: 'Adhésion : 5,99 USD par semaine',
   joinPro: 'Devenir Pro (simulation)',
   leavePro: 'Annuler l’adhésion (démo)',
   joinedPro: 'Bienvenue ! Vous êtes maintenant membre Pro (simulation).',
@@ -917,7 +917,7 @@ const EXTRA_ACTIONS = {
   circleApprove: () => { fx.set('circle', { ...circle(), status: 'member', since: new Date().toISOString() }); route(); },
   circleReset: () => { fx.set('circle', null); route(); },
   joinPro: () => {
-    if (BOOKING.live || whopLink('pro')) return checkout({ title: 'Museo Abreu Pro', price: 25, period: 'month', link: whopLink('pro'), provider: 'Whop' });
+    if (BOOKING.live || whopLink('pro')) return checkout({ title: 'Museo Abreu Pro', price: 5.99, period: 'week', link: whopLink('pro'), provider: 'Whop' });
     const name = profile.name.trim() || 'Miembro Pro';
     fx.set('member', { id: proCode(), name, since: new Date().toISOString() });
     toast(t('joinedPro'));

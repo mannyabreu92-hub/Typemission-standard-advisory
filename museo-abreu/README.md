@@ -459,7 +459,7 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
 - `VISIT_INFO` (booking-config.js): address, hours, admission, accessibility, getting here, Abreu Fine Art hours, press email.
 - Couples VIP Tour price (`COUPLE_TOUR_PRICE`); welcome video (`WELCOME_VIDEO`).
 - Spanish versions of the ART GABANGI artist quotes; ART GABANGI 2027 dates.
-- **Whop, to finish** (saved for later): create Pro (USD 25/month) and the three class sponsorships (USD 25,
+- **Whop, to finish** (saved for later): create Pro (USD 5.99/week, recurring weekly) and the three class sponsorships (USD 25,
   50, 100, one-time) and paste their links into `BOOKING.whop` (`pro`, `sponsor-25`, `sponsor-50`,
   `sponsor-100`). Already connected: Ecce Homo English and Spanish. Painting club and Art club are on hold on Whop (family
   decision, Oct 2026): their links are removed from the app, so both clubs go back to WhatsApp requests. Check that

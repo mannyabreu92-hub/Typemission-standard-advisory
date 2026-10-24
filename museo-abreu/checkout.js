@@ -26,13 +26,13 @@ Object.assign(I18N.fr, {
   coWaOrder: 'Bonjour, je souhaite acheter :\n{qty} × {item}{when}\nTotal : {total}\nNom : {name}\nTéléphone : {phone}',
 });
 
-// o: { title, sub?, when?, img?, price (number or null), period? ('month'), qty? (true = quantity selector),
+// o: { title, sub?, when?, img?, price (number or null), period? ('month' or 'week'), qty? (true = quantity selector),
 //      link? (card checkout URL), provider? ('Whop' | 'Bókun') }
 function checkout(o) {
   // A card checkout (Bókun, Whop) asks for the quantity itself.
   if (o.link) o.qty = false;
   let qty = 1;
-  const amount = () => o.price == null ? t('coPriceTbd') : 'USD ' + money(o.price * qty) + (o.period ? ' ' + t('perMonth') : '');
+  const amount = () => o.price == null ? t('coPriceTbd') : 'USD ' + money(o.price * qty) + (o.period ? ' ' + t(o.period === 'week' ? 'perWeek' : 'perMonth') : '');
   const dlg = document.createElement('dialog');
   dlg.className = 'co-sheet';
   dlg.setAttribute('aria-labelledby', 'co-title');
