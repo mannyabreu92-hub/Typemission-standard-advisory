@@ -633,6 +633,7 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 /* "Remind me the day before" (remind.js) */
 .remind { margin-top: 1rem; display: grid; gap: .4rem; justify-items: start; }
 .remind-on { color: var(--ok); font-weight: 600; }
+.bk-short { color: #b42318; font-weight: 600; }
 .remind-help { font-size: .85rem; margin: 0; }
 
 /* Wishlist (wishlist.js) */

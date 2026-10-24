@@ -12,7 +12,7 @@ Object.assign(I18N.es, {
   bkFile: 'Archivo Word de una edición', bkFound: 'Encontrado: {s} secciones · {p} párrafos · primer capítulo: «{first}»', bkLang: 'Edición',
   bkUpload: 'Subir esta edición', bkUploading: 'Subiendo… {n} de {total}', bkDone: 'Edición subida: {lang}.', bkErr: 'No se pudo subir. Revise la conexión e inténtelo de nuevo.',
   bkBad: 'Este archivo no parece una edición de Ecce Homo: no se encontraron capítulos.', bkWarn: 'Atención: se esperaban 73 secciones (introducción, 70 capítulos, agradecimientos y cronología).',
-  bkStatus: 'Subida el {date} · {s} secciones', bkMissing: 'Aún no subida', adBook: 'Libro completo', bkPdf: 'Este archivo es un PDF. Elija la versión Word (.docx) del libro.', bkNotWord: 'Este archivo no es un documento Word (.docx). Elija el archivo Word del libro.', bkReading: 'Leyendo el archivo…',
+  bkStatus: 'Subida el {date} · {s} secciones', bkMissing: 'Aún no subida', bkShort: 'Incompleta: {s} de 73 secciones. Vuelva a subir el archivo Word completo de esta edición.', adBook: 'Libro completo', bkPdf: 'Este archivo es un PDF. Elija la versión Word (.docx) del libro.', bkNotWord: 'Este archivo no es un documento Word (.docx). Elija el archivo Word del libro.', bkReading: 'Leyendo el archivo…',
 });
 Object.assign(I18N.en, {
   fbNotYet: 'The full text of this edition will be here very soon. Meanwhile, you can read it in your Whop account.',
@@ -22,7 +22,7 @@ Object.assign(I18N.en, {
   bkFile: 'Word file of an edition', bkFound: 'Found: {s} sections · {p} paragraphs · first chapter: “{first}”', bkLang: 'Edition',
   bkUpload: 'Upload this edition', bkUploading: 'Uploading… {n} of {total}', bkDone: 'Edition uploaded: {lang}.', bkErr: 'Could not upload. Check the connection and try again.',
   bkBad: 'This file does not look like an edition of Ecce Homo: no chapters were found.', bkWarn: 'Note: 73 sections were expected (introduction, 70 chapters, acknowledgements and chronology).',
-  bkStatus: 'Uploaded on {date} · {s} sections', bkMissing: 'Not uploaded yet', adBook: 'Full book', bkPdf: 'This file is a PDF. Choose the Word (.docx) version of the book.', bkNotWord: 'This file is not a Word document (.docx). Choose the book’s Word file.', bkReading: 'Reading the file…',
+  bkStatus: 'Uploaded on {date} · {s} sections', bkMissing: 'Not uploaded yet', bkShort: 'Incomplete: {s} of 73 sections. Upload this edition’s complete Word file again.', adBook: 'Full book', bkPdf: 'This file is a PDF. Choose the Word (.docx) version of the book.', bkNotWord: 'This file is not a Word document (.docx). Choose the book’s Word file.', bkReading: 'Reading the file…',
 });
 Object.assign(I18N.fr, {
   fbNotYet: 'Le texte intégral de cette édition sera ici très bientôt. En attendant, vous pouvez le lire dans votre compte Whop.',
@@ -32,7 +32,7 @@ Object.assign(I18N.fr, {
   bkFile: 'Fichier Word d’une édition', bkFound: 'Trouvé : {s} sections · {p} paragraphes · premier chapitre : « {first} »', bkLang: 'Édition',
   bkUpload: 'Téléverser cette édition', bkUploading: 'Téléversement… {n} sur {total}', bkDone: 'Édition téléversée : {lang}.', bkErr: 'Téléversement impossible. Vérifiez la connexion et réessayez.',
   bkBad: 'Ce fichier ne ressemble pas à une édition d’Ecce Homo : aucun chapitre trouvé.', bkWarn: 'Attention : 73 sections étaient attendues (introduction, 70 chapitres, remerciements et chronologie).',
-  bkStatus: 'Téléversée le {date} · {s} sections', bkMissing: 'Pas encore téléversée', adBook: 'Livre intégral', bkPdf: 'Ce fichier est un PDF. Choisissez la version Word (.docx) du livre.', bkNotWord: 'Ce fichier n’est pas un document Word (.docx). Choisissez le fichier Word du livre.', bkReading: 'Lecture du fichier…',
+  bkStatus: 'Téléversée le {date} · {s} sections', bkMissing: 'Pas encore téléversée', bkShort: 'Incomplète : {s} sections sur 73. Téléversez à nouveau le fichier Word complet de cette édition.', adBook: 'Livre intégral', bkPdf: 'Ce fichier est un PDF. Choisissez la version Word (.docx) du livre.', bkNotWord: 'Ce fichier n’est pas un document Word (.docx). Choisissez le fichier Word du livre.', bkReading: 'Lecture du fichier…',
 });
 
 /* ---------- Reading a Word file in the browser ---------- */
@@ -123,7 +123,9 @@ function pageBook() {
     <section class="section"><p class="eyebrow">Ecce Homo</p><h1 class="h2">${t('bkTitle')}</h1>
       <p class="muted">${t('bkLead')}</p>
       <ul class="bk-status">${langs.map(l => { const b = books.find(x => x.lang === l);
-        return `<li><strong>${L(LANG_NAMES[l])}</strong> · ${b ? `<span class="remind-on">${t('bkStatus', { date: adStamp(b.at), s: b.sections })}</span>` : `<span class="muted">${t('bkMissing')}</span>`}</li>`; }).join('')}</ul>
+        // An edition with fewer than the book's 73 sections came from an incomplete file: flagged, with the file's name.
+        return `<li><strong>${L(LANG_NAMES[l])}</strong> · ${!b ? `<span class="muted">${t('bkMissing')}</span>`
+          : b.sections === 73 ? `<span class="remind-on">${t('bkStatus', { date: adStamp(b.at), s: b.sections })}</span>` : `<span class="bk-short">${t('bkShort', { s: b.sections })}</span>`}${b && b.file ? `<br><span class="muted">${esc(b.file)}</span>` : ''}</li>`; }).join('')}</ul>
       <form class="bk-form" data-form="book" novalidate>
         <div class="field"><label for="bk-file">${t('bkFile')}</label><input id="bk-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></div>
         ${bkParsed ? `<p>${esc(t('bkFound', { s: bkParsed.sections.length, p: bkParsed.paragraphs, first: bkParsed.first }))}</p>
