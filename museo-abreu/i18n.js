@@ -4,7 +4,7 @@
 // gabangi.com; the interface French is a first translation pending that review.
 const I18N = {
   es: {
-    readEnSample: 'Leer muestra en inglés',
+    readEnSample: 'Leer muestra en inglés', edMine: 'En su idioma',
     samplePending: 'Todavía no hay muestra gratuita en este idioma. La muestra gratuita está disponible en las ediciones en español, inglés, francés, alemán, ruso, italiano, portugués y japonés.',
     credits: 'Primera edición, 2026 · Ediciones ARTFORO · Dirección conceptual y editorial: Cándido Gerón · Impreso por Amigo del Hogar, Santo Domingo',
     bookSub2: 'El nacimiento del Psico-Expresionismo',
@@ -143,7 +143,7 @@ const I18N = {
     staffNote: 'En la versión real esta vista requiere inicio de sesión con autenticación reforzada.',
   },
   en: {
-    readEnSample: 'Read the English sample',
+    readEnSample: 'Read the English sample', edMine: 'In your language',
     samplePending: 'There is no free sample in this language yet. The free sample is available in the Spanish, English, French, German, Russian, Italian, Portuguese and Japanese editions.',
     credits: 'First edition, 2026 · ARTFORO Editions · English translation: Reed Newhall',
     bookSub2: 'The Birth of Psycho-Expressionism',
@@ -282,7 +282,7 @@ const I18N = {
     staffNote: 'In the real version this view requires sign-in with strong authentication.',
   },
   fr: {
-    readEnSample: 'Lire l’extrait en anglais',
+    readEnSample: 'Lire l’extrait en anglais', edMine: 'Dans votre langue',
     samplePending: 'Il n’y a pas encore d’extrait gratuit dans cette langue. L’extrait gratuit est disponible dans les éditions espagnole, anglaise, française, allemande, russe, italienne, portugaise et japonaise.',
     credits: 'Première édition, 2026 · Ediciones ARTFORO · Direction conceptuelle et éditoriale : Cándido Gerón · Imprimé par Amigo del Hogar, Saint-Domingue',
     bookSub2: 'La naissance du Psycho-Expressionnisme',

@@ -295,6 +295,14 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## Edition finder (`myEdition` in `app.js`)
+
+The library and the Shop lead with the visitor's own edition, read from the phone's languages in order. A language the
+app's menus are not in (Japanese, Portuguese) wins, since the visitor could not choose it as the app's language: a Japanese
+phone opens the library on the Japanese edition, marked "In your language", with "Read free sample · Japanese" and the
+Japanese chapter titles. Otherwise the app's language leads when the book exists in it; an Arabic phone with French as
+second language gets the French edition.
+
 ## Japanese edition (`sample-ja.js`)
 
 From `Ecce Homo — 日本語版` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph

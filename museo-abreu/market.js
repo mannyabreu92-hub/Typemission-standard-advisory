@@ -249,7 +249,7 @@ EXTRA_ACTIONS.lotInterest = el => {
 /* ---------- Shop ---------- */
 
 function pageShop() {
-  const digital = EDITIONS.filter(e => e.status === 'available' && LANG_NAMES[e.lang]);
+  const digital = editionsMineFirst(EDITIONS.filter(e => e.status === 'available' && LANG_NAMES[e.lang]), myEdition());
   const price = p => p == null ? t('coPriceTbd') : auUSD(p);
   return `<div class="wrap">
     <section class="section"><p class="eyebrow">Museo Abreu</p><h1>${t('shTitle')}</h1><p class="lead" style="margin-top:.8rem">${t('shLead')}</p></section>

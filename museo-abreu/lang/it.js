@@ -750,6 +750,7 @@ I18N.it = {
   "srSampleOnly": "La ricerca riguarda solo l’estratto gratuito. Con l’edizione completa cerca in tutto il libro.",
   "srLoading": "Caricamento del libro…",
   "srFirst": "Sono mostrati i primi 100.",
+  "edMine": "Nella sua lingua",
 };
 TR.it = {
   "2019": "2019",

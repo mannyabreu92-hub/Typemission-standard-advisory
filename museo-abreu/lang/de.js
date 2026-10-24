@@ -750,6 +750,7 @@ I18N.de = {
   "srSampleOnly": "Die Suche umfasst nur die kostenlose Leseprobe. Mit der vollständigen Ausgabe durchsucht sie das ganze Buch.",
   "srLoading": "Das Buch wird geladen…",
   "srFirst": "Die ersten 100 werden angezeigt.",
+  "edMine": "In Ihrer Sprache",
 };
 TR.de = {
   "2019": "2019",

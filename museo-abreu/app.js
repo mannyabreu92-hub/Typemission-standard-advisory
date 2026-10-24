@@ -684,8 +684,8 @@ const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
-  // Sample text exists for the Spanish, English, French, German and Russian editions.
-  const readLang = owns(lang) ? lang : (purchases[0]?.lang || (hasSample(lang) ? lang : 'en'));
+  // The visitor's own edition leads (myEdition): a Japanese phone opens on the Japanese edition.
+  const mine = myEdition(), readLang = owns(lang) ? lang : (purchases[0]?.lang || (hasSample(mine) ? mine : 'en'));
   const last = reading.last;
   return `<div class="wrap">
     <section class="section book">
@@ -703,7 +703,7 @@ function pageLibrary() {
           ${EDITION_CREDITS[lang].notes.map(n => `<p>${esc(n)}</p>`).join('')}</details>` : ''}
         <div class="btn-row">
           ${last ? `<a class="btn primary" href="#/leer/${last.lang}/${last.ch}">${t('resume')}</a>` : ''}
-          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : readLang !== lang ? t('readEnSample') : t('readSample')}</a>
+          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : readLang !== lang ? `${t('readSample')} · ${L(LANG_NAMES[readLang])}` : t('readSample')}</a>
         </div>
       </div>
     </section>
@@ -712,9 +712,9 @@ function pageLibrary() {
       <div>
         <h2>${t('editions')}</h2>
         <p class="muted" style="margin-bottom:.8rem">${t('oneTime')}</p>
-        <div class="editions">${EDITIONS.map(ed => `
+        <div class="editions">${editionsMineFirst(EDITIONS, readLang).map(ed => `
           <div class="edition">
-            <div><strong>${L(LANG_NAMES[ed.lang])}</strong><br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span>
+            <div><strong>${L(LANG_NAMES[ed.lang])}</strong>${ed.lang === mine && mine !== lang ? ` <span class="ed-mine">${t('edMine')}</span>` : ''}<br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span>
               ${hasSample(ed.lang) && ed.lang !== readLang && !owns(ed.lang) ? `<br><a class="ed-sample" href="#/leer/${ed.lang}/0" aria-label="${esc(t('readSample') + ' · ' + L(LANG_NAMES[ed.lang]))}">${t('readSample')}</a>` : ''}</div>
             ${owns(ed.lang) ? `<a class="btn small dark" href="#/leer/${ed.lang}/0">${t('owned')} · ${t('read')}</a>`
               : ed.status === 'available' ? `<button class="btn small primary" data-action="buy" data-l="${ed.lang}">${t(BOOKING.live || whopLink('book-' + ed.lang) ? 'buyOnline' : 'buy', { price: usd(ed.price) })}</button>`
@@ -770,6 +770,16 @@ const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
 const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE, ru: SAMPLE_RU, it: SAMPLE_IT, pt: SAMPLE_PT, ja: SAMPLE_JA };
 const sampleFor = (l, c) => SAMPLES[l]?.[c.key] || null;
 const hasSample = l => l in SAMPLES;
+// The edition in the visitor's own language. The phone's languages are read in order; one the app's menus
+// are not in (Japanese, Portuguese) wins, since the visitor could not pick it as the app's language.
+// Otherwise the app's language, if the book exists in it (a choice the visitor made), else the phone's.
+const deviceEdition = () => (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''])
+  .map(x => String(x).slice(0, 2).toLowerCase()).find(l => EDITIONS.some(e => e.lang === l && e.status === 'available')) || '';
+function myEdition() {
+  const d = deviceEdition();
+  return d && !LANGS.includes(d) ? d : EDITIONS.some(e => e.lang === lang) ? lang : d || 'en';
+}
+const editionsMineFirst = (list, l) => [...list.filter(e => e.lang === l), ...list.filter(e => e.lang !== l)];
 
 
 function pageReader(l = 'es', chStr = '0') {
