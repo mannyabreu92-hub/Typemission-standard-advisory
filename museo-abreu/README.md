@@ -295,18 +295,21 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
-## Second book: Fundamentos del Psico-Expresionismo (`fundamentos.js`)
+## Second book: Fundamentos del Psico-Expresionismo / Foundations of Psycho-Expressionism (`fundamentos.js`)
 
 *Fundamentos del Psico-Expresionismo: La materia, la memoria y la transformación humana* (Oscar Abreu, ARTFORO
-Editions, 2026; Spanish), a companion to Ecce Homo.
-- `#/fundamentos`: cover, the author's own words from his note, contents (as printed in the book's index, in four
-  parts), credits (the ISBN and legal deposit lines, still blank in the manuscript, are left out). `#/fundamentos/<n>`
-  reads section n (28 sections: note, introduction, 19 chapters, seven closing sections).
-- Free sample (`sample-fund.js`): the note, the introduction and chapter 1. The rest is uploaded in Dashboard › Full
-  book (`fundamentos-parse.js` reads the Word headings) and served by `api/book.js?b=fu` from `fund/es/`, to owners of
-  Whop key `fund-es` or Pro. Owning it never unlocks an Ecce Homo edition, nor the other way round.
-- Price `FUND_PRICE` (fundamentos.js) and Whop link `BOOKING.whop['fund-es']`: until both are set, the page offers
-  "Request the digital edition" on WhatsApp. Digital only for now: the printing line of the credits is left out. Listed in the Library ("Also by Oscar Abreu") and the Shop.
+Editions, 2026) and its English edition *Foundations of Psycho-Expressionism: Matter, Memory, and Human
+Transformation*, which follows the Spanish paragraph by paragraph. A companion to Ecce Homo; digital only for now.
+- `#/fundamentos` opens the visitor's edition (Spanish in the Spanish app, English otherwise), with a switch between
+  them. `#/fundamentos/<es|en>`: cover, the author's own words from his note, contents in four parts as printed, credits
+  (lines not yet final in the manuscripts, ISBN, legal deposit, English translator, and the printing line are left
+  out). `#/fundamentos/<es|en>/<n>` reads section n (28 sections). Old links `#/fundamentos/<n>` open the Spanish edition.
+- Free sample (`sample-fund.js`): the note, the introduction and chapter 1 of each edition. The rest is uploaded in
+  Dashboard › Full book (`fundamentos-parse.js` reads the Word headings and recognises the edition) and served by
+  `api/book.js?b=fu` from `fund/<lang>/`, to owners of Whop key `fund-<lang>` or Pro. Owning one edition never unlocks
+  the other, nor Ecce Homo, and the other way round.
+- Price `FUND_PRICE` (fundamentos.js) and Whop links `BOOKING.whop['fund-es']`, `['fund-en']`: until set, the page offers
+  "Request the digital edition" on WhatsApp. Listed in the Library ("Also by Oscar Abreu") and the Shop.
 
 ## Launch fixes (24 Oct 2026)
 

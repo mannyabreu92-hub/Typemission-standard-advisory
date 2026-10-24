@@ -3,8 +3,8 @@
 // ch=all → { sections: { intro: blocks, ch1: blocks, … } }, the whole edition for offline reading.
 // The editions are uploaded by the museum from the dashboard (admin.js "book-put") and kept privately
 // as book/<lang>/<section>.json; the token comes from api/purchases.js when the app unlocks a purchase.
-// b=fu: Fundamentos del Psico-Expresionismo (fundamentos.js), sections s0…s39 in fund/<lang>/, for owners of
-// "fund-<lang>" or Pro.
+// b=fu: Fundamentos del Psico-Expresionismo / Foundations of Psycho-Expressionism (fundamentos.js), sections
+// s0…s39 in fund/<lang>/, for owners of "fund-<lang>" or Pro.
 const crypto = require('crypto');
 const { readJSON, readerToken } = require('./_lib');
 

@@ -42,6 +42,7 @@ var BOOKING = {
     'book-ja': 'https://whop.com/museoabreu/ecce-homo-57', // Japanese digital edition (Whop dropped the Japanese from the name)
     'book-print-ja': '', // printed Japanese edition (shop)
     'fund-es': '', // Fundamentos del Psico-Expresionismo (Spanish, digital): Whop link to come
+    'fund-en': '', // Foundations of Psycho-Expressionism (English, digital): Whop link to come
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',

@@ -784,12 +784,13 @@ I18N.de = {
   "fuEyebrow": "Neues Buch von Oscar Abreu",
   "fuAlso": "Vom selben Autor",
   "fuLead": "Oscar Abreu untersucht die Prinzipien, das Bildvokabular, die Verfahren und die Grenzen des Psycho-Expressionismus. Ein Begleiter zu Ecce Homo, der sich auch einzeln lesen lässt.",
-  "fuEdition": "Digitale Ausgabe auf Spanisch · ARTFORO Editions, 2026",
+  "fuEdition": "Digitale Ausgabe · {lang} · ARTFORO Editions, 2026",
   "fuCredits": "Impressum der Ausgabe",
   "fuWords": "In den Worten des Autors",
   "fuPro": "In Pro enthalten",
-  "waFund": "Hallo, ich möchte die digitale Ausgabe von Fundamentos del Psico-Expresionismo.",
+  "waFund": "Hallo, ich möchte die digitale Ausgabe von {title} ({lang}).",
   "fuRequest": "Digitale Ausgabe anfragen",
+  "fuEditions": "Ausgaben",
 };
 TR.de = {
   "2019": "2019",
