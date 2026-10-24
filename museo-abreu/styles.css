@@ -660,6 +660,11 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .nl-topics input { width: 20px; height: 20px; accent-color: var(--accent); }
 .ed-sample { font-size: .85rem; }
 :root[lang="ru"] { --sans: 'Golos Text', 'Work Sans', system-ui, sans-serif; }
+/* The Japanese edition: the phone's own Mincho typeface (Hiragino on iPhone, Yu on Windows, Noto on Android), upright
+   (Japanese has no italics), with Japanese line-breaking rules. */
+:lang(ja) { --serif: 'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, 'Noto Serif JP', 'Noto Serif CJK JP', serif; line-break: strict; }
+:lang(ja), :lang(ja) * { font-style: normal; }
+.reader-text:lang(ja) { line-height: 1.9; letter-spacing: .02em; }
 
 /* Door scanner (scanner.js) */
 .sc-view { display: grid; gap: .6rem; margin: 1rem 0; }

@@ -4,7 +4,7 @@
 // the rest is the app's translation, pending review by a native speaker.
 I18N.de = {
   "readEnSample": "Die englische Leseprobe lesen",
-  "samplePending": "In dieser Sprache gibt es noch keine kostenlose Leseprobe. Die kostenlose Leseprobe gibt es in der spanischen, englischen, französischen, deutschen, russischen, italienischen und portugiesischen Ausgabe.",
+  "samplePending": "In dieser Sprache gibt es noch keine kostenlose Leseprobe. Die kostenlose Leseprobe gibt es in der spanischen, englischen, französischen, deutschen, russischen, italienischen, portugiesischen und japanischen Ausgabe.",
   "credits": "Erste Auflage, 2026 · Ediciones ARTFORO · Konzeptionelle und redaktionelle Leitung: Cándido Gerón · Gedruckt von Amigo del Hogar, Santo Domingo",
   "bookSub2": "Die Geburt des Psycho-Expressionismus",
   "bookSub": "Die Kunst hat mir das Leben gerettet",
@@ -1179,4 +1179,6 @@ TR.de = {
   "Russian edition": "Russische Ausgabe",
   "Italian edition": "Italienische Ausgabe",
   "Portuguese edition": "Portugiesische Ausgabe",
+  "Japanese": "Japanisch",
+  "Japanese edition": "Japanische Ausgabe",
 };

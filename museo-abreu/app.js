@@ -680,7 +680,7 @@ const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typ
 // Credits pages of the printed editions, shown in the library in their own language.
 const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR }, de: { label: 'Impressum der Ausgabe', ...CREDITS_DE },
   ru: { label: 'Выходные данные', ...CREDITS_RU }, it: { label: 'Crediti dell’edizione', ...CREDITS_IT },
-  pt: { label: 'Créditos da edição', ...CREDITS_PT } };
+  pt: { label: 'Créditos da edição', ...CREDITS_PT }, ja: { label: '奥付', ...CREDITS_JA } };
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
@@ -767,7 +767,7 @@ function buyEdition(l) {
 }
 
 const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
-const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE, ru: SAMPLE_RU, it: SAMPLE_IT, pt: SAMPLE_PT };
+const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE, ru: SAMPLE_RU, it: SAMPLE_IT, pt: SAMPLE_PT, ja: SAMPLE_JA };
 const sampleFor = (l, c) => SAMPLES[l]?.[c.key] || null;
 const hasSample = l => l in SAMPLES;
 

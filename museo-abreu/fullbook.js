@@ -52,8 +52,10 @@ async function readDocx(buf) {
 }
 
 const BOOK_LANG_BY_HEADING = { 'CAPÍTULO': 'es', CHAPTER: 'en', CHAPITRE: 'fr', KAPITEL: 'de', 'ГЛАВА': 'ru', CAPITOLO: 'it' };
+// Japanese chapters read "第一章" … "第七十章".
+const JA_CHAPTER = /^第[一二三四五六七八九十百]+章$/;
 // Spanish and Portuguese chapters both read "CAPÍTULO": the Portuguese edition is told by its own headings.
-const bookLang = (word, doc) => word === 'CAPÍTULO' && /INTRODUÇÃO|AGRADECIMENTOS/.test(doc) ? 'pt' : BOOK_LANG_BY_HEADING[word] || '';
+const bookLang = (word, doc) => JA_CHAPTER.test(word) ? 'ja' : word === 'CAPÍTULO' && /INTRODUÇÃO|AGRADECIMENTOS/.test(doc) ? 'pt' : BOOK_LANG_BY_HEADING[word] || '';
 const xmlText = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
   .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&amp;/g, '&');
 
@@ -86,9 +88,9 @@ function parseBook(doc, styles) {
 // the title is the paragraph after; the introduction, acknowledgements and chronology by their capitalised
 // headings in each language; chronology years are paragraphs that are just a year. Subheadings read as text.
 const BOOK_SECTION_HEADINGS = {
-  intro: ['INTRODUCCIÓN', 'INTRODUCTION', 'EINLEITUNG', 'ВВЕДЕНИЕ', 'INTRODUZIONE', 'INTRODUÇÃO'],
-  ack: ['AGRADECIMIENTOS', 'ACKNOWLEDGMENTS', 'ACKNOWLEDGEMENTS', 'REMERCIEMENTS', 'DANKSAGUNG', 'БЛАГОДАРНОСТИ', 'RINGRAZIAMENTI', 'AGRADECIMENTOS'],
-  chrono: ['CRONOLOGÍA BIOGRÁFICA', 'BIOGRAPHICAL CHRONOLOGY', 'CHRONOLOGIE BIOGRAPHIQUE', 'BIOGRAFISCHE ZEITTAFEL', 'БИОГРАФИЧЕСКАЯ ХРОНИКА', 'CRONOLOGIA BIOGRAFICA', 'CRONOLOGIA BIOGRÁFICA'],
+  intro: ['INTRODUCCIÓN', 'INTRODUCTION', 'EINLEITUNG', 'ВВЕДЕНИЕ', 'INTRODUZIONE', 'INTRODUÇÃO', 'はじめに'],
+  ack: ['AGRADECIMIENTOS', 'ACKNOWLEDGMENTS', 'ACKNOWLEDGEMENTS', 'REMERCIEMENTS', 'DANKSAGUNG', 'БЛАГОДАРНОСТИ', 'RINGRAZIAMENTI', 'AGRADECIMENTOS', '謝辞'],
+  chrono: ['CRONOLOGÍA BIOGRÁFICA', 'BIOGRAPHICAL CHRONOLOGY', 'CHRONOLOGIE BIOGRAPHIQUE', 'BIOGRAFISCHE ZEITTAFEL', 'БИОГРАФИЧЕСКАЯ ХРОНИКА', 'CRONOLOGIA BIOGRAFICA', 'CRONOLOGIA BIOGRÁFICA', '年譜'],
 };
 function parseBookByText(doc) {
   const sections = []; let cur = null, chN = 0, firstHeading = '', firstTitle = '', paragraphs = 0, needTitle = false;
@@ -97,8 +99,9 @@ function parseBookByText(doc) {
     const tx = xmlText([...runs.matchAll(/<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>/g)].map(x => x[1]).join('')).trim();
     if (!tx) continue;
     const sec = Object.keys(BOOK_SECTION_HEADINGS).find(k => BOOK_SECTION_HEADINGS[k].includes(tx));
-    if (sec) { cur = { key: sec, blocks: [] }; sections.push(cur); continue; }
-    if (/^(CAPÍTULO|CHAPTER|CHAPITRE|KAPITEL|ГЛАВА|CAPITOLO)\s+[IVXLC]+\.?$/.test(tx)) {
+    // The Japanese contents page lists はじめに and 謝辞 exactly as their headings: the later one, the section itself, wins.
+    if (sec) { const old = sections.findIndex(x => x.key === sec); if (old >= 0) sections.splice(old, 1); cur = { key: sec, blocks: [] }; sections.push(cur); continue; }
+    if (/^(CAPÍTULO|CHAPTER|CHAPITRE|KAPITEL|ГЛАВА|CAPITOLO)\s+[IVXLC]+\.?$/.test(tx) || JA_CHAPTER.test(tx)) {
       chN++; if (!firstHeading) firstHeading = tx; cur = { key: 'ch' + chN, blocks: [] }; sections.push(cur); needTitle = true; continue;
     }
     if (needTitle) { if (chN === 1) firstTitle = tx; needTitle = false; continue; }

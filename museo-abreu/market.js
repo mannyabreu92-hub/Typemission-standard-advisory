@@ -74,9 +74,9 @@ Object.assign(I18N.fr, {
   shAuctionTitle: 'Aux enchères', shAllLots: 'Voir la vente',
 });
 
-// The printed Ecce Homo (Spanish, French, German, Russian, Italian and Portuguese editions, all printed by Amigo del Hogar
+// The printed Ecce Homo (Spanish, French, German, Russian, Italian, Portuguese and Japanese editions, all printed by Amigo del Hogar
 // per their credits pages). Prices pending: until set, orders go to WhatsApp with "Price confirmed by
-// the museum". Whop keys: book-print-es, book-print-fr, book-print-de, book-print-ru, book-print-it, book-print-pt.
+// the museum". Whop keys: book-print-es, book-print-fr, book-print-de, book-print-ru, book-print-it, book-print-pt, book-print-ja.
 const PRINT_EDITIONS = [
   { lang: 'es', price: null, key: 'book-print-es', name: { es: 'Edición en español', en: 'Spanish edition', fr: 'Édition espagnole' } },
   { lang: 'fr', price: null, key: 'book-print-fr', name: { es: 'Edición en francés', en: 'French edition', fr: 'Édition française' } },
@@ -84,6 +84,7 @@ const PRINT_EDITIONS = [
   { lang: 'ru', price: null, key: 'book-print-ru', name: { es: 'Edición en ruso', en: 'Russian edition', fr: 'Édition russe' } },
   { lang: 'it', price: null, key: 'book-print-it', name: { es: 'Edición en italiano', en: 'Italian edition', fr: 'Édition italienne' } },
   { lang: 'pt', price: null, key: 'book-print-pt', name: { es: 'Edición en portugués', en: 'Portuguese edition', fr: 'Édition portugaise' } },
+  { lang: 'ja', price: null, key: 'book-print-ja', name: { es: 'Edición en japonés', en: 'Japanese edition', fr: 'Édition japonaise' } },
 ];
 const printSub = p => L(p.name) + ' · Ediciones ARTFORO';
 

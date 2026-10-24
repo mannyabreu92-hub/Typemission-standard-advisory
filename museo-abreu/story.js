@@ -15,16 +15,19 @@ function storyFonts() {
 }
 
 // Breaks text into lines that fit `max` pixels (at most `limit` lines, the last one shortened with …).
+const CJK = /[\u3040-\u30ff\u3400-\u9fff\uff00-\uffef]/;
 function storyLines(ctx, text, max, limit) {
-  const words = String(text).split(/\s+/), lines = [];
+  // Japanese has no spaces: it breaks between characters, but not before closing punctuation (、。」…).
+  const cjk = CJK.test(text), sep = cjk ? '' : ' ';
+  const words = cjk ? String(text).match(/.[、。，．・：；！？」』）】〉》ー…]*/gu) : String(text).split(/\s+/), lines = [];
   let line = '';
   for (const w of words) {
-    const next = line ? line + ' ' + w : w;
+    const next = line ? line + sep + w : w;
     if (ctx.measureText(next).width <= max || !line) line = next;
     else { lines.push(line); line = w; }
   }
   if (line) lines.push(line);
-  if (lines.length > limit) { lines.length = limit; lines[limit - 1] = lines[limit - 1].replace(/\s*\S*$/, '') + '…'; }
+  if (lines.length > limit) { lines.length = limit; lines[limit - 1] = (cjk ? lines[limit - 1].slice(0, -1) : lines[limit - 1].replace(/\s*\S*$/, '')) + '…'; }
   return lines;
 }
 

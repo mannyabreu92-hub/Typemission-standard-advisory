@@ -295,6 +295,18 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## Japanese edition (`sample-ja.js`)
+
+From `Ecce Homo — 日本語版` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph
+(71 sections, every paragraph matched):
+- `SAMPLE_JA` (はじめに and 第一章), `TOC_JA` (`nums` 第一章…第七十章 and the 70 titles as printed), `CREDITS_JA` ("奥付").
+  No Japanese interface: the edition is read from the library in any interface language.
+- Type: the phone's own Mincho typeface (Hiragino Mincho on iPhone, Yu Mincho on Windows, Noto Serif JP on Android), upright,
+  with Japanese line breaking (`:lang(ja)` in `styles.css`). Share a passage wraps Japanese by character, never starting a
+  line with 、。」 and quotes it with 「」. Search keeps positions exact for Japanese (`srNorm`).
+- Digital edition available (Whop key `book-ja`, link to come); printed Japanese edition in the Shop (`book-print-ja`,
+  price pending). "Full book" upload recognises 第一章 headings, also without Word styles.
+
 ## Portuguese edition (`sample-pt.js`)
 
 From `Ecce Homo — Edição em português` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph

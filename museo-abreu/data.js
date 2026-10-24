@@ -45,6 +45,7 @@ const LANG_NAMES = {
   ru: { es: 'Ruso', en: 'Russian', fr: 'Russe' },
   it: { es: 'Italiano', en: 'Italian', fr: 'Italien' },
   pt: { es: 'Portugués', en: 'Portuguese', fr: 'Portugais' },
+  ja: { es: 'Japonés', en: 'Japanese', fr: 'Japonais' },
 };
 
 // Sample weekly schedule. Each session lists its real guide languages; a language
@@ -105,17 +106,18 @@ const EDITIONS = [
   { lang: 'ru', price: 25, status: 'available' },
   { lang: 'it', price: 25, status: 'available' },
   { lang: 'pt', price: 25, status: 'available' },
+  { lang: 'ja', price: 25, status: 'available' },
 ];
 
 // Table of contents of ECCE HOMO. Introduction and Chapter I are the free sample.
 const CHAPTERS = [
-  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction', fr: 'Introduction', de: 'Einleitung', ru: 'Введение', it: 'Introduzione', pt: 'Introdução' } },
+  { key: 'intro', free: true, title: { es: 'Introducción', en: 'Introduction', fr: 'Introduction', de: 'Einleitung', ru: 'Введение', it: 'Introduzione', pt: 'Introdução', ja: 'はじめに' } },
   ...TOC_EN.nums.map((n, i) => ({
     key: 'ch' + (i + 1), free: i === 0,
-    title: { es: 'Capítulo ' + n + ' — ' + TOC_ES.titles[i], en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i], fr: 'Chapitre ' + n + ' — ' + TOC_FR.titles[i], de: 'Kapitel ' + n + ' — ' + TOC_DE.titles[i], ru: 'Глава ' + n + ' — ' + TOC_RU.titles[i], it: 'Capitolo ' + n + ' — ' + TOC_IT.titles[i], pt: 'Capítulo ' + n + ' — ' + TOC_PT.titles[i] },
+    title: { es: 'Capítulo ' + n + ' — ' + TOC_ES.titles[i], en: 'Chapter ' + n + ' — ' + TOC_EN.titles[i], fr: 'Chapitre ' + n + ' — ' + TOC_FR.titles[i], de: 'Kapitel ' + n + ' — ' + TOC_DE.titles[i], ru: 'Глава ' + n + ' — ' + TOC_RU.titles[i], it: 'Capitolo ' + n + ' — ' + TOC_IT.titles[i], pt: 'Capítulo ' + n + ' — ' + TOC_PT.titles[i], ja: TOC_JA.nums[i] + '　' + TOC_JA.titles[i] },
   })),
-  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments', fr: 'Remerciements', de: 'Danksagung', ru: 'Благодарности', it: 'Ringraziamenti', pt: 'Agradecimentos' } },
-  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology', fr: 'Chronologie biographique', de: 'Biografische Zeittafel', ru: 'Биографическая хроника', it: 'Cronologia biografica', pt: 'Cronologia biográfica' } },
+  { key: 'ack', title: { es: 'Agradecimientos', en: 'Acknowledgments', fr: 'Remerciements', de: 'Danksagung', ru: 'Благодарности', it: 'Ringraziamenti', pt: 'Agradecimentos', ja: '謝辞' } },
+  { key: 'chrono', title: { es: 'Cronología biográfica', en: 'Biographical Chronology', fr: 'Chronologie biographique', de: 'Biografische Zeittafel', ru: 'Биографическая хроника', it: 'Cronologia biografica', pt: 'Cronologia biográfica', ja: '年譜' } },
 ];
 
 // Selected milestones from the book's Biographical Chronology (updated manuscript, 1978–2026).

@@ -40,7 +40,9 @@ document.addEventListener('selectionchange', () => {
 });
 window.addEventListener('hashchange', () => { const b = document.getElementById('qs-btn'); if (b) b.remove(); });
 
-async function qsDraw(quote, where) {
+async function qsDraw(quote, where, l) {
+  // A Japanese passage: upright Mincho type and Japanese quotation marks.
+  const ja = l === 'ja', JA_SERIF = '"Hiragino Mincho ProN", "Yu Mincho", YuMincho, "Noto Serif JP", "Noto Serif CJK JP", serif';
   const { w, h } = STORY, f = storyFonts(), c = document.createElement('canvas'); c.width = w; c.height = h;
   await Promise.all([`italic 400 64px ${f.serif}`, `600 64px ${f.serif}`, `500 30px ${f.sans}`].map(x => document.fonts.load(x).catch(() => {})));
   const ctx = c.getContext('2d');
@@ -51,7 +53,7 @@ async function qsDraw(quote, where) {
   ctx.fillText('ECCE HOMO', w / 2, 220); ctx.letterSpacing = '0px';
   // The largest size at which the quote fits in 13 lines.
   let size = 72, lines;
-  do { ctx.font = `italic 400 ${size}px ${f.serif}`; lines = storyLines(ctx, '“' + quote + '”', w - 240, 99); size -= 4; } while (lines.length > 13 && size > 36);
+  do { ctx.font = ja ? `500 ${size - 14}px ${JA_SERIF}` : `italic 400 ${size}px ${f.serif}`; lines = storyLines(ctx, ja ? '「' + quote + '」' : '“' + quote + '”', w - 240, 99); size -= 4; } while (lines.length > 13 && size > 36);
   const lh = Math.round((size + 4) * 1.28);
   let y = (h - lines.length * lh) / 2 + lh * 0.6;
   ctx.fillStyle = STORY.paper;
@@ -71,10 +73,10 @@ async function qsShare() {
   const w = qsWhere || qsCurrent() || { l: lang, ch: 0 }, c = CHAPTERS[w.ch];
   const where = (w.ch >= 1 && w.ch <= 70 ? t('chapterN', { n: TOC_EN.nums[w.ch - 1] }) : chTitle(c, w.l)) + ' · ' + L(LANG_NAMES[w.l]);
   try {
-    const blob = await qsDraw(qsText, where), file = new File([blob], 'ecce-homo-oscar-abreu.png', { type: 'image/png' });
+    const blob = await qsDraw(qsText, where, w.l), file = new File([blob], 'ecce-homo-oscar-abreu.png', { type: 'image/png' });
     if (typeof trackEvent === 'function') trackEvent('Passage shared', { lang: w.l, ch: w.ch });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      try { await navigator.share({ files: [file], text: `“${qsText}” — Oscar Abreu, Ecce Homo · ${location.origin}/b?l=${lang}` }); } catch (e) {}
+      try { await navigator.share({ files: [file], text: `${w.l === 'ja' ? '「' + qsText + '」' : '“' + qsText + '”'} — Oscar Abreu, Ecce Homo · ${location.origin}/b?l=${lang}` }); } catch (e) {}
     } else {
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file.name; a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 1000);
@@ -86,7 +88,9 @@ async function qsShare() {
 
 /* ---------- Search in the book ---------- */
 
-const srNorm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/ё/g, 'е');
+// Accents and case are ignored, one character at a time so positions stay the same as in the text
+// (a character that would change length, like Japanese グ, is kept as it is).
+const srNorm = s => Array.from(s, ch => { const d = ch.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/ё/g, 'е'); return d.length === ch.length ? d : ch; }).join('');
 const srBooks = {};
 // The edition's text by section key: the whole book for owners (phone copy, else one download), else the sample.
 async function srText(l) {
@@ -126,7 +130,7 @@ async function srRun(l, q) {
   const { sections, full } = await srText(l), nq = srNorm(q.trim()), hits = [];
   CHAPTERS.forEach((c, idx) => (sections[c.key] || []).forEach(([kind, text], pi) => {
     if (kind === 'y' || hits.length > 100) return;
-    const i = srNorm(text).indexOf(nq);   // NFD keeps the length for these scripts, so i points into text too
+    const i = srNorm(text).indexOf(nq);   // srNorm keeps the length, so i points into text too
     if (i >= 0) hits.push({ idx, pi, title: chTitle(c, l), snip: srSnippet(text, i, q.trim().length) });
   }));
   if (!document.getElementById('sr-out')) return;
