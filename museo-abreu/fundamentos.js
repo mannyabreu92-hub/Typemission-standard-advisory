@@ -10,24 +10,24 @@ const FUND_FREE = 3;       // sections 0–2 are free
 Object.assign(I18N.es, {
   fuEyebrow: 'Nuevo libro de Oscar Abreu', fuAlso: 'Del mismo autor',
   fuLead: 'Oscar Abreu examina los principios, el vocabulario visual, los procedimientos y los límites del Psico-Expresionismo. Acompaña a Ecce Homo y puede leerse por separado.',
-  fuEdition: 'Edición en español · ARTFORO Editions, 2026', fuCredits: 'Créditos de la edición', fuWords: 'En palabras del autor', fuPro: 'Incluido en Pro',
-  waFund: 'Hola, quiero un ejemplar de Fundamentos del Psico-Expresionismo.', fuUpload: 'Fundamentos del Psico-Expresionismo',
+  fuEdition: 'Edición digital en español · ARTFORO Editions, 2026', fuRequest: 'Solicitar la edición digital', fuCredits: 'Créditos de la edición', fuWords: 'En palabras del autor', fuPro: 'Incluido en Pro',
+  waFund: 'Hola, quiero la edición digital de Fundamentos del Psico-Expresionismo.', fuUpload: 'Fundamentos del Psico-Expresionismo',
   fuUploadHelp: 'Elija el archivo Word del libro. Se esperan 28 secciones: nota, introducción, 19 capítulos y siete secciones finales.',
   fuFound: 'Encontradas {s} secciones y {p} párrafos.', fuWarn: 'Atención: se esperaban 28 secciones.', fuBad: 'Este archivo no parece Fundamentos del Psico-Expresionismo.',
 });
 Object.assign(I18N.en, {
   fuEyebrow: 'New book by Oscar Abreu', fuAlso: 'Also by Oscar Abreu',
   fuLead: 'Oscar Abreu examines the principles, visual vocabulary, procedures and limits of Psycho-Expressionism. A companion to Ecce Homo that can be read on its own.',
-  fuEdition: 'Spanish edition · ARTFORO Editions, 2026', fuCredits: 'Edition credits', fuWords: 'In the author’s words', fuPro: 'Included in Pro',
-  waFund: 'Hello, I would like a copy of Fundamentos del Psico-Expresionismo.', fuUpload: 'Fundamentos del Psico-Expresionismo',
+  fuEdition: 'Digital edition in Spanish · ARTFORO Editions, 2026', fuRequest: 'Request the digital edition', fuCredits: 'Edition credits', fuWords: 'In the author’s words', fuPro: 'Included in Pro',
+  waFund: 'Hello, I would like the digital edition of Fundamentos del Psico-Expresionismo.', fuUpload: 'Fundamentos del Psico-Expresionismo',
   fuUploadHelp: 'Choose the book’s Word file. 28 sections are expected: note, introduction, 19 chapters and seven closing sections.',
   fuFound: 'Found {s} sections and {p} paragraphs.', fuWarn: 'Note: 28 sections were expected.', fuBad: 'This file does not look like Fundamentos del Psico-Expresionismo.',
 });
 Object.assign(I18N.fr, {
   fuEyebrow: 'Nouveau livre d’Oscar Abreu', fuAlso: 'Du même auteur',
   fuLead: 'Oscar Abreu examine les principes, le vocabulaire visuel, les procédés et les limites du Psycho-Expressionnisme. Un compagnon d’Ecce Homo qui peut se lire séparément.',
-  fuEdition: 'Édition espagnole · ARTFORO Editions, 2026', fuCredits: 'Crédits de l’édition', fuWords: 'Selon l’auteur', fuPro: 'Inclus dans Pro',
-  waFund: 'Bonjour, je souhaite un exemplaire de Fundamentos del Psico-Expresionismo.', fuUpload: 'Fundamentos del Psico-Expresionismo',
+  fuEdition: 'Édition numérique en espagnol · ARTFORO Editions, 2026', fuRequest: 'Demander l’édition numérique', fuCredits: 'Crédits de l’édition', fuWords: 'Selon l’auteur', fuPro: 'Inclus dans Pro',
+  waFund: 'Bonjour, je souhaite l’édition numérique de Fundamentos del Psico-Expresionismo.', fuUpload: 'Fundamentos del Psico-Expresionismo',
   fuUploadHelp: 'Choisissez le fichier Word du livre. 28 sections sont attendues : note, introduction, 19 chapitres et sept sections finales.',
   fuFound: '{s} sections et {p} paragraphes trouvés.', fuWarn: 'Attention : 28 sections étaient attendues.', fuBad: 'Ce fichier ne ressemble pas à Fundamentos del Psico-Expresionismo.',
 });
@@ -41,12 +41,12 @@ const fuCover = () => `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(F
   <text x="28" y="502" fill="#e9dfd0" font-family="Cormorant Garamond, serif" font-size="17" font-style="italic">La materia, la memoria y la transformación humana</text>
   <text x="28" y="560" fill="#c4a76c" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`;
 
-// Buy on Whop once there is a price and a link; otherwise a request by WhatsApp.
+// Buy on Whop once there is a price and a link; otherwise a request by WhatsApp. Digital only for now.
 function fuBuyButton(cls = 'btn primary') {
   if (fuOwns()) return '';
   if (FUND_PRICE && whopLink('fund-es')) return `<button class="${cls}" data-action="fuBuy">${t('buyOnline', { price: usd(FUND_PRICE) })}</button>`;
   const wa = whatsappLink(t('waFund'));
-  return wa ? `<a class="${cls}" href="${wa}" target="_blank" rel="noopener">${t('t100Ask')}</a>` : '';
+  return wa ? `<a class="${cls}" href="${wa}" target="_blank" rel="noopener">${t('fuRequest')}</a>` : '';
 }
 EXTRA_ACTIONS.fuBuy = () => checkout({ title: FUND.title, sub: 'Oscar Abreu · ' + t('fuEdition'), price: FUND_PRICE, link: whopLink('fund-es'), provider: 'Whop' });
 

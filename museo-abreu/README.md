@@ -306,7 +306,7 @@ Editions, 2026; Spanish), a companion to Ecce Homo.
   book (`fundamentos-parse.js` reads the Word headings) and served by `api/book.js?b=fu` from `fund/es/`, to owners of
   Whop key `fund-es` or Pro. Owning it never unlocks an Ecce Homo edition, nor the other way round.
 - Price `FUND_PRICE` (fundamentos.js) and Whop link `BOOKING.whop['fund-es']`: until both are set, the page offers
-  "Request a copy" on WhatsApp. Listed in the Library ("Also by Oscar Abreu") and the Shop.
+  "Request the digital edition" on WhatsApp. Digital only for now: the printing line of the credits is left out. Listed in the Library ("Also by Oscar Abreu") and the Shop.
 
 ## Launch fixes (24 Oct 2026)
 

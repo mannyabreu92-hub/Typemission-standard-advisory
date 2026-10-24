@@ -784,11 +784,12 @@ I18N.ar = {
   "fuEyebrow": "كتاب جديد لأوسكار أبرو",
   "fuAlso": "للمؤلف نفسه",
   "fuLead": "يتناول أوسكار أبرو مبادئ التعبيرية-النفسية ومفرداتها البصرية وأساليبها وحدودها. كتاب مرافق لـ Ecce Homo يمكن قراءته منفردًا.",
-  "fuEdition": "الطبعة الإسبانية · ARTFORO Editions، 2026",
+  "fuEdition": "طبعة رقمية بالإسبانية · ARTFORO Editions، 2026",
   "fuCredits": "بيانات الطبعة",
   "fuWords": "بكلمات المؤلف",
   "fuPro": "مشمول في Pro",
-  "waFund": "مرحبًا، أودّ نسخة من Fundamentos del Psico-Expresionismo.",
+  "waFund": "مرحبًا، أودّ الطبعة الرقمية من Fundamentos del Psico-Expresionismo.",
+  "fuRequest": "اطلب الطبعة الرقمية",
 };
 TR.ar = {
   "2019": "2019",

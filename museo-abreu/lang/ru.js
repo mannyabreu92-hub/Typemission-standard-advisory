@@ -785,11 +785,12 @@ I18N.ru = {
   "fuEyebrow": "Новая книга Оскара Абреу",
   "fuAlso": "Другие книги автора",
   "fuLead": "Оскар Абреу рассматривает принципы, визуальный словарь, приёмы и границы психо-экспрессионизма. Спутник Ecce Homo, который можно читать отдельно.",
-  "fuEdition": "Испанское издание · ARTFORO Editions, 2026",
+  "fuEdition": "Цифровое издание на испанском · ARTFORO Editions, 2026",
   "fuCredits": "Выходные данные",
   "fuWords": "Словами автора",
   "fuPro": "Входит в Pro",
-  "waFund": "Здравствуйте, хочу заказать экземпляр Fundamentos del Psico-Expresionismo.",
+  "waFund": "Здравствуйте, хочу заказать цифровое издание Fundamentos del Psico-Expresionismo.",
+  "fuRequest": "Запросить цифровое издание",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

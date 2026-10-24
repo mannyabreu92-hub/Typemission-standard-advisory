@@ -784,11 +784,12 @@ I18N.it = {
   "fuEyebrow": "Nuovo libro di Oscar Abreu",
   "fuAlso": "Dello stesso autore",
   "fuLead": "Oscar Abreu esamina i principi, il vocabolario visivo, i procedimenti e i limiti del Psico-Espressionismo. Un compagno di Ecce Homo che si può leggere anche da solo.",
-  "fuEdition": "Edizione spagnola · ARTFORO Editions, 2026",
+  "fuEdition": "Edizione digitale in spagnolo · ARTFORO Editions, 2026",
   "fuCredits": "Crediti dell’edizione",
   "fuWords": "Nelle parole dell’autore",
   "fuPro": "Incluso in Pro",
-  "waFund": "Salve, vorrei una copia di Fundamentos del Psico-Expresionismo.",
+  "waFund": "Salve, vorrei l’edizione digitale di Fundamentos del Psico-Expresionismo.",
+  "fuRequest": "Richiedi l’edizione digitale",
 };
 TR.it = {
   "2019": "2019",
