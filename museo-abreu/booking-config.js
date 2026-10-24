@@ -23,7 +23,7 @@ var BOOKING = {
   // Whop checkout links (memberships, clubs, digital book, donations). Paste each product's
   // checkout link; an empty one keeps the WhatsApp request. See BOOKING-SETUP.md, part 2.
   whop: {
-    pro: '',
+    pro: 'https://whop.com/museoabreu/museo-abreu-pro', // weekly membership, USD 5.99
     'painting-club': '', // on hold (family decision); was https://whop.com/museoabreu/painting-club
     'art-club': '', // on hold (family decision); was https://whop.com/museoabreu/art-club-5d
     'book-en': 'https://whop.com/museoabreu/ecce-homo-english-edition',

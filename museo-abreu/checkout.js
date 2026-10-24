@@ -228,6 +228,21 @@ EXTRA_FORMS.unlock = async form => {
   btn.disabled = false;
 };
 
+// Pro bought on Whop is a weekly membership: once a day the app asks the server whether it is still active,
+// and ends it on this phone when it was cancelled or a payment failed. Without a connection it stays as it is.
+async function proRecheck() {
+  const m = fx.get('member', null);
+  if (!m || m.source !== 'whop' || !profile.email || fx.get('proChecked', '') === todayPC()) return;
+  try {
+    const r = await fetch('/api/purchases', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: profile.email }) });
+    if (!r.ok) return;
+    const { keys } = await r.json();
+    fx.set('proChecked', todayPC());
+    if (!(keys || []).includes('pro')) { fx.set('member', null); if (/^#\/(pro|cuenta|eventos)/.test(location.hash)) route(); }
+  } catch (e) {}
+}
+setTimeout(proRecheck, 3000);
+
 // The unlock form appears on the thank-you page and in Account.
 {
   const thanks = pageThanks;
