@@ -103,15 +103,19 @@ if (typeof EXTRA_ROUTES !== 'undefined') Object.assign(routes, EXTRA_ROUTES);
 
 function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/');
-  const name = routes[parts[0]] ? parts[0] : '';
+  // An address that is no page of the app shows "Page not found" (the home page only for #/ and the bare URL).
+  const missing = parts[0] !== '' && !routes[parts[0]];
+  const name = missing ? '' : parts[0];
   clearInterval(holdTimer);
-  main.innerHTML = (typeof sectionNav === 'function' ? sectionNav(name) : '') + routes[name](...parts.slice(1));
+  main.innerHTML = missing ? page404() : (typeof sectionNav === 'function' ? sectionNav(name) : '') + routes[name](...parts.slice(1));
+  pageMeta(name, missing);
   const section = (typeof ROUTE_SECTION !== 'undefined' && ROUTE_SECTION[name]) || name;
   document.querySelectorAll('[data-route]').forEach(a => {
     a.classList.toggle('active', a.dataset.route === section);
     if (a.dataset.route === section) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
   afterRender(name);
+  loadImagesSoon();
   trackPage();
   // A last path part naming an element on the page (e.g. #/biblioteca/top100) scrolls to it.
   const anchor = parts.length > 1 && /^[a-z][\w-]*$/.test(parts.at(-1)) && document.getElementById(parts.at(-1));
@@ -134,6 +138,41 @@ document.addEventListener('click', e => {
   if (/wa\.me\//.test(href)) trackEvent('WhatsApp', { button: (a.textContent || '').trim().slice(0, 60) });
   else if (Object.values(BOOKING.links || {}).includes(href) || Object.values(BOOKING.whop || {}).includes(href)) trackEvent('Checkout', { url: href });
 });
+
+function page404() {
+  return `<div class="wrap"><section class="section notfound">
+    <p class="eyebrow">404</p><h1>${t('nfTitle')}</h1>
+    <p class="lead" style="margin-top:.8rem">${t('nfLead')}</p>
+    <div class="btn-row"><a class="btn primary" href="#/">${t('nfHome')}</a><a class="btn" href="#/artista">Oscar Abreu</a><a class="btn" href="#/eventos">${t('navEvents')}</a></div>
+  </section></div>`;
+}
+
+// Each page's browser title and description: its own heading ("Visit & VIP Tour | Museo Abreu") and its
+// opening text, so every route has its own in every language. The home page keeps the museum's name.
+const SITE_TITLE = 'Museo Abreu · Art Experiences';
+// Pages whose heading is not their name: the press kit is headed "Oscar Abreu", like the artist page.
+const PAGE_TITLES = { kit: () => `${t('moreKit')} · Oscar Abreu`, coleccion: () => t('ciEyebrow') };
+function pageMeta(name, missing) {
+  const h1 = main.querySelector('h1'), heading = PAGE_TITLES[name] ? PAGE_TITLES[name]() : h1 ? h1.textContent.replace(/\s+/g, ' ').trim() : '';
+  document.title = !name && !missing ? SITE_TITLE : (heading ? `${heading} | Museo Abreu` : SITE_TITLE);
+  const lead = main.querySelector('.lead, .section p:not(.eyebrow):not(.muted)');
+  const desc = (!name && !missing ? t('homeLead') : lead ? lead.textContent : '').replace(/\s+/g, ' ').trim();
+  let meta = document.querySelector('meta[name="description"]');
+  if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
+  if (desc) meta.content = desc.length > 160 ? desc.slice(0, 157).replace(/\s+\S*$/, '') + '…' : desc;
+}
+
+// Images marked lazy are fetched just after the page's first paint instead of when scrolled to, so a gallery,
+// manifesto or portrait is never seen as an empty tile; the images in view are still requested first.
+function loadImagesSoon() {
+  requestAnimationFrame(() => setTimeout(() => main.querySelectorAll('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; }), 250));
+}
+// A work whose image cannot be loaded is hidden with its tile: an empty placeholder is never shown.
+document.addEventListener('error', e => {
+  const img = e.target;
+  if (!(img instanceof HTMLImageElement) || !main.contains(img)) return;
+  (img.closest('.painting, .work, .m-work, .gb-artist, .gb-fig, .kit-work, .lot-img') || img).style.display = 'none';
+}, true);
 
 function afterRender(name) {
   renderQRs();
@@ -214,10 +253,13 @@ const workImg = w => w.img
   ? `<img src="${w.img}" alt="${esc(L(w.title))}, Oscar Abreu" loading="lazy">`
   : artSVG(w.seed, L(w.title));
 
+// Oscar Abreu's welcome video (a file in img/ or a full URL). Until there is one, the artist page shows no video box.
+const WELCOME_VIDEO = '';
+
 function workCard(w) {
   return `<button type="button" class="work" data-action="work" data-id="${w.id}">
     <div class="art">${workImg(w)}</div>
-    <div class="meta"><strong>${L(w.title)}</strong><span class="muted">${t('year')}: ${w.spec ? L(w.spec)[0] : t('pending')}</span>${w.sold ? ` <span class="chip sold">${t('sold')}</span>` : ''}</div>
+    <div class="meta"><strong>${L(w.title)}</strong>${w.spec ? `<span class="muted">${t('year')}: ${L(w.spec)[0]}</span>` : ''}${w.sold ? ` <span class="chip sold">${t('sold')}</span>` : ''}</div>
   </button>`;
 }
 
@@ -228,15 +270,15 @@ function pageArtist() {
       <h1>Oscar Abreu</h1>
       <p class="lead" style="margin-top:.8rem">${t('artistLead')}</p>
     </section>
-    <section class="section grid two">
-      <div>
+    <section class="section${WELCOME_VIDEO ? ' grid two' : ''}">
+      ${WELCOME_VIDEO ? `<div>
         <h2>${t('welcomeVideo')}</h2>
-        <div class="video-ph"><p>▶<br>${t('videoPending')}</p></div>
-      </div>
+        <video class="welcome-video" src="${WELCOME_VIDEO}" controls playsinline preload="metadata"></video>
+      </div>` : ''}
       <div>
         <h2>${t('bioShort')}</h2>
         <p>${esc(L(BIO_SITE).intro)}</p>
-        <p class="muted" style="margin-top:.6rem">${t('sourceLabel')}: ${BIO_SITE.source}</p>
+        <p class="muted" style="margin-top:.6rem">${t('sourceLabel')}: ${BIO_SITE.source}/biography · ${t('bioRecordSource')}</p>
         <details style="margin-top:1rem"><summary><strong>${t('bioLong')}</strong></summary><p style="margin-top:.6rem">${t('bioPlaceholder')}</p><p>${t('bioLongText')}</p>
         <p class="muted">${t('sourceNote')}</p></details>
       </div>
@@ -293,9 +335,9 @@ function openWork(id) {
     ${w.sold ? `<p><span class="chip sold">${t('sold')}</span></p>` : ''}
     <dl class="specs">
       ${w.spec && w.spec.series ? `<dt>${t('series')}</dt><dd>${L(w.spec.series)}</dd>` : ''}
-      <dt>${t('year')}</dt><dd>${w.spec ? L(w.spec)[0] : pend()}</dd>
-      <dt>${t('technique')}</dt><dd>${w.spec ? L(w.spec)[1] : pend()}</dd>
-      <dt>${t('dimensions')}</dt><dd>${w.spec ? L(w.spec)[2] : pend()}</dd>
+      ${w.spec ? `<dt>${t('year')}</dt><dd>${L(w.spec)[0]}</dd>
+      <dt>${t('technique')}</dt><dd>${L(w.spec)[1]}</dd>
+      <dt>${t('dimensions')}</dt><dd>${L(w.spec)[2]}</dd>` : ''}
     </dl>
     ${w.spec ? `<p class="muted">${t('sourceLabel')}: oscarabreu.com</p>` : ''}
     <div class="btn-row">
@@ -373,8 +415,7 @@ function manifestoSection(m, own = false) {
       <p class="eyebrow">${t('manifestoEyebrow')} ${m.n}/${MANIFESTOS.length}</p>
       ${own ? `<h1 class="m-title">${L(m.title)}</h1>` : `<h2>${L(m.title)}</h2>`}
       <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${m.source}</p>
-      ${w.img ? `<button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${caption}</span></button>`
-        : `<p class="m-work-missing">${caption} · ${t('imagePending')}</p>`}
+      ${w.img ? `<button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${caption}</span></button>` : ''}
       ${body}
     </section>`;
 }
@@ -397,19 +438,22 @@ function pageVisit() {
       <h2>${t('practical')}</h2>
       <div class="card">
         <dl class="specs">
-          <dt>${t('location')}</dt><dd>Bávaro, Punta Cana ${pend()} · <a href="https://www.google.com/maps/search/?api=1&query=Museo+Abreu+B%C3%A1varo+Punta+Cana" target="_blank" rel="noopener">${t('mapOpen')}</a></dd>
-          <dt>${t('hours')}</dt><dd>${t('hoursVal')}</dd>
+          <dt>${t('location')}</dt><dd>${esc(visitInfo('address') || 'Bávaro, Punta Cana')} · <a href="${mapLink()}" target="_blank" rel="noopener">${t('mapOpen')}</a>${visitInfo('address') ? ` · <a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(visitInfo('address'))}" target="_blank" rel="noopener">${t('mapDirections')}</a>` : ''}</dd>
+          ${infoRow('hours', 'hours')}${infoRow('admission', 'admission')}
           <dt>${t('duration')}</dt><dd>${t('durationVal')}</dd>
           <dt>${t('languages')}</dt><dd>${t('languagesVal')}</dd>
-          <dt>${t('accessibility')}</dt><dd>${pend()}</dd>
-          <dt>${t('arrival')}</dt><dd>${pend()}</dd>
+          ${infoRow('accessibility', 'accessibility')}${infoRow('arrival', 'arrival')}
           <dt>${t('transport')}</dt><dd>${t('transportVal')}</dd>
           <dt>${t('contact')}</dt><dd>WhatsApp <a href="https://wa.me/18098409588" target="_blank" rel="noopener">+1 (809) 840-9588</a></dd>
         </dl>
       </div>
+      ${visitInfo('address') ? `<iframe class="visit-map" title="${esc(t('mapTitle'))}" src="https://www.google.com/maps?q=${encodeURIComponent(visitInfo('address'))}&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>` : ''}
     </section>
   </div>`;
 }
+// Visit page rows from VISIT_INFO (booking-config.js): shown only once filled in.
+const infoRow = (key, label) => visitInfo(key) ? `<dt>${t(label)}</dt><dd>${esc(visitInfo(key))}</dd>` : '';
+const mapLink = () => 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(visitInfo('address') || 'Museo Abreu Bávaro Punta Cana');
 
 function stepsBar() {
   const names = ['stepExp', 'stepDate', 'stepPeople', 'stepReview', 'stepPay', 'stepTicket'];
@@ -432,7 +476,7 @@ function bookingWizard() {
           : `<button type="button" class="choice" data-action="exp" data-id="${e.id}" aria-pressed="${bk.exp === e.id}">${inner}</button>`;
       }).join('')}</div>
         ${whatsappLink(t('waTour')) ? `<p style="margin-top:1rem"><a class="btn wa" href="${whatsappLink(t('waTour'))}" target="_blank" rel="noopener">${t('bookWhatsApp')}</a></p>` : ''}
-        <p class="muted" style="margin-top:.8rem">* ${t('illustrative')}</p>`;
+`;
       break;
     case 1: {
       const start = todayPC();
@@ -539,7 +583,7 @@ function summary(exp) {
       <span class="total">${t('total')}</span><span class="total">${usd(exp.price * bk.qty)}</span>
     </div>
     ${exp.includesBook ? `<p class="muted" style="margin-top:.6rem">📖 ${t('combo')}</p>` : ''}
-    <p class="muted" style="margin-top:.4rem">${t('currency')} · ${t('illustrative')}</p>`;
+    <p class="muted" style="margin-top:.4rem">${t('currency')}</p>`;
 }
 
 function canPay() { return bk.terms && profile.name.trim() && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(profile.email); }
@@ -721,7 +765,6 @@ function pageLibrary() {
               : `<span class="chip">${t('comingSoon')}</span>`}
           </div>`).join('')}
         </div>
-        <p class="muted" style="margin-top:.6rem">* ${t('illustrative')}</p>
       </div>
       <div>
         <h2>${t('contents')}</h2>

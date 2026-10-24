@@ -88,6 +88,12 @@ module.exports = async (req, res) => {
       return res.status(200).json({ ok: true, stored: secs.length });
     }
     // Mailing list (api/subscribe.js): remove one person.
+    // Contact form (api/contact.js): archive one message.
+    if (b.action === 'msg-remove') {
+      if (!/^contact\/[\w-]+\.json$/.test(String(b.id))) return res.status(400).json({ error: 'request' });
+      await del(b.id).catch(() => {});
+      return res.status(200).json({ ok: true });
+    }
     if (b.action === 'list-remove') {
       if (!/^list\/[0-9a-f]{64}\.json$/.test(String(b.id))) return res.status(400).json({ error: 'request' });
       await del(b.id).catch(() => {});
@@ -152,6 +158,7 @@ module.exports = async (req, res) => {
   const wishes = {};
   (await all('wish/', 3000)).forEach(w => ((w.data && w.data.items) || []).forEach(k => { wishes[k] = (wishes[k] || 0) + 1; }));
   const people = (await all('list/', 5000)).filter(r => r.data).map(r => ({ id: r.path, ...r.data }));
+  const messages = (await all('contact/', 2000)).filter(r => r.data).map(r => ({ id: r.path, ...r.data }));
   const tickets = (await all('tickets/', 5000)).filter(r => r.data && r.data.code).map(r => r.data);
   // Only each edition's index (not every chapter) is read.
   const bookBlobs = []; let cur;
@@ -167,5 +174,5 @@ module.exports = async (req, res) => {
     if (d.owner) { s.buyers++; if (d.startedFree) s.converted++; s.reached[d.max === 0 ? 0 : d.max >= 70 ? 8 : Math.ceil(d.max / 10)]++; if (d.max >= 70) s.finished++; }
     else s.sample++;
   }
-  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list: people, tickets, books, reading, now: new Date().toISOString() });
+  res.status(200).json({ auction, purchases, rsvps, invites, wishes, list: people, messages, tickets, books, reading, now: new Date().toISOString() });
 };

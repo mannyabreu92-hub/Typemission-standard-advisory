@@ -4,22 +4,22 @@
 // next events, links (auction, Circle, press, reviews) and contacts. "Save as PDF" prints a clean page.
 
 Object.assign(I18N.es, {
-  kitEyebrow: 'Prensa y coleccionistas', kitPdf: 'Guardar como PDF', kitWords: 'En sus palabras', kitDates: 'Fechas clave',
+  kitEyebrow: 'Dossier de prensa', kitPdf: 'Guardar como PDF', kitWords: 'En sus palabras', kitDates: 'Fechas clave',
   kitDownload: 'Descargar imagen', kitDownloadT: 'Descargar la imagen de «{title}»', kitCredit: 'Para publicar, acredite: © Oscar Abreu y el título de la obra.',
   kitBook: 'El libro', kitEditions: 'Ediciones: {list}.', kitEvents: 'Próximos eventos', kitMore: 'Más información',
-  kitShareText: 'Oscar Abreu · Prensa y coleccionistas · Museo Abreu', moreKit: 'Prensa y coleccionistas', moreKitText: 'La trayectoria, obras para descargar, el libro y los eventos en una página.',
+  kitShareText: 'Oscar Abreu · Dossier de prensa · Museo Abreu', moreKit: 'Dossier de prensa', moreKitText: 'La trayectoria, obras para descargar, el libro y los eventos en una página.',
 });
 Object.assign(I18N.en, {
-  kitEyebrow: 'Press & collectors', kitPdf: 'Save as PDF', kitWords: 'In his words', kitDates: 'Key dates',
+  kitEyebrow: 'Press kit', kitPdf: 'Save as PDF', kitWords: 'In his words', kitDates: 'Key dates',
   kitDownload: 'Download image', kitDownloadT: 'Download the image of “{title}”', kitCredit: 'For publication, please credit: © Oscar Abreu and the title of the work.',
   kitBook: 'The book', kitEditions: 'Editions: {list}.', kitEvents: 'Upcoming events', kitMore: 'More information',
-  kitShareText: 'Oscar Abreu · Press & collectors · Museo Abreu', moreKit: 'Press & collectors', moreKitText: 'His career, works to download, the book and the events on one page.',
+  kitShareText: 'Oscar Abreu · Press kit · Museo Abreu', moreKit: 'Press kit', moreKitText: 'His career, works to download, the book and the events on one page.',
 });
 Object.assign(I18N.fr, {
-  kitEyebrow: 'Presse et collectionneurs', kitPdf: 'Enregistrer en PDF', kitWords: 'Dans ses mots', kitDates: 'Dates clés',
+  kitEyebrow: 'Dossier de presse', kitPdf: 'Enregistrer en PDF', kitWords: 'Dans ses mots', kitDates: 'Dates clés',
   kitDownload: 'Télécharger l’image', kitDownloadT: 'Télécharger l’image de « {title} »', kitCredit: 'Pour publication, merci de créditer : © Oscar Abreu et le titre de l’œuvre.',
   kitBook: 'Le livre', kitEditions: 'Éditions : {list}.', kitEvents: 'Prochains événements', kitMore: 'En savoir plus',
-  kitShareText: 'Oscar Abreu · Presse et collectionneurs · Museo Abreu', moreKit: 'Presse et collectionneurs', moreKitText: 'Son parcours, des œuvres à télécharger, le livre et les événements sur une page.',
+  kitShareText: 'Oscar Abreu · Dossier de presse · Museo Abreu', moreKit: 'Dossier de presse', moreKitText: 'Son parcours, des œuvres à télécharger, le livre et les événements sur une page.',
 });
 
 const KIT_YEARS = ['1978', '1994', '1996', '1998', '2004', '2011', '2016', '2021', '2023', '2025', '2026'];
@@ -82,7 +82,7 @@ function pageKit() {
     <section class="section">
       <h2>${t('kitMore')}</h2>
       <div class="btn-row">
-        <a class="btn" href="#/subasta">${t('navAuction')}</a><a class="btn" href="#/coleccion">${t('ciEyebrow')}</a>
+        ${auLots().length ? `<a class="btn" href="#/subasta">${t('navAuction')}</a>` : ''}<a class="btn" href="#/coleccion">${t('ciEyebrow')}</a>
         <a class="btn" href="#/prensa">${t('navPress')}</a><a class="btn" href="#/resenas">${t('navReviews')}</a><a class="btn" href="#/exposiciones">${t('navExhibits')}</a>
       </div>
     </section>

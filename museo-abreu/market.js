@@ -21,9 +21,10 @@ Object.assign(I18N.es, {
   auInterest: 'Avisarme cuando abra', waAuInterest: 'Hola, me interesa el {lot} de la subasta: {title}.',
   auHistory: 'Pujas', auWinner: 'El museo contacta al ganador para el pago y la entrega.', auBack: 'Todos los lotes',
   auLiveOff: 'Las pujas en vivo no están disponibles ahora.',
-  shTitle: 'Tienda', shLead: 'El libro Ecce Homo, impreso y digital, y las obras en subasta.',
+  shTitle: 'Tienda', shLead: 'El libro Ecce Homo, impreso y digital, y las obras en subasta.', shLeadBook: 'El libro Ecce Homo, impreso y digital.',
+  shDigitalAll: 'En {n} idiomas · Para leer en esta app.', shChoose: 'Elegir edición', auSoon: 'El museo publicará aquí las obras, sus precios de salida y la fecha de cierre.',
   shBook: 'El libro', shPrint: 'Libro impreso', shPrintSub: 'Edición en español · Ediciones ARTFORO',
-  shPrintNote: 'Recogida en el museo o envío; el museo confirma el precio y la entrega.',
+  shPrintNote: 'Recogida en el museo o envío; el museo confirma la entrega.',
   shDigital: 'Edición digital', shDigitalNote: 'Para leer en esta app.', shOrder: 'Pedir',
   shAuctionTitle: 'En subasta', shAllLots: 'Ver la subasta',
 });
@@ -44,9 +45,10 @@ Object.assign(I18N.en, {
   auInterest: 'Notify me when it opens', waAuInterest: 'Hello, I am interested in auction {lot}: {title}.',
   auHistory: 'Bids', auWinner: 'The museum contacts the winner to arrange payment and delivery.', auBack: 'All lots',
   auLiveOff: 'Live bids are unavailable right now.',
-  shTitle: 'Shop', shLead: 'The book Ecce Homo, in print and digital, and the works at auction.',
+  shTitle: 'Shop', shLead: 'The book Ecce Homo, in print and digital, and the works at auction.', shLeadBook: 'The book Ecce Homo, in print and digital.',
+  shDigitalAll: 'In {n} languages · To read in this app.', shChoose: 'Choose your edition', auSoon: 'The museum will publish the works, their starting bids and the closing date here.',
   shBook: 'The book', shPrint: 'Printed book', shPrintSub: 'Spanish edition · Ediciones ARTFORO',
-  shPrintNote: 'Pick up at the museum or have it shipped; the museum confirms price and delivery.',
+  shPrintNote: 'Pick up at the museum or have it shipped; the museum confirms delivery.',
   shDigital: 'Digital edition', shDigitalNote: 'To read in this app.', shOrder: 'Order',
   shAuctionTitle: 'At auction', shAllLots: 'See the auction',
 });
@@ -67,9 +69,10 @@ Object.assign(I18N.fr, {
   auInterest: 'Me prévenir à l’ouverture', waAuInterest: 'Bonjour, le {lot} de la vente m’intéresse : {title}.',
   auHistory: 'Enchères', auWinner: 'Le musée contacte le gagnant pour le paiement et la livraison.', auBack: 'Tous les lots',
   auLiveOff: 'Les enchères en direct sont indisponibles pour le moment.',
-  shTitle: 'Boutique', shLead: 'Le livre Ecce Homo, imprimé et numérique, et les œuvres aux enchères.',
+  shTitle: 'Boutique', shLead: 'Le livre Ecce Homo, imprimé et numérique, et les œuvres aux enchères.', shLeadBook: 'Le livre Ecce Homo, imprimé et numérique.',
+  shDigitalAll: 'En {n} langues · À lire dans cette app.', shChoose: 'Choisir l’édition', auSoon: 'Le musée publiera ici les œuvres, leurs mises à prix et la date de clôture.',
   shBook: 'Le livre', shPrint: 'Livre imprimé', shPrintSub: 'Édition espagnole · Ediciones ARTFORO',
-  shPrintNote: 'Retrait au musée ou envoi ; le musée confirme le prix et la livraison.',
+  shPrintNote: 'Retrait au musée ou envoi ; le musée confirme la livraison.',
   shDigital: 'Édition numérique', shDigitalNote: 'À lire dans cette app.', shOrder: 'Commander',
   shAuctionTitle: 'Aux enchères', shAllLots: 'Voir la vente',
 });
@@ -98,6 +101,15 @@ function lotTitle(lot) {
   return w ? L(w.title) : t('auSculptureN', { n: lot.n });
 }
 const lotNumber = lot => AUCTION.lots.indexOf(lot) + 1;
+// Lots shown to visitors: the real ones. Example lots (example: true in auction-config.js) appear nowhere, and
+// until a real lot is published the auction is out of the menus (the bottom tab opens the book instead).
+const auLots = () => AUCTION.lots.filter(l => !l.example);
+const shLeadText = () => t(auLots().length ? 'shLead' : 'shLeadBook');
+if (!auLots().length) {
+  document.querySelectorAll('header [data-route="subasta"]').forEach(a => a.remove());
+  const tab = document.querySelector('.tabbar [data-route="subasta"]');
+  if (tab) { tab.href = '#/biblioteca'; tab.dataset.route = 'biblioteca'; tab.innerHTML = '<span class="ti">✦</span><span data-i18n="tabLibrary">Libro</span>'; }
+}
 const lotKind = lot => t(lot.kind === 'sculpture' ? 'auSculpture' : 'auPainting');
 function liveFinale() {
   const gb = EVENTS.find(e => e.id === AUCTION.live.event), tier = gb.tiers.find(x => x.id === AUCTION.live.tier);
@@ -153,17 +165,20 @@ function pageAuction(id) {
   if (!auState && !auFailed) fetchAuction().then(() => { if (location.hash.startsWith('#/subasta')) route(); });
   setTimeout(auPoll, 0);
   const fin = liveFinale();
-  const lot = id && AUCTION.lots.find(l => l.id === id);
+  const lot = id && auLots().find(l => l.id === id);
   if (lot) return pageLot(lot, fin);
+  if (!auLots().length) return `<div class="wrap"><section class="section">
+      <p class="eyebrow">${t('auEyebrow')}</p><h1>${t('auTitle')}</h1>
+      <p class="lead" style="margin-top:.8rem">${t('auSoon')}</p>
+      <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p></section></div>`;
   return `<div class="wrap">
     <section class="section">
       <p class="eyebrow">${t('auEyebrow')}</p><h1>${t('auTitle')}</h1>
       <p class="lead" style="margin-top:.8rem">${t('auLead', { event: esc(fin.name) })}</p>
       <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p>
-      ${AUCTION.lots.some(l => l.example) ? `<p class="muted" style="margin-top:.5rem">${t('auExampleNote')}</p>` : ''}
       ${auFailed && AUCTION.lots.some(l => lotOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
     </section>
-    <section class="section"><div class="lots">${AUCTION.lots.map(l => lotCard(l, 'h2')).join('')}</div></section>
+    <section class="section"><div class="lots">${auLots().map(l => lotCard(l, 'h2')).join('')}</div></section>
   </div>`;
 }
 
@@ -252,12 +267,12 @@ function pageShop() {
   const digital = editionsMineFirst(EDITIONS.filter(e => e.status === 'available' && LANG_NAMES[e.lang]), myEdition());
   const price = p => p == null ? t('coPriceTbd') : auUSD(p);
   return `<div class="wrap">
-    <section class="section"><p class="eyebrow">Museo Abreu</p><h1>${t('shTitle')}</h1><p class="lead" style="margin-top:.8rem">${t('shLead')}</p></section>
+    <section class="section"><p class="eyebrow">Museo Abreu</p><h1>${t('shTitle')}</h1><p class="lead" style="margin-top:.8rem">${shLeadText()}</p></section>
     <section class="section"><div class="section-head"><h2 class="tier-group">${t('shBook')}</h2>
         <button class="btn small" data-action="bookShare">${t('evShare')}</button></div>
       <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
       <div class="shop-grid">
-        ${PRINT_EDITIONS.map(p => `<article class="shop-item">
+        ${PRINT_EDITIONS.filter(p => p.price != null).map(p => `<article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
           <h3 class="pass-name">${t('shPrint')}</h3>
           <p class="muted">${printSub(p)}</p>
@@ -265,19 +280,19 @@ function pageShop() {
           <p class="muted">${t('shPrintNote')}</p>
           <button class="buy-now" data-action="buyPrint" data-l="${p.lang}">${t('shOrder')} <span class="arr" aria-hidden="true">›</span></button>
         </article>`).join('')}
-        ${digital.map(e => `<article class="shop-item">
+        <article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
           <h3 class="pass-name">${t('shDigital')}</h3>
-          <p class="muted">${L(LANG_NAMES[e.lang])} · ${t('shDigitalNote')}</p>
-          <p class="pass-price">${auUSD(e.price)}</p>
-          <button class="buy-now" data-action="buy" data-l="${e.lang}">${t('buyNow')} <span class="arr" aria-hidden="true">›</span></button>
-        </article>`).join('')}
+          <p class="muted">${t('shDigitalAll', { n: digital.length })}</p>
+          <p class="pass-price">${auUSD(digital[0].price)}</p>
+          <a class="buy-now" href="#/biblioteca">${t('shChoose')} <span class="arr" aria-hidden="true">›</span></a>
+        </article>
       </div>
     </section>
-    <section class="section"><h2 class="tier-group">${t('shAuctionTitle')}</h2>
-      <div class="lots">${AUCTION.lots.slice(0, 3).map(l => lotCard(l)).join('')}</div>
+    ${auLots().length ? `<section class="section"><h2 class="tier-group">${t('shAuctionTitle')}</h2>
+      <div class="lots">${auLots().slice(0, 3).map(l => lotCard(l)).join('')}</div>
       <div class="btn-row"><a class="btn primary" href="#/subasta">${t('shAllLots')}</a></div>
-    </section>
+    </section>` : ''}
   </div>`;
 }
 
@@ -291,10 +306,10 @@ EXTRA_ACTIONS.buyPrint = el => {
   const home = homeExtras;
   homeExtras = () => {
     const html = home(), cut = html.lastIndexOf('<section class="section"><h2>');
-    const strip = `<section class="section"><div class="section-head"><h2>${t('shAuctionTitle')}</h2><a class="buy-now" href="#/subasta">${t('shAllLots')} <span class="arr" aria-hidden="true">›</span></a></div>
-      <div class="lots">${AUCTION.lots.slice(0, 3).map(l => lotCard(l)).join('')}</div></section>
+    const strip = (auLots().length ? `<section class="section"><div class="section-head"><h2>${t('shAuctionTitle')}</h2><a class="buy-now" href="#/subasta">${t('shAllLots')} <span class="arr" aria-hidden="true">›</span></a></div>
+      <div class="lots">${auLots().slice(0, 3).map(l => lotCard(l)).join('')}</div></section>` : '') + `
       <section class="section"><a class="card shop-banner" href="#/tienda"><div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
-        <div><p class="eyebrow">${t('shTitle')}</p><h3>${t('bookTitle')}</h3><p class="muted">${t('shLead')}</p></div></a></section>`;
+        <div><p class="eyebrow">${t('shTitle')}</p><h3>${t('bookTitle')}</h3><p class="muted">${shLeadText()}</p></div></a></section>`;
     return cut > 0 ? html.slice(0, cut) + strip + html.slice(cut) : html + strip;
   };
 }

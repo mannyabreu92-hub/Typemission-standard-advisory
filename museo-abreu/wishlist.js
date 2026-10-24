@@ -84,7 +84,7 @@ function wsSection() {
     ${items.length ? `<ul class="ws-list">${items.map(([k, i]) => `<li>${i.open}<span class="ws-thumb">${i.thumb}</span><span>${esc(i.title)}${i.lot ? `<br><small class="muted">${t('wsAuction')}</small>` : ''}</span>${i.open.startsWith('<a') ? '</a>' : '</button>'}
         <button type="button" class="btn small" data-wish="${k}" aria-label="${esc(t('wsRemoveT', { title: i.title }))}">${t('wsRemove')}</button></li>`).join('')}</ul>
       ${wa ? `<div class="btn-row"><a class="btn wa" href="${wa}" target="_blank" rel="noopener">${t('wsAsk')}</a></div>` : ''}`
-    : `<p class="empty">${t('wsEmpty')}</p><div class="btn-row"><a class="btn small" href="#/artista">${t('wsSeeWorks')}</a><a class="btn small" href="#/subasta">${t('wsSeeAuction')}</a></div>`}
+    : `<p class="empty">${t('wsEmpty')}</p><div class="btn-row"><a class="btn small" href="#/artista">${t('wsSeeWorks')}</a>${auLots().length ? `<a class="btn small" href="#/subasta">${t('wsSeeAuction')}</a>` : ''}</div>`}
     <p class="muted ad-help">${t('wsPrivacy')}</p></section>`;
 }
 

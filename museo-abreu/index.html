@@ -25,6 +25,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="preload" as="image" href="img/escaping-being-800.jpg" imagesrcset="img/escaping-being-800.jpg 800w, img/escaping-being.jpg 1400w" imagesizes="(max-width: 700px) 100vw, 50vw" fetchpriority="high">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
@@ -43,7 +44,7 @@
     <a href="#/eventos" data-route="eventos" data-i18n="navEvents">Eventos</a>
     <a href="#/subasta" data-route="subasta" data-i18n="navAuction">Subasta</a>
     <a href="#/tienda" data-route="tienda" data-i18n="navShop">Tienda</a>
-    <a href="#/coleccion" data-route="coleccion" data-i18n="navCollection">Colección</a>
+    <a href="#/coleccion" data-route="coleccion" data-i18n="navCollection">Círculo de Coleccionistas</a>
     <a href="#/biblioteca" data-route="biblioteca" data-i18n="navLibrary">Biblioteca</a>
     <a href="#/pro" data-route="pro" data-i18n="navPro">Pro</a>
     <a href="#/cuenta" data-route="cuenta" data-i18n="navAccount">Mi cuenta</a>
@@ -73,8 +74,9 @@
 
 <footer class="footer">
   <p><strong>Museo Abreu</strong> · Bávaro, Punta Cana · República Dominicana</p>
-  <p>WhatsApp <a href="https://wa.me/18098409588" target="_blank" rel="noopener">+1 (809) 840-9588</a></p>
-  <p><a href="#/psico" data-i18n="navPsico">Psico-Expresionismo</a> · <a href="#/clases" data-i18n="navClasses">Clases</a> · <a href="#/eventos" data-i18n="navEvents">Eventos</a> · <a href="#/pinturas" data-i18n="paintingsTitle">Pinturas</a> · <a href="#/dibujos" data-i18n="drawingsTitle">Dibujos</a> · <a href="#/escultura" data-i18n="sculptureTitle">Escultura</a> · <a href="#/fotos" data-i18n="photosTitle">Fotos</a> · <a href="#/manifiestos" data-i18n="navManifestos">Manifiestos</a> · <a href="#/resenas" data-i18n="navReviews">Reseñas</a> · <a href="#/prensa" data-i18n="navPress">Prensa</a> · <a href="#/exposiciones" data-i18n="navExhibits">Exposiciones</a> · <a href="#/contacto" data-i18n="navContact">Contacto</a> · <a href="#/gabangi">ART GABANGI</a> · <a href="#/galeria">Abreu Fine Art</a><span class="staff-link"> · <a href="#/personal" data-i18n="navStaff">Acceso personal</a></span></p>
+  <p class="foot-social"><span data-i18n="footFollow">Síganos</span> · <a href="https://www.instagram.com/oscarabreu_artist/" target="_blank" rel="noopener">Instagram @oscarabreu_artist</a> · <a href="https://wa.me/18098409588" target="_blank" rel="noopener">WhatsApp +1 (809) 840-9588</a> · <a href="mailto:info@oscarabreu.com">info@oscarabreu.com</a></p>
+  <p><a href="#/psico" data-i18n="navPsico">Psico-Expresionismo</a> · <a href="#/clases" data-i18n="navClasses">Clases</a> · <a href="#/eventos" data-i18n="navEvents">Eventos</a> · <a href="#/pinturas" data-i18n="paintingsTitle">Pinturas</a> · <a href="#/dibujos" data-i18n="drawingsTitle">Dibujos</a> · <a href="#/escultura" data-i18n="sculptureTitle">Escultura</a> · <a href="#/fotos" data-i18n="photosTitle">Fotos</a> · <a href="#/manifiestos" data-i18n="navManifestos">Manifiestos</a> · <a href="#/resenas" data-i18n="navReviews">Reseñas</a> · <a href="#/prensa" data-i18n="navPress">En la prensa</a> · <a href="#/kit" data-i18n="moreKit">Dossier de prensa</a> · <a href="#/exposiciones" data-i18n="navExhibits">Exposiciones</a> · <a href="#/contacto" data-i18n="navContact">Contacto</a> · <a href="#/gabangi">ART GABANGI</a> · <a href="#/galeria">Abreu Fine Art</a><span class="staff-link"> · <a href="#/personal" data-i18n="navStaff">Acceso personal</a></span></p>
+  <p class="foot-legal"><a href="#/privacidad" data-i18n="footPrivacy">Privacidad</a> · <a href="#/terminos" data-i18n="footTerms">Condiciones</a> · © Oscar Abreu</p>
 </footer>
 
 <div class="toast" role="status" aria-live="polite"></div>
@@ -119,6 +121,8 @@
 <script src="newsletter.js"></script>
 <script src="scanner.js"></script>
 <script src="kit.js"></script>
+<script src="contact.js"></script>
+<script src="legal.js"></script>
 <script src="fullbook.js"></script>
 <script src="bookplus.js"></script>
 <script src="app.js"></script>

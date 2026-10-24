@@ -6,7 +6,7 @@
 // example are not approved figures.
 
 Object.assign(I18N.es, {
-  navClasses: 'Clases', navEvents: 'Eventos', navCollection: 'Colección', navPro: 'Pro', tabCollection: 'Colección',
+  navClasses: 'Clases', navEvents: 'Eventos', navCollection: 'Círculo de Coleccionistas', navPro: 'Pro', tabCollection: 'Colección',
   example: 'Ejemplo', examplesNote: 'Fechas y valores de ejemplo; no son datos reales.',
   becomePro: 'Hazte Pro', youArePro: 'Eres miembro Pro',
   moreTitle: 'Vive más el Museo Abreu',
@@ -76,7 +76,7 @@ Object.assign(I18N.es, {
 });
 
 Object.assign(I18N.en, {
-  navClasses: 'Classes', navEvents: 'Events', navCollection: 'Collection', navPro: 'Pro', tabCollection: 'Collection',
+  navClasses: 'Classes', navEvents: 'Events', navCollection: 'Collectors’ Circle', navPro: 'Pro', tabCollection: 'Collection',
   example: 'Example', examplesNote: 'Example dates and values; not real data.',
   becomePro: 'Become Pro', youArePro: 'You are a Pro member',
   moreTitle: 'More of Museo Abreu',
@@ -148,7 +148,7 @@ Object.assign(I18N.en, {
 Object.assign(I18N.fr, {
   navClasses: 'Cours',
   navEvents: 'Événements',
-  navCollection: 'Collection',
+  navCollection: 'Cercle des collectionneurs',
   navPro: 'Pro',
   tabCollection: 'Collection',
   example: 'Exemple',
@@ -379,8 +379,10 @@ Object.assign(I18N.fr, {
 
 /* ---------- Data ---------- */
 
-EXPERIENCES.splice(1, 0, {
-  id: 'couple', cat: 'tour', price: 50, capacity: 10, seatsPer: 2, minutes: 75,
+// VIP Tour for couples: shown once the museum confirms its price per couple (COUPLE_TOUR_PRICE, USD).
+const COUPLE_TOUR_PRICE = null;
+if (COUPLE_TOUR_PRICE) EXPERIENCES.splice(1, 0, {
+  id: 'couple', cat: 'tour', price: COUPLE_TOUR_PRICE, capacity: 10, seatsPer: 2, minutes: 75,
   perLabel: { es: 'por pareja', en: 'per couple', fr: 'par couple' },
   name: { es: 'VIP Tour para parejas', en: 'VIP Tour for couples', fr: 'VIP Tour pour couples' },
   desc: { es: 'El VIP Tour para dos personas, a precio de pareja.', en: 'The VIP Tour for two people, at a couple’s price.', fr: 'Le VIP Tour pour deux personnes, à un prix pour couple.' },
@@ -389,12 +391,12 @@ EXPERIENCES.push(
   {
     id: 'painting-class', cat: 'class', price: 45, capacity: 12, minutes: 120,
     name: { es: 'Clase de pintura Psico-Expresionista', en: 'Psycho-Expressionist painting class', fr: 'Cours de peinture psycho-expressionniste' },
-    desc: { es: 'Capas, raspado y rasgado sobre lienzo. Materiales incluidos. 2 horas.', en: 'Layers, scraping and tearing on canvas. Materials included. 2 hours.', fr: 'Couches, grattage et déchirure sur toile. Matériel inclus. 2 heures.' },
+    desc: { es: 'Capas, raspado y rasgado sobre lienzo. Materiales incluidos. 2 h.', en: 'Layers, scraping and tearing on canvas. Materials included. 2 h.', fr: 'Couches, grattage et déchirure sur toile. Matériel inclus. 2 h.' },
   },
   {
     id: 'sculpture-class', cat: 'class', price: 55, capacity: 8, minutes: 150,
     name: { es: 'Clase de escultura', en: 'Sculpture class', fr: 'Cours de sculpture' },
-    desc: { es: 'Forma y materia en tres dimensiones, a partir del rostro. 2 h 30 min.', en: 'Form and matter in three dimensions, starting from the face. 2 h 30 min.', fr: 'La forme et la matière en trois dimensions, à partir du visage. 2 h 30.' },
+    desc: { es: 'Forma y materia en tres dimensiones, a partir del rostro. 2 h 30 min.', en: 'Form and matter in three dimensions, starting from the face. 2 h 30 min.', fr: 'La forme et la matière en trois dimensions, à partir du visage. 2 h 30 min.' },
   },
 );
 SCHEDULE.couple = SCHEDULE.vip;
@@ -406,7 +408,7 @@ EDITIONS.forEach(e => { e.price = 59.99; }); // as charged on Whop
 
 const CLUBS = [
   { id: 'painting-club', price: 80, name: { es: 'Club de pintura', en: 'Painting club', fr: 'Club de peinture' },
-    when: { es: 'Cada sábado · 2 horas', en: 'Every Saturday · 2 hours', fr: 'Chaque samedi · 2 heures' },
+    when: { es: 'Cada sábado · 2 h', en: 'Every Saturday · 2 h', fr: 'Chaque samedi · 2 h' },
     desc: { es: 'Pinta cada semana en el museo con un instructor y otros miembros.', en: 'Paint every week at the museum with an instructor and other members.', fr: 'Peignez chaque semaine au musée avec un instructeur et d’autres membres.' } },
   { id: 'art-club', price: 30, name: { es: 'Club de arte', en: 'Art club', fr: 'Club d’art' },
     when: { es: 'Una vez al mes', en: 'Once a month', fr: 'Une fois par mois' },
@@ -573,7 +575,7 @@ function pageClasses() {
           ? `<a class="btn primary" href="${bookingLink(c.id)}" target="_blank" rel="noopener">${t('bookClass')} ↗</a>`
           : `<button class="btn primary" data-action="bookClass" data-id="${c.id}">${t('bookClass')}</button>`}
           ${whatsappLink(t('waClass', { name: L(c.name) })) ? `<a class="btn wa" href="${whatsappLink(t('waClass', { name: L(c.name) }))}" target="_blank" rel="noopener">WhatsApp</a>` : ''}</div></div>`).join('')}</div>
-      <p class="muted" style="margin-top:.8rem">* ${t('illustrative')}</p></section>
+</section>
     <section class="section"><h2>${t('clubsSection')}</h2><div class="grid two">${CLUBS.map(c => `
       <div class="card"><span style="float:right;font-weight:600">${usd(c.price)} <small class="muted">${t('perMonth')}</small></span>
         <h3>${L(c.name)}</h3><p class="muted">${L(c.when)}</p><p>${L(c.desc)}</p>
@@ -605,11 +607,9 @@ function pageEvents() {
     <section class="section">
       <p class="eyebrow">${t('eventsEyebrow')}</p><h1>${t('eventsTitle')}</h1>
       <p class="lead" style="margin-top:.8rem">${t('eventsLead')}</p>
-      <p class="muted" style="margin-top:.5rem">${t('examplesNote')}</p>
     </section>
     <section class="section"><h2>${t('annualTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('annualLead')}</p>
       <div class="grid two">${sortedEvents().filter(ev => ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>
-    ${BOOKING.live ? '' : `<section class="section"><h2>${t('moreEvents')}</h2><div class="grid two">${sortedEvents().filter(ev => !ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>`}
   </div>`;
 }
 

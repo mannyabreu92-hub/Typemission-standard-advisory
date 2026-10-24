@@ -897,7 +897,7 @@ const REVIEWS = {
       es: 'Esta actitud formal concuerda con inquietudes humanistas y la creación de personajes “sobrevivientes y testigos” —así los califica el propio artista— comprometidos con su historia y comprometiendo la reflexión del espectador. Si no representa ni imita, Oscar Abreu sugiere e “inventa lo visible”, acorde con la propuesta del filósofo francés Henri Meschonnic acerca de la escritura y de la pintura: “Inventa otra cosa que el sentido. Y que tenga sentido.”',
       en: 'This formal attitude aligns with humanist concerns and with the creation of characters—“survivors and witnesses,” as the artist himself calls them—committed to their history and engaging the viewer’s reflection. Rather than representing or imitating, Oscar Abreu suggests and “invents the visible,” in keeping with the French philosopher Henri Meschonnic’s proposal regarding writing and painting: “Invent something other than meaning. And let it make sense.”',
       fr: 'Cette attitude formelle s’accorde avec des préoccupations humanistes et la création de personnages — « survivants et témoins », ainsi que les nomme l’artiste — engagés dans leur histoire et sollicitant la réflexion du spectateur. Plutôt que de représenter ou d’imiter, Oscar Abreu suggère et « invente le visible », conformément à la proposition du philosophe français Henri Meschonnic : « Invente autre chose que le sens. Et que cela ait du sens. »' },
-    { critic: 'Abil Peralta', year: '1998',
+    { critic: 'Abil Peralta Agüero', year: '1998',
       es: 'Oscar Abreu, aplica con sensibilidad y raciocinio una cromática deliberadamente anárquica en su exposición, sin dejarla desbordar hasta el esquizoide estado del abigarramiento, demostrando así poseer un ojo cromático de conciencia severa y fría, a pesar de la turbulencia y energía que emiten y transmiten hasta el ojo espectador las líneas de su dibujo vibrante y suelto.',
       en: 'With sensitivity and reason, Oscar Abreu applies a deliberately anarchic chromatic palette, without letting it spill over into a schizoid state of cluttered motley. Thus he shows a chromatic eye marked by a severe, cool awareness, despite the turbulence and energy that the vibrant, free line of his drawing emits and transmits to the viewer.',
       fr: 'Avec sensibilité et discernement, Oscar Abreu emploie une palette chromatique délibérément anarchique, sans la laisser déborder jusqu’à un état schizoïde de bariolage saturé. Il révèle ainsi un œil chromatique d’une conscience sévère et froide, malgré la turbulence et l’énergie que la ligne vibrante et libre de son dessin émet et transmet au regard.' },
@@ -983,18 +983,18 @@ const MICHELEN = {
 const CATALOGUE = {
   img: 'img/exhibits/huellas-catalogue.jpg', title: 'Huellas “La invención de lo visible”',
   venue: 'Museo del Hombre Dominicano', year: 2004,
-  text: 'Published on the occasion of the exhibitions “Huellas “La invención de lo visible”” at Museo del Hombre Dominicano, Dominican Republic, (November 4-20, 2004). Softcover. 64 pgs. with essay by Marianne de Tolentino, Odalís G. Perez, Abil Peralta Aguero',
+  text: 'Published on the occasion of the exhibitions “Huellas “La invención de lo visible”” at Museo del Hombre Dominicano, Dominican Republic, (November 4-20, 2004). Softcover. 64 pgs. with essay by Marianne de Tolentino, Odalís G. Pérez, Abil Peralta Agüero',
   dates: { es: '4–20 de noviembre de 2004', en: 'November 4–20, 2004', fr: '4–20 novembre 2004' },
   format: { es: 'Tapa blanda · 64 páginas', en: 'Softcover · 64 pages', fr: 'Couverture souple · 64 pages' },
-  essays: 'Marianne de Tolentino, Odalís G. Perez, Abil Peralta Aguero',
+  essays: 'Marianne de Tolentino, Odalís G. Pérez, Abil Peralta Agüero',
 };
 
-// oscarabreu.com/contact as published (the Instagram handle is spelled
-// "aertist" on the site; kept as is). Portrait from the same page.
+// oscarabreu.com/contact. The site spells the Instagram handle "aertist"; the account is @oscarabreu_artist
+// ("Oscar Abreu | Psico-Expresionismo", linking to oscarabreu.com). Portrait from the same page.
 const CONTACT = {
   photo: 'img/oscar-abreu.jpg',
   whatsapp: { label: '1809-840-9588', url: 'https://wa.me/18098409588' },
-  instagram: { label: '@oscarabreu_aertist', url: 'https://www.instagram.com/oscarabreu_aertist/' },
+  instagram: { label: '@oscarabreu_artist', url: 'https://www.instagram.com/oscarabreu_artist/' },
   email: 'info@oscarabreu.com',
 };
 

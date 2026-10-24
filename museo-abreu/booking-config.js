@@ -85,5 +85,18 @@ function openWhatsApp(text) {
   return true;
 }
 
+// Visitor information for the Visit, Abreu Fine Art and Contact pages. A row appears only once it is filled in:
+// nothing unconfirmed is shown to visitors. Texts in Spanish, English and French (other languages show English).
+var VISIT_INFO = {
+  address: '',                    // Museo Abreu's street address, e.g. 'Calle …, Bávaro, Punta Cana'; also places the map
+  hours: { es: '', en: '', fr: '' },          // opening hours
+  admission: { es: '', en: '', fr: '' },      // walk-in general admission and its price, or "by guided tour only"
+  accessibility: { es: '', en: '', fr: '' },
+  arrival: { es: '', en: '', fr: '' },        // getting here: parking, taxi, from the hotels
+  fineArtHours: { es: '', en: '', fr: '' },   // Abreu Fine Art opening hours
+  pressEmail: '',                              // a press-only email, if the museum has one
+};
+const visitInfo = k => { const v = VISIT_INFO[k]; return !v ? '' : typeof v === 'string' ? v : v[typeof lang !== 'undefined' && v[lang] ? lang : 'en'] || v.en || v.es || ''; };
+
 // Lets the purchase server (api/) read the same product list.
 if (typeof module !== 'undefined') module.exports = { BOOKING };

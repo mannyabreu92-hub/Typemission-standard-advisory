@@ -38,7 +38,7 @@ Object.assign(I18N.es, {
   paintingsLead: 'Las pinturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
   drawingsTitle: 'Dibujos', drawingsLead: 'Los dibujos que Oscar Abreu publica en oscarabreu.com, identificados por número.',
   sculptureTitle: 'Escultura', sculptureLead: 'Las esculturas que Oscar Abreu publica en oscarabreu.com, identificadas por número.',
-  galleryNote: 'oscarabreu.com publica estas obras solo con su número; título, año, técnica y medidas están pendientes.',
+  galleryNote: 'oscarabreu.com publica estas obras identificadas por número.',
   photosTitle: 'Fotos', photosLead: 'Fotos de Oscar Abreu en inauguraciones y encuentros, publicadas en oscarabreu.com.',
   photosNote: 'oscarabreu.com publica estas fotos sin pie de foto, fecha ni nombres.', photosN: 'Foto {n}',
   paintingsN: 'Pintura {n}', drawingsN: 'Dibujo {n}', sculptureN: 'Escultura {n}',
@@ -54,7 +54,7 @@ Object.assign(I18N.es, {
   gbTabFounder: 'Fundador', gbTabClub: 'Club', gbTabEssay: 'Revista', gbTab2025: 'Edición 2025',
   gbFounderNote: 'Texto de Oscar Abreu en su perfil de gabangi.com.',
   gbEssayBy: 'Por Oscar Abreu · Revista GABANGI', gbEssayNote: 'Ensayo publicado en gabangi.com/magazine.',
-  gb2025Note: 'Comunicado de noviembre de 2025 publicado en gabangi.com. La edición 2025 (11–17 de diciembre de 2025) ya se celebró.',
+  gb2025Note: 'Comunicado de noviembre de 2025 publicado en gabangi.com. La edición 2025 (11–20 de diciembre de 2025) ya se celebró.',
   gbTopTen: 'Top Ten GABANGI 2025', gbGGCover: 'Portada de la edición especial de GG Magazine',
   gbClubNote: 'Datos de gabangi.com/club. Para exponer en el festival o participar en la subasta se requiere ser miembro.',
   gbClubJoin: 'Hacerse miembro', gbFaq: 'Preguntas frecuentes',
@@ -73,7 +73,7 @@ Object.assign(I18N.es, {
   hlManifestos: 'Los {n} manifiestos del Psico-Expresionismo, en seis idiomas', hlTopTen: 'Diez artistas caribeños destacados por GABANGI',
   hlReviews: '{r} reseñas de la crítica y {p} artículos de prensa sobre su obra', hlPress: 'Reseñas y prensa',
   navContact: 'Contacto', contactLead: 'Contacto de Oscar Abreu, tal como aparece en oscarabreu.com.',
-  navPress: 'Prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
+  navPress: 'En la prensa', pressCta: 'Prensa ({n})', readArticle: 'Leer en {outlet}',
   navReviews: 'Reseñas', reviewsCta: 'Reseñas de la crítica ({n})', fullReview: 'Leer la reseña completa', langOffline: 'No se pudo cargar el idioma. Revise su conexión.', essayFull: 'Ensayo completo', readEssay: 'Leer el ensayo', backReviews: 'Volver a reseñas', essayWorks: 'Obras del ensayo', essayNote: 'Ensayo publicado en oscarabreu.com/gamalmichelen.', reviewsNote: 'Fragmentos tal como aparecen en oscarabreu.com/reviews.', imagePending: 'imagen no disponible en oscarabreu.com',
 });
 
@@ -109,7 +109,7 @@ Object.assign(I18N.en, {
   paintingsLead: 'The paintings Oscar Abreu publishes on oscarabreu.com, identified by number.',
   drawingsTitle: 'Drawings', drawingsLead: 'The drawings Oscar Abreu publishes on oscarabreu.com, identified by number.',
   sculptureTitle: 'Sculpture', sculptureLead: 'The sculptures Oscar Abreu publishes on oscarabreu.com, identified by number.',
-  galleryNote: 'oscarabreu.com publishes these works by number only; title, year, technique and size are pending.',
+  galleryNote: 'oscarabreu.com publishes these works identified by number.',
   photosTitle: 'Photos', photosLead: 'Photos of Oscar Abreu at openings and gatherings, published on oscarabreu.com.',
   photosNote: 'oscarabreu.com publishes these photos without captions, dates or names.', photosN: 'Photo {n}',
   paintingsN: 'Painting {n}', drawingsN: 'Drawing {n}', sculptureN: 'Sculpture {n}',
@@ -125,7 +125,7 @@ Object.assign(I18N.en, {
   gbTabFounder: 'Founder', gbTabClub: 'Club', gbTabEssay: 'Magazine', gbTab2025: '2025 edition',
   gbFounderNote: 'Text by Oscar Abreu on his gabangi.com profile.',
   gbEssayBy: 'By Oscar Abreu · GABANGI Magazine', gbEssayNote: 'Essay published on gabangi.com/magazine.',
-  gb2025Note: 'November 2025 press release published on gabangi.com. The 2025 edition (December 11–17, 2025) has already taken place.',
+  gb2025Note: 'November 2025 press release published on gabangi.com. The 2025 edition (December 11–20, 2025) has already taken place.',
   gbTopTen: 'GABANGI 2025 Top Ten', gbGGCover: 'Cover of the GG Magazine special edition',
   gbClubNote: 'Details from gabangi.com/club. Membership is required to exhibit at the festival or take part in the auction.',
   gbClubJoin: 'Become a member', gbFaq: 'FAQ',
@@ -144,7 +144,7 @@ Object.assign(I18N.en, {
   hlManifestos: 'The {n} manifestos of Psycho-Expressionism, in six languages', hlTopTen: 'Ten Caribbean artists highlighted by GABANGI',
   hlReviews: '{r} critics’ reviews and {p} press articles on his work', hlPress: 'Reviews and press',
   navContact: 'Contact', contactLead: 'Oscar Abreu’s contact details, as published on oscarabreu.com.',
-  navPress: 'Press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
+  navPress: 'In the press', pressCta: 'Press ({n})', readArticle: 'Read on {outlet}',
   navReviews: 'Reviews', reviewsCta: 'Critics’ reviews ({n})', fullReview: 'Read the full review', langOffline: 'The language could not be loaded. Check your connection.', essayFull: 'Full essay', readEssay: 'Read the essay', backReviews: 'Back to reviews', essayWorks: 'Works in the essay', essayNote: 'Essay published on oscarabreu.com/gamalmichelen.', reviewsNote: 'Excerpts as published on oscarabreu.com/reviews.', imagePending: 'image not available on oscarabreu.com',
 });
 
@@ -183,7 +183,7 @@ Object.assign(I18N.fr, {
   drawingsLead: 'Les dessins qu’Oscar Abreu publie sur oscarabreu.com, identifiés par leur numéro.',
   sculptureTitle: 'Sculpture',
   sculptureLead: 'Les sculptures qu’Oscar Abreu publie sur oscarabreu.com, identifiées par leur numéro.',
-  galleryNote: 'oscarabreu.com publie ces œuvres uniquement avec leur numéro ; titre, année, technique et dimensions à venir.',
+  galleryNote: 'oscarabreu.com publie ces œuvres identifiées par leur numéro.',
   photosTitle: 'Photos',
   photosLead: 'Photos d’Oscar Abreu lors de vernissages et de rencontres, publiées sur oscarabreu.com.',
   photosNote: 'oscarabreu.com publie ces photos sans légende, date ni noms.',
@@ -213,7 +213,7 @@ Object.assign(I18N.fr, {
   gbFounderNote: 'Texte d’Oscar Abreu sur son profil gabangi.com.',
   gbEssayBy: 'Par Oscar Abreu · Revue GABANGI',
   gbEssayNote: 'Essai publié sur gabangi.com/magazine.',
-  gb2025Note: 'Communiqué de novembre 2025 publié sur gabangi.com. L’édition 2025 (11–17 décembre 2025) a déjà eu lieu.',
+  gb2025Note: 'Communiqué de novembre 2025 publié sur gabangi.com. L’édition 2025 (11–20 décembre 2025) a déjà eu lieu.',
   gbTopTen: 'Top Ten GABANGI 2025',
   gbGGCover: 'Couverture de l’édition spéciale de GG Magazine',
   gbClubNote: 'Informations de gabangi.com/club. L’adhésion est requise pour exposer au festival ou participer à la vente aux enchères.',
@@ -251,7 +251,7 @@ Object.assign(I18N.fr, {
   hlPress: 'Critiques et presse',
   navContact: 'Contact',
   contactLead: 'Les coordonnées d’Oscar Abreu, telles que publiées sur oscarabreu.com.',
-  navPress: 'Presse',
+  navPress: 'Dans la presse',
   pressCta: 'Presse ({n})',
   readArticle: 'Lire sur {outlet}',
   navReviews: 'Critiques',
@@ -330,7 +330,7 @@ const MANIFESTOS = [
 function manifestoList() {
   return `<ol class="m-index">${MANIFESTOS.map(m => {
     const w = findWork(m.work);
-    return `<li><a href="#/manifiestos/${m.n}">${w.img ? `<img src="${w.img}" alt="" loading="lazy">` : '<span class="m-noimg"></span>'}
+    return `<li><a href="#/manifiestos/${m.n}">${w.img ? `<img src="${w.img}" alt="" loading="lazy">` : ''}
       <span><small>${m.n}</small><strong>${L(m.title)}</strong></span></a></li>`;
   }).join('')}</ol>`;
 }
@@ -695,7 +695,7 @@ function pageFineArt() {
       ${BOOK_QUOTE('The museum would offer permanence; the gallery, movement.')}
       <dl class="specs">
         <dt>${t('location')}</dt><dd>${t('faWhere')}</dd>
-        <dt>${t('hours')}</dt><dd>${pend()}</dd>
+        ${visitInfo('fineArtHours') ? `<dt>${t('hours')}</dt><dd>${esc(visitInfo('fineArtHours'))}</dd>` : ''}
         <dt>${t('date')}</dt><dd>${t('faOpened')}</dd>
       </dl>
       <div class="btn-row">${askLink('waFineArt', 'faAsk')}</div>

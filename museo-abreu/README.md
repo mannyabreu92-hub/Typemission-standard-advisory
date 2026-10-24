@@ -295,6 +295,29 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## Launch fixes (24 Oct 2026)
+
+Completeness and correctness only; the visual identity is unchanged.
+- **Images**: every gallery, manifesto and portrait image loads right after the page's first paint (`loadImagesSoon`
+  in `app.js`), so no tile is ever seen blank; an image that fails hides its tile. Manifestos 16–23 have no image
+  (oscarabreu.com returns 404) and show none, without an empty frame. The home hero has a 32-pixel copy of the painting
+  under it and a preload in `index.html`, so the first paint shows the artwork, never a black band.
+- **Visitor information**: `VISIT_INFO` in `booking-config.js` (address and map, hours, admission, accessibility,
+  getting here, Abreu Fine Art hours, press email). Each row appears only once filled in.
+- **Contact form** (`contact.js`, `api/contact.js`): messages are kept privately (`contact/`) and listed in the
+  dashboard under Messages, with Reply (email or WhatsApp) and Archive.
+- **Auction**: lots marked `example: true` appear nowhere. Until a real lot is published the auction is out of the
+  menus (the bottom tab opens the book) and `#/subasta` says the museum will publish the works there.
+- **Shop**: printed editions show only once priced; the digital book is sold in the Library, the Shop links to it.
+- **Events**: only the museum's own yearly events. **Couples tour**: hidden until `COUPLE_TOUR_PRICE` (features.js) is set.
+- **Welcome video**: `WELCOME_VIDEO` in `app.js`; no box until there is one.
+- **Corrections**: @oscarabreu_artist; Julieta Prissell; ART GABANGI 2025 December 11–20; Odalís G. Pérez and
+  Abil Peralta Agüero everywhere; durations as "2 h", "2 h 30 min", "60–90 min"; the USD 200,000 record cites
+  Ecce Homo, chapter LV; no "pending", "example" or "subject to confirmation" notes on public pages.
+- **Structure**: each page's browser title and description come from its heading and opening text; unknown addresses
+  show "Page not found"; "Collectors' Circle", "Press kit" and "In the press" labels; footer with Instagram,
+  WhatsApp, email, Privacy (`#/privacidad`) and Terms (`#/terminos`, `legal.js`).
+
 ## Edition finder (`myEdition` in `app.js`)
 
 The library and the Shop lead with the visitor's own edition, read from the phone's languages in order. A language the
@@ -431,7 +454,9 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
 - Website fixes for the site owners: https://claude.ai/artifact/M65zq23L1QYti11tFVpqcL
 - Questions for the family (answers stored with the page): https://claude.ai/artifact/MaKd21KM2Z39nyuLCK37Ph
 - "Ecos de la memoria": year, technique, size (not published on the site).
-- Images of the works that open manifestos 16–23 (oscarabreu.com/gallery4/161…231.JPG return 404).
+- Images of the works that open manifestos 16–23 (oscarabreu.com/gallery4/161…231.JPG return 404); until then they show no image.
+- `VISIT_INFO` (booking-config.js): address, hours, admission, accessibility, getting here, Abreu Fine Art hours, press email.
+- Couples VIP Tour price (`COUPLE_TOUR_PRICE`); welcome video (`WELCOME_VIDEO`).
 - Spanish versions of the ART GABANGI artist quotes; ART GABANGI 2027 dates.
 - **Whop, to finish** (saved for later): create Pro (USD 25/month) and the three class sponsorships (USD 25,
   50, 100, one-time) and paste their links into `BOOKING.whop` (`pro`, `sponsor-25`, `sponsor-50`,
