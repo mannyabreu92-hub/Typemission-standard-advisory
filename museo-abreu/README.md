@@ -312,8 +312,9 @@ Completeness and correctness only; the visual identity is unchanged.
 - **Events**: only the museum's own yearly events. **Couples tour**: hidden until `COUPLE_TOUR_PRICE` (features.js) is set.
 - **Welcome video**: `WELCOME_VIDEO` in `app.js`; no box until there is one.
 - **Corrections**: @oscarabreu_artist; Julieta Prissell; ART GABANGI 2025 December 11–20; Odalís G. Pérez and
-  Abil Peralta Agüero everywhere; durations as "2 h", "2 h 30 min", "60–90 min"; the USD 200,000 record cites
-  Ecce Homo, chapter LV; no "pending", "example" or "subject to confirmation" notes on public pages.
+  Abil Peralta Agüero everywhere; durations as "2 h", "2 h 30 min", "60–90 min"; the artist page's first sentence
+  follows Wikipedia (one of the three most valued Dominican painters according to artprice.com) and the sale of
+  María Moñito (2014) for USD 200,000 from Ecce Homo, chapter LV, with both sources under it; no "pending", "example" or "subject to confirmation" notes on public pages.
 - **Structure**: each page's browser title and description come from its heading and opening text; unknown addresses
   show "Page not found"; "Collectors' Circle", "Press kit" and "In the press" labels; footer with Instagram,
   WhatsApp, email, Privacy (`#/privacidad`) and Terms (`#/terminos`, `legal.js`).
