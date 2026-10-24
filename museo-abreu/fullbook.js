@@ -52,6 +52,8 @@ async function readDocx(buf) {
 }
 
 const BOOK_LANG_BY_HEADING = { 'CAPÍTULO': 'es', CHAPTER: 'en', CHAPITRE: 'fr', KAPITEL: 'de', 'ГЛАВА': 'ru', CAPITOLO: 'it' };
+// Spanish and Portuguese chapters both read "CAPÍTULO": the Portuguese edition is told by its own headings.
+const bookLang = (word, doc) => word === 'CAPÍTULO' && /INTRODUÇÃO|AGRADECIMENTOS/.test(doc) ? 'pt' : BOOK_LANG_BY_HEADING[word] || '';
 const xmlText = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
   .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&amp;/g, '&');
 
@@ -77,16 +79,16 @@ function parseBook(doc, styles) {
   }
   if (!chN) return parseBookByText(doc);
   const word = firstHeading.split(/\s+/)[0].toUpperCase();
-  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: BOOK_LANG_BY_HEADING[word] || '', first: firstTitle };
+  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: bookLang(word, doc), first: firstTitle };
 }
 
 // The same book without its Word styles: chapters are found by their headings ("CAPÍTULO IV", "KAPITEL IV"…),
 // the title is the paragraph after; the introduction, acknowledgements and chronology by their capitalised
 // headings in each language; chronology years are paragraphs that are just a year. Subheadings read as text.
 const BOOK_SECTION_HEADINGS = {
-  intro: ['INTRODUCCIÓN', 'INTRODUCTION', 'EINLEITUNG', 'ВВЕДЕНИЕ', 'INTRODUZIONE'],
-  ack: ['AGRADECIMIENTOS', 'ACKNOWLEDGMENTS', 'ACKNOWLEDGEMENTS', 'REMERCIEMENTS', 'DANKSAGUNG', 'БЛАГОДАРНОСТИ', 'RINGRAZIAMENTI'],
-  chrono: ['CRONOLOGÍA BIOGRÁFICA', 'BIOGRAPHICAL CHRONOLOGY', 'CHRONOLOGIE BIOGRAPHIQUE', 'BIOGRAFISCHE ZEITTAFEL', 'БИОГРАФИЧЕСКАЯ ХРОНИКА', 'CRONOLOGIA BIOGRAFICA'],
+  intro: ['INTRODUCCIÓN', 'INTRODUCTION', 'EINLEITUNG', 'ВВЕДЕНИЕ', 'INTRODUZIONE', 'INTRODUÇÃO'],
+  ack: ['AGRADECIMIENTOS', 'ACKNOWLEDGMENTS', 'ACKNOWLEDGEMENTS', 'REMERCIEMENTS', 'DANKSAGUNG', 'БЛАГОДАРНОСТИ', 'RINGRAZIAMENTI', 'AGRADECIMENTOS'],
+  chrono: ['CRONOLOGÍA BIOGRÁFICA', 'BIOGRAPHICAL CHRONOLOGY', 'CHRONOLOGIE BIOGRAPHIQUE', 'BIOGRAFISCHE ZEITTAFEL', 'БИОГРАФИЧЕСКАЯ ХРОНИКА', 'CRONOLOGIA BIOGRAFICA', 'CRONOLOGIA BIOGRÁFICA'],
 };
 function parseBookByText(doc) {
   const sections = []; let cur = null, chN = 0, firstHeading = '', firstTitle = '', paragraphs = 0, needTitle = false;
@@ -105,7 +107,7 @@ function parseBookByText(doc) {
     else { cur.blocks.push(['p', tx]); paragraphs++; }
   }
   const word = firstHeading.split(/\s+/)[0].toUpperCase();
-  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: BOOK_LANG_BY_HEADING[word] || '', first: firstTitle };
+  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: bookLang(word, doc), first: firstTitle };
 }
 
 /* ---------- Dashboard › Full book ---------- */

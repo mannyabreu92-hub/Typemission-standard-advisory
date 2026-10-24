@@ -37,6 +37,8 @@ var BOOKING = {
     'book-print-ru': '', // printed Russian edition (shop)
     'book-it': '', // Italian digital edition: Whop link to come
     'book-print-it': '', // printed Italian edition (shop)
+    'book-pt': '', // Portuguese digital edition: Whop link to come
+    'book-print-pt': '', // printed Portuguese edition (shop)
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',

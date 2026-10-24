@@ -295,6 +295,16 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## Portuguese edition (`sample-pt.js`)
+
+From `Ecce Homo — Edição em português` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph
+(71 sections, every paragraph matched):
+- `SAMPLE_PT` (Introdução and Capítulo I), `TOC_PT` (70 chapter titles as printed), `CREDITS_PT` ("Créditos da edição").
+  There is no Portuguese interface: the edition is read from the library in any interface language, like the others.
+- Digital edition available (Whop key `book-pt`, link to come; until then orders go to WhatsApp); printed Portuguese edition
+  in the Shop (`book-print-pt`, price pending). "Full book" upload recognises it: its chapters also read "CAPÍTULO", so
+  it is told from Spanish by its own headings (INTRODUÇÃO, AGRADECIMENTOS).
+
 ## Italian edition (`sample-it.js`)
 
 From `Ecce Homo — Edizione italiana` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph:
