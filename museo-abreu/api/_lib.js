@@ -35,7 +35,7 @@ const findEmail = data => (strings(data).find(([k, v]) => /email/i.test(k) && /^
 // The app's product keys (BOOKING.whop) are matched by the last part of each checkout link,
 // e.g. https://whop.com/museoabreu/painting-club → "painting-club".
 function findProductKey(data) {
-  const values = strings(data).map(([, v]) => v);
+  const values = strings(data).map(([, v]) => v.replace(/\/+$/, ''));   // a link may come with a trailing /
   for (const [key, url] of Object.entries(BOOKING.whop || {})) {
     if (!url) continue;
     const slug = url.replace(/\/+$/, '').split('/').pop();

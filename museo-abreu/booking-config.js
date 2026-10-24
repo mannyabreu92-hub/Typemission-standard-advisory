@@ -35,11 +35,11 @@ var BOOKING = {
     'book-print-de': '', // printed German edition (shop)
     'book-ru': 'https://whop.com/museoabreu/ecce-homo', // Russian digital edition (Whop dropped the Cyrillic from the name)
     'book-print-ru': '', // printed Russian edition (shop)
-    'book-it': '', // Italian digital edition: Whop link to come
+    'book-it': 'https://whop.com/museoabreu/ecce-homo-edizione-italiana', // Italian digital edition
     'book-print-it': '', // printed Italian edition (shop)
-    'book-pt': '', // Portuguese digital edition: Whop link to come
+    'book-pt': 'https://whop.com/museoabreu/ecce-homo-edicao-em-portugues', // Portuguese digital edition
     'book-print-pt': '', // printed Portuguese edition (shop)
-    'book-ja': '', // Japanese digital edition: Whop link to come
+    'book-ja': 'https://whop.com/museoabreu/ecce-homo-57', // Japanese digital edition (Whop dropped the Japanese from the name)
     'book-print-ja': '', // printed Japanese edition (shop)
     'sponsor-25': '',
     'sponsor-50': '',

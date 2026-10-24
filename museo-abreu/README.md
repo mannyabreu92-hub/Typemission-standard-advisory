@@ -304,7 +304,7 @@ From `Ecce Homo — 日本語版` (Ediciones ARTFORO, 2026), which also follows 
 - Type: the phone's own Mincho typeface (Hiragino Mincho on iPhone, Yu Mincho on Windows, Noto Serif JP on Android), upright,
   with Japanese line breaking (`:lang(ja)` in `styles.css`). Share a passage wraps Japanese by character, never starting a
   line with 、。」 and quotes it with 「」. Search keeps positions exact for Japanese (`srNorm`).
-- Digital edition available (Whop key `book-ja`, link to come); printed Japanese edition in the Shop (`book-print-ja`,
+- Digital edition available (Whop key `book-ja`, `…/ecce-homo-57`: Whop dropped the Japanese from the name); printed Japanese edition in the Shop (`book-print-ja`,
   price pending). "Full book" upload recognises 第一章 headings, also without Word styles.
 
 ## Portuguese edition (`sample-pt.js`)
@@ -313,7 +313,7 @@ From `Ecce Homo — Edição em português` (Ediciones ARTFORO, 2026), which als
 (71 sections, every paragraph matched):
 - `SAMPLE_PT` (Introdução and Capítulo I), `TOC_PT` (70 chapter titles as printed), `CREDITS_PT` ("Créditos da edição").
   There is no Portuguese interface: the edition is read from the library in any interface language, like the others.
-- Digital edition available (Whop key `book-pt`, link to come; until then orders go to WhatsApp); printed Portuguese edition
+- Digital edition available (Whop key `book-pt`, `…/ecce-homo-edicao-em-portugues`); printed Portuguese edition
   in the Shop (`book-print-pt`, price pending). "Full book" upload recognises it: its chapters also read "CAPÍTULO", so
   it is told from Spanish by its own headings (INTRODUÇÃO, AGRADECIMENTOS).
 
@@ -324,7 +324,7 @@ From `Ecce Homo — Edizione italiana` (Ediciones ARTFORO, 2026), which also fol
   the same passage as Spanish, French, German and Russian ones.
 - `SAMPLE_IT` (Introduzione and Capitolo I), `TOC_IT` (70 chapter titles as printed, replacing the app's own
   translation), `CREDITS_IT` ("Crediti dell’edizione"); the Italian `credits` line follows the printed credits.
-- Digital edition available (Whop key `book-it`, link to come; until then orders go to WhatsApp); printed Italian edition
+- Digital edition available (Whop key `book-it`, `…/ecce-homo-edizione-italiana`); printed Italian edition
   in the Shop (`book-print-it`, price pending); "Full book" upload recognises it (CAPITOLO).
 
 ## Russian edition (`sample-ru.js`)
