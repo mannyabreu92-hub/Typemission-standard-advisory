@@ -739,6 +739,17 @@ I18N.it = {
   "fbSaveErr": "Impossibile salvare. Controlla la connessione e riprova.",
   "fbRemoved": "Rimossa da questo telefono.",
   "fbSize": "{mb} MB",
+  "qsBtn": "Condividi questo passo",
+  "qsTooLong": "Seleziona un passo più breve (fino a 400 caratteri).",
+  "srBtn": "Cerca nel libro",
+  "srPh": "Una parola o una frase",
+  "srGo": "Cerca",
+  "srResults": "Risultati: {n}",
+  "srResult1": "1 risultato",
+  "srNone": "Nessun risultato.",
+  "srSampleOnly": "La ricerca riguarda solo l’estratto gratuito. Con l’edizione completa cerca in tutto il libro.",
+  "srLoading": "Caricamento del libro…",
+  "srFirst": "Sono mostrati i primi 100.",
 };
 TR.it = {
   "2019": "2019",

@@ -228,6 +228,12 @@ collection, the reader and Pro stay in the top menu and on the home page.
   reading token (HMAC of the email hash with `book/secret.json`) when the purchase is unlocked, and each request checks
   the token and that the edition (or Pro) is active, so a refund ends access. As with unlocking, the proof is the
   purchase email; a one-time email code would make it stricter.
+- **Share a passage** (`bookplus.js`): selecting 10–400 characters in the reader shows "Share this passage" above the bottom
+  menu; it draws a 1080 × 1920 image (the quote in Cormorant italic, sized to fit, "— Oscar Abreu", Ecce Homo · chapter ·
+  edition, the book's link `/b`) and opens the phone's share sheet (or downloads it).
+- **Search in the book** (`bookplus.js`, `#/buscar/<edition>/<words>`): from the library and the reader's bar. Searches the
+  free sample, and for owners the whole edition (the copy saved on the phone, else one download of `api/book.js?ch=all`),
+  ignoring accents and capitals; up to 100 results with the passage marked; a result opens the chapter scrolled to it.
 - **Offline reading** (`fullbook.js`): in the library, owners with a reading token get "Read offline" → "Save on this
   phone": the whole edition (`api/book.js?ch=all`, about 0.7 MB) is kept in IndexedDB (`museo-abreu` › `books`). The
   reader uses it when offline or if the server can't be reached; online, the server is still asked first, and a 403

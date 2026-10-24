@@ -739,6 +739,17 @@ I18N.de = {
   "fbSaveErr": "Speichern nicht möglich. Prüfen Sie die Verbindung und versuchen Sie es erneut.",
   "fbRemoved": "Von diesem Telefon entfernt.",
   "fbSize": "{mb} MB",
+  "qsBtn": "Diese Passage teilen",
+  "qsTooLong": "Wählen Sie eine kürzere Passage (bis zu 400 Zeichen).",
+  "srBtn": "Im Buch suchen",
+  "srPh": "Ein Wort oder ein Satz",
+  "srGo": "Suchen",
+  "srResults": "{n} Treffer",
+  "srResult1": "1 Treffer",
+  "srNone": "Keine Treffer.",
+  "srSampleOnly": "Die Suche umfasst nur die kostenlose Leseprobe. Mit der vollständigen Ausgabe durchsucht sie das ganze Buch.",
+  "srLoading": "Das Buch wird geladen…",
+  "srFirst": "Die ersten 100 werden angezeigt.",
 };
 TR.de = {
   "2019": "2019",
