@@ -76,12 +76,13 @@ Object.assign(I18N.fr, {
 
 // The printed Ecce Homo (Spanish, French, German and Russian editions, all printed by Amigo del Hogar
 // per their credits pages). Prices pending: until set, orders go to WhatsApp with "Price confirmed by
-// the museum". Whop keys: book-print-es, book-print-fr, book-print-de, book-print-ru.
+// the museum". Whop keys: book-print-es, book-print-fr, book-print-de, book-print-ru, book-print-it.
 const PRINT_EDITIONS = [
   { lang: 'es', price: null, key: 'book-print-es', name: { es: 'Edición en español', en: 'Spanish edition', fr: 'Édition espagnole' } },
   { lang: 'fr', price: null, key: 'book-print-fr', name: { es: 'Edición en francés', en: 'French edition', fr: 'Édition française' } },
   { lang: 'de', price: null, key: 'book-print-de', name: { es: 'Edición en alemán', en: 'German edition', fr: 'Édition allemande' } },
   { lang: 'ru', price: null, key: 'book-print-ru', name: { es: 'Edición en ruso', en: 'Russian edition', fr: 'Édition russe' } },
+  { lang: 'it', price: null, key: 'book-print-it', name: { es: 'Edición en italiano', en: 'Italian edition', fr: 'Édition italienne' } },
 ];
 const printSub = p => L(p.name) + ' · Ediciones ARTFORO';
 

@@ -295,6 +295,16 @@ collection, the reader and Pro stay in the top menu and on the home page.
   (`api/share-item.js`) give link previews with the lot's image and title, or the book's title and opening line,
   in Spanish, English or French, then open the lot or the Shop.
 
+## Italian edition (`sample-it.js`)
+
+From `Ecce Homo — Edizione italiana` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph:
+- `DAILY_QUOTES_IT` (`data.js`): all 74 quotes matched sentence by sentence and checked word for word; Italian visitors see
+  the same passage as Spanish, French, German and Russian ones.
+- `SAMPLE_IT` (Introduzione and Capitolo I), `TOC_IT` (70 chapter titles as printed, replacing the app's own
+  translation), `CREDITS_IT` ("Crediti dell’edizione"); the Italian `credits` line follows the printed credits.
+- Digital edition available (Whop key `book-it`, link to come; until then orders go to WhatsApp); printed Italian edition
+  in the Shop (`book-print-it`, price pending); "Full book" upload recognises it (CAPITOLO).
+
 ## Russian edition (`sample-ru.js`)
 
 From `Ecce Homo — Русское издание` (Ediciones ARTFORO, 2026), which also follows the Spanish paragraph by paragraph.

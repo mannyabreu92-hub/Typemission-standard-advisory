@@ -26,7 +26,7 @@ const KIT_YEARS = ['1978', '1994', '1996', '1998', '2004', '2011', '2016', '2021
 
 function pageKit() {
   // The quote in the visitor's own edition where there is one (Spanish, French, German, Russian), else English.
-  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU }[lang], q = (own || DAILY_QUOTES)[0];
+  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU, it: DAILY_QUOTES_IT }[lang], q = (own || DAILY_QUOTES)[0];
   const editions = EDITIONS.filter(e => e.status === 'available').map(e => L(LANG_NAMES[e.lang])).join(', ');
   const events = ANNUAL_EVENTS.slice().sort((a, b) => eventDate(a).localeCompare(eventDate(b)));
   return `<div class="wrap kit">

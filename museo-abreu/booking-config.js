@@ -35,6 +35,8 @@ var BOOKING = {
     'book-print-de': '', // printed German edition (shop)
     'book-ru': 'https://whop.com/museoabreu/ecce-homo', // Russian digital edition (Whop dropped the Cyrillic from the name)
     'book-print-ru': '', // printed Russian edition (shop)
+    'book-it': '', // Italian digital edition: Whop link to come
+    'book-print-it': '', // printed Italian edition (shop)
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',

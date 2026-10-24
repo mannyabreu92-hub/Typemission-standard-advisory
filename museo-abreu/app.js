@@ -158,8 +158,8 @@ function go(hash) {
 // A different quote from the book each day (Punta Cana date), in the book's order.
 function quoteOfTheDay() {
   const today = todayPC();
-  // Spanish, French, German and Russian visitors get the quote from their own edition; others the English one.
-  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU }[lang], list = own || DAILY_QUOTES;
+  // Spanish, French, German, Russian and Italian visitors get the quote from their own edition; others the English one.
+  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU, it: DAILY_QUOTES_IT }[lang], list = own || DAILY_QUOTES;
   const q = list[Math.floor(Date.parse(today) / 864e5) % list.length];
   const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
   return `<p class="eyebrow">${t('quoteOfDay')} · ${fmtDate(today, { day: 'numeric', month: 'long' })}</p>
@@ -679,7 +679,7 @@ const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typ
 
 // Credits pages of the printed editions, shown in the library in their own language.
 const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR }, de: { label: 'Impressum der Ausgabe', ...CREDITS_DE },
-  ru: { label: 'Выходные данные', ...CREDITS_RU } };
+  ru: { label: 'Выходные данные', ...CREDITS_RU }, it: { label: 'Crediti dell’edizione', ...CREDITS_IT } };
 
 function pageLibrary() {
   const bookTitle = t('bookTitle');
@@ -766,7 +766,7 @@ function buyEdition(l) {
 }
 
 const chTitle = (c, l) => c.title[l] ?? c.title.en ?? c.title.es;
-const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE, ru: SAMPLE_RU };
+const SAMPLES = { en: SAMPLE_EN, es: SAMPLE_ES, fr: SAMPLE_FR, de: SAMPLE_DE, ru: SAMPLE_RU, it: SAMPLE_IT };
 const sampleFor = (l, c) => SAMPLES[l]?.[c.key] || null;
 const hasSample = l => l in SAMPLES;
 
