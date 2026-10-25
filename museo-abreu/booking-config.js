@@ -43,6 +43,10 @@ var BOOKING = {
     'book-print-ja': '', // printed Japanese edition (shop)
     'fund-es': '', // Fundamentos del Psico-Expresionismo (Spanish, digital): Whop link to come
     'fund-en': '', // Foundations of Psycho-Expressionism (English, digital): Whop link to come
+    'fund-fr': '', // Fondements du Psycho-Expressionnisme (French, digital): Whop link to come
+    'fund-pt': '', // Fundamentos do Psicoexpressionismo (Portuguese, digital): Whop link to come
+    'fund-it': '', // Fondamenti del Psico-Espressionismo (Italian, digital): Whop link to come
+    'fund-de': '', // Grundlagen des Psycho-Expressionismus (German, digital): Whop link to come
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',

@@ -1,10 +1,10 @@
-// Fundamentos del Psico-Expresionismo (Oscar Abreu, 2026) and its English edition, Foundations of
-// Psycho-Expressionism: the second book sold in the app, digital only for now. #/fundamentos opens the edition
-// for the visitor (Spanish in the Spanish app, else English); #/fundamentos/<es|en> is an edition's page (cover,
-// the author's own words from his note, contents, buy or request it); #/fundamentos/<es|en>/<n> reads section n.
+// Fundamentos del Psico-Expresionismo (Oscar Abreu, 2026) in six editions (Spanish, English, French, Portuguese,
+// Italian, German): the second book sold in the app, digital only for now. #/fundamentos opens the visitor's
+// edition (the app's language, else the phone's, else English); #/fundamentos/<lang> is an edition's page (cover,
+// the author's own words from his note, contents, buy or request it); #/fundamentos/<lang>/<n> reads section n.
 // The free sample (sample-fund.js) is the note, the introduction and chapter 1; the rest comes from the server
 // (api/book.js, b=fu) for owners of "fund-<lang>" or Pro, once the museum uploads the Word file in Dashboard ›
-// Full book. Whop keys: BOOKING.whop['fund-es'], ['fund-en']; price: FUND_PRICE.
+// Full book. Whop keys: BOOKING.whop['fund-<lang>']; price: FUND_PRICE (one price for every edition).
 
 const FUND_PRICE = null;   // USD; with a Whop link, an edition's page offers Buy. Until then: request it by WhatsApp.
 const FUND_FREE = 3;       // sections 0–2 are free
@@ -14,39 +14,45 @@ Object.assign(I18N.es, {
   fuEyebrow: 'Nuevo libro de Oscar Abreu', fuAlso: 'Del mismo autor',
   fuLead: 'Oscar Abreu examina los principios, el vocabulario visual, los procedimientos y los límites del Psico-Expresionismo. Acompaña a Ecce Homo y puede leerse por separado.',
   fuEdition: 'Edición digital · {lang} · ARTFORO Editions, 2026', fuRequest: 'Solicitar la edición digital', fuCredits: 'Créditos de la edición', fuWords: 'En palabras del autor', fuPro: 'Incluido en Pro',
-  fuEditions: 'Ediciones', waFund: 'Hola, quiero la edición digital de {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · Foundations of Psycho-Expressionism',
-  fuUploadHelp: 'Elija el archivo Word de una edición (español o inglés). Se esperan 28 secciones: nota, introducción, 19 capítulos y siete secciones finales.',
+  fuEditions: 'Ediciones', waFund: 'Hola, quiero la edición digital de {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · todas las ediciones',
+  fuUploadHelp: 'Elija el archivo Word de una edición; se reconoce su idioma. Se esperan 28 secciones: nota, introducción, 19 capítulos y siete secciones finales.',
   fuFound: 'Encontradas {s} secciones y {p} párrafos.', fuWarn: 'Atención: se esperaban 28 secciones.', fuBad: 'Este archivo no parece Fundamentos del Psico-Expresionismo.',
 });
 Object.assign(I18N.en, {
   fuEyebrow: 'New book by Oscar Abreu', fuAlso: 'Also by Oscar Abreu',
   fuLead: 'Oscar Abreu examines the principles, visual vocabulary, procedures and limits of Psycho-Expressionism. A companion to Ecce Homo that can be read on its own.',
   fuEdition: 'Digital edition · {lang} · ARTFORO Editions, 2026', fuRequest: 'Request the digital edition', fuCredits: 'Edition credits', fuWords: 'In the author’s words', fuPro: 'Included in Pro',
-  fuEditions: 'Editions', waFund: 'Hello, I would like the digital edition of {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · Foundations of Psycho-Expressionism',
-  fuUploadHelp: 'Choose the Word file of an edition (Spanish or English). 28 sections are expected: note, introduction, 19 chapters and seven closing sections.',
+  fuEditions: 'Editions', waFund: 'Hello, I would like the digital edition of {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · all editions',
+  fuUploadHelp: 'Choose the Word file of an edition; its language is recognised. 28 sections are expected: note, introduction, 19 chapters and seven closing sections.',
   fuFound: 'Found {s} sections and {p} paragraphs.', fuWarn: 'Note: 28 sections were expected.', fuBad: 'This file does not look like Fundamentos del Psico-Expresionismo.',
 });
 Object.assign(I18N.fr, {
   fuEyebrow: 'Nouveau livre d’Oscar Abreu', fuAlso: 'Du même auteur',
   fuLead: 'Oscar Abreu examine les principes, le vocabulaire visuel, les procédés et les limites du Psycho-Expressionnisme. Un compagnon d’Ecce Homo qui peut se lire séparément.',
   fuEdition: 'Édition numérique · {lang} · ARTFORO Editions, 2026', fuRequest: 'Demander l’édition numérique', fuCredits: 'Crédits de l’édition', fuWords: 'Selon l’auteur', fuPro: 'Inclus dans Pro',
-  fuEditions: 'Éditions', waFund: 'Bonjour, je souhaite l’édition numérique de {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · Foundations of Psycho-Expressionism',
-  fuUploadHelp: 'Choisissez le fichier Word d’une édition (espagnol ou anglais). 28 sections sont attendues : note, introduction, 19 chapitres et sept sections finales.',
+  fuEditions: 'Éditions', waFund: 'Bonjour, je souhaite l’édition numérique de {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · toutes les éditions',
+  fuUploadHelp: 'Choisissez le fichier Word d’une édition ; sa langue est reconnue. 28 sections sont attendues : note, introduction, 19 chapitres et sept sections finales.',
   fuFound: '{s} sections et {p} paragraphes trouvés.', fuWarn: 'Attention : 28 sections étaient attendues.', fuBad: 'Ce fichier ne ressemble pas à Fundamentos del Psico-Expresionismo.',
 });
 
 const fuEd = l => FUND_EDITIONS[l] || FUND_EDITIONS.es;
-const fuDefault = () => FUND_EDITIONS[lang] ? lang : 'en';
+// As for Ecce Homo (myEdition): a phone language the app's menus are not in wins (a Portuguese phone opens the
+// Portuguese edition); else the app's language when the book exists in it; else the phone's; else English.
+function fuDefault() {
+  const d = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']).map(x => String(x).slice(0, 2).toLowerCase()).find(x => FUND_EDITIONS[x]);
+  return d && !LANGS.includes(d) ? d : FUND_EDITIONS[lang] ? lang : d || 'en';
+}
 const fuOwns = l => fx.get('books2', []).includes('fund-' + l) || (typeof isPro === 'function' && isPro());
 const fuCanRead = (l, n) => n < FUND_FREE || fuOwns(l);
-// The cover's two title lines, as on each edition.
-const FU_COVER = { es: ['FUNDAMENTOS', 'DEL PSICO-EXPRESIONISMO'], en: ['FOUNDATIONS', 'OF PSYCHO-EXPRESSIONISM'] };
-const fuCover = l => `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
+// The cover's two title lines from the edition's title ("FUNDAMENTOS" / "DEL PSICO-EXPRESIONISMO"), the second
+// set smaller when it is long.
+const fuCoverLines = l => { const t = fuEd(l).title.toUpperCase(), i = t.indexOf(' '); return [t.slice(0, i), t.slice(i + 1)]; };
+const fuCover = l => { const [a, b] = fuCoverLines(l); return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
   <rect y="360" width="400" height="240" fill="#16120f"/><rect x="28" y="384" width="56" height="2" fill="#c4a76c"/>
-  <text x="28" y="430" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="40" font-weight="600" letter-spacing="1.5">${FU_COVER[l][0]}</text>
-  <text x="28" y="466" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="25" font-weight="600" letter-spacing="1">${FU_COVER[l][1]}</text>
+  <text x="28" y="430" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="40" font-weight="600" letter-spacing="1.5">${a}</text>
+  <text x="28" y="466" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="${Math.min(25, Math.floor((344 / b.length - 1) / 0.61))}" font-weight="600" letter-spacing="1">${b}</text>
   <text x="28" y="502" fill="#e9dfd0" font-family="Cormorant Garamond, serif" font-size="17" font-style="italic">${esc(fuEd(l).subtitle)}</text>
-  <text x="28" y="560" fill="#c4a76c" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`;
+  <text x="28" y="560" fill="#c4a76c" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`; };
 
 // Buy on Whop once there is a price and a link; otherwise a request by WhatsApp. Digital only for now.
 function fuBuyButton(l, cls = 'btn primary') {
