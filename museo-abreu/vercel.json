@@ -18,5 +18,11 @@
       "path": "/api/push-cron",
       "schedule": "0 14 * * *"
     }
-  ]
+  ],
+  "functions": {
+    "api/agent.js": {
+      "maxDuration": 30,
+      "includeFiles": "{sample-*,i18n,data,booking-config,features,auction-config}.js"
+    }
+  }
 }
