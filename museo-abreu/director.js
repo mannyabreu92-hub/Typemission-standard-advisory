@@ -81,7 +81,7 @@ function dirPast() {
     return `<li>${href ? `<a href="${href}">${inner}</a>` : `<div>${inner}</div>`}</li>`; }).join('');
 }
 const dirEventsBlock = (promo, upcoming = true) => `${promo}
-  ${upcoming ? `<h3 class="dir-sub">${t('hmUpcoming')}</h3><ul class="dir-events">${dirUpcoming()}</ul>` : ''}
+  ${upcoming ? `<h3 class="dir-sub${promo ? '' : ' dir-sub-first'}">${t('hmUpcoming')}</h3><ul class="dir-events">${dirUpcoming()}</ul>` : ''}
   <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>`;
 
 /* ---------- Home ---------- */
@@ -114,7 +114,7 @@ function pageHomeDirector() {
     </div>
   </section>
   <div class="wrap">
-    <section class="section"><div class="section-head"><h2>${t('hmNow')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>${dirEventsBlock(promo)}</section>
+    <section class="section"><div class="section-head"><h2>${t('hmNow')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>${dirEventsBlock('')}</section>
     <section class="section dir-founder rv">
       <img class="dir-portrait" src="${CONTACT.photo}" alt="Oscar Abreu" loading="lazy">
       <div>

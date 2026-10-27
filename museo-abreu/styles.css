@@ -820,3 +820,4 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .dir-ev-title { display: block; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
 .dir-events .arr { color: var(--gold-ink); font-size: 1.3rem; }
 .dir-past li span:nth-child(2) { font-size: .95rem; }
+.dir-sub-first { margin-top: .4rem; }
