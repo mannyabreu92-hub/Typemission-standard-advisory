@@ -253,8 +253,11 @@ function pageHome() {
   </div>`;
 }
 
-const workImg = w => w.img
-  ? `<img src="${w.img}" alt="${esc(L(w.title))}, Oscar Abreu" loading="lazy">`
+// The featured works have a 600px version (img/<id>-600.jpg) for cards; the browser takes the full one when shown large.
+const WORK_600 = new Set(['escaping-being', 'passion', 'petrichor', 'resilience', 'limerence', 'echoes-of-memory', 'time-on-my-face']);
+const imgSet = (src, sizes) => { const m = src.match(/^img\/([\w-]+)\.jpg$/); return m && WORK_600.has(m[1]) ? ` srcset="img/${m[1]}-600.jpg 600w, ${src} 1400w" sizes="${sizes}"` : ''; };
+const workImg = (w, sizes = '(max-width: 700px) 50vw, 300px') => w.img
+  ? `<img src="${w.img}"${imgSet(w.img, sizes)} alt="${esc(L(w.title))}, Oscar Abreu" loading="lazy">`
   : artSVG(w.seed, L(w.title));
 
 // Oscar Abreu's welcome video (a file in img/ or a full URL). Until there is one, the artist page shows no video box.
@@ -334,7 +337,7 @@ function openWork(id) {
   const dlg = document.createElement('dialog');
   dlg.setAttribute('aria-label', L(w.title));
   dlg.innerHTML = `<div class="dlg-body">
-    <div class="dlg-art">${workImg(w)}</div>
+    <div class="dlg-art">${workImg(w, '(max-width: 700px) 100vw, 640px')}</div>
     <h3 style="margin-top:1rem">${L(w.title)}</h3>
     ${w.sold ? `<p><span class="chip sold">${t('sold')}</span></p>` : ''}
     <dl class="specs">
@@ -419,7 +422,7 @@ function manifestoSection(m, own = false) {
       <p class="eyebrow">${t('manifestoEyebrow')} ${m.n}/${MANIFESTOS.length}</p>
       ${own ? `<h1 class="m-title">${L(m.title)}</h1>` : `<h2>${L(m.title)}</h2>`}
       <p class="muted" style="margin-bottom:1rem">Oscar Abreu · ${m.source}</p>
-      ${w.img ? `<button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w)}<span>${caption}</span></button>` : ''}
+      ${w.img ? `<button type="button" class="m-work" data-action="work" data-id="${w.id}">${workImg(w, '(max-width: 700px) 100vw, 640px')}<span>${caption}</span></button>` : ''}
       ${body}
     </section>`;
 }

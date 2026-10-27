@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<link rel="preload" as="image" href="img/escaping-being-800.jpg" imagesrcset="img/escaping-being-800.jpg 800w, img/escaping-being.jpg 1400w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" href="img/hero-1000.jpg" imagesrcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" imagesizes="100vw" fetchpriority="high">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
@@ -64,6 +64,11 @@
 </header>
 
 <main id="main" tabindex="-1"></main>
+<script>
+  // The home page's opening image paints at once, before the app's scripts arrive; the app then draws the page over it.
+  if (!window.SEO_ROUTE && !/^#\/./.test(location.hash)) document.getElementById('main').innerHTML =
+    '<section class="hero dir-hero" aria-hidden="true"><div class="hero-art"><img src="img/hero-1000.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" sizes="100vw" alt="" fetchpriority="high"></div><div class="hero-inner"></div></section>';
+</script>
 
 <nav class="tabbar" aria-label="Principal (móvil)">
   <a href="#/" data-route=""><span class="ti">◐</span><span data-i18n="navHome">Inicio</span></a>

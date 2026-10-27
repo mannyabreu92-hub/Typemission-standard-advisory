@@ -118,7 +118,7 @@ function pageHomeDirector() {
   const act = (promo.match(/<a class="btn primary"[^>]*>[^<]*<\/a>/) || [`<a class="btn primary" href="${dirEventHref(next)}">${t('eventDetails')}</a>`])[0];
   return `
   <section class="hero dir-hero">
-    <div class="hero-art"><img src="img/escaping-being.jpg" srcset="img/escaping-being-800.jpg 800w, img/escaping-being.jpg 1400w" sizes="100vw" alt="" fetchpriority="high"></div>
+    <div class="hero-art"><img src="img/hero-1000.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" sizes="100vw" alt="" fetchpriority="high"></div>
     <div class="hero-inner">
       <p class="eyebrow">Museo Abreu · Bávaro, Punta Cana</p>
       <h1 class="dir-headline">${t('hmHeadline')}</h1>
@@ -295,3 +295,13 @@ document.addEventListener('click', e => {
   if (location.pathname === '/' || !e.target.closest('a[href="#main"]')) return;
   e.preventDefault(); document.getElementById('main').focus();
 });
+
+// The opening image painted by index.html before the scripts arrived is kept when the app draws the home page,
+// so it is not loaded and painted a second time.
+{
+  const shell = document.querySelector('#main .dir-hero .hero-art img');
+  if (shell) new MutationObserver((_, obs) => {
+    const img = document.querySelector('#main .dir-hero .hero-art img');
+    if (img && img !== shell) { img.replaceWith(shell); obs.disconnect(); }
+  }).observe(document.getElementById('main'), { childList: true });
+}

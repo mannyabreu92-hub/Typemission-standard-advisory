@@ -399,7 +399,7 @@ function sectionNav(name) {
 }
 
 function homeHighlights() {
-  const card = (href, img, title, text) => `<a class="card hl" href="${href}"><img src="${img}" alt="" loading="lazy"><h3>${title}</h3><p class="muted">${text}</p></a>`;
+  const card = (href, img, title, text) => `<a class="card hl" href="${href}"><img src="${img}"${imgSet(img, '(max-width: 700px) 50vw, 260px')} alt="" loading="lazy"><h3>${title}</h3><p class="muted">${text}</p></a>`;
   return `<section class="section"><h2>${t('hlTitle')}</h2>
     <div class="grid four" style="margin-top:1rem">
       ${card('#/pinturas', PAINTINGS[5].img, t('navWork'), t('hlWork', { p: PAINTINGS.length, d: DRAWINGS.length, s: SCULPTURES.length, f: PHOTOS.length }))}

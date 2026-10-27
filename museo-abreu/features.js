@@ -629,7 +629,7 @@ function tierBlock(ev, tier, passes) {
   }
   const art = tier.art && WORKS.find(w => w.id === tier.art);
   return `<article class="tier pass-card ${tier.proFree ? 'tier-vip' : ''}">
-    ${art ? `<figure class="pass-img"><img src="${tier.img}" alt="" loading="lazy" width="1400" height="1400"><figcaption>Oscar Abreu · ${L(art.title)}</figcaption></figure>` : ''}
+    ${art ? `<figure class="pass-img"><img src="${tier.img}"${imgSet(tier.img, '(max-width: 700px) 90vw, 360px')} alt="" loading="lazy" width="1400" height="1400"><figcaption>Oscar Abreu · ${L(art.title)}</figcaption></figure>` : ''}
     <h5 class="pass-name">${L(tier.name)}</h5>
     <p class="pass-price">USD ${tier.price.toLocaleString('en-US')}${tier.proFree ? ` <span class="status ok">${t('freeForPro')}</span>` : ''}</p>
     ${tier.lead ? `<p class="pass-lead">${L(tier.lead)}</p>` : `<span class="chip">${L(tier.tag)}</span>`}
