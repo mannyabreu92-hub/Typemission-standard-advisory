@@ -70,7 +70,7 @@ function pageRsvp(id) {
   const card = inv ? `<div class="invite"><div class="invite-inner">
       <p class="invite-host">${t('rsvpHost')}</p>
       <p class="invite-request">${L(inv.request)}</p>
-      <h1 class="invite-title invite-caps">${L(inv.title)}</h1>
+      <h2 class="invite-title invite-caps">${L(inv.title)}</h2>
       <p class="invite-also">${L(inv.launchOf)}</p>
       <p class="invite-book"><span class="invite-book-title" lang="la">Ecce Homo</span><span>${L(inv.sub1)}</span><span>${L(inv.sub2)}</span></p>
       <p class="invite-by">${L(inv.by)}</p>
@@ -82,7 +82,7 @@ function pageRsvp(id) {
     </div></div>` : `<div class="invite"><div class="invite-inner">
       <p class="invite-host">${t('rsvpHost')}</p>
       <p class="invite-request">${t('rsvpRequests')}</p>
-      <h1 class="invite-title">${L(ev.name)}</h1>
+      <h2 class="invite-title">${L(ev.name)}</h2>
       ${ev.since ? `<p class="invite-sub">${t('nth', { n: Number(d.slice(0, 4)) - ev.since })}</p>` : ''}
       ${ev.launch ? `<p class="invite-also">${L(ev.launch)}</p>` : ''}
       <div class="invite-rule" aria-hidden="true"><span></span></div>
@@ -109,7 +109,7 @@ function pageRsvp(id) {
       <h2>${t('rsvpFormTitle')}</h2>
       <form class="rsvp-form" data-form="rsvp" data-id="${ev.id}" novalidate>
         <fieldset class="rsvp-att"><legend class="visually-hidden">${t('rsvpFormTitle')}</legend>
-          <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-yes" value="yes" ${prev.att !== 'no' && prev.att ? 'checked' : ''}><span>${t('rsvpAccept')}</span></label>
+          <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-yes" value="yes" ${prev.att !== 'no' ? 'checked' : ''}><span>${t('rsvpAccept')}</span></label>
           <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-no" value="no" ${prev.att === 'no' ? 'checked' : ''}><span>${t('rsvpDecline')}</span></label>
         </fieldset>
         <div class="grid two">
@@ -120,13 +120,17 @@ function pageRsvp(id) {
             <select id="rs-guests">${[0, 1, 2, 3].map(n => `<option value="${n}"${(prev.guests || 0) === n ? ' selected' : ''}>${n}</option>`).join('')}</select></div>
         </div>
         <div class="field rsvp-yes-only" id="rs-names-wrap"${prev.guests ? '' : ' hidden'}><label for="rs-names">${t('rsvpGuestNames')}</label><input id="rs-names" value="${esc(prev.guestNames || '')}"></div>
-        <div class="field"><label for="rs-note">${t('rsvpNote')}</label><textarea id="rs-note" rows="2" placeholder="${esc(t('rsvpNotePh'))}">${esc(prev.note || '')}</textarea></div>
+        <details class="rsvp-more"${prev.note ? ' open' : ''}><summary>${t('rsvpNote')}</summary>
+          <div class="field"><label for="rs-note" class="visually-hidden">${t('rsvpNote')}</label><textarea id="rs-note" rows="2" placeholder="${esc(t('rsvpNotePh'))}">${esc(prev.note || '')}</textarea></div></details>
         <p class="status" id="rs-err" role="alert" hidden></p>
-        <div class="btn-row"><button class="btn primary" type="submit">${t('rsvpSend')}</button></div>
+        <div class="btn-row"><button class="btn primary rsvp-send" type="submit">${t('rsvpSend')}</button></div>
         <p class="muted rsvp-private">${t('rsvpPrivate')}</p>
       </form>
     </section>`;
-  return `<div class="wrap rsvp-page"><section class="section">${card}</section>${replied}${form}</div>`;
+  const head = `<section class="section rsvp-head"><p class="eyebrow">${t('rsvpEyebrow')}</p>
+      <h1 class="rsvp-head-title">${inv ? '<span lang="la">Ecce Homo</span>' : L(ev.name)}</h1>
+      <p class="rsvp-head-date">${rsvpLongDate(d)} · ${rsvpTime(ev.time)}</p><p class="muted">Museo Abreu · Bávaro, Punta Cana</p></section>`;
+  return `<div class="wrap rsvp-page">${head}${replied}${form}<section class="section">${card}</section></div>`;
 }
 
 const rsvpEditing = new Set();
