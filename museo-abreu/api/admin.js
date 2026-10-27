@@ -166,7 +166,7 @@ module.exports = async (req, res) => {
   const bookBlobs = []; let cur;
   do { const r = await list({ prefix: 'book/', cursor: cur, limit: 1000 }); bookBlobs.push(...r.blobs); cur = r.hasMore ? r.cursor : null; } while (cur);
   const books = (await Promise.all(bookBlobs.filter(x => /^book\/[a-z]{2}\/index\.json$/.test(x.pathname)).map(x => readJSON(x.pathname)))).filter(Boolean);
-  const fund = (await Promise.all(['es', 'en', 'fr', 'pt', 'it', 'de', 'ja'].map(l => readJSON(`fund/${l}/index.json`)))).filter(Boolean);
+  const fund = (await Promise.all(['es', 'en', 'fr', 'pt', 'it', 'de', 'ja', 'zh'].map(l => readJSON(`fund/${l}/index.json`)))).filter(Boolean);
   // Reading statistics per edition (api/reading.js): readers, buyers, sample-only, finished, bought after the
   // sample, and how far buyers got (furthest section in groups: intro, chapters 1–10 … 61–70, the end).
   const reading = {};

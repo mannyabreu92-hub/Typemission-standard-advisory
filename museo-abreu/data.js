@@ -46,6 +46,7 @@ const LANG_NAMES = {
   it: { es: 'Italiano', en: 'Italian', fr: 'Italien' },
   pt: { es: 'Portugués', en: 'Portuguese', fr: 'Portugais' },
   ja: { es: 'Japonés', en: 'Japanese', fr: 'Japonais' },
+  zh: { es: 'Chino', en: 'Chinese', fr: 'Chinois' },
 };
 
 // Sample weekly schedule. Each session lists its real guide languages; a language

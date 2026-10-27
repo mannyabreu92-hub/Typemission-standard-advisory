@@ -1,5 +1,5 @@
-// Fundamentos del Psico-Expresionismo (Oscar Abreu, 2026) in seven editions (Spanish, English, French, Portuguese,
-// Italian, German, Japanese): the second book sold in the app, digital only for now. #/fundamentos opens the visitor's
+// Fundamentos del Psico-Expresionismo (Oscar Abreu, 2026) in eight editions (Spanish, English, French,
+// Portuguese, Italian, German, Japanese, Chinese): the second book sold in the app, digital only for now. #/fundamentos opens the visitor's
 // edition (the app's language, else the phone's, else English); #/fundamentos/<lang> is an edition's page (cover,
 // the author's own words from his note, contents, buy or request it); #/fundamentos/<lang>/<n> reads section n.
 // The free sample (sample-fund.js) is the note, the introduction and chapter 1; the rest comes from the server
@@ -45,10 +45,11 @@ function fuDefault() {
 const fuOwns = l => fx.get('books2', []).includes('fund-' + l) || (typeof isPro === 'function' && isPro());
 const fuCanRead = (l, n) => n < FUND_FREE || fuOwns(l);
 // The cover's two title lines from the edition's title ("FUNDAMENTOS" / "DEL PSICO-EXPRESIONISMO"), the second
-// set smaller when it is long. A title without spaces (Japanese) is one line, in the Japanese book typeface, upright.
-const FU_JA_SERIF = "'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, 'Noto Serif JP', serif";
+// set smaller when it is long. A title without spaces (Japanese, Chinese) is one line, in that language's book
+// typeface, upright (neither has italics).
+const FU_CJK_SERIF = { ja: "'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, 'Noto Serif JP', serif", zh: "'Songti SC', STSong, SimSun, 'Noto Serif SC', serif" };
 const fuCoverLines = l => { const t = fuEd(l).title.toUpperCase(), i = t.indexOf(' '); return i < 0 ? [t, ''] : [t.slice(0, i), t.slice(i + 1)]; };
-const fuCover = l => { const [a, b] = fuCoverLines(l), ja = l === 'ja', serif = ja ? FU_JA_SERIF : 'Cormorant Garamond, serif'; return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
+const fuCover = l => { const [a, b] = fuCoverLines(l), ja = !!FU_CJK_SERIF[l], serif = FU_CJK_SERIF[l] || 'Cormorant Garamond, serif'; return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
   <rect y="360" width="400" height="240" fill="#16120f"/><rect x="28" y="384" width="56" height="2" fill="#c4a76c"/>
   <text x="28" y="${b ? 430 : 448}" fill="#f6f1e9" font-family="${serif}" font-size="${ja ? Math.min(40, Math.floor(320 / a.length)) : 40}" font-weight="600" letter-spacing="1.5">${a}</text>
   ${b ? `<text x="28" y="466" fill="#f6f1e9" font-family="${serif}" font-size="${Math.min(25, Math.floor((344 / b.length - 1) / 0.61))}" font-weight="600" letter-spacing="1">${b}</text>` : ''}
@@ -79,7 +80,7 @@ function pageFund(l) {
       <div>
         <p class="eyebrow">${t('fuEyebrow')}</p>
         <h1 lang="${l}">${esc(e.title)}</h1>
-        <p lang="${l}" style="font-family:var(--serif);font-size:1.4rem;font-style:${l === 'ja' ? 'normal' : 'italic'}">${esc(e.subtitle)}</p>
+        <p lang="${l}" style="font-family:var(--serif);font-size:1.4rem;font-style:${FU_CJK_SERIF[l] ? 'normal' : 'italic'}">${esc(e.subtitle)}</p>
         <p class="muted" style="margin:.3rem 0 1rem">Oscar Abreu · ${t('fuEdition', { lang: L(LANG_NAMES[l]) })}</p>
         <nav class="tabs fu-eds" aria-label="${t('fuEditions')}">${FUND_LANGS.map(x => `<a class="tab" href="#/fundamentos/${x}"${x === l ? ' aria-current="page"' : ''}>${L(LANG_NAMES[x])}</a>`).join('')}</nav>
         <p class="lead" style="margin-top:1rem">${t('fuLead')}</p>

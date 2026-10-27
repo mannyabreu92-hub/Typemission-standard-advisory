@@ -674,6 +674,10 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 :lang(ja) { --serif: 'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, 'Noto Serif JP', 'Noto Serif CJK JP', serif; line-break: strict; }
 :lang(ja), :lang(ja) * { font-style: normal; }
 .reader-text:lang(ja) { line-height: 1.9; letter-spacing: .02em; }
+/* The Chinese edition (Simplified): the phone's own Song typeface, upright, with Chinese line-breaking rules. */
+:lang(zh) { --serif: 'Songti SC', STSong, SimSun, 'Noto Serif SC', 'Noto Serif CJK SC', serif; line-break: strict; }
+:lang(zh), :lang(zh) * { font-style: normal; }
+.reader-text:lang(zh) { line-height: 1.9; letter-spacing: .02em; }
 
 /* Door scanner (scanner.js) */
 .sc-view { display: grid; gap: .6rem; margin: 1rem 0; }
