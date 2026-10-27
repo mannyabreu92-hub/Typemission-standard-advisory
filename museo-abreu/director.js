@@ -19,6 +19,7 @@ Object.assign(I18N.es, {
   peLayers: 'Levante las capas', peLive: 'Véalo en vivo: eventos en el museo', peClosing: 'El libro termina con los doce fundamentos del movimiento.', peOpen: 'Abrir el libro',
   mbTitle: 'Membresía', mbLead: 'Tres maneras de estar cerca de la obra de Oscar Abreu, de la primera visita a una colección propia.',
   mbFriend: 'Amigo', mbFree: 'Gratis', mbFriendPromise: 'Sea el primero en saberlo', mbFriendB1: 'Noticias de inauguraciones, eventos y libros', mbFriendCta: 'Inscribirme',
+  evCalTitle: 'El año en el Museo Abreu', evSubscribe: 'Añadir todos los eventos a mi calendario', evSubscribeHelp: 'Su calendario se actualiza solo cuando el museo añade un evento.', evGoogle: 'Google Calendar', evApple: 'iPhone, Mac u Outlook',
   hmUpcoming: 'Próximos eventos', hmPast: 'Eventos anteriores',
   mbProPromise: 'Leer, asistir, volver', mbCirclePromise: 'Vivir con la obra', mbCompare: 'Comparar gratis y Pro', navMembership: 'Membresía',
 });
@@ -35,6 +36,7 @@ Object.assign(I18N.en, {
   peLayers: 'Lift the layers', peLive: 'See it live: events at the museum', peClosing: 'The book closes with the twelve foundations of the movement.', peOpen: 'Open the book',
   mbTitle: 'Membership', mbLead: 'Three ways to stay close to the work of Oscar Abreu, from the first visit to a collection of your own.',
   mbFriend: 'Friend', mbFree: 'Free', mbFriendPromise: 'Be the first to know', mbFriendB1: 'News of openings, events and books', mbFriendCta: 'Sign up',
+  evCalTitle: 'The year at Museo Abreu', evSubscribe: 'Add every event to my calendar', evSubscribeHelp: 'Your calendar updates by itself when the museum adds an event.', evGoogle: 'Google Calendar', evApple: 'iPhone, Mac or Outlook',
   hmUpcoming: 'Upcoming events', hmPast: 'Past events',
   mbProPromise: 'Read, attend, return', mbCirclePromise: 'Live with the work', mbCompare: 'Compare free and Pro', navMembership: 'Membership',
 });
@@ -51,6 +53,7 @@ Object.assign(I18N.fr, {
   peLayers: 'Soulever les couches', peLive: 'Le vivre : les événements du musée', peClosing: 'Le livre se termine par les douze fondements du mouvement.', peOpen: 'Ouvrir le livre',
   mbTitle: 'Adhésion', mbLead: 'Trois façons de rester proche de l’œuvre d’Oscar Abreu, de la première visite à une collection personnelle.',
   mbFriend: 'Ami', mbFree: 'Gratuit', mbFriendPromise: 'Être le premier informé', mbFriendB1: 'Nouvelles des vernissages, événements et livres', mbFriendCta: 'M’inscrire',
+  evCalTitle: 'L’année au Museo Abreu', evSubscribe: 'Ajouter tous les événements à mon agenda', evSubscribeHelp: 'Votre agenda se met à jour tout seul quand le musée ajoute un événement.', evGoogle: 'Google Agenda', evApple: 'iPhone, Mac ou Outlook',
   hmUpcoming: 'Événements à venir', hmPast: 'Événements passés',
   mbProPromise: 'Lire, venir, revenir', mbCirclePromise: 'Vivre avec l’œuvre', mbCompare: 'Comparer gratuit et Pro', navMembership: 'Adhésion',
 });
@@ -80,8 +83,24 @@ function dirPast() {
     const inner = `<span class="dir-date"><strong>${y}</strong></span><span>${esc(L(e))}</span>${href ? '<span class="arr" aria-hidden="true">›</span>' : ''}`;
     return `<li>${href ? `<a href="${href}">${inner}</a>` : `<div>${inner}</div>`}</li>`; }).join('');
 }
+// Twelve months from this one, each with the events that fall in it (several days: on its first day).
+function dirCalendar() {
+  const today = todayPC(), y0 = Number(today.slice(0, 4)), m0 = Number(today.slice(5, 7));
+  const months = Array.from({ length: 12 }, (_, i) => { const m = (m0 - 1 + i) % 12 + 1, y = y0 + Math.floor((m0 - 1 + i) / 12); return `${y}-${String(m).padStart(2, '0')}`; });
+  const evs = sortedEvents().filter(ev => ev.annual);
+  return `<ol class="dir-cal">${months.map(ym => { const here = evs.filter(ev => eventDate(ev).slice(0, 7) === ym);
+    return `<li class="${here.length ? 'has' : ''}"><span class="dir-cal-m">${fmtDate(ym + '-01', { month: 'short' })}<small>${ym.slice(0, 4)}</small></span>
+      ${here.map(ev => `<a href="${dirEventHref(ev)}"><strong>${Number(eventDate(ev).slice(8))}${ev.lastDay ? '–' + Number(addDays(eventDate(ev), ev.lastDay).slice(8)) : ''}</strong> ${eventTitle(ev)}</a>`).join('')}</li>`; }).join('')}</ol>`;
+}
+// Subscribe to every event (api/calendar.js): the phone's calendar app, or Google Calendar.
+function dirSubscribe() {
+  const feed = `${location.host}/calendar.ics${lang !== 'en' ? '?lang=' + lang : ''}`;
+  return `<div class="dir-subscribe"><p><strong>${t('evSubscribe')}</strong><br><span class="muted">${t('evSubscribeHelp')}</span></p>
+    <div class="btn-row"><a class="btn" href="webcal://${feed}">${t('evApple')}</a>
+    <a class="btn" href="https://calendar.google.com/calendar/r?cid=${encodeURIComponent('webcal://' + feed)}" target="_blank" rel="noopener">${t('evGoogle')}</a></div></div>`;
+}
 const dirEventsBlock = (promo, upcoming = true) => `${promo}
-  ${upcoming ? `<h3 class="dir-sub${promo ? '' : ' dir-sub-first'}">${t('hmUpcoming')}</h3><ul class="dir-events">${dirUpcoming()}</ul>` : ''}
+  ${upcoming ? `<h3 class="dir-sub${promo ? '' : ' dir-sub-first'}">${t('hmUpcoming')}</h3><ul class="dir-events">${dirUpcoming()}</ul>${dirSubscribe()}` : ''}
   <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>`;
 
 /* ---------- Home ---------- */
@@ -248,7 +267,7 @@ const PAGE_DESC = {
 Object.assign(EXTRA_ROUTES, { membresia: pageMembership });
 {
   const events = EXTRA_ROUTES.eventos;
-  EXTRA_ROUTES.eventos = () => events().replace(/<\/div>\s*$/, `<section class="section"><h2>${t('hmPast')}</h2><ul class="dir-events dir-past">${dirPast()}</ul></section></div>`);
+  EXTRA_ROUTES.eventos = () => events().replace(/(<\/section>)/, `$1<section class="section"><h2>${t('evCalTitle')}</h2>${dirCalendar()}${dirSubscribe()}</section>`).replace(/<\/div>\s*$/, `<section class="section"><h2>${t('hmPast')}</h2><ul class="dir-events dir-past">${dirPast()}</ul></section></div>`);
 }
 Object.assign(ROUTE_SECTION, { pro: 'membresia' });
 (window.APP_HOOKS ||= []).push(() => {

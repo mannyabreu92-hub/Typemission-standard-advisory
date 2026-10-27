@@ -834,6 +834,11 @@ I18N.ru = {
   "navMembership": "Членство",
   "hmUpcoming": "Ближайшие события",
   "hmPast": "Прошедшие события",
+  "evCalTitle": "Год в Museo Abreu",
+  "evSubscribe": "Добавить все события в мой календарь",
+  "evSubscribeHelp": "Ваш календарь обновится сам, когда музей добавит событие.",
+  "evGoogle": "Google Календарь",
+  "evApple": "iPhone, Mac или Outlook",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

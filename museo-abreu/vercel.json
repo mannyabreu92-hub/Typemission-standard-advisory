@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/calendar.ics",
+      "destination": "/api/calendar"
+    },
+    {
       "source": "/e/:id",
       "destination": "/api/event-share?id=:id"
     },
@@ -93,6 +97,9 @@
       "includeFiles": "{sample-*,i18n,data,booking-config,features,auction-config,fundamentos}.js"
     },
     "api/page.js": {
+      "includeFiles": "{index.html,seo/*.json}"
+    },
+    "api/calendar.js": {
       "includeFiles": "{index.html,seo/*.json}"
     }
   }

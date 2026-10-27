@@ -833,6 +833,11 @@ I18N.it = {
   "navMembership": "Membership",
   "hmUpcoming": "Prossimi eventi",
   "hmPast": "Eventi passati",
+  "evCalTitle": "L’anno al Museo Abreu",
+  "evSubscribe": "Aggiungi tutti gli eventi al mio calendario",
+  "evSubscribeHelp": "Il tuo calendario si aggiorna da solo quando il museo aggiunge un evento.",
+  "evGoogle": "Google Calendar",
+  "evApple": "iPhone, Mac o Outlook",
 };
 TR.it = {
   "2019": "2019",

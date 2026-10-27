@@ -833,6 +833,11 @@ I18N.ar = {
   "navMembership": "العضوية",
   "hmUpcoming": "الفعاليات القادمة",
   "hmPast": "فعاليات سابقة",
+  "evCalTitle": "العام في متحف أبرو",
+  "evSubscribe": "أضف كل الفعاليات إلى تقويمي",
+  "evSubscribeHelp": "يتحدّث تقويمك تلقائيًا عندما يضيف المتحف فعالية.",
+  "evGoogle": "تقويم Google",
+  "evApple": "iPhone أو Mac أو Outlook",
 };
 TR.ar = {
   "2019": "2019",
