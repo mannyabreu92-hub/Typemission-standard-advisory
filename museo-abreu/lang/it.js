@@ -838,6 +838,9 @@ I18N.it = {
   "evSubscribeHelp": "Il tuo calendario si aggiorna da solo quando il museo aggiunge un evento.",
   "evGoogle": "Google Calendar",
   "evApple": "iPhone, Mac o Outlook",
+  "rsvpShareTitle": "Invita un amico",
+  "rsvpShareLead": "Inviagli l’invito perché possa rispondere anche lui.",
+  "rsvpShareMsg": "Sei invitato a {event} al Museo Abreu, {date}. Conferma qui: {link}",
 };
 TR.it = {
   "2019": "2019",

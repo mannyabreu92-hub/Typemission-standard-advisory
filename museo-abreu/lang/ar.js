@@ -838,6 +838,9 @@ I18N.ar = {
   "evSubscribeHelp": "يتحدّث تقويمك تلقائيًا عندما يضيف المتحف فعالية.",
   "evGoogle": "تقويم Google",
   "evApple": "iPhone أو Mac أو Outlook",
+  "rsvpShareTitle": "ادعُ صديقًا",
+  "rsvpShareLead": "أرسل إليه الدعوة ليؤكد حضوره أيضًا.",
+  "rsvpShareMsg": "أنت مدعو إلى {event} في متحف أبرو، {date}. أكّد حضورك هنا: {link}",
 };
 TR.ar = {
   "2019": "2019",

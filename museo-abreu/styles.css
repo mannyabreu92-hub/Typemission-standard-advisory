@@ -938,3 +938,11 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .rsvp-choice input:checked + span::before { content: '✓  '; color: var(--champagne); }
 /* The poster's date: upright capitals-height figures instead of the italic. */
 .dir-p-date { font: 600 clamp(2.1rem, 9.4vw, 3.1rem)/1.1 'Cormorant Garamond', Georgia, serif; font-variant-numeric: lining-nums; letter-spacing: .04em; color: #8a2a1b; }
+/* RSVP, second pass: the date upright like the poster; the reply after the details; invite a friend. */
+.rsvp-head-date { font: 600 clamp(1.35rem, 5.6vw, 1.8rem)/1.3 'Cormorant Garamond', Georgia, serif; font-variant-numeric: lining-nums; font-style: normal; letter-spacing: .02em; color: #8a2a1b; }
+.rsvp-form .rsvp-att { margin: 1.2rem 0 1rem; }
+.rsvp-share { text-align: center; }
+.rsvp-share h2 { font-size: 1.6rem; }
+.rsvp-share .btn-row { justify-content: center; }
+.rsvp-share .btn { min-width: 9rem; }
+.rsvp-head-time { font: 600 1rem/1.4 'Cormorant Garamond', Georgia, serif; letter-spacing: .2em; text-transform: uppercase; color: #14110e; }

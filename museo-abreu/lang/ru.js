@@ -839,6 +839,9 @@ I18N.ru = {
   "evSubscribeHelp": "Ваш календарь обновится сам, когда музей добавит событие.",
   "evGoogle": "Google Календарь",
   "evApple": "iPhone, Mac или Outlook",
+  "rsvpShareTitle": "Пригласить друга",
+  "rsvpShareLead": "Отправьте приглашение, чтобы друг тоже смог ответить.",
+  "rsvpShareMsg": "Приглашаем вас на {event} в Museo Abreu, {date}. Подтвердите участие здесь: {link}",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

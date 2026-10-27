@@ -5,6 +5,7 @@
 // Loaded after content.js and before app.js.
 
 Object.assign(I18N.es, {
+  rsvpShareTitle: 'Invite a un amigo', rsvpShareLead: 'Envíele la invitación para que también confirme su asistencia.', rsvpShareMsg: 'Le invito a {event} en el Museo Abreu, {date}. Confirme su asistencia aquí: {link}',
   rsvp: 'Confirmar asistencia', rsvpEyebrow: 'Invitación', rsvpHost: 'Museo Abreu',
   rsvpRequests: 'tiene el honor de invitarle a', rsvpAtTime: 'a las {time}', rsvpPlace: 'Bávaro, Punta Cana',
   rsvpKindly: 'Se ruega confirmar asistencia', rsvpFormTitle: 'Su respuesta', rsvpAccept: 'Asistiré con mucho gusto',
@@ -20,6 +21,7 @@ Object.assign(I18N.es, {
   rsvpWithGuests: ', acompañado(a) de {n} invitado(s): {names}',
 });
 Object.assign(I18N.en, {
+  rsvpShareTitle: 'Invite a friend', rsvpShareLead: 'Send them the invitation so they can reply too.', rsvpShareMsg: 'You are invited to {event} at Museo Abreu, {date}. RSVP here: {link}',
   rsvp: 'RSVP', rsvpEyebrow: 'Invitation', rsvpHost: 'Museo Abreu',
   rsvpRequests: 'requests the pleasure of your company at', rsvpAtTime: 'at {time}', rsvpPlace: 'Bávaro, Punta Cana',
   rsvpKindly: 'The favour of a reply is requested', rsvpFormTitle: 'Your reply', rsvpAccept: 'Accepts with pleasure',
@@ -35,6 +37,7 @@ Object.assign(I18N.en, {
   rsvpWithGuests: ', accompanied by {n} guest(s): {names}',
 });
 Object.assign(I18N.fr, {
+  rsvpShareTitle: 'Inviter un ami', rsvpShareLead: 'Envoyez-lui l’invitation pour qu’il puisse répondre aussi.', rsvpShareMsg: 'Vous êtes invité à {event} au Museo Abreu, {date}. Répondez ici : {link}',
   rsvp: 'Répondre', rsvpEyebrow: 'Invitation', rsvpHost: 'Museo Abreu',
   rsvpRequests: 'a le plaisir de vous convier à', rsvpAtTime: 'à {time}', rsvpPlace: 'Bávaro, Punta Cana',
   rsvpKindly: 'R.S.V.P.', rsvpFormTitle: 'Votre réponse', rsvpAccept: 'Accepte avec plaisir',
@@ -59,6 +62,16 @@ const rsvpTime = time => {
   return new Intl.DateTimeFormat(loc, { hour: 'numeric', minute: '2-digit', timeZone: 'UTC' }).format(Date.UTC(2000, 0, 1, h, m));
 };
 const rsvpLongDate = iso => fmtDate(iso, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+// Invite a friend: the same RSVP page by WhatsApp or email, in the visitor's language, so the friend replies too.
+function rsvpShare(ev) {
+  const d = eventDate(ev);
+  const link = `${location.origin}/?lang=${lang}#/rsvp/${ev.id}`;
+  const msg = t('rsvpShareMsg', { event: eventTitle(ev), date: `${rsvpLongDate(d)} · ${rsvpTime(ev.time)}`, link });
+  return `<section class="section rsvp-share"><h2>${t('rsvpShareTitle')}</h2><p class="muted">${t('rsvpShareLead')}</p>
+    <div class="btn-row"><a class="btn wa" href="https://wa.me/?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn" href="mailto:?subject=${encodeURIComponent(eventTitle(ev) + ' · Museo Abreu')}&body=${encodeURIComponent(msg)}">${t('email')}</a></div></section>`;
+}
 
 function pageRsvp(id) {
   const ev = rsvpEvents().find(e => e.id === id);
@@ -108,17 +121,17 @@ function pageRsvp(id) {
   const form = current ? '' : `<section class="section rsvp-form-wrap">
       <h2>${t('rsvpFormTitle')}</h2>
       <form class="rsvp-form" data-form="rsvp" data-id="${ev.id}" novalidate>
-        <fieldset class="rsvp-att"><legend class="visually-hidden">${t('rsvpFormTitle')}</legend>
-          <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-yes" value="yes" ${prev.att !== 'no' ? 'checked' : ''}><span>${t('rsvpAccept')}</span></label>
-          <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-no" value="no" ${prev.att === 'no' ? 'checked' : ''}><span>${t('rsvpDecline')}</span></label>
-        </fieldset>
         <div class="grid two">
           <div class="field"><label for="rs-name">${t('name')}</label><input id="rs-name" required autocomplete="name" value="${esc(prev.name || profile.name)}"></div>
           <div class="field"><label for="rs-email">${t('email')}</label><input id="rs-email" type="email" required autocomplete="email" value="${esc(prev.email || profile.email)}"></div>
           <div class="field"><label for="rs-phone">${t('phone')}</label><input id="rs-phone" type="tel" required autocomplete="tel" value="${esc(prev.phone || '')}"></div>
-          <div class="field rsvp-yes-only"><label for="rs-guests">${t('rsvpGuests')}</label>
-            <select id="rs-guests">${[0, 1, 2, 3].map(n => `<option value="${n}"${(prev.guests || 0) === n ? ' selected' : ''}>${n}</option>`).join('')}</select></div>
         </div>
+        <fieldset class="rsvp-att"><legend class="visually-hidden">${t('rsvpFormTitle')}</legend>
+          <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-yes" value="yes" ${prev.att !== 'no' ? 'checked' : ''}><span>${t('rsvpAccept')}</span></label>
+          <label class="rsvp-choice"><input type="radio" name="rs-att" id="rs-no" value="no" ${prev.att === 'no' ? 'checked' : ''}><span>${t('rsvpDecline')}</span></label>
+        </fieldset>
+        <div class="field rsvp-yes-only"><label for="rs-guests">${t('rsvpGuests')}</label>
+          <select id="rs-guests">${[0, 1, 2, 3].map(n => `<option value="${n}"${(prev.guests || 0) === n ? ' selected' : ''}>${n}</option>`).join('')}</select></div>
         <div class="field rsvp-yes-only" id="rs-names-wrap"${prev.guests ? '' : ' hidden'}><label for="rs-names">${t('rsvpGuestNames')}</label><input id="rs-names" value="${esc(prev.guestNames || '')}"></div>
         <details class="rsvp-more"${prev.note ? ' open' : ''}><summary>${t('rsvpNote')}</summary>
           <div class="field"><label for="rs-note" class="visually-hidden">${t('rsvpNote')}</label><textarea id="rs-note" rows="2" placeholder="${esc(t('rsvpNotePh'))}">${esc(prev.note || '')}</textarea></div></details>
@@ -127,10 +140,10 @@ function pageRsvp(id) {
         <p class="muted rsvp-private">${t('rsvpPrivate')}</p>
       </form>
     </section>`;
-  const head = `<section class="section rsvp-head"><p class="eyebrow">${t('rsvpEyebrow')}</p>
+  const head = `<section class="section rsvp-head">
       <h1 class="rsvp-head-title">${inv ? '<span lang="la">Ecce Homo</span>' : L(ev.name)}</h1>
-      <p class="rsvp-head-date">${rsvpLongDate(d)} · ${rsvpTime(ev.time)}</p><p class="muted">Museo Abreu · Bávaro, Punta Cana</p></section>`;
-  return `<div class="wrap rsvp-page">${head}${replied}${form}<section class="section">${card}</section></div>`;
+      <p class="rsvp-head-date">${rsvpLongDate(d)}</p><p class="rsvp-head-time">${rsvpTime(ev.time)}</p></section>`;
+  return `<div class="wrap rsvp-page">${head}${replied}${form}${rsvpShare(ev)}<section class="section">${card}</section></div>`;
 }
 
 const rsvpEditing = new Set();
