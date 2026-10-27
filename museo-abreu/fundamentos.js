@@ -1,5 +1,5 @@
-// Fundamentos del Psico-Expresionismo (Oscar Abreu, 2026) in six editions (Spanish, English, French, Portuguese,
-// Italian, German): the second book sold in the app, digital only for now. #/fundamentos opens the visitor's
+// Fundamentos del Psico-Expresionismo (Oscar Abreu, 2026) in seven editions (Spanish, English, French, Portuguese,
+// Italian, German, Japanese): the second book sold in the app, digital only for now. #/fundamentos opens the visitor's
 // edition (the app's language, else the phone's, else English); #/fundamentos/<lang> is an edition's page (cover,
 // the author's own words from his note, contents, buy or request it); #/fundamentos/<lang>/<n> reads section n.
 // The free sample (sample-fund.js) is the note, the introduction and chapter 1; the rest comes from the server
@@ -45,13 +45,14 @@ function fuDefault() {
 const fuOwns = l => fx.get('books2', []).includes('fund-' + l) || (typeof isPro === 'function' && isPro());
 const fuCanRead = (l, n) => n < FUND_FREE || fuOwns(l);
 // The cover's two title lines from the edition's title ("FUNDAMENTOS" / "DEL PSICO-EXPRESIONISMO"), the second
-// set smaller when it is long.
-const fuCoverLines = l => { const t = fuEd(l).title.toUpperCase(), i = t.indexOf(' '); return [t.slice(0, i), t.slice(i + 1)]; };
-const fuCover = l => { const [a, b] = fuCoverLines(l); return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
+// set smaller when it is long. A title without spaces (Japanese) is one line, in the Japanese book typeface, upright.
+const FU_JA_SERIF = "'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, 'Noto Serif JP', serif";
+const fuCoverLines = l => { const t = fuEd(l).title.toUpperCase(), i = t.indexOf(' '); return i < 0 ? [t, ''] : [t.slice(0, i), t.slice(i + 1)]; };
+const fuCover = l => { const [a, b] = fuCoverLines(l), ja = l === 'ja', serif = ja ? FU_JA_SERIF : 'Cormorant Garamond, serif'; return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
   <rect y="360" width="400" height="240" fill="#16120f"/><rect x="28" y="384" width="56" height="2" fill="#c4a76c"/>
-  <text x="28" y="430" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="40" font-weight="600" letter-spacing="1.5">${a}</text>
-  <text x="28" y="466" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="${Math.min(25, Math.floor((344 / b.length - 1) / 0.61))}" font-weight="600" letter-spacing="1">${b}</text>
-  <text x="28" y="502" fill="#e9dfd0" font-family="Cormorant Garamond, serif" font-size="17" font-style="italic">${esc(fuEd(l).subtitle)}</text>
+  <text x="28" y="${b ? 430 : 448}" fill="#f6f1e9" font-family="${serif}" font-size="${ja ? Math.min(40, Math.floor(320 / a.length)) : 40}" font-weight="600" letter-spacing="1.5">${a}</text>
+  ${b ? `<text x="28" y="466" fill="#f6f1e9" font-family="${serif}" font-size="${Math.min(25, Math.floor((344 / b.length - 1) / 0.61))}" font-weight="600" letter-spacing="1">${b}</text>` : ''}
+  <text x="28" y="502" fill="#e9dfd0" font-family="${serif}" font-size="17" font-style="${ja ? 'normal' : 'italic'}">${esc(fuEd(l).subtitle)}</text>
   <text x="28" y="560" fill="#c4a76c" font-family="Work Sans, sans-serif" font-size="16" letter-spacing="4">OSCAR ABREU</text></svg>`; };
 
 // Buy on Whop once there is a price and a link; otherwise a request by WhatsApp. Digital only for now.
@@ -65,7 +66,7 @@ EXTRA_ACTIONS.fuBuy = el => checkout({ title: fuEd(el.dataset.l).title, sub: 'Os
   price: FUND_PRICE, link: whopLink('fund-' + el.dataset.l), provider: 'Whop' });
 
 function pageFund(l) {
-  const e = fuEd(l), note = e.sample.s0.find(b => b[0] === 'p' && /acompaña mi autobiografía|accompanies my autobiography/.test(b[1]));
+  const e = fuEd(l), note = e.sample.s0.find(b => b[0] === 'p' && /Ecce Homo/.test(b[1]));   // the paragraph that places it beside Ecce Homo
   const item = (s, i) => fuCanRead(l, i)
     ? `<li><a href="#/fundamentos/${l}/${i}"><span>${esc(s.title)}</span><span class="muted">${i < FUND_FREE ? t('free') : ''}</span></a></li>`
     : `<li><span><span>${esc(s.title)}</span><span>🔒</span></span></li>`;
@@ -78,7 +79,7 @@ function pageFund(l) {
       <div>
         <p class="eyebrow">${t('fuEyebrow')}</p>
         <h1 lang="${l}">${esc(e.title)}</h1>
-        <p lang="${l}" style="font-family:var(--serif);font-size:1.4rem;font-style:italic">${esc(e.subtitle)}</p>
+        <p lang="${l}" style="font-family:var(--serif);font-size:1.4rem;font-style:${l === 'ja' ? 'normal' : 'italic'}">${esc(e.subtitle)}</p>
         <p class="muted" style="margin:.3rem 0 1rem">Oscar Abreu · ${t('fuEdition', { lang: L(LANG_NAMES[l]) })}</p>
         <nav class="tabs fu-eds" aria-label="${t('fuEditions')}">${FUND_LANGS.map(x => `<a class="tab" href="#/fundamentos/${x}"${x === l ? ' aria-current="page"' : ''}>${L(LANG_NAMES[x])}</a>`).join('')}</nav>
         <p class="lead" style="margin-top:1rem">${t('fuLead')}</p>
@@ -89,7 +90,7 @@ function pageFund(l) {
         <p class="muted" style="margin-top:.6rem">${t('fuPro')} · <a href="#/pro">Pro</a></p>
       </div>
     </section>
-    ${note ? `<section class="section"><h2 class="h3">${t('fuWords')}</h2><figure class="quote"><blockquote lang="${l}">“${esc(note[1])}”</blockquote>
+    ${note ? `<section class="section"><h2 class="h3">${t('fuWords')}</h2><figure class="quote"><blockquote lang="${l}">${l === 'ja' ? `「${esc(note[1])}」` : `“${esc(note[1])}”`}</blockquote>
       <figcaption class="muted">— Oscar Abreu, ${esc(e.toc[0].title)}</figcaption></figure></section>` : ''}
     <section class="section"><h2>${t('contents')}</h2><ol class="toc fu-toc" lang="${l}">${toc}</ol></section>
     <section class="section"><details class="ed-credits"><summary>${t('fuCredits')}</summary>${e.credits.map(c => `<p lang="${l}">${esc(c)}</p>`).join('')}</details></section>

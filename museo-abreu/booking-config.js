@@ -47,6 +47,7 @@ var BOOKING = {
     'fund-pt': '', // Fundamentos do Psicoexpressionismo (Portuguese, digital): Whop link to come
     'fund-it': '', // Fondamenti del Psico-Espressionismo (Italian, digital): Whop link to come
     'fund-de': '', // Grundlagen des Psycho-Expressionismus (German, digital): Whop link to come
+    'fund-ja': '', // 心理表現主義の基礎 (Japanese, digital): Whop link to come
     'sponsor-25': '',
     'sponsor-50': '',
     'sponsor-100': '',
