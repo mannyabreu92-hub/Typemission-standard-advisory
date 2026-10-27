@@ -135,12 +135,11 @@ function dirPosterHero(ev) {
   return `<section class="dir-poster-hero">
     <img class="dir-paper" src="img/poster-paper-1024.jpg" srcset="img/poster-paper-640.jpg 640w, img/poster-paper-1024.jpg 1024w" sizes="100vw" alt="" fetchpriority="high">
     <div class="dir-poster-inner">
-      <h1 class="dir-p-title"><a href="${dirEventHref(ev)}">Ecce<br>Homo</a></h1>
+      <h1 class="dir-p-title"><a href="${dirEventHref(ev)}"><span class="dir-p-ecce">Ecce</span> <span class="dir-p-homo">Homo</span></a></h1>
       <figure class="dir-p-quote"><blockquote lang="${own ? lang : 'en'}" dir="ltr">“${esc(q.q)}”</blockquote></figure>
-      <hr class="dir-p-rule">
       <p class="dir-p-name">Oscar Abreu</p>
-      <p class="dir-p-date">${fmtDate(d, { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-      <p class="dir-p-time">${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}</p>
+      <p class="dir-p-date">${fmtDate(d, { day: 'numeric', month: 'long' })}</p>
+      <p class="dir-p-time">${d.slice(0, 4)} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}</p>
       <p class="dir-p-place">Museo Abreu</p>
       <p class="dir-p-town">Bávaro · Punta Cana</p>
       <p class="dir-p-count">${n === 0 ? t('today') : t('inNDays', { n })} · ${t('freeForPro')}</p>
