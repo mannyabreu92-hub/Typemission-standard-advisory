@@ -749,7 +749,9 @@ function artSVG(seed, label) {
 }
 
 function coverSVG(title, sub) {
-  return `<svg viewBox="0 0 400 600" role="img" aria-label="${title}">${artLayer(5, 0).replace('height="500"', 'height="600"')}${artLayer(5, 2)}
+  // The cover's painting by Oscar Abreu (img/ecce-homo-cover-800.jpg) above the title band.
+  return `<svg viewBox="0 0 400 600" role="img" aria-label="${title}"><rect width="400" height="600" fill="#16120f"/>
+    <image href="img/ecce-homo-cover-800.jpg" x="0" y="0" width="400" height="400" preserveAspectRatio="xMidYMid slice"/>
     <rect y="400" width="400" height="200" fill="#16120f"/>
     <text x="28" y="462" fill="#f6f1e9" font-family="Cormorant Garamond, serif" font-size="52" font-weight="600" letter-spacing="2">ECCE HOMO</text>
     <text x="28" y="500" fill="#e9dfd0" font-family="Cormorant Garamond, serif" font-size="24" font-style="italic">${sub}</text>
