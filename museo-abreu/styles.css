@@ -936,3 +936,5 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .btn.rsvp-send { width: 100%; min-height: 56px; font-size: 1.05rem; }
 .rsvp-choice input:checked + span { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .rsvp-choice input:checked + span::before { content: '✓  '; color: var(--champagne); }
+/* The poster's date: upright capitals-height figures instead of the italic. */
+.dir-p-date { font: 600 clamp(2.1rem, 9.4vw, 3.1rem)/1.1 'Cormorant Garamond', Georgia, serif; font-variant-numeric: lining-nums; letter-spacing: .04em; color: #8a2a1b; }

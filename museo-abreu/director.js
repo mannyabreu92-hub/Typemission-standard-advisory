@@ -131,9 +131,8 @@ function dirPosterHero(ev) {
       <p class="dir-p-time">${d.slice(0, 4)} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}</p>
       <p class="dir-p-place">Museo Abreu</p>
       <p class="dir-p-town">Bávaro · Punta Cana</p>
-      <p class="dir-p-count">${n === 0 ? t('today') : t('inNDays', { n })} · ${t('freeForPro')}</p>
+      <p class="dir-p-count">${n === 0 ? t('today') : t('inNDays', { n })}</p>
       <div class="btn-row dir-p-actions"><a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a>${dirAct(ev, 'btn primary').replace(`>${t('rsvp')}</a>`, ` aria-label="RSVP · ${esc(t('rsvp'))}">RSVP</a>`)}</div>
-      <div class="btn-row"><button class="btn dir-p-cal" data-action="evCal" data-id="${ev.id}">${t('addCal')}</button></div>
     </div>
   </section>`;
 }
