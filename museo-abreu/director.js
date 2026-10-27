@@ -77,24 +77,13 @@ const dirAct = (ev, cls = 'btn primary') => ev.tiers ? `<a class="${cls}" href="
   : !ev.price && typeof rsvpEvents === 'function' && rsvpEvents().some(e => e.id === ev.id) ? `<a class="${cls}" href="#/rsvp/${ev.id}">${t('rsvp')}</a>`
   : `<a class="${cls}" href="${dirEventHref(ev)}">${t('eventDetails')}</a>`;
 const dirWhen = ev => { const d = eventDate(ev); return ev.lastDay ? `${fmtDate(d, { day: 'numeric', month: 'long' })} – ${fmtDate(addDays(d, ev.lastDay), { day: 'numeric', month: 'long', year: 'numeric' })}` : `${fmtDate(d)} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}`; };
-// The upcoming events after the next one, as picture cards.
-function dirPosters() {
-  const next = nextAnnualEvent();
-  return `<div class="dir-posters">${sortedEvents().filter(ev => ev.annual && ev.id !== next.id).map(ev => { const d = eventDate(ev);
-    return `<article class="dir-poster"><a class="dir-poster-img" href="${dirEventHref(ev)}" tabindex="-1" aria-hidden="true"><img ${dirArt(ev, '(max-width: 760px) 100vw, 520px')} alt="" loading="lazy">
-      <span class="dir-poster-date"><strong>${Number(d.slice(8))}</strong><small>${fmtDate(d, { month: 'short' })}</small></span></a>
-      <div class="dir-poster-body"><p class="dir-poster-chips"><span class="chip vip">${t('vipEvent')}</span> <span class="status ok">${t('freeForPro')}</span></p>
-        <h3><a href="${dirEventHref(ev)}">${eventTitle(ev)}</a></h3><p class="muted">${dirWhen(ev)} · ${t('inNDays', { n: daysUntil(d) })}</p>
-        <div class="btn-row">${dirAct(ev)}<a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a></div></div></article>`; }).join('')}</div>`;
-}
-
 // The yearly events after the next one, as compact rows: date, title, a link to the event's page.
 const dirEventHref = ev => ev.tiers ? '#/gabangi' : `#/evento/${ev.id}`;
 function dirUpcoming() {
   const next = nextAnnualEvent();
   return sortedEvents().filter(ev => ev.annual && ev.id !== next.id).map(ev => { const d = eventDate(ev);
     return `<li><a href="${dirEventHref(ev)}"><span class="dir-date"><strong>${Number(d.slice(8))}</strong><small>${fmtDate(d, { month: 'short' })}</small></span>
-      <span><span class="dir-ev-title">${eventTitle(ev)}</span><span class="muted">${fmtDate(d)}</span></span><span class="arr" aria-hidden="true">›</span></a></li>`; }).join('');
+      <span><span class="dir-row-title">${eventTitle(ev)}</span><span class="muted">${fmtDate(d)}</span></span><span class="arr" aria-hidden="true">›</span></a></li>`; }).join('');
 }
 // Past events at the museum, newest first, in the timeline's own words; each opens its page where there is one.
 const DIR_PAST = [['2026', '#/gabangi'], ['2025', '#/gabangi/2025'], ['2024', '#/evento/anniversary'], ['2023', ''], ['2021', '#/evento/anniversary']];
@@ -143,7 +132,6 @@ function dirPosterHero(ev) {
       <p class="dir-p-place">Museo Abreu</p>
       <p class="dir-p-town">Bávaro · Punta Cana</p>
       <p class="dir-p-count">${n === 0 ? t('today') : t('inNDays', { n })} · ${t('freeForPro')}</p>
-      <hr class="dir-p-rule">
       <div class="btn-row dir-p-actions"><a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a>${dirAct(ev, 'btn primary').replace(`>${t('rsvp')}</a>`, ` aria-label="RSVP · ${esc(t('rsvp'))}">RSVP</a>`)}</div>
       <div class="btn-row"><button class="btn dir-p-cal" data-action="evCal" data-id="${ev.id}">${t('addCal')}</button></div>
     </div>
@@ -185,8 +173,24 @@ function pageHomeDirector() {
   return `
   ${hero}
   <div class="wrap">
+    <section class="section dir-book">
+      <a class="dir-book-cover" href="#/biblioteca" tabindex="-1" aria-hidden="true">${coverSVG(t('bookTitle'), t('bookSub'))}</a>
+      <div>
+        <p class="eyebrow">Oscar Abreu</p>
+        <h2 class="dir-book-title">${t('bookTitle')}</h2>
+        <p class="dir-book-sub">${t('bookSub')}</p>
+        <p>${t('synopsisText')}</p>
+        <div class="btn-row"><a class="btn primary" href="#/biblioteca">${t('readSample')}</a><a class="btn" href="#/tienda">${t('navShop')}</a></div>
+        <a class="dir-also" href="#/fundamentos/${fu}"><span class="eyebrow">${t('fuAlso')}</span> <span lang="${fu}">${esc(FUND_EDITIONS[fu].title)}</span> <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+    <section class="section dir-auction">
+      <div class="section-head"><h2>${t('navAuction')}</h2><a href="#/subasta">${t('shAllLots')}</a></div>
+      ${auLots().length ? `<div class="lots">${auLots().slice(0, 3).map(l => lotCard(l)).join('')}</div>`
+        : `<a class="card dir-card dir-au-soon" href="#/subasta"><p class="eyebrow">ART GABANGI · Auction & Awards</p><p>${t('auSoon')}</p><p class="dir-link">${t('shAllLots')} <span class="arr">→</span></p></a>`}
+    </section>
     <section class="section dir-upcoming"><div class="section-head"><h2>${t('hmUpcoming')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>
-      ${dirPosters()}${dirSubscribe()}
+      <ul class="dir-events">${dirUpcoming()}</ul>${dirSubscribe()}
       <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>
     </section>
     <section class="section dir-museum rv">
@@ -217,14 +221,6 @@ function pageHomeDirector() {
       </div>
     </section>
     ${typeof homeHighlights === 'function' ? homeHighlights().replace('<section class="section">', '<section class="section rv">') : ''}
-    <section class="section rv"><h2>${t('hmRead')}</h2>
-      <div class="grid two dir-books">
-        <a class="card shop-banner" href="#/biblioteca"><div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
-          <div><h3>${t('bookTitle')}</h3><p class="muted">${t('bookSub')}</p><p class="dir-link">${t('readSample')} <span class="arr">→</span></p></div></a>
-        <a class="card shop-banner" href="#/fundamentos/${fu}"><div class="cover">${fuCover(fu)}</div>
-          <div><h3 lang="${fu}">${esc(FUND_EDITIONS[fu].title)}</h3><p class="muted" lang="${fu}">${esc(FUND_EDITIONS[fu].subtitle)}</p><p class="dir-link">${t('readSample')} <span class="arr">→</span></p></div></a>
-      </div>
-    </section>
     <section class="section rv"><h2>${t('hmCollect')}</h2>
       <div class="grid two">
         <a class="card dir-card" href="#/coleccion"><p class="eyebrow">${t('ciEyebrow')}</p><h3>${t('ciTitle')}</h3><p class="muted">${t('ciViewingTitle')}</p></a>

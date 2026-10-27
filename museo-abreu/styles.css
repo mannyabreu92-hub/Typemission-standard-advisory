@@ -813,11 +813,11 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .dir-sub { font-size: 1.35rem; margin: 1.8rem 0 .6rem; }
 .dir-events { list-style: none; border-top: 1px solid var(--line); }
 .dir-events li > a, .dir-events li > div { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr) auto; gap: .9rem; align-items: center; padding: .85rem 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
-.dir-events li > a:hover .dir-ev-title { text-decoration: underline; }
+.dir-events li > a:hover .dir-row-title { text-decoration: underline; }
 .dir-date { display: grid; justify-items: center; line-height: 1; }
 .dir-date strong { font-family: var(--serif); font-size: 1.6rem; color: var(--gold-ink); }
 .dir-date small { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; margin-top: .2rem; color: var(--ink-3); }
-.dir-ev-title { display: block; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
+.dir-row-title { display: block; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
 .dir-events .arr { color: var(--gold-ink); font-size: 1.3rem; }
 .dir-past li span:nth-child(2) { font-size: .95rem; }
 .dir-sub-first { margin-top: .4rem; }
@@ -913,3 +913,16 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .dir-p-place { font-weight: 700; margin-top: 1.1rem !important; }
 :root[lang="ar"] .dir-poster-hero .dir-p-title { line-height: 1; }
 .dir-p-title { font-size: clamp(3.2rem, 14.6vw, 7.4rem); }
+/* After the poster: the book, then the auction. */
+.dir-book { display: grid; gap: 1.6rem; align-items: center; }
+.dir-book-cover { display: block; max-width: 300px; width: 70%; margin: 0 auto; box-shadow: 0 30px 60px -30px rgba(22, 18, 15, .55); }
+@media (min-width: 760px) { .dir-book { grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); } .dir-book-cover { width: 100%; } }
+.dir-book-title { font-size: clamp(2.6rem, 9vw, 4rem); margin-bottom: .1rem; }
+.dir-book-sub { font: italic 400 1.4rem/1.3 var(--serif); color: var(--ink-2); margin-bottom: .8rem; }
+.dir-also { display: inline-flex; flex-wrap: wrap; gap: .5rem; align-items: baseline; margin-top: 1.2rem; color: var(--ink); text-decoration: none; font-family: var(--serif); font-size: 1.15rem; }
+.dir-also .eyebrow { margin: 0; }
+.dir-also:hover span[lang] { text-decoration: underline; }
+.dir-au-soon { display: block; background: var(--ink); color: var(--paper); text-decoration: none; padding: 1.4rem; box-shadow: inset 0 0 0 1px rgba(166, 138, 82, .55); }
+.dir-au-soon .eyebrow { color: var(--champagne); }
+.dir-au-soon p { color: #e9dfd0; }
+.dir-au-soon .dir-link { color: var(--champagne); }
