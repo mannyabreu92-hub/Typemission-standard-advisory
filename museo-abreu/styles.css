@@ -894,3 +894,11 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 :root[lang="ru"] .dir-p-label { letter-spacing: .3em; margin-inline-end: -.3em; }
 .dir-p-title, .dir-p-name, .dir-p-place, .dir-p-town, .dir-p-quote blockquote:lang(en) { font-family: 'Cormorant Garamond', Georgia, serif; }
 :root[lang="ar"] .dir-poster-hero .dir-p-title { line-height: .84; font-family: "Cormorant Garamond", Georgia, serif; }
+/* Poster fixes: Oscar Abreu and the date in bold; See details on the left, RSVP on the right. */
+.dir-p-quote { margin-top: .4rem; }
+.dir-p-name { font-weight: 700; }
+.dir-p-date { font-weight: 700; font-size: 1.12rem; letter-spacing: .14em; color: #14110e; }
+.dir-p-actions { flex-wrap: nowrap; }
+.dir-p-actions .btn { flex: 1 1 0; max-width: 15rem; min-height: 52px; padding-inline: .9rem; }
+.dir-p-cal { background: transparent !important; border-color: transparent !important; text-decoration: underline; text-underline-offset: .2em; min-height: 40px; }
+.dir-p-time { margin-top: .2rem !important; font-family: var(--serif); font-size: 1rem; letter-spacing: .14em; text-transform: uppercase; }

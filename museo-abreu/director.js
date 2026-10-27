@@ -131,25 +131,22 @@ function dirPosterHero(ev) {
   const d = eventDate(ev), today = todayPC();
   const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU, it: DAILY_QUOTES_IT }[lang], list = own || DAILY_QUOTES;
   const q = list[Math.floor(Date.parse(today) / 864e5) % list.length];
-  const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
   const n = daysUntil(d);
   return `<section class="dir-poster-hero">
     <img class="dir-paper" src="img/poster-paper-1024.jpg" srcset="img/poster-paper-640.jpg 640w, img/poster-paper-1024.jpg 1024w" sizes="100vw" alt="" fetchpriority="high">
     <div class="dir-poster-inner">
-      <p class="dir-p-kicker">${t('nextAnnual')}</p>
       <h1 class="dir-p-title"><a href="${dirEventHref(ev)}">Ecce<br>Homo</a></h1>
-      <p class="dir-p-label">${t('quoteOfDay')}</p>
-      <figure class="dir-p-quote"><blockquote lang="${own ? lang : 'en'}" dir="ltr">“${esc(q.q)}”</blockquote>
-        <figcaption><cite>Ecce Homo</cite>, ${where}${lang !== 'en' && !own ? ` · ${t('englishEdition')}` : ''}</figcaption></figure>
+      <figure class="dir-p-quote"><blockquote lang="${own ? lang : 'en'}" dir="ltr">“${esc(q.q)}”</blockquote></figure>
       <hr class="dir-p-rule">
       <p class="dir-p-name">Oscar Abreu</p>
-      <p class="dir-p-date">${fmtDate(d, { day: 'numeric', month: 'long', year: 'numeric' })} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}</p>
+      <p class="dir-p-date">${fmtDate(d, { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+      <p class="dir-p-time">${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}</p>
       <p class="dir-p-place">Museo Abreu</p>
       <p class="dir-p-town">Bávaro · Punta Cana</p>
       <p class="dir-p-count">${n === 0 ? t('today') : t('inNDays', { n })} · ${t('freeForPro')}</p>
       <hr class="dir-p-rule">
-      <div class="btn-row">${dirAct(ev, 'btn primary dir-big')}<a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a>
-        <button class="btn" data-action="evCal" data-id="${ev.id}">${t('addCal')}</button></div>
+      <div class="btn-row dir-p-actions"><a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a>${dirAct(ev, 'btn primary').replace(`>${t('rsvp')}</a>`, ` aria-label="RSVP · ${esc(t('rsvp'))}">RSVP</a>`)}</div>
+      <div class="btn-row"><button class="btn dir-p-cal" data-action="evCal" data-id="${ev.id}">${t('addCal')}</button></div>
     </div>
   </section>`;
 }
