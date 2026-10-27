@@ -113,7 +113,7 @@ function catalogueText() {
   const vis = ['address', 'hours', 'admission', 'accessibility', 'arrival'].map(k => [k, L(V[k])]).filter(x => x[1]);
   out.push('VISITOR INFO: ' + (vis.length ? vis.map(([k, v]) => `${k}: ${v}`).join(' · ') : 'Museo Abreu, Bávaro, Punta Cana, Dominican Republic. Address, hours and walk-in admission are NOT yet published: do not invent them; offer WhatsApp.'));
   out.push(`CONTACT: WhatsApp +1 (809) 840-9588 · info@oscarabreu.com · Instagram @oscarabreu_artist.`);
-  out.push(`SITE PAGES (link as ${SITE_URL()}/#/<route>): artista (Oscar Abreu), psico (Psycho-Expressionism), visita (Visit & VIP Tour), clases, eventos, subasta, tienda (shop), coleccion (Collectors' Circle), biblioteca (library/book sample), fundamentos (second book), pro, manifiestos, pinturas, dibujos, escultura, fotos, resenas (reviews), prensa, kit (press kit), exposiciones, gabangi, galeria (Abreu Fine Art), contacto.`);
+  out.push(`SITE PAGES (link as ${SITE_URL()}/#/<route>): artista (Oscar Abreu), psico (Psycho-Expressionism), visita (Visit & VIP Tour), clases, eventos, subasta, tienda (shop), coleccion (Collectors' Circle), biblioteca (library/book sample), fundamentos (second book), membresia (Membership: Friend, Pro, Collectors’ Circle), pro, manifiestos, pinturas, dibujos, escultura, fotos, resenas (reviews), prensa, kit (press kit), exposiciones, gabangi, galeria (Abreu Fine Art), contacto.`);
   return out.join('\n\n');
 }
 
