@@ -831,6 +831,8 @@ I18N.de = {
   "mbCirclePromise": "Mit dem Werk leben",
   "mbCompare": "Kostenlos und Pro vergleichen",
   "navMembership": "Mitgliedschaft",
+  "hmUpcoming": "Kommende Veranstaltungen",
+  "hmPast": "Vergangene Veranstaltungen",
 };
 TR.de = {
   "2019": "2019",

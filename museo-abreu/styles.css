@@ -805,3 +805,18 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .rv-on .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s ease-out, transform .7s ease-out; }
 .rv-on .rv.rv-in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .dir-hero .hero-art img { animation: none; } .rv-on .rv { opacity: 1; transform: none; } }
+/* Events first: the next event inside the hero, then upcoming and past events as rows. */
+.dir-hero { min-height: min(84svh, 820px); }
+.dir-next { display: grid; gap: .15rem; margin: 1.2rem 0 .2rem; padding: .8rem 1rem; max-width: 34rem; color: var(--paper); text-decoration: none; border-inline-start: 2px solid var(--champagne); background: rgba(22, 18, 15, .45); }
+.dir-next-title { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; line-height: 1.15; }
+.dir-next:hover .dir-next-title { text-decoration: underline; }
+.dir-sub { font-size: 1.35rem; margin: 1.8rem 0 .6rem; }
+.dir-events { list-style: none; border-top: 1px solid var(--line); }
+.dir-events li > a, .dir-events li > div { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr) auto; gap: .9rem; align-items: center; padding: .85rem 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.dir-events li > a:hover .dir-ev-title { text-decoration: underline; }
+.dir-date { display: grid; justify-items: center; line-height: 1; }
+.dir-date strong { font-family: var(--serif); font-size: 1.6rem; color: var(--gold-ink); }
+.dir-date small { font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; margin-top: .2rem; color: var(--ink-3); }
+.dir-ev-title { display: block; font-family: var(--serif); font-size: 1.25rem; font-weight: 600; line-height: 1.2; }
+.dir-events .arr { color: var(--gold-ink); font-size: 1.3rem; }
+.dir-past li span:nth-child(2) { font-size: .95rem; }

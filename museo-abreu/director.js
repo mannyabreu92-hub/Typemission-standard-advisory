@@ -19,6 +19,7 @@ Object.assign(I18N.es, {
   peLayers: 'Levante las capas', peLive: 'Véalo en vivo: eventos en el museo', peClosing: 'El libro termina con los doce fundamentos del movimiento.', peOpen: 'Abrir el libro',
   mbTitle: 'Membresía', mbLead: 'Tres maneras de estar cerca de la obra de Oscar Abreu, de la primera visita a una colección propia.',
   mbFriend: 'Amigo', mbFree: 'Gratis', mbFriendPromise: 'Sea el primero en saberlo', mbFriendB1: 'Noticias de inauguraciones, eventos y libros', mbFriendCta: 'Inscribirme',
+  hmUpcoming: 'Próximos eventos', hmPast: 'Eventos anteriores',
   mbProPromise: 'Leer, asistir, volver', mbCirclePromise: 'Vivir con la obra', mbCompare: 'Comparar gratis y Pro', navMembership: 'Membresía',
 });
 Object.assign(I18N.en, {
@@ -34,6 +35,7 @@ Object.assign(I18N.en, {
   peLayers: 'Lift the layers', peLive: 'See it live: events at the museum', peClosing: 'The book closes with the twelve foundations of the movement.', peOpen: 'Open the book',
   mbTitle: 'Membership', mbLead: 'Three ways to stay close to the work of Oscar Abreu, from the first visit to a collection of your own.',
   mbFriend: 'Friend', mbFree: 'Free', mbFriendPromise: 'Be the first to know', mbFriendB1: 'News of openings, events and books', mbFriendCta: 'Sign up',
+  hmUpcoming: 'Upcoming events', hmPast: 'Past events',
   mbProPromise: 'Read, attend, return', mbCirclePromise: 'Live with the work', mbCompare: 'Compare free and Pro', navMembership: 'Membership',
 });
 Object.assign(I18N.fr, {
@@ -49,6 +51,7 @@ Object.assign(I18N.fr, {
   peLayers: 'Soulever les couches', peLive: 'Le vivre : les événements du musée', peClosing: 'Le livre se termine par les douze fondements du mouvement.', peOpen: 'Ouvrir le livre',
   mbTitle: 'Adhésion', mbLead: 'Trois façons de rester proche de l’œuvre d’Oscar Abreu, de la première visite à une collection personnelle.',
   mbFriend: 'Ami', mbFree: 'Gratuit', mbFriendPromise: 'Être le premier informé', mbFriendB1: 'Nouvelles des vernissages, événements et livres', mbFriendCta: 'M’inscrire',
+  hmUpcoming: 'Événements à venir', hmPast: 'Événements passés',
   mbProPromise: 'Lire, venir, revenir', mbCirclePromise: 'Vivre avec l’œuvre', mbCompare: 'Comparer gratuit et Pro', navMembership: 'Adhésion',
 });
 
@@ -60,6 +63,27 @@ const dirBlockquote = (sec, ...idx) => `<figure class="dir-quote"><blockquote la
 const dirYears = years => `<ul class="dir-facts">${years.map(y => TIMELINE.find(e => String(e.y) === String(y))).filter(Boolean)
   .map(e => `<li><strong>${e.y}</strong><span>${esc(L(e))}</span></li>`).join('')}</ul>`;
 
+/* ---------- Events first ---------- */
+
+// The yearly events after the next one, as compact rows: date, title, a link to the event's page.
+const dirEventHref = ev => ev.tiers ? '#/gabangi' : `#/evento/${ev.id}`;
+function dirUpcoming() {
+  const next = nextAnnualEvent();
+  return sortedEvents().filter(ev => ev.annual && ev.id !== next.id).map(ev => { const d = eventDate(ev);
+    return `<li><a href="${dirEventHref(ev)}"><span class="dir-date"><strong>${Number(d.slice(8))}</strong><small>${fmtDate(d, { month: 'short' })}</small></span>
+      <span><span class="dir-ev-title">${eventTitle(ev)}</span><span class="muted">${fmtDate(d)}</span></span><span class="arr" aria-hidden="true">›</span></a></li>`; }).join('');
+}
+// Past events at the museum, newest first, in the timeline's own words; each opens its page where there is one.
+const DIR_PAST = [['2026', '#/gabangi'], ['2025', '#/gabangi/2025'], ['2024', '#/evento/anniversary'], ['2023', ''], ['2021', '#/evento/anniversary']];
+function dirPast() {
+  return DIR_PAST.map(([y, href]) => { const e = TIMELINE.find(x => String(x.y) === y); if (!e) return '';
+    const inner = `<span class="dir-date"><strong>${y}</strong></span><span>${esc(L(e))}</span>${href ? '<span class="arr" aria-hidden="true">›</span>' : ''}`;
+    return `<li>${href ? `<a href="${href}">${inner}</a>` : `<div>${inner}</div>`}</li>`; }).join('');
+}
+const dirEventsBlock = (promo, upcoming = true) => `${promo}
+  ${upcoming ? `<h3 class="dir-sub">${t('hmUpcoming')}</h3><ul class="dir-events">${dirUpcoming()}</ul>` : ''}
+  <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>`;
+
 /* ---------- Home ---------- */
 
 function pageHomeDirector() {
@@ -70,6 +94,9 @@ function pageHomeDirector() {
   const ed = dirEdLang(), parts = [...new Set(FUND_EDITIONS[ed].toc.map(s => s.part).filter(Boolean))].map(dirPartName);
   const fu = typeof fuDefault === 'function' ? fuDefault() : ed;
   const visit = ['address', 'hours', 'admission'].map(k => visitInfo(k)).filter(Boolean);
+  // The hero leads with the next event and its own action (RSVP for the museum's invitations, else tickets).
+  const next = nextAnnualEvent(), nd = eventDate(next);
+  const act = (promo.match(/<a class="btn primary"[^>]*>[^<]*<\/a>/) || [`<a class="btn primary" href="${dirEventHref(next)}">${t('eventDetails')}</a>`])[0];
   return `
   <section class="hero dir-hero">
     <div class="hero-art"><img src="img/escaping-being.jpg" srcset="img/escaping-being-800.jpg 800w, img/escaping-being.jpg 1400w" sizes="100vw" alt="" fetchpriority="high"></div>
@@ -77,15 +104,17 @@ function pageHomeDirector() {
       <p class="eyebrow">Museo Abreu · Bávaro, Punta Cana</p>
       <h1 class="dir-headline">${t('hmHeadline')}</h1>
       <p class="lead">${t('hmLead')}</p>
+      <a class="dir-next" href="${dirEventHref(next)}"><span class="eyebrow">${t('nextAnnual')}</span>
+        <span class="dir-next-title">${eventTitle(next)}</span><span>${fmtDate(nd)} · ${daysUntil(nd) === 0 ? t('today') : t('inNDays', { n: daysUntil(nd) })}</span></a>
       <div class="btn-row">
-        <a class="btn primary" href="#/visita">${t('hmCtaVisit')}</a>
+        ${act}
         <a class="btn" href="#/eventos">${t('hmCtaEvents')}</a>
         <a class="btn" href="#/psico">${t('hmCtaPsico')}</a>
       </div>
     </div>
   </section>
   <div class="wrap">
-    ${promo ? `<section class="section rv"><div class="section-head"><h2>${t('hmNow')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>${promo}</section>` : ''}
+    <section class="section"><div class="section-head"><h2>${t('hmNow')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>${dirEventsBlock(promo)}</section>
     <section class="section dir-founder rv">
       <img class="dir-portrait" src="${CONTACT.photo}" alt="Oscar Abreu" loading="lazy">
       <div>
@@ -207,6 +236,10 @@ function pageMembership() {
 /* ---------- Wiring ---------- */
 
 Object.assign(EXTRA_ROUTES, { membresia: pageMembership });
+{
+  const events = EXTRA_ROUTES.eventos;
+  EXTRA_ROUTES.eventos = () => events().replace(/<\/div>\s*$/, `<section class="section"><h2>${t('hmPast')}</h2><ul class="dir-events dir-past">${dirPast()}</ul></section></div>`);
+}
 Object.assign(ROUTE_SECTION, { pro: 'membresia' });
 (window.APP_HOOKS ||= []).push(() => {
   pageHome = pageHomeDirector; routes[''] = pageHome;

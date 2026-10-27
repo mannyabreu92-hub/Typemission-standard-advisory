@@ -831,6 +831,8 @@ I18N.ar = {
   "mbCirclePromise": "عِش مع العمل الفني",
   "mbCompare": "قارن بين المجاني وPro",
   "navMembership": "العضوية",
+  "hmUpcoming": "الفعاليات القادمة",
+  "hmPast": "فعاليات سابقة",
 };
 TR.ar = {
   "2019": "2019",

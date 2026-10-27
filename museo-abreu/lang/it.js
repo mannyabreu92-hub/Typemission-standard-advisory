@@ -831,6 +831,8 @@ I18N.it = {
   "mbCirclePromise": "Vivere con l’opera",
   "mbCompare": "Confronta gratis e Pro",
   "navMembership": "Membership",
+  "hmUpcoming": "Prossimi eventi",
+  "hmPast": "Eventi passati",
 };
 TR.it = {
   "2019": "2019",

@@ -32,6 +32,7 @@
   .ma-fab{position:fixed;inset-inline-end:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:.5rem;background:var(--ink,#16120f);color:var(--paper,#f6f1e9);border:0;border-radius:999px;padding:.7rem 1.05rem;font:500 .9rem var(--sans,'Work Sans',system-ui,sans-serif);box-shadow:0 10px 30px rgba(22,18,15,.25);cursor:pointer}
   .ma-fab:hover{background:#2a231d}.ma-fab svg{width:18px;height:18px}
   @media(min-width:900px){.ma-fab{bottom:24px}}
+  @media(max-width:899px){.ma-fab{padding:.8rem}.ma-fab-t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
   .ma-panel{position:fixed;inset-inline-end:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:81;width:min(400px,calc(100vw - 32px));height:min(620px,calc(100vh - 120px));display:none;flex-direction:column;background:var(--card,#fffdf9);color:var(--ink,#16120f);border:1px solid var(--line,rgba(22,18,15,.14));border-radius:var(--radius,14px);box-shadow:0 24px 60px rgba(22,18,15,.28);overflow:hidden;font-family:var(--sans,'Work Sans',system-ui,sans-serif)}
   @media(min-width:900px){.ma-panel{bottom:24px}}
   .ma-panel.on{display:flex}

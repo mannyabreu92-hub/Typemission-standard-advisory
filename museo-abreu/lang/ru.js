@@ -832,6 +832,8 @@ I18N.ru = {
   "mbCirclePromise": "Жить рядом с творчеством",
   "mbCompare": "Сравнить бесплатный и Pro",
   "navMembership": "Членство",
+  "hmUpcoming": "Ближайшие события",
+  "hmPast": "Прошедшие события",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",
