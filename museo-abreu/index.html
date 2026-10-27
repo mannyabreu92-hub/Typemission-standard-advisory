@@ -26,7 +26,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<link rel="preload" as="image" href="img/hero-1000.jpg" imagesrcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" imagesizes="100vw" fetchpriority="high">
 </head>
 <body>
 <a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
@@ -65,9 +64,10 @@
 
 <main id="main" tabindex="-1"></main>
 <script>
-  // The home page's opening image paints at once, before the app's scripts arrive; the app then draws the page over it.
-  if (!window.SEO_ROUTE && !/^#\/./.test(location.hash)) document.getElementById('main').innerHTML =
-    '<section class="hero dir-hero" aria-hidden="true"><div class="hero-art"><img src="img/hero-1000.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" sizes="100vw" alt="" fetchpriority="high"></div><div class="hero-inner"></div></section>';
+  // The home page's opening screen paints at once, before the app's scripts arrive; the app then draws the page over it
+  // and keeps the same image. Until the launch of Ecce Homo (17 November 2026, Punta Cana) it is that poster's paper.
+  if (!window.SEO_ROUTE && !/^#\/./.test(location.hash) && Date.now() < Date.parse('2026-11-18T04:00:00Z')) document.getElementById('main').innerHTML =
+    '<section class="dir-poster-hero" aria-hidden="true"><img class="dir-paper" src="img/poster-paper-1024.jpg" srcset="img/poster-paper-640.jpg 640w, img/poster-paper-1024.jpg 1024w" sizes="100vw" alt="" fetchpriority="high"></section>';
 </script>
 
 <nav class="tabbar" aria-label="Principal (móvil)">

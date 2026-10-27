@@ -123,6 +123,37 @@ const dirEventsBlock = (promo, upcoming = true) => `${promo}
   ${upcoming ? `<h3 class="dir-sub${promo ? '' : ' dir-sub-first'}">${t('hmUpcoming')}</h3><ul class="dir-events">${dirUpcoming()}</ul>${dirSubscribe()}` : ''}
   <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>`;
 
+/* ---------- The Ecce Homo poster ---------- */
+
+// The opening screen for the launch of Ecce Homo, set like the museum's poster: the title in large capitals,
+// the book's phrase of the day (the visitor's edition, else the English one), Oscar Abreu, date and place, RSVP.
+function dirPosterHero(ev) {
+  const d = eventDate(ev), today = todayPC();
+  const own = { es: DAILY_QUOTES_ES, fr: DAILY_QUOTES_FR, de: DAILY_QUOTES_DE, ru: DAILY_QUOTES_RU, it: DAILY_QUOTES_IT }[lang], list = own || DAILY_QUOTES;
+  const q = list[Math.floor(Date.parse(today) / 864e5) % list.length];
+  const where = q.ch ? t('chapterN', { n: TOC_EN.nums[q.ch - 1] }) : L(CHAPTERS[0].title);
+  const n = daysUntil(d);
+  return `<section class="dir-poster-hero">
+    <img class="dir-paper" src="img/poster-paper-1024.jpg" srcset="img/poster-paper-640.jpg 640w, img/poster-paper-1024.jpg 1024w" sizes="100vw" alt="" fetchpriority="high">
+    <div class="dir-poster-inner">
+      <p class="dir-p-kicker">${t('nextAnnual')}</p>
+      <h1 class="dir-p-title"><a href="${dirEventHref(ev)}">Ecce<br>Homo</a></h1>
+      <p class="dir-p-label">${t('quoteOfDay')}</p>
+      <figure class="dir-p-quote"><blockquote lang="${own ? lang : 'en'}" dir="ltr">“${esc(q.q)}”</blockquote>
+        <figcaption><cite>Ecce Homo</cite>, ${where}${lang !== 'en' && !own ? ` · ${t('englishEdition')}` : ''}</figcaption></figure>
+      <hr class="dir-p-rule">
+      <p class="dir-p-name">Oscar Abreu</p>
+      <p class="dir-p-date">${fmtDate(d, { day: 'numeric', month: 'long', year: 'numeric' })} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}</p>
+      <p class="dir-p-place">Museo Abreu</p>
+      <p class="dir-p-town">Bávaro · Punta Cana</p>
+      <p class="dir-p-count">${n === 0 ? t('today') : t('inNDays', { n })} · ${t('freeForPro')}</p>
+      <hr class="dir-p-rule">
+      <div class="btn-row">${dirAct(ev, 'btn primary dir-big')}<a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a>
+        <button class="btn" data-action="evCal" data-id="${ev.id}">${t('addCal')}</button></div>
+    </div>
+  </section>`;
+}
+
 /* ---------- Home ---------- */
 
 function pageHomeDirector() {
@@ -137,7 +168,8 @@ function pageHomeDirector() {
   const next = nextAnnualEvent(), nd = eventDate(next);
   const inv = next.invitation && next.invitation[nd.slice(0, 4)];
   setTimeout(() => { tickCountdowns(); clearInterval(holdTimer); holdTimer = setInterval(tickCountdowns, 1000); }, 0);
-  return `
+  // The launch of Ecce Homo opens as its poster (ink on paper, the book's phrase of the day); other events on their picture.
+  const hero = next.id === 'anniversary' && inv ? dirPosterHero(next) : `
   <section class="hero dir-hero dir-ev-hero">
     <div class="hero-art"><img ${dirArt(next, '100vw')} alt="" fetchpriority="high"></div>
     <div class="hero-inner">
@@ -153,7 +185,9 @@ function pageHomeDirector() {
         <button class="btn" data-action="evCal" data-id="${next.id}">${t('addCal')}</button>
       </div>
     </div>
-  </section>
+  </section>`;
+  return `
+  ${hero}
   <div class="wrap">
     <section class="section dir-upcoming"><div class="section-head"><h2>${t('hmUpcoming')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>
       ${dirPosters()}${dirSubscribe()}
@@ -170,7 +204,7 @@ function pageHomeDirector() {
       <div>
         <p class="eyebrow">${t('hmFounder')}</p><h2>Oscar Abreu</h2>
         ${dirYears([1978, 1994, 2021])}
-        ${quoteOfTheDay().replace('class="hero-quote"', 'class="dir-quote"')}
+        ${dirBlockquote('s2', 15, 16)}
         <div class="btn-row"><a class="btn primary" href="#/artista">${t('hmFounderCta')}</a></div>
       </div>
     </section>
@@ -330,9 +364,9 @@ document.addEventListener('click', e => {
 // The opening image painted by index.html before the scripts arrived is kept when the app draws the home page,
 // so it is not loaded and painted a second time.
 {
-  const shell = document.querySelector('#main .dir-hero .hero-art img');
+  const shell = document.querySelector('#main .dir-hero .hero-art img, #main .dir-paper');
   if (shell) new MutationObserver((_, obs) => {
-    const img = document.querySelector('#main .dir-hero .hero-art img');
+    const img = document.querySelector('#main .dir-hero .hero-art img, #main .dir-paper');
     if (img && img !== shell) { if (img.getAttribute('src') === shell.getAttribute('src')) img.replaceWith(shell); obs.disconnect(); }
   }).observe(document.getElementById('main'), { childList: true });
 }

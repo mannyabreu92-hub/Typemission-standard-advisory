@@ -867,3 +867,30 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 /* The museum, after the events */
 .dir-museum-title { font-size: clamp(2.2rem, 7vw, 3.6rem); max-width: 16ch; text-wrap: balance; }
 .dir-ev-title-2 { display: block; font-size: .56em; line-height: 1.1; margin-top: .25em; color: #f1e7d6; }
+/* The Ecce Homo poster: ink on paper, the title in large capitals, everything centred. */
+.dir-poster-hero { position: relative; overflow: hidden; background: #efe7d8; color: #14110e; min-height: min(100svh, 980px); display: grid; place-items: center; text-align: center; }
+.dir-paper { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dir-poster-inner { position: relative; padding: 3.2rem 28px 3rem; max-width: 760px; width: 100%; }
+.dir-poster-hero p { margin: 0; }
+.dir-p-kicker, .dir-p-label, .dir-p-name, .dir-p-date, .dir-p-place { font-family: var(--serif); text-transform: uppercase; letter-spacing: .32em; }
+.dir-p-kicker { font-size: .78rem; font-weight: 600; color: #4a3f34; }
+.dir-p-title { font: 600 clamp(4.6rem, 26vw, 10.5rem)/.84 var(--serif); text-transform: uppercase; letter-spacing: -.015em; margin: 1.6rem 0 1.4rem; color: #14110e; }
+.dir-p-title a { color: inherit; text-decoration: none; }
+.dir-p-label { font-size: clamp(1.15rem, 5vw, 1.6rem); letter-spacing: .5em; margin-inline-end: -.5em; }
+.dir-p-quote { margin: 1rem auto 0; max-width: 32ch; }
+.dir-p-quote blockquote { font: italic 400 clamp(1.25rem, 5.2vw, 1.65rem)/1.35 var(--serif); text-wrap: balance; }
+.dir-p-quote figcaption { margin-top: .55rem; font-size: .82rem; color: #4a3f34; }
+.dir-p-rule { width: 9rem; height: 3px; border: 0; margin: 1.8rem auto; background: radial-gradient(ellipse at center, #14110e 0 45%, transparent 72%); }
+.dir-p-name { font-size: clamp(1.35rem, 6.2vw, 2rem); letter-spacing: .28em; margin-inline-end: -.28em; }
+.dir-p-date { margin-top: 1.4rem !important; font-size: .95rem; letter-spacing: .18em; }
+.dir-p-place { margin-top: .4rem !important; font-size: clamp(1.15rem, 5vw, 1.5rem); letter-spacing: .26em; }
+.dir-p-town { margin-top: .3rem !important; font-family: var(--serif); font-size: 1rem; letter-spacing: .12em; }
+.dir-p-count { margin-top: 1rem !important; font-size: .82rem; letter-spacing: .08em; font-weight: 600; color: #4a3f34; }
+.dir-poster-hero .btn-row { justify-content: center; }
+.dir-poster-hero .btn { border-color: #14110e; color: #14110e; background: rgba(239, 231, 216, .6); }
+.dir-poster-hero .btn.primary { background: #14110e; color: #f6f1e9; }
+.dir-poster-hero .btn:not(.primary):hover { background: rgba(20, 17, 14, .06); }
+:root[lang="ar"] .dir-p-kicker, :root[lang="ar"] .dir-p-label, :root[lang="ar"] .dir-p-date { letter-spacing: 0; }
+:root[lang="ru"] .dir-p-label { letter-spacing: .3em; margin-inline-end: -.3em; }
+.dir-p-title, .dir-p-name, .dir-p-place, .dir-p-town, .dir-p-quote blockquote:lang(en) { font-family: 'Cormorant Garamond', Georgia, serif; }
+:root[lang="ar"] .dir-poster-hero .dir-p-title { line-height: .84; font-family: "Cormorant Garamond", Georgia, serif; }
