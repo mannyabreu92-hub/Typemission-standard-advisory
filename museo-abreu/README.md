@@ -498,3 +498,15 @@ Vercel Web Analytics (no cookies, no consent banner). Turn it on once in the Ver
 `index.html` shell · `booking-config.js` (WhatsApp, Bókun links, live mode) · `features.js` (classes, events, Collectors' Circle, Pro, daily reading) · `manifestos.js` (manifestos 3–23: titles and images) · `manifestos-text.js` (their text, loaded on demand) · `content.js` (galleries, manifestos, ART GABANGI) · `styles.css` · `i18n.js` (ES/EN/FR strings) · `lang/` (DE/IT/AR, loaded on demand) · `sample-en.js` (book sample + TOC) · `data.js` (experiences, schedule,
 works, editions, timeline, quotes, placeholder art) · `app.js` (router, pages, booking, reader) · `sw.js` (offline) ·
 `manifest.webmanifest` · `qrcode.js` (MIT, Kazuhiko Arase).
+
+## AI agents (Claude)
+
+A "Museum assistant" chat button (`agent-widget.js`) with three agents served by `api/agent.js`:
+the **Guide** (artist, Psycho-Expressionism, works, book), the **Booking concierge** (tours and classes, slots by
+guide language, booking requests) and **Shop & collect** (book editions and Pro via the Whop links in
+`booking-config.js`; Collectors' Circle leads). They read `data.js`, `features.js`, `booking-config.js` and
+`auction-config.js` directly, so they follow any change to the catalogue. Booking requests and collector leads are
+saved through `api/contact.js`, so they appear under Messages in the dashboard.
+
+Setup: add `ANTHROPIC_API_KEY` in Vercel → Settings → Environment Variables (optional `ANTHROPIC_MODEL`, default
+`claude-sonnet-5-5`), then redeploy. Open an agent from any link: `<a href="#" data-agent="concierge">…</a>`.
