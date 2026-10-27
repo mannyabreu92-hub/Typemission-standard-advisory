@@ -14,6 +14,9 @@ const LAZY_LANGS = ['de', 'it', 'ar', 'ru'];
 const TR = {};
 const browserLang = (navigator.language || 'es').slice(0, 2).toLowerCase();
 let lang = store.get('lang', LANGS.includes(browserLang) ? browserLang : 'en');
+// A link with ?lang= (search results, the sitemap) opens in that language.
+const urlLang = new URLSearchParams(location.search).get('lang');
+if (LANGS.includes(urlLang)) lang = urlLang;
 if (!LANGS.includes(lang)) lang = 'es';
 let tickets = store.get('tickets', []);
 let purchases = store.get('purchases', []);
@@ -102,7 +105,7 @@ const routes = {
 if (typeof EXTRA_ROUTES !== 'undefined') Object.assign(routes, EXTRA_ROUTES);
 
 function route() {
-  const parts = location.hash.replace(/^#\/?/, '').split('/');
+  const parts = (location.hash || (window.SEO_ROUTE ? '#/' + window.SEO_ROUTE : '')).replace(/^#\/?/, '').split('/');
   // An address that is no page of the app shows "Page not found" (the home page only for #/ and the bare URL).
   const missing = parts[0] !== '' && !routes[parts[0]];
   const name = missing ? '' : parts[0];
@@ -156,7 +159,8 @@ function pageMeta(name, missing) {
   const h1 = main.querySelector('h1'), heading = PAGE_TITLES[name] ? PAGE_TITLES[name]() : h1 ? h1.textContent.replace(/\s+/g, ' ').trim() : '';
   document.title = !name && !missing ? SITE_TITLE : (heading ? `${heading} | Museo Abreu` : SITE_TITLE);
   const lead = main.querySelector('.lead, .section p:not(.eyebrow):not(.muted)');
-  const desc = (!name && !missing ? t('homeLead') : lead ? lead.textContent : '').replace(/\s+/g, ' ').trim();
+  const own = !missing && typeof PAGE_DESC !== 'undefined' && PAGE_DESC[name] && PAGE_DESC[name]();
+  const desc = (own || (!name && !missing ? t('homeLead') : lead ? lead.textContent : '')).replace(/\s+/g, ' ').trim();
   let meta = document.querySelector('meta[name="description"]');
   if (!meta) { meta = document.createElement('meta'); meta.name = 'description'; document.head.appendChild(meta); }
   if (desc) meta.content = desc.length > 160 ? desc.slice(0, 157).replace(/\s+\S*$/, '') + '…' : desc;

@@ -233,6 +233,16 @@ function pageMembership() {
   </div>`;
 }
 
+/* ---------- Page descriptions (browser tab, search results) where the page's first lines are not one ---------- */
+
+const PAGE_DESC = {
+  eventos: () => `${t('hmUpcoming')} · ${sortedEvents().filter(ev => ev.annual).map(ev => `${eventTitle(ev)} (${fmtDate(eventDate(ev))})`).join(' · ')}. ${t('eventsLead')}`,
+  evento: () => { const ev = ANNUAL_EVENTS.find(e => e.id === location.hash.split('/')[2] || e.id === String(window.SEO_ROUTE || '').split('/')[1]); return ev ? `${fmtDate(eventDate(ev))} · Museo Abreu, Bávaro. ${L(ev.desc)}` : ''; },
+  visita: () => `${t('visitTitle')} · Museo Abreu, Bávaro, Punta Cana · ${EXPERIENCES.filter(e => e.price != null).map(e => L(e.name)).join(' · ')}.`,
+  biblioteca: () => t('synopsisText'),
+  fundamentos: () => t('fuLead'),
+};
+
 /* ---------- Wiring ---------- */
 
 Object.assign(EXTRA_ROUTES, { membresia: pageMembership });
@@ -260,3 +270,9 @@ if (dirObserver) {
   new MutationObserver(() => document.querySelectorAll('#main .rv:not(.rv-in)').forEach(el => dirObserver.observe(el)))
     .observe(document.getElementById('main'), { childList: true });
 }
+
+// On a page served at its own address (/oscar-abreu…), the skip link stays on the page instead of following <base href="/">.
+document.addEventListener('click', e => {
+  if (location.pathname === '/' || !e.target.closest('a[href="#main"]')) return;
+  e.preventDefault(); document.getElementById('main').focus();
+});

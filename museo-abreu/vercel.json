@@ -11,6 +11,74 @@
     {
       "source": "/b",
       "destination": "/api/share-item?type=book"
+    },
+    {
+      "source": "/oscar-abreu",
+      "destination": "/api/page?p=oscar-abreu"
+    },
+    {
+      "source": "/psycho-expressionism",
+      "destination": "/api/page?p=psycho-expressionism"
+    },
+    {
+      "source": "/events",
+      "destination": "/api/page?p=events"
+    },
+    {
+      "source": "/events/anniversary",
+      "destination": "/api/page?p=events/anniversary"
+    },
+    {
+      "source": "/events/group-exhibition",
+      "destination": "/api/page?p=events/group-exhibition"
+    },
+    {
+      "source": "/art-gabangi",
+      "destination": "/api/page?p=art-gabangi"
+    },
+    {
+      "source": "/visit",
+      "destination": "/api/page?p=visit"
+    },
+    {
+      "source": "/membership",
+      "destination": "/api/page?p=membership"
+    },
+    {
+      "source": "/books/ecce-homo",
+      "destination": "/api/page?p=books/ecce-homo"
+    },
+    {
+      "source": "/books/fundamentos",
+      "destination": "/api/page?p=books/fundamentos"
+    },
+    {
+      "source": "/exhibitions",
+      "destination": "/api/page?p=exhibitions"
+    },
+    {
+      "source": "/manifestos",
+      "destination": "/api/page?p=manifestos"
+    },
+    {
+      "source": "/paintings",
+      "destination": "/api/page?p=paintings"
+    },
+    {
+      "source": "/collectors-circle",
+      "destination": "/api/page?p=collectors-circle"
+    },
+    {
+      "source": "/shop",
+      "destination": "/api/page?p=shop"
+    },
+    {
+      "source": "/press",
+      "destination": "/api/page?p=press"
+    },
+    {
+      "source": "/contact",
+      "destination": "/api/page?p=contact"
     }
   ],
   "crons": [
@@ -23,6 +91,9 @@
     "api/agent.js": {
       "maxDuration": 30,
       "includeFiles": "{sample-*,i18n,data,booking-config,features,auction-config,fundamentos}.js"
+    },
+    "api/page.js": {
+      "includeFiles": "{index.html,seo/*.json}"
     }
   }
 }
