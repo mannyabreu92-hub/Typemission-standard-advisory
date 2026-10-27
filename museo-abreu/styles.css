@@ -834,3 +834,36 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .dir-cal a:hover { text-decoration: underline; }
 .dir-subscribe { margin-top: 1.2rem; padding: 1rem 1.1rem; border: 1px solid var(--line); background: var(--card); }
 .dir-subscribe .btn-row { margin-top: .6rem; }
+/* Event first: the next event is the opening screen (its picture, title, live countdown, RSVP or tickets). */
+.dir-ev-hero { min-height: min(92svh, 880px); }
+.dir-ev-hero .hero-inner { padding-top: 6rem; }
+.dir-hero-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .7rem 0 .2rem; }
+.dir-ev-hero .chip { background: rgba(22, 18, 15, .55); color: var(--champagne); border-color: rgba(216, 193, 150, .6); }
+.dir-ev-title { font-size: clamp(2.7rem, 10.5vw, 6.2rem); max-width: 15ch; margin: .5rem 0 .6rem; }
+.dir-ev-title a { color: inherit; text-decoration: none; }
+.dir-ev-title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .12em; }
+.dir-ev-sub { font: italic 400 1.35rem/1.3 var(--serif); color: #e9dfd0; margin-bottom: .4rem; }
+.dir-ev-when { font-size: 1.12rem; font-weight: 500; color: var(--paper); margin-bottom: 1rem; }
+.dir-ev-hero .countdown { max-width: 440px; margin-bottom: 1.3rem; }
+.dir-ev-hero .countdown span { background: rgba(22, 18, 15, .55); border-color: rgba(216, 193, 150, .45); backdrop-filter: blur(4px); }
+.dir-ev-hero .countdown strong { color: var(--paper); }
+.dir-ev-hero .countdown small { color: var(--champagne); }
+.btn.dir-big { min-height: 54px; padding: .8rem 2.2rem; font-size: 1.05rem; }
+/* Upcoming events as picture cards */
+.dir-upcoming { padding-top: 2rem; }
+.dir-posters { display: grid; gap: 1.2rem; }
+@media (min-width: 760px) { .dir-posters { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.dir-poster { background: var(--card); border: 1px solid var(--line); display: grid; min-width: 0; }
+.dir-poster-img { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: var(--ink); }
+.dir-poster-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s ease; }
+.dir-poster:hover .dir-poster-img img { transform: scale(1.04); }
+.dir-poster-date { position: absolute; inset-inline-start: 0; bottom: 0; display: grid; justify-items: center; line-height: 1; padding: .7rem 1rem; background: var(--ink); color: var(--paper); }
+.dir-poster-date strong { font: 600 2.1rem/1 var(--serif); }
+.dir-poster-date small { font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; color: var(--champagne); margin-top: .25rem; }
+.dir-poster-body { padding: 1.1rem 1.2rem 1.3rem; }
+.dir-poster-body h3 { font-size: 1.7rem; margin: .4rem 0 .3rem; }
+.dir-poster-body h3 a { color: inherit; text-decoration: none; }
+.dir-poster-chips { display: flex; gap: .4rem; align-items: center; flex-wrap: wrap; }
+/* The museum, after the events */
+.dir-museum-title { font-size: clamp(2.2rem, 7vw, 3.6rem); max-width: 16ch; text-wrap: balance; }
+.dir-ev-title-2 { display: block; font-size: .56em; line-height: 1.1; margin-top: .25em; color: #f1e7d6; }

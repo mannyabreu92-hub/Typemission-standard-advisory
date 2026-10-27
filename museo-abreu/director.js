@@ -68,6 +68,26 @@ const dirYears = years => `<ul class="dir-facts">${years.map(y => TIMELINE.find(
 
 /* ---------- Events first ---------- */
 
+// An event's picture (events-page.js) at a size for the screen: the opening work has light versions under the veil.
+const dirArt = (ev, sizes) => { const src = (EVENT_ART[ev.id] || EVENT_ART.anniversary).img;
+  return src === 'img/escaping-being.jpg' ? `src="img/hero-1000.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" sizes="${sizes}"`
+    : `src="${src}"${imgSet(src, sizes)}`; };
+// The event's own action: tickets for ART GABANGI, RSVP for the museum's invitations, else its page.
+const dirAct = (ev, cls = 'btn primary') => ev.tiers ? `<a class="${cls}" href="#/gabangi">${t('buyTickets')}</a>`
+  : !ev.price && typeof rsvpEvents === 'function' && rsvpEvents().some(e => e.id === ev.id) ? `<a class="${cls}" href="#/rsvp/${ev.id}">${t('rsvp')}</a>`
+  : `<a class="${cls}" href="${dirEventHref(ev)}">${t('eventDetails')}</a>`;
+const dirWhen = ev => { const d = eventDate(ev); return ev.lastDay ? `${fmtDate(d, { day: 'numeric', month: 'long' })} – ${fmtDate(addDays(d, ev.lastDay), { day: 'numeric', month: 'long', year: 'numeric' })}` : `${fmtDate(d)} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}`; };
+// The upcoming events after the next one, as picture cards.
+function dirPosters() {
+  const next = nextAnnualEvent();
+  return `<div class="dir-posters">${sortedEvents().filter(ev => ev.annual && ev.id !== next.id).map(ev => { const d = eventDate(ev);
+    return `<article class="dir-poster"><a class="dir-poster-img" href="${dirEventHref(ev)}" tabindex="-1" aria-hidden="true"><img ${dirArt(ev, '(max-width: 760px) 100vw, 520px')} alt="" loading="lazy">
+      <span class="dir-poster-date"><strong>${Number(d.slice(8))}</strong><small>${fmtDate(d, { month: 'short' })}</small></span></a>
+      <div class="dir-poster-body"><p class="dir-poster-chips"><span class="chip vip">${t('vipEvent')}</span> <span class="status ok">${t('freeForPro')}</span></p>
+        <h3><a href="${dirEventHref(ev)}">${eventTitle(ev)}</a></h3><p class="muted">${dirWhen(ev)} · ${t('inNDays', { n: daysUntil(d) })}</p>
+        <div class="btn-row">${dirAct(ev)}<a class="btn" href="${dirEventHref(ev)}">${t('eventDetails')}</a></div></div></article>`; }).join('')}</div>`;
+}
+
 // The yearly events after the next one, as compact rows: date, title, a link to the event's page.
 const dirEventHref = ev => ev.tiers ? '#/gabangi' : `#/evento/${ev.id}`;
 function dirUpcoming() {
@@ -115,25 +135,36 @@ function pageHomeDirector() {
   const visit = ['address', 'hours', 'admission'].map(k => visitInfo(k)).filter(Boolean);
   // The hero leads with the next event and its own action (RSVP for the museum's invitations, else tickets).
   const next = nextAnnualEvent(), nd = eventDate(next);
-  const act = (promo.match(/<a class="btn primary"[^>]*>[^<]*<\/a>/) || [`<a class="btn primary" href="${dirEventHref(next)}">${t('eventDetails')}</a>`])[0];
+  const inv = next.invitation && next.invitation[nd.slice(0, 4)];
+  setTimeout(() => { tickCountdowns(); clearInterval(holdTimer); holdTimer = setInterval(tickCountdowns, 1000); }, 0);
   return `
-  <section class="hero dir-hero">
-    <div class="hero-art"><img src="img/hero-1000.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" sizes="100vw" alt="" fetchpriority="high"></div>
+  <section class="hero dir-hero dir-ev-hero">
+    <div class="hero-art"><img ${dirArt(next, '100vw')} alt="" fetchpriority="high"></div>
     <div class="hero-inner">
-      <p class="eyebrow">Museo Abreu · Bávaro, Punta Cana</p>
-      <h1 class="dir-headline">${t('hmHeadline')}</h1>
-      <p class="lead">${t('hmLead')}</p>
-      <a class="dir-next" href="${dirEventHref(next)}"><span class="eyebrow">${t('nextAnnual')}</span>
-        <span class="dir-next-title">${eventTitle(next)}</span><span>${fmtDate(nd)} · ${daysUntil(nd) === 0 ? t('today') : t('inNDays', { n: daysUntil(nd) })}</span></a>
+      <p class="eyebrow">${t('nextAnnual')} · Museo Abreu, Bávaro</p>
+      <p class="dir-hero-chips"><span class="chip vip">${t('vipEvent')}</span><span class="chip annual-chip">${t('freeForPro')}</span></p>
+      <h1 class="dir-headline dir-ev-title"><a href="${dirEventHref(next)}">${eventTitle(next).split(' · ').map((p, i) => i ? `<span class="dir-ev-title-2"><span class="visually-hidden"> · </span>${p}</span>` : p).join('')}</a></h1>
+      ${inv ? `<p class="dir-ev-sub">Ecce Homo · ${L(inv.sub1)}</p>` : ''}
+      <p class="dir-ev-when">${dirWhen(next)}</p>
+      ${countdownHTML(next)}
       <div class="btn-row">
-        ${act}
-        <a class="btn" href="#/eventos">${t('hmCtaEvents')}</a>
-        <a class="btn" href="#/psico">${t('hmCtaPsico')}</a>
+        ${dirAct(next, 'btn primary dir-big')}
+        <a class="btn" href="${dirEventHref(next)}">${t('eventDetails')}</a>
+        <button class="btn" data-action="evCal" data-id="${next.id}">${t('addCal')}</button>
       </div>
     </div>
   </section>
   <div class="wrap">
-    <section class="section"><div class="section-head"><h2>${t('hmNow')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>${dirEventsBlock('')}</section>
+    <section class="section dir-upcoming"><div class="section-head"><h2>${t('hmUpcoming')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>
+      ${dirPosters()}${dirSubscribe()}
+      <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>
+    </section>
+    <section class="section dir-museum rv">
+      <p class="eyebrow">Museo Abreu · Bávaro, Punta Cana</p>
+      <h2 class="dir-museum-title">${t('hmHeadline')}</h2>
+      <p class="lead">${t('hmLead')}</p>
+      <div class="btn-row"><a class="btn primary" href="#/visita">${t('hmCtaVisit')}</a><a class="btn" href="#/psico">${t('hmCtaPsico')}</a></div>
+    </section>
     <section class="section dir-founder rv">
       <img class="dir-portrait" src="${CONTACT.photo}" alt="Oscar Abreu" loading="lazy">
       <div>
@@ -302,6 +333,6 @@ document.addEventListener('click', e => {
   const shell = document.querySelector('#main .dir-hero .hero-art img');
   if (shell) new MutationObserver((_, obs) => {
     const img = document.querySelector('#main .dir-hero .hero-art img');
-    if (img && img !== shell) { img.replaceWith(shell); obs.disconnect(); }
+    if (img && img !== shell) { if (img.getAttribute('src') === shell.getAttribute('src')) img.replaceWith(shell); obs.disconnect(); }
   }).observe(document.getElementById('main'), { childList: true });
 }
