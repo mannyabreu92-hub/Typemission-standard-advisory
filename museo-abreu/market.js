@@ -81,13 +81,13 @@ Object.assign(I18N.fr, {
 // per their credits pages). Prices pending: until set, orders go to WhatsApp with "Price confirmed by
 // the museum". Whop keys: book-print-es, book-print-fr, book-print-de, book-print-ru, book-print-it, book-print-pt, book-print-ja.
 const PRINT_EDITIONS = [
-  { lang: 'es', price: null, key: 'book-print-es', name: { es: 'Edición en español', en: 'Spanish edition', fr: 'Édition espagnole' } },
-  { lang: 'fr', price: null, key: 'book-print-fr', name: { es: 'Edición en francés', en: 'French edition', fr: 'Édition française' } },
-  { lang: 'de', price: null, key: 'book-print-de', name: { es: 'Edición en alemán', en: 'German edition', fr: 'Édition allemande' } },
-  { lang: 'ru', price: null, key: 'book-print-ru', name: { es: 'Edición en ruso', en: 'Russian edition', fr: 'Édition russe' } },
-  { lang: 'it', price: null, key: 'book-print-it', name: { es: 'Edición en italiano', en: 'Italian edition', fr: 'Édition italienne' } },
-  { lang: 'pt', price: null, key: 'book-print-pt', name: { es: 'Edición en portugués', en: 'Portuguese edition', fr: 'Édition portugaise' } },
-  { lang: 'ja', price: null, key: 'book-print-ja', name: { es: 'Edición en japonés', en: 'Japanese edition', fr: 'Édition japonaise' } },
+  { lang: 'es', price: 149.99, key: 'book-print-es', name: { es: 'Edición en español', en: 'Spanish edition', fr: 'Édition espagnole' } },
+  { lang: 'fr', price: 149.99, key: 'book-print-fr', name: { es: 'Edición en francés', en: 'French edition', fr: 'Édition française' } },
+  { lang: 'de', price: 149.99, key: 'book-print-de', name: { es: 'Edición en alemán', en: 'German edition', fr: 'Édition allemande' } },
+  { lang: 'ru', price: 149.99, key: 'book-print-ru', name: { es: 'Edición en ruso', en: 'Russian edition', fr: 'Édition russe' } },
+  { lang: 'it', price: 149.99, key: 'book-print-it', name: { es: 'Edición en italiano', en: 'Italian edition', fr: 'Édition italienne' } },
+  { lang: 'pt', price: 149.99, key: 'book-print-pt', name: { es: 'Edición en portugués', en: 'Portuguese edition', fr: 'Édition portugaise' } },
+  { lang: 'ja', price: 149.99, key: 'book-print-ja', name: { es: 'Edición en japonés', en: 'Japanese edition', fr: 'Édition japonaise' } },
 ];
 const printSub = p => L(p.name) + ' · Ediciones ARTFORO';
 
@@ -272,20 +272,23 @@ function pageShop() {
         <button class="btn small" data-action="bookShare">${t('evShare')}</button></div>
       <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
       <div class="shop-grid">
-        ${PRINT_EDITIONS.filter(p => p.price != null).map(p => `<article class="shop-item">
+        ${(() => { const ps = PRINT_EDITIONS.filter(p => p.price != null); if (!ps.length) return '';
+          const mine = typeof myEdition === 'function' ? myEdition() : lang, first = ps.find(p => p.lang === mine) || ps.find(p => p.lang === lang) || ps[0];
+          return `<article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
           <h3 class="pass-name">${t('shPrint')}</h3>
-          <p class="muted">${printSub(p)}</p>
-          <p class="pass-price">${price(p.price)}</p>
+          <p class="muted">Ediciones ARTFORO</p>
+          <p class="pass-price">${price(first.price)}</p>
+          <div class="field"><label for="shop-print-lang">${t('bkLang')}</label><select id="shop-print-lang">${ps.map(p => `<option value="${p.lang}"${p === first ? ' selected' : ''}>${L(p.name)}</option>`).join('')}</select></div>
           <p class="muted">${t('shPrintNote')}</p>
-          <button class="buy-now" data-action="buyPrint" data-l="${p.lang}">${t('shOrder')} <span class="arr" aria-hidden="true">›</span></button>
-        </article>`).join('')}
+          <button class="buy-now" data-action="buyPrint">${t('shOrder')} <span class="arr" aria-hidden="true">›</span></button>
+        </article>`; })()}
         <article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
           <h3 class="pass-name">${t('shDigital')}</h3>
-          <p class="muted">${t('shDigitalAll', { n: digital.length })}</p>
-          <p class="pass-price">${auUSD(digital[0].price)}</p>
-          <a class="buy-now" href="#/biblioteca">${t('shChoose')} <span class="arr" aria-hidden="true">›</span></a>
+          <p class="muted">${t('bkProLead')}</p>
+          <p class="pass-price">${usd(PRO_WEEK)} <span class="muted">${t('perWeek')}</span></p>
+          <a class="buy-now" href="#/pro">Pro <span class="arr" aria-hidden="true">›</span></a>
         </article>
       </div>
     </section>
@@ -297,7 +300,7 @@ function pageShop() {
 }
 
 EXTRA_ACTIONS.buyPrint = el => {
-  const p = PRINT_EDITIONS.find(x => x.lang === el.dataset.l);
+  const sel = document.getElementById('shop-print-lang'), p = PRINT_EDITIONS.find(x => x.lang === (el.dataset.l || (sel && sel.value)));
   checkout({ title: 'Ecce Homo · ' + t('shPrint'), sub: printSub(p), price: p.price, qty: true, link: whopLink(p.key), provider: 'Whop' });
 };
 

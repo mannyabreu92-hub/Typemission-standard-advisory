@@ -727,6 +727,9 @@ function downloadICS(code) {
 
 const owns = l => purchases.some(p => p.lang === l && !p.refunded);
 const canRead = (l, ch) => CHAPTERS[ch] && (CHAPTERS[ch].free || owns(l) || (typeof isPro === 'function' && isPro()));
+// The free sample of chapter 1 is its opening: the rest is for Pro members (and earlier owners of an edition).
+const FREE_CH1_PARAS = 4;
+const readsWhole = l => owns(l) || (typeof isPro === 'function' && isPro());
 
 // Credits pages of the printed editions, shown in the library in their own language.
 const EDITION_CREDITS = { es: { label: 'Créditos de la edición', ...CREDITS_ES }, fr: { label: 'Crédits de l’édition', ...CREDITS_FR }, de: { label: 'Impressum der Ausgabe', ...CREDITS_DE },
@@ -754,7 +757,7 @@ function pageLibrary() {
           ${EDITION_CREDITS[lang].notes.map(n => `<p>${esc(n)}</p>`).join('')}</details>` : ''}
         <div class="btn-row">
           ${last ? `<a class="btn primary" href="#/leer/${last.lang}/${last.ch}">${t('resume')}</a>` : ''}
-          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${owns(readLang) ? t('read') : readLang !== lang ? `${t('readSample')} · ${L(LANG_NAMES[readLang])}` : t('readSample')}</a>
+          <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${readsWhole(readLang) ? t('read') : readLang !== lang ? `${t('readSample')} · ${L(LANG_NAMES[readLang])}` : t('readSample')}</a>
         </div>
       </div>
     </section>
@@ -762,13 +765,13 @@ function pageLibrary() {
     <section class="section grid two">
       <div>
         <h2>${t('editions')}</h2>
-        <p class="muted" style="margin-bottom:.8rem">${t('oneTime')}</p>
+        <p class="muted" style="margin-bottom:.8rem">${t('bkProLead')}</p>
+        <div class="btn-row" style="margin:0 0 1rem">${readsWhole(readLang) ? '' : bkProButton()}<a class="btn" href="#/tienda">${t('bkPrintCta', { price: usd(BOOK_PRINT_PRICE) })}</a></div>
         <div class="editions">${editionsMineFirst(EDITIONS, readLang).map(ed => `
           <div class="edition">
-            <div><strong>${L(LANG_NAMES[ed.lang])}</strong>${ed.lang === mine && mine !== lang ? ` <span class="ed-mine">${t('edMine')}</span>` : ''}<br><span class="muted">${ed.status === 'available' ? t('available') : t('comingSoon')}</span>
-              ${hasSample(ed.lang) && ed.lang !== readLang && !owns(ed.lang) ? `<br><a class="ed-sample" href="#/leer/${ed.lang}/0" aria-label="${esc(t('readSample') + ' · ' + L(LANG_NAMES[ed.lang]))}">${t('readSample')}</a>` : ''}</div>
-            ${owns(ed.lang) ? `<a class="btn small dark" href="#/leer/${ed.lang}/0">${t('owned')} · ${t('read')}</a>`
-              : ed.status === 'available' ? `<button class="btn small primary" data-action="buy" data-l="${ed.lang}">${t(BOOKING.live || whopLink('book-' + ed.lang) ? 'buyOnline' : 'buy', { price: usd(ed.price) })}</button>`
+            <div><strong>${L(LANG_NAMES[ed.lang])}</strong>${ed.lang === mine && mine !== lang ? ` <span class="ed-mine">${t('edMine')}</span>` : ''}</div>
+            ${readsWhole(ed.lang) ? `<a class="btn small dark" href="#/leer/${ed.lang}/0">${t('read')}</a>`
+              : hasSample(ed.lang) ? `<a class="btn small" href="#/leer/${ed.lang}/0" aria-label="${esc(t('readSample') + ' · ' + L(LANG_NAMES[ed.lang]))}">${t('readSample')}</a>`
               : `<span class="chip">${t('comingSoon')}</span>`}
           </div>`).join('')}
         </div>
@@ -841,15 +844,18 @@ function pageReader(l = 'es', chStr = '0') {
   if (canRead(l, ch)) {
     reading.last = { lang: l, ch, at: new Date().toISOString() };
     save();
-    const paras = sampleFor(l, c);
+    let paras = sampleFor(l, c);
+    const cut = paras && c.key === 'ch1' && !readsWhole(l);
+    if (cut) paras = paras.slice(0, FREE_CH1_PARAS);
     text = `<h1 class="ch-title">${chTitle(c, l)}</h1>` + (paras
       ? paras.map(p => `<p>${esc(p)}</p>`).join('')
       : c.free
         ? `<div class="empty"><p>${t('samplePending')}</p><div class="btn-row" style="justify-content:center"><a class="btn dark" href="#/leer/en/${ch}">${t('readEnSample')}</a></div></div>`
-        : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`);
+        : `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`)
+      + (cut ? `<div class="empty bk-sample-end"><p>${t('bkSampleEnd')}</p><div class="btn-row" style="justify-content:center">${bkProButton()}</div></div>` : '');
   } else {
     text = `<h1 class="ch-title">${chTitle(c, l)}</h1><div class="empty">🔒<p>${t('lockedChapter')}</p>
-      <div class="btn-row" style="justify-content:center"><button class="btn primary" data-action="buy" data-l="${l}">${t(BOOKING.live || whopLink('book-' + l) ? 'buyOnline' : 'buy', { price: usd(EDITIONS.find(e => e.lang === l)?.price || 59.99) })}</button></div></div>`;
+      <div class="btn-row" style="justify-content:center">${bkProButton()}<a class="btn" href="#/tienda">${t('bkPrintCta', { price: usd(BOOK_PRINT_PRICE) })}</a></div></div>`;
   }
   return `<div class="wrap reader">
     <div class="reader-bar">

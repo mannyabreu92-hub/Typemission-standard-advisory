@@ -93,15 +93,15 @@ function catalogueText() {
   out.push(`COLLECTORS' CIRCLE: works by private introduction only (no public prices): ${circle}. Private evenings around: ${(d.CIRCLE_EVENINGS || []).join(', ')}. Formats: private museum viewing, private dinner with Oscar Abreu, commissions.`);
 
   const B = d.BOOKING || {};
-  const ed = (d.EDITIONS || []).map(e => `${e.lang} USD ${e.price}${B.whop && B.whop['book-' + e.lang] ? ' (digital, Whop)' : ''}`).join(', ');
-  out.push(`BOOK "Ecce Homo: Art Saved My Life" by Oscar Abreu — editions: ${ed}. Free sample on the site (#/biblioteca).`);
+  const ed = (d.EDITIONS || []).map(e => e.lang).join(', ');
+  out.push(`BOOK "Ecce Homo: Art Saved My Life" by Oscar Abreu — PRINTED edition USD 149.99 (order in the shop, #/tienda; the museum confirms delivery or pick-up). DIGITAL book (languages: ${ed}) is NOT sold on its own: it is included in Pro (USD 5.99 a week), read in the app. Everyone can read a free sample (the introduction and the opening of chapter 1) at #/biblioteca.`);
   // The second book (fundamentos.js / sample-fund.js): its editions, and its price once the museum sets FUND_PRICE.
   const F = d.FUND_EDITIONS || {};
   let fPrice = null;
   try { const m = fs.readFileSync(path.join(ROOT, 'fundamentos.js'), 'utf8').match(/const FUND_PRICE = ([\d.]+|null)/); fPrice = m && m[1] !== 'null' ? Number(m[1]) : null; } catch (e) {}
   const fEds = Object.entries(F).map(([l, e]) => `${l} "${e.title}"${fPrice && B.whop && B.whop['fund-' + l] ? ` USD ${fPrice} (digital, Whop)` : ''}`).join('; ');
-  if (fEds) out.push(`BOOK "Fundamentos del Psico-Expresionismo" by Oscar Abreu (companion to Ecce Homo; its principles, visual vocabulary, procedures and limits) — DIGITAL ONLY, no printed copy. Editions: ${fEds}. Free sample (note, introduction, chapter 1) at #/fundamentos/<lang>. ${fPrice ? '' : 'Not yet sold by card: the price is not set, so visitors request the digital edition on WhatsApp; do not quote a price. '}Included in Pro.`);
-  out.push('PRO MEMBERSHIP: USD 5.99 per week (Whop). Benefits: full daily book session, free entry to museum events with QR pass, up to 3 free guests at every VIP event, priority in classes and clubs.');
+  if (fEds) out.push(`BOOK "Fundamentos del Psico-Expresionismo" by Oscar Abreu (companion to Ecce Homo; its principles, visual vocabulary, procedures and limits) — DIGITAL ONLY, no printed copy. Editions: ${fEds}. Free sample (note, introduction, chapter 1) at #/fundamentos/<lang>. ${fPrice ? '' : 'Not sold on its own: the digital book is read with Pro (USD 5.99 a week). '}Included in Pro.`);
+  out.push('PRO MEMBERSHIP: USD 5.99 per week (Whop). Benefits: the whole digital book Ecce Homo (and Fundamentos), free entry to museum events with QR pass, up to 3 free guests at every VIP event, priority in classes and clubs.');
   const clubs = (d.CLUBS || []).map(c => `${L(c.name)} USD ${c.price} (${L(c.when)})`).join('; ');
   if (clubs) out.push(`CLUBS (currently ON HOLD, take interest only): ${clubs}.`);
 

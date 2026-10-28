@@ -26,20 +26,21 @@ var BOOKING = {
     pro: 'https://whop.com/museoabreu/museo-abreu-pro', // weekly membership, USD 5.99
     'painting-club': '', // on hold (family decision); was https://whop.com/museoabreu/painting-club
     'art-club': '', // on hold (family decision); was https://whop.com/museoabreu/art-club-5d
-    'book-en': 'https://whop.com/museoabreu/ecce-homo-english-edition',
-    'book-es': 'https://whop.com/museoabreu/ecce-homo-edicion-en-espanol',
-    'book-fr': 'https://whop.com/museoabreu/ecce-homo-edition-francaise',
+    // The digital book is read with Pro (no single editions for sale); the old Whop products can be archived.
+    'book-en': '',
+    'book-es': '',
+    'book-fr': '',
     'book-print-es': '', // printed Spanish edition (shop)
     'book-print-fr': '', // printed French edition (shop)
-    'book-de': 'https://whop.com/museoabreu/ecce-homo-deutsche-ausgabe',
+    'book-de': '',
     'book-print-de': '', // printed German edition (shop)
-    'book-ru': 'https://whop.com/museoabreu/ecce-homo', // Russian digital edition (Whop dropped the Cyrillic from the name)
+    'book-ru': '', // Russian digital edition (Whop dropped the Cyrillic from the name)
     'book-print-ru': '', // printed Russian edition (shop)
-    'book-it': 'https://whop.com/museoabreu/ecce-homo-edizione-italiana', // Italian digital edition
+    'book-it': '', // Italian digital edition
     'book-print-it': '', // printed Italian edition (shop)
-    'book-pt': 'https://whop.com/museoabreu/ecce-homo-edicao-em-portugues', // Portuguese digital edition
+    'book-pt': '', // Portuguese digital edition
     'book-print-pt': '', // printed Portuguese edition (shop)
-    'book-ja': 'https://whop.com/museoabreu/ecce-homo-57', // Japanese digital edition (Whop dropped the Japanese from the name)
+    'book-ja': '', // Japanese digital edition (Whop dropped the Japanese from the name)
     'book-print-ja': '', // printed Japanese edition (shop)
     'fund-es': '', // Fundamentos del Psico-Expresionismo (Spanish, digital): Whop link to come
     'fund-en': '', // Foundations of Psycho-Expressionism (English, digital): Whop link to come

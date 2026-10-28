@@ -946,3 +946,5 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .rsvp-share .btn-row { justify-content: center; }
 .rsvp-share .btn { min-width: 9rem; }
 .rsvp-head-time { font: 600 1rem/1.4 'Cormorant Garamond', Georgia, serif; letter-spacing: .2em; text-transform: uppercase; color: #14110e; }
+/* The end of the free sample in chapter 1 */
+.bk-sample-end { margin-top: 2rem; border-top: 1px solid var(--line); padding-top: 1.6rem; font-family: var(--sans); }

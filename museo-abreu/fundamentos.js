@@ -60,8 +60,8 @@ const fuCover = l => { const [a, b] = fuCoverLines(l), ja = !!FU_CJK_SERIF[l], s
 function fuBuyButton(l, cls = 'btn primary') {
   if (fuOwns(l)) return '';
   if (FUND_PRICE && whopLink('fund-' + l)) return `<button class="${cls}" data-action="fuBuy" data-l="${l}">${t('buyOnline', { price: usd(FUND_PRICE) })}</button>`;
-  const wa = whatsappLink(t('waFund', { title: fuEd(l).title, lang: L(LANG_NAMES[l]) }));
-  return wa ? `<a class="${cls}" href="${wa}" target="_blank" rel="noopener">${t('fuRequest')}</a>` : '';
+  // Like Ecce Homo, the digital book is read with Pro.
+  return bkProButton(cls);
 }
 EXTRA_ACTIONS.fuBuy = el => checkout({ title: fuEd(el.dataset.l).title, sub: 'Oscar Abreu · ' + t('fuEdition', { lang: L(LANG_NAMES[el.dataset.l]) }),
   price: FUND_PRICE, link: whopLink('fund-' + el.dataset.l), provider: 'Whop' });

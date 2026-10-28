@@ -9,7 +9,7 @@ Object.assign(I18N.en, { footFollow: 'Follow us', footPrivacy: 'Privacy', footTe
 Object.assign(I18N.fr, { footFollow: 'Suivez-nous', footPrivacy: 'Confidentialité', footTerms: 'Conditions', legalUpdated: 'Mis à jour le {date}',
   nfTitle: 'Page introuvable', nfLead: 'Cette adresse ne correspond à aucune page du Museo Abreu.', nfHome: 'Aller à l’accueil' });
 
-const LEGAL_DATE = '2026-10-24';
+const LEGAL_DATE = '2026-10-28';
 const LEGAL = {
   privacidad: {
     title: { es: 'Privacidad', en: 'Privacy', fr: 'Confidentialité' },
@@ -40,9 +40,9 @@ const LEGAL = {
     title: { es: 'Condiciones', en: 'Terms', fr: 'Conditions' },
     blocks: [
       { h: { es: 'El libro digital', en: 'The digital book', fr: 'Le livre numérique' },
-        p: { es: 'Cada edición digital de Ecce Homo se paga una sola vez y se lee en esta app con el correo usado en la compra. Es para su lectura personal: el texto es © 2026 Oscar Abreu y no puede copiarse ni compartirse.',
-          en: 'Each digital edition of Ecce Homo is paid once and read in this app with the email used for the purchase. It is for your personal reading: the text is © 2026 Oscar Abreu and may not be copied or shared.',
-          fr: 'Chaque édition numérique d’Ecce Homo se paie une seule fois et se lit dans cette app avec l’e-mail utilisé lors de l’achat. Elle est destinée à votre lecture personnelle : le texte est © 2026 Oscar Abreu et ne peut être ni copié ni partagé.' } },
+        p: { es: 'El libro digital Ecce Homo se lee en esta app con la membresía Pro (USD 5.99 a la semana), con el correo usado en la compra; la muestra gratuita es para todos. Es para su lectura personal: el texto es © 2026 Oscar Abreu y no puede copiarse ni compartirse.',
+          en: 'The digital book Ecce Homo is read in this app with Pro membership (USD 5.99 a week), with the email used for the purchase; the free sample is for everyone. It is for your personal reading: the text is © 2026 Oscar Abreu and may not be copied or shared.',
+          fr: 'Le livre numérique Ecce Homo se lit dans cette app avec l’adhésion Pro (5,99 USD par semaine), avec l’e-mail utilisé lors de l’achat ; l’extrait gratuit est pour tous. Il est destiné à votre lecture personnelle : le texte est © 2026 Oscar Abreu et ne peut être ni copié ni partagé.' } },
       { h: { es: 'Pagos y precios', en: 'Payments and prices', fr: 'Paiements et prix' },
         p: { es: 'Los precios están en dólares estadounidenses. Los pagos los procesa Whop según sus propias condiciones.',
           en: 'Prices are in US dollars. Payments are processed by Whop under its own terms.',

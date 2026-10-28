@@ -58,6 +58,18 @@ Object.assign(I18N.fr, {
   mbProPromise: 'Lire, venir, revenir', mbCirclePromise: 'Vivre avec l’œuvre', mbCompare: 'Comparer gratuit et Pro', navMembership: 'Adhésion',
 });
 
+// The book: the printed edition is sold in the shop; the digital book is read with Pro (US$5.99 a week);
+// everyone reads a free sample (the introduction and the opening of chapter 1).
+const BOOK_PRINT_PRICE = 149.99;
+const PRO_WEEK = 5.99;
+Object.assign(I18N.es, { bkProCta: 'Leer el libro completo con Pro · {price} a la semana', bkProLead: 'El libro digital está incluido en Pro: los 70 capítulos, en ocho idiomas, en su teléfono.',
+  bkSampleEnd: 'Aquí termina la muestra gratuita. El resto del capítulo y el libro completo están en Pro.', bkPrintCta: 'Edición impresa · {price}' });
+Object.assign(I18N.en, { bkProCta: 'Read the whole book with Pro · {price} a week', bkProLead: 'The digital book is included in Pro: all 70 chapters, in eight languages, on your phone.',
+  bkSampleEnd: 'This is the end of the free sample. The rest of the chapter and the whole book are in Pro.', bkPrintCta: 'Printed edition · {price}' });
+Object.assign(I18N.fr, { bkProCta: 'Lire le livre entier avec Pro · {price} par semaine', bkProLead: 'Le livre numérique est inclus dans Pro : les 70 chapitres, en huit langues, sur votre téléphone.',
+  bkSampleEnd: 'Ici s’achève l’extrait gratuit. La suite du chapitre et le livre entier sont dans Pro.', bkPrintCta: 'Édition imprimée · {price}' });
+const bkProButton = (cls = 'btn primary') => `<a class="${cls}" href="#/pro">${t('bkProCta', { price: usd(PRO_WEEK) })}</a>`;
+
 // The edition of Fundamentos in the app's language, else the English one; its paragraphs by position.
 const dirEdLang = () => FUND_EDITIONS[lang] ? lang : 'en';
 const dirQuote = (sec, ...idx) => { const e = FUND_EDITIONS[dirEdLang()]; return idx.map(i => e.sample[sec][i][1]).join(' '); };
@@ -179,7 +191,8 @@ function pageHomeDirector() {
         <h2 class="dir-book-title">${t('bookTitle')}</h2>
         <p class="dir-book-sub">${t('bookSub')}</p>
         <p>${t('synopsisText')}</p>
-        <div class="btn-row"><a class="btn primary" href="#/biblioteca">${t('readSample')}</a><a class="btn" href="#/tienda">${t('navShop')}</a></div>
+        <div class="btn-row"><a class="btn primary" href="#/leer/${typeof myEdition === 'function' ? myEdition() : lang}/0">${t('readSample')}</a>${bkProButton('btn')}</div>
+        <p class="dir-link"><a href="#/tienda">${t('bkPrintCta', { price: usd(BOOK_PRINT_PRICE) })}</a></p>
         <a class="dir-also" href="#/fundamentos/${fu}"><span class="eyebrow">${t('fuAlso')}</span> <span lang="${fu}">${esc(FUND_EDITIONS[fu].title)}</span> <span class="arr" aria-hidden="true">→</span></a>
       </div>
     </section>
