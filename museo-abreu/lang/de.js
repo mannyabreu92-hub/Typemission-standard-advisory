@@ -845,6 +845,12 @@ I18N.de = {
   "bkProLead": "Das digitale Buch ist in Pro enthalten: alle 70 Kapitel, in acht Sprachen, auf Ihrem Handy.",
   "bkSampleEnd": "Hier endet die kostenlose Leseprobe. Der Rest des Kapitels und das ganze Buch sind in Pro.",
   "bkPrintCta": "Gedruckte Ausgabe · {price}",
+  "lsListen": "Anhören",
+  "lsPause": "Pause",
+  "lsResume": "Fortsetzen",
+  "lsSpeed": "Lesegeschwindigkeit",
+  "lsStop": "Stopp",
+  "lsNoVoice": "Dieses Telefon hat keine Stimme für {lang}. Sie können eine in den Einstellungen hinzufügen.",
 };
 TR.de = {
   "2019": "2019",

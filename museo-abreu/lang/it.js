@@ -845,6 +845,12 @@ I18N.it = {
   "bkProLead": "Il libro digitale è incluso in Pro: tutti i 70 capitoli, in otto lingue, sul tuo telefono.",
   "bkSampleEnd": "Qui finisce l’estratto gratuito. Il resto del capitolo e il libro intero sono in Pro.",
   "bkPrintCta": "Edizione stampata · {price}",
+  "lsListen": "Ascolta",
+  "lsPause": "Pausa",
+  "lsResume": "Riprendi",
+  "lsSpeed": "Velocità di lettura",
+  "lsStop": "Ferma",
+  "lsNoVoice": "Questo telefono non ha una voce in {lang}. Può aggiungerne una nelle impostazioni.",
 };
 TR.it = {
   "2019": "2019",
