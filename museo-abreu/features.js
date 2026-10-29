@@ -44,7 +44,7 @@ Object.assign(I18N.es, {
   proPrice: 'Membresía: USD 5.99 a la semana', joinPro: 'Hacerme Pro (simulación)', leavePro: 'Cancelar membresía (demo)',
   joinedPro: '¡Bienvenido! Ya eres miembro Pro (simulación).', memberPass: 'Pase de miembro', memberPassHelp: 'Muéstralo en la entrada de cualquier evento del museo.',
   compare: 'Qué incluye', featureCol: 'Beneficio', freeCol: 'Usuario', proCol: 'Pro', 
-  b1: 'Explorar el museo, la obra y el manifiesto', b2: 'Lectura del día (fragmento del libro)', b3: 'El libro digital Ecce Homo completo',
+  b1: 'Explorar el museo, la obra y el manifiesto', b2: 'Lectura del día (fragmento del libro)', b3: 'El libro digital Ecce Homo completo, para leer y escuchar',
   b4: 'Entrada gratis a eventos del museo con QR', b5: 'Hasta 3 invitados gratis en cada evento VIP', 
   b9: 'Prioridad en clases y clubes', 
 
@@ -114,7 +114,7 @@ Object.assign(I18N.en, {
   proPrice: 'Membership: USD 5.99 per week', joinPro: 'Become Pro (simulated)', leavePro: 'Cancel membership (demo)',
   joinedPro: 'Welcome! You are now a Pro member (simulated).', memberPass: 'Member pass', memberPassHelp: 'Show it at the entrance of any museum event.',
   compare: 'What’s included', featureCol: 'Benefit', freeCol: 'User', proCol: 'Pro', 
-  b1: 'Explore the museum, the work and the manifesto', b2: 'Daily reading (excerpt from the book)', b3: 'The whole digital book, Ecce Homo',
+  b1: 'Explore the museum, the work and the manifesto', b2: 'Daily reading (excerpt from the book)', b3: 'The whole digital book, Ecce Homo, to read and to listen to',
   b4: 'Free entry to museum events with QR', b5: 'Up to 3 free guests at every VIP event', 
   b9: 'Priority in classes and clubs', 
 
@@ -223,7 +223,7 @@ Object.assign(I18N.fr, {
   
   b1: 'Explorer le musée, l’œuvre et le manifeste',
   b2: 'Lecture du jour (extrait du livre)',
-  b3: 'Le livre numérique Ecce Homo en entier',
+  b3: 'Le livre numérique Ecce Homo en entier, à lire et à écouter',
   b4: 'Entrée gratuite aux événements du musée avec code QR',
   b5: 'Jusqu’à 3 invités gratuits à chaque événement VIP',
   

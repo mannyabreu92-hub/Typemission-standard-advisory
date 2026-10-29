@@ -94,7 +94,7 @@ function catalogueText() {
 
   const B = d.BOOKING || {};
   const ed = (d.EDITIONS || []).map(e => e.lang).join(', ');
-  out.push(`BOOK "Ecce Homo: Art Saved My Life" by Oscar Abreu — PRINTED edition USD 149.99 (order in the shop, #/tienda; the museum confirms delivery or pick-up). DIGITAL book (languages: ${ed}) is NOT sold on its own: it is included in Pro (USD 5.99 a week), read in the app. Everyone can read a free sample (the introduction and the opening of chapter 1) at #/biblioteca. In the reader, a "Listen" button reads the book aloud with the phone's own voice, in the edition's language, in one of five museum voices: Curator, Storyteller, Scholar, Narrator, Collector (whatever the visitor can read: the sample, or the whole book with Pro).`);
+  out.push(`BOOK "Ecce Homo: Art Saved My Life" by Oscar Abreu — PRINTED edition USD 149.99 (order in the shop, #/tienda; the museum confirms delivery or pick-up). DIGITAL book (languages: ${ed}) is NOT sold on its own: it is included in Pro (USD 5.99 a week), read or listened to in the app. Everyone can read a free sample (the introduction and the opening of chapter 1) at #/biblioteca. In the reader, a "Listen" button reads the book aloud with the phone's own voice, in the edition's language, in one of five museum voices: Curator, Storyteller, Scholar, Narrator, Collector (whatever the visitor can read: the sample, or the whole book with Pro).`);
   // The second book (fundamentos.js / sample-fund.js): its editions, and its price once the museum sets FUND_PRICE.
   const F = d.FUND_EDITIONS || {};
   let fPrice = null;

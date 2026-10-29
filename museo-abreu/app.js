@@ -758,6 +758,7 @@ function pageLibrary() {
         <div class="btn-row">
           ${last ? `<a class="btn primary" href="#/leer/${last.lang}/${last.ch}">${t('resume')}</a>` : ''}
           <a class="btn ${last ? '' : 'primary'}" href="#/leer/${readLang}/0">${readsWhole(readLang) ? t('read') : readLang !== lang ? `${t('readSample')} · ${L(LANG_NAMES[readLang])}` : t('readSample')}</a>
+          ${typeof lsLink === 'function' ? lsLink(readLang, 'btn') : ''}
         </div>
       </div>
     </section>

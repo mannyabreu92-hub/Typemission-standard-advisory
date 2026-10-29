@@ -11,17 +11,17 @@
 // back, the screen stays awake, and the chapter's remaining minutes show. At the end of a chapter the next
 // one follows, unless the page ends on the end of the free sample. Pausing resumes at the paragraph's start.
 
-Object.assign(I18N.es, { lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
+Object.assign(I18N.es, { lsSample: 'Escuchar la muestra', lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
   lsNoVoice: 'Este teléfono no tiene voz en {lang}. Puede añadir una en sus ajustes.', lsMin: '{n} min',
   lsPcurator: 'Curador', lsPstoryteller: 'Narrador', lsPscholar: 'Erudito', lsPnarrator: 'Voz documental', lsPcollector: 'Coleccionista',
   lsTcurator: 'Sereno y poético, como una exposición privada.', lsTstoryteller: 'Cálido y cercano.', lsTscholar: 'Pausado y preciso.',
   lsTnarrator: 'Profundo, como un documental.', lsTcollector: 'Lento e íntimo.' });
-Object.assign(I18N.en, { lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
+Object.assign(I18N.en, { lsSample: 'Listen to the sample', lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
   lsNoVoice: 'This phone has no voice for {lang}. You can add one in its settings.', lsMin: '{n} min',
   lsPcurator: 'Curator', lsPstoryteller: 'Storyteller', lsPscholar: 'Scholar', lsPnarrator: 'Narrator', lsPcollector: 'Collector',
   lsTcurator: 'Calm and poetic, like a private exhibition.', lsTstoryteller: 'Warm and close.', lsTscholar: 'Unhurried and precise.',
   lsTnarrator: 'Deep, like a documentary.', lsTcollector: 'Slow and intimate.' });
-Object.assign(I18N.fr, { lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
+Object.assign(I18N.fr, { lsSample: 'Écouter l’extrait', lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
   lsNoVoice: 'Ce téléphone n’a pas de voix en {lang}. Vous pouvez en ajouter une dans ses réglages.', lsMin: '{n} min',
   lsPcurator: 'Conservateur', lsPstoryteller: 'Conteur', lsPscholar: 'Érudit', lsPnarrator: 'Narrateur', lsPcollector: 'Collectionneur',
   lsTcurator: 'Calme et poétique, comme une exposition privée.', lsTstoryteller: 'Chaleureux et proche.', lsTscholar: 'Posé et précis.',
@@ -162,10 +162,12 @@ function lsSpeak(run) {
     u.rate = tone.rate * (st.emph ? p.emph : 1) * ls.rate; u.pitch = tone.pitch - (st.emph ? .02 : 0); u.volume = 1;
     // A breath after each sentence, a longer one after a short sentence that should land; none inside one.
     u.onend = () => st.last && n < steps.length ? setTimeout(next, (p.sentence + (st.s.length < 60 ? 220 : 0)) / ls.rate) : next();
+    u.onstart = () => { ls.spoke = true; };
     u.onerror = e => { if (run === ls.run && e.error !== 'interrupted' && e.error !== 'canceled') lsStop(); };
     lsSynth.speak(u);
   };
   next();
+  if (!ls.spoke) setTimeout(() => { if (run === ls.run && ls.on && !ls.spoke && !lsSynth.speaking) lsPause(); }, 4000);
   lsPaint();
 }
 
@@ -200,7 +202,7 @@ function lsStart(fromAuto) {
   const items = lsItems(art);
   if (!items.length) return fromAuto ? lsStop() : undefined;
   if (ls.items[0] !== items[0]) ls.i = 0;
-  ls.items = items; ls.on = true;
+  ls.items = items; ls.on = true; ls.spoke = false;
   lsAwake(true);
   const run = ++ls.run;
   // A voice that was just stopped needs a moment on some phones; the first one must start within the tap (iPhone).
@@ -222,6 +224,12 @@ function lsEnd() {
 }
 
 /* ---------- The listening bar ---------- */
+
+// "Listen to the sample" (or "Listen", for a reader of the whole book) on the homepage and in the library: it
+// opens the reader and starts the voice there. The tap is what lets the phone speak; where a phone still
+// refuses (the voice does not start within a few seconds), the reader waits on its Listen button instead.
+const lsLink = (l, cls) => lsSynth ? `<a class="${cls}" href="#/leer/${l}/0" data-ls-start><span aria-hidden="true">▶</span> ${t(typeof readsWhole === 'function' && readsWhole(l) ? 'lsListen' : 'lsSample')}</a>` : '';
+document.addEventListener('click', e => { if (e.target.closest('[data-ls-start]')) try { sessionStorage.setItem('ma.lsAuto', '1'); } catch (x) {} }, true);
 
 // The chapter's remaining minutes, at the voice's pace (about 150 words a minute at 1×).
 function lsMinutesLeft() {
