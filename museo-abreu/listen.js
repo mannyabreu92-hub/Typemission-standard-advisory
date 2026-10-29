@@ -16,10 +16,11 @@ const LS_RATES = [1, 1.25, 1.5, 0.8];
 const ls = { on: false, i: 0, run: 0, items: [], lang: '', rate: (() => { try { return +localStorage.getItem('ma.lsRate') || 1; } catch (e) { return 1; } })() };
 const lsSynth = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window ? window.speechSynthesis : null;
 
-// The voice: a calm, deep narrator's voice for an artist's first-person story. The phone's best voices come
-// first (the premium, natural and enhanced ones), then the narrators each system is known for, men's voices
-// first since the book is told by Oscar Abreu himself; the toy voices some phones carry are never chosen.
-// The visitor can pick another of the phone's voices; the choice is kept per language.
+// The voice: the museum's chosen voices first, in this order: Samantha, Karen, Daniel (Enhanced), Eddy. Then the
+// phone's best voices (the premium, natural and enhanced ones) and the narrators each system is known for;
+// the toy voices some phones carry are never chosen. The visitor can pick another of the phone's voices;
+// the choice is kept per language.
+const LS_PREFERRED = [/^samantha\b/i, /^karen\b/i, /^daniel\b.*enhanced/i, /^eddy\b/i];
 const LS_NARRATORS = {
   en: /daniel|arthur|oliver|ryan|guy|thomas|aaron|evan|nathan|uk english male|george|christopher|eric|davis|andrew|brian/i,
   es: /jorge|juan|álvaro|alvaro|diego|pablo|carlos|tomás|tomas/i,
@@ -31,8 +32,8 @@ const LS_NARRATORS = {
   ja: /otoya|hattori|keita|kyoko|nanami|ayumi/i,
   zh: /yunxi|yunyang|kangkang|tingting|xiaoxiao|meijia/i,
 };
-const LS_TOYS = /albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|eddy|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|sandy|flo\b|reed/i;
-const lsRank = (v, l) => (LS_TOYS.test(v.name) ? -100 : 0) + (/premium|natural|neural/i.test(v.name) ? 6 : /enhanced|improved|wavenet|studio/i.test(v.name) ? 5 : /online|network/i.test(v.name) ? 2 : 0)
+const LS_TOYS = /albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|sandy|flo\b|reed/i;
+const lsRank = (v, l) => (LS_TOYS.test(v.name) ? -100 : 0) + (i => i < 0 ? 0 : 40 - i * 10)(LS_PREFERRED.findIndex(r => r.test(v.name))) + (/premium|natural|neural/i.test(v.name) ? 6 : /enhanced|improved|wavenet|studio/i.test(v.name) ? 5 : /online|network/i.test(v.name) ? 2 : 0)
   + (LS_NARRATORS[l]?.test(v.name) ? 3 : 0) + (/female|woman|frau/i.test(v.name) ? -1 : /\b(male|man)\b/i.test(v.name) ? 1 : 0);
 const lsVoices = l => lsSynth.getVoices().filter(v => v.lang.toLowerCase().replace('_', '-').split('-')[0] === l && !LS_TOYS.test(v.name))
   .sort((a, b) => lsRank(b, l) - lsRank(a, l));
@@ -43,11 +44,11 @@ function lsVoice(l) {
 }
 const lsVoiceName = v => v.name.replace(/^(Microsoft|Google|Apple)\s+/, '').replace(/\s*Online\s*/, ' ').replace(/\s+-\s+.*$/, '').trim();
 
-// The narrator's delivery, so that it sounds told rather than recited: the everyday pace (a slow, low
-// voice puts listeners to sleep), short breaths between paragraphs, and each sentence spoken on its own with
-// its own small rise or fall in pitch and pace, the way a person tells a story: questions rise, exclamations
-// lift, a short sentence lands a little slower, a long one moves on, quoted words take a slightly other tone.
-const LS_PACE = { rate: 1.02, pitch: 1, para: 380, title: 750 };
+// The narrator's delivery, so that it sounds told rather than recited: a slower, slightly deeper voice at full
+// volume, short breaths between paragraphs, and each sentence spoken on its own with its own small rise or
+// fall in pitch and pace around that, the way a person tells a story: questions rise, exclamations lift, a
+// short sentence lands a little slower, a long one moves on, quoted words take a slightly other tone.
+const LS_PACE = { rate: .88, pitch: .95, volume: 1, para: 380, title: 750 };
 const LS_WAVE = [0, .035, -.02, .025, -.03, .015];
 
 // What is read: the chapter's title and text, not the notes around it (the end of the sample, credits, loading).
@@ -110,7 +111,7 @@ function lsSpeak(run) {
     if (k >= chunks.length) { ls.i++; return setTimeout(() => lsSpeak(run), (head ? LS_PACE.title : LS_PACE.para) / ls.rate); }
     const tone = lsTone(chunks[k], ls.i + k, k === 0), u = new SpeechSynthesisUtterance(chunks[k++]);
     u.lang = voice ? voice.lang : ls.lang; if (voice) u.voice = voice;
-    u.rate = tone.rate * ls.rate; u.pitch = tone.pitch;
+    u.rate = tone.rate * ls.rate; u.pitch = tone.pitch; u.volume = LS_PACE.volume;
     u.onend = next;
     u.onerror = e => { if (run === ls.run && e.error !== 'interrupted' && e.error !== 'canceled') lsStop(); };
     lsSynth.speak(u);
