@@ -68,7 +68,7 @@ const lsSay = (text, heading) => {
 // A paragraph is spoken sentence by sentence (some phones also cut a long utterance short); a long sentence
 // is parted at a comma or semicolon near its middle.
 function lsChunks(text) {
-  const parts = (text.match(/[^.!?。！？]+(?:\.\.\.|[.!?。！？])*["')\]]*\s*/g) || [text]).map(s => s.trim()).filter(Boolean), out = [];
+  const parts = (text.match(/(?:[^.!?。！？]|\.(?=\d))+(?:\.\.\.|[.!?。！？])*["')\]]*\s*/g) || [text]).map(s => s.trim()).filter(Boolean), out = [];
   for (const s of parts) {
     if (out.length && s.length < 2) { out[out.length - 1] += s; continue; }
     if (s.length <= 240) { out.push(s); continue; }
@@ -78,6 +78,11 @@ function lsChunks(text) {
   }
   return out;
 }
+
+// Longer breaths: a full stop and a colon are said as an ellipsis, which phones read as a pause, and a comma
+// always has its space. Numbers keep their points and colons (3.5, 10:30), and an ellipsis stays one.
+const lsBreaths = s => s.replace(/\.{3,}/g, '…').replace(/(?<!\d)[.:](?!\d)|…/g, '... ')
+  .replace(/,(?=\S)/g, ', ').replace(/\.\.\. (?=["')\]])/g, '...').replace(/\s+/g, ' ').trim();
 
 // Each sentence's own tone and pace.
 function lsTone(s, k, first) {
@@ -109,7 +114,7 @@ function lsSpeak(run) {
   const next = () => {
     if (run !== ls.run || !ls.on) return;
     if (k >= chunks.length) { ls.i++; return setTimeout(() => lsSpeak(run), (head ? LS_PACE.title : LS_PACE.para) / ls.rate); }
-    const tone = lsTone(chunks[k], ls.i + k, k === 0), u = new SpeechSynthesisUtterance(chunks[k++]);
+    const tone = lsTone(chunks[k], ls.i + k, k === 0), u = new SpeechSynthesisUtterance(lsBreaths(chunks[k++]));
     u.lang = voice ? voice.lang : ls.lang; if (voice) u.voice = voice;
     u.rate = tone.rate * ls.rate; u.pitch = tone.pitch; u.volume = LS_PACE.volume;
     u.onend = next;
