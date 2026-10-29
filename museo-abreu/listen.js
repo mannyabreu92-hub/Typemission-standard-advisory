@@ -43,19 +43,51 @@ function lsVoice(l) {
 }
 const lsVoiceName = v => v.name.replace(/^(Microsoft|Google|Apple)\s+/, '').replace(/\s*Online\s*/, ' ').replace(/\s+-\s+.*$/, '').trim();
 
-// The narrator's pace: a touch slower and lower than the phone's everyday voice, with a breath between
-// paragraphs and a longer one after a title.
-const LS_PACE = { rate: .92, pitch: .94, para: 550, title: 1000 };
+// The narrator's delivery, so that it sounds told rather than recited: the everyday pace (a slow, low
+// voice puts listeners to sleep), short breaths between paragraphs, and each sentence spoken on its own with
+// its own small rise or fall in pitch and pace, the way a person tells a story: questions rise, exclamations
+// lift, a short sentence lands a little slower, a long one moves on, quoted words take a slightly other tone.
+const LS_PACE = { rate: 1.02, pitch: 1, para: 380, title: 750 };
+const LS_WAVE = [0, .035, -.02, .025, -.03, .015];
 
 // What is read: the chapter's title and text, not the notes around it (the end of the sample, credits, loading).
 const lsItems = art => [...art.querySelectorAll('h1, h2, p')]
   .filter(el => !el.closest('.empty, .bk-sample-end, details') && !el.classList.contains('muted') && el.textContent.trim());
 
-// A paragraph is spoken in pieces of a sentence or a few, as some phones cut a long utterance short.
+// The text as a voice should say it: a dash is a pause, not a word, and a chapter's Roman numeral is read as
+// a number ("Chapter I" is not "Chapter eye").
+const LS_ROMAN = { I: 1, V: 5, X: 10, L: 50, C: 100 };
+const lsRoman = r => [...r].reduce((n, c, i, a) => n + (LS_ROMAN[c] < (LS_ROMAN[a[i + 1]] || 0) ? -LS_ROMAN[c] : LS_ROMAN[c]), 0);
+const lsSay = (text, heading) => {
+  let x = text.replace(/\s*[—–]\s*/g, ', ').replace(/…/g, '...').replace(/[«»“”„]/g, '"').replace(/\s+/g, ' ');
+  if (heading) x = x.replace(/^([^\s,]+)\s+([IVXLC]+)\b/, (m, w, r) => `${w} ${lsRoman(r)}`);
+  return x.trim();
+};
+
+// A paragraph is spoken sentence by sentence (some phones also cut a long utterance short); a long sentence
+// is parted at a comma or semicolon near its middle.
 function lsChunks(text) {
-  const parts = text.match(/[^.!?。！？…]+[.!?。！？…]*[»”"’')\]]*\s*/g) || [text], out = [];
-  for (const s of parts) if (out.length && (out[out.length - 1] + s).length < 220) out[out.length - 1] += s; else out.push(s);
-  return out.map(s => s.trim()).filter(Boolean);
+  const parts = (text.match(/[^.!?。！？]+(?:\.\.\.|[.!?。！？])*["')\]]*\s*/g) || [text]).map(s => s.trim()).filter(Boolean), out = [];
+  for (const s of parts) {
+    if (out.length && s.length < 2) { out[out.length - 1] += s; continue; }
+    if (s.length <= 240) { out.push(s); continue; }
+    const mid = s.length / 2, cuts = [...s.matchAll(/[,;:]\s/g)].map(m => m.index + 1);
+    const at = cuts.sort((a, b) => Math.abs(a - mid) - Math.abs(b - mid))[0];
+    if (at) out.push(s.slice(0, at), s.slice(at).trim()); else out.push(s);
+  }
+  return out;
+}
+
+// Each sentence's own tone and pace.
+function lsTone(s, k, first) {
+  const end = s.replace(/["')\]\s]+$/, '').slice(-1);
+  let pitch = LS_PACE.pitch + LS_WAVE[k % LS_WAVE.length], rate = LS_PACE.rate;
+  if (end === '?' || end === '？') pitch += .07;
+  if (end === '!' || end === '！') { pitch += .05; rate += .03; }
+  if (/^"/.test(s)) pitch += .03;
+  if (s.length < 60) rate -= .04; else if (s.length > 170) rate += .04;
+  if (first) rate -= .02;
+  return { pitch: Math.min(1.25, Math.max(.8, pitch)), rate };
 }
 
 function lsMark(el) {
@@ -71,14 +103,14 @@ function lsSpeak(run) {
   const el = ls.items[ls.i];
   if (!el || !el.isConnected) return lsEnd();
   lsMark(el);
-  const { voice } = lsVoice(ls.lang), chunks = lsChunks(el.textContent);
+  const head = /^H/.test(el.tagName), { voice } = lsVoice(ls.lang), chunks = lsChunks(lsSay(el.textContent, head));
   let k = 0;
   const next = () => {
     if (run !== ls.run || !ls.on) return;
-    if (k >= chunks.length) { ls.i++; return setTimeout(() => lsSpeak(run), (/^H/.test(el.tagName) ? LS_PACE.title : LS_PACE.para) / ls.rate); }
-    const u = new SpeechSynthesisUtterance(chunks[k++]);
+    if (k >= chunks.length) { ls.i++; return setTimeout(() => lsSpeak(run), (head ? LS_PACE.title : LS_PACE.para) / ls.rate); }
+    const tone = lsTone(chunks[k], ls.i + k, k === 0), u = new SpeechSynthesisUtterance(chunks[k++]);
     u.lang = voice ? voice.lang : ls.lang; if (voice) u.voice = voice;
-    u.rate = LS_PACE.rate * ls.rate; u.pitch = LS_PACE.pitch;
+    u.rate = tone.rate * ls.rate; u.pitch = tone.pitch;
     u.onend = next;
     u.onerror = e => { if (run === ls.run && e.error !== 'interrupted' && e.error !== 'canceled') lsStop(); };
     lsSynth.speak(u);
