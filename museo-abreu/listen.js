@@ -5,23 +5,47 @@
 // one follows, unless the page ends on the end of the free sample. Pausing stops the voice and resumes at the
 // start of the same paragraph, which works the same way on every phone.
 
-Object.assign(I18N.es, { lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Velocidad de lectura', lsStop: 'Detener',
+Object.assign(I18N.es, { lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Velocidad de lectura', lsStop: 'Detener',
   lsNoVoice: 'Este teléfono no tiene voz en {lang}. Puede añadir una en sus ajustes.' });
-Object.assign(I18N.en, { lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading speed', lsStop: 'Stop',
+Object.assign(I18N.en, { lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading speed', lsStop: 'Stop',
   lsNoVoice: 'This phone has no voice for {lang}. You can add one in its settings.' });
-Object.assign(I18N.fr, { lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Vitesse de lecture', lsStop: 'Arrêter',
+Object.assign(I18N.fr, { lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Vitesse de lecture', lsStop: 'Arrêter',
   lsNoVoice: 'Ce téléphone n’a pas de voix en {lang}. Vous pouvez en ajouter une dans ses réglages.' });
 
 const LS_RATES = [1, 1.25, 1.5, 0.8];
 const ls = { on: false, i: 0, run: 0, items: [], lang: '', rate: (() => { try { return +localStorage.getItem('ma.lsRate') || 1; } catch (e) { return 1; } })() };
 const lsSynth = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window ? window.speechSynthesis : null;
 
-// The voice for the edition's language: a better-sounding one first where the phone has several.
+// The voice: a calm, deep narrator's voice for an artist's first-person story. The phone's best voices come
+// first (the premium, natural and enhanced ones), then the narrators each system is known for, men's voices
+// first since the book is told by Oscar Abreu himself; the toy voices some phones carry are never chosen.
+// The visitor can pick another of the phone's voices; the choice is kept per language.
+const LS_NARRATORS = {
+  en: /daniel|arthur|oliver|ryan|guy|thomas|aaron|evan|nathan|uk english male|george|christopher|eric|davis|andrew|brian/i,
+  es: /jorge|juan|álvaro|alvaro|diego|pablo|carlos|tomás|tomas/i,
+  fr: /thomas|henri|nicolas|daniel|denise|eloise|amélie|amelie|audrey/i,
+  de: /markus|yannick|conrad|killian|viktor|stefan|anna|petra|helena/i,
+  it: /luca|diego|giuseppe|cosimo|federica|alice|elsa/i,
+  ru: /yuri|dmitry|pavel|maxim|milena|svetlana/i,
+  pt: /felipe|duarte|antonio|antónio|luciana|joana|francisca/i,
+  ja: /otoya|hattori|keita|kyoko|nanami|ayumi/i,
+  zh: /yunxi|yunyang|kangkang|tingting|xiaoxiao|meijia/i,
+};
+const LS_TOYS = /albert|bad news|bahh|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|eddy|fred|junior|ralph|kathy|grandma|grandpa|rocko|shelley|sandy|flo\b|reed/i;
+const lsRank = (v, l) => (LS_TOYS.test(v.name) ? -100 : 0) + (/premium|natural|neural/i.test(v.name) ? 6 : /enhanced|improved|wavenet|studio/i.test(v.name) ? 5 : /online|network/i.test(v.name) ? 2 : 0)
+  + (LS_NARRATORS[l]?.test(v.name) ? 3 : 0) + (/female|woman|frau/i.test(v.name) ? -1 : /\b(male|man)\b/i.test(v.name) ? 1 : 0);
+const lsVoices = l => lsSynth.getVoices().filter(v => v.lang.toLowerCase().replace('_', '-').split('-')[0] === l && !LS_TOYS.test(v.name))
+  .sort((a, b) => lsRank(b, l) - lsRank(a, l));
+const lsChosen = () => { try { return JSON.parse(localStorage.getItem('ma.lsVoice')) || {}; } catch (e) { return {}; } };
 function lsVoice(l) {
-  const all = lsSynth.getVoices(), mine = all.filter(v => v.lang.toLowerCase().replace('_', '-').split('-')[0] === l);
-  const rank = v => (/premium|enhanced|natural|neural/i.test(v.name) ? 0 : /google/i.test(v.name) ? 1 : 2) + (v.localService ? 0 : .5);
-  return { known: all.length > 0, voice: mine.sort((a, b) => rank(a) - rank(b))[0] || null };
+  const all = lsSynth.getVoices(), mine = lsVoices(l), pick = lsChosen()[l];
+  return { known: all.length > 0, voice: mine.find(v => v.voiceURI === pick) || mine[0] || null };
 }
+const lsVoiceName = v => v.name.replace(/^(Microsoft|Google|Apple)\s+/, '').replace(/\s*Online\s*/, ' ').replace(/\s+-\s+.*$/, '').trim();
+
+// The narrator's pace: a touch slower and lower than the phone's everyday voice, with a breath between
+// paragraphs and a longer one after a title.
+const LS_PACE = { rate: .92, pitch: .94, para: 550, title: 1000 };
 
 // What is read: the chapter's title and text, not the notes around it (the end of the sample, credits, loading).
 const lsItems = art => [...art.querySelectorAll('h1, h2, p')]
@@ -51,9 +75,10 @@ function lsSpeak(run) {
   let k = 0;
   const next = () => {
     if (run !== ls.run || !ls.on) return;
-    if (k >= chunks.length) { ls.i++; return lsSpeak(run); }
+    if (k >= chunks.length) { ls.i++; return setTimeout(() => lsSpeak(run), (/^H/.test(el.tagName) ? LS_PACE.title : LS_PACE.para) / ls.rate); }
     const u = new SpeechSynthesisUtterance(chunks[k++]);
-    u.lang = voice ? voice.lang : ls.lang; if (voice) u.voice = voice; u.rate = ls.rate;
+    u.lang = voice ? voice.lang : ls.lang; if (voice) u.voice = voice;
+    u.rate = LS_PACE.rate * ls.rate; u.pitch = LS_PACE.pitch;
     u.onend = next;
     u.onerror = e => { if (run === ls.run && e.error !== 'interrupted' && e.error !== 'canceled') lsStop(); };
     lsSynth.speak(u);
@@ -109,6 +134,16 @@ function lsPaint(note) {
   n.textContent = note || (started ? `${Math.min(ls.i + 1, ls.items.length)} / ${ls.items.length}` : '');
 }
 
+const lsLangOf = () => (document.querySelector('.reader-text')?.getAttribute('lang') || lang).slice(0, 2);
+// The voice menu lists the phone's voices for the edition's language, the chosen narrator first.
+function lsFillVoices() {
+  const sel = document.querySelector('.ls-voice');
+  if (!sel) return;
+  const l = lsLangOf(), list = lsVoices(l), cur = lsVoice(l).voice;
+  sel.innerHTML = list.map(v => `<option value="${esc(v.voiceURI)}"${v === cur ? ' selected' : ''}>${esc(lsVoiceName(v))}</option>`).join('');
+  sel.hidden = list.length < 2;
+}
+
 function lsMount() {
   const bar = document.querySelector('.reader-bar');
   if (!lsSynth || !bar || bar.querySelector('.ls-row')) return;
@@ -116,6 +151,7 @@ function lsMount() {
     <button type="button" class="btn small dark" data-ls="play" aria-pressed="false"></button>
     <button type="button" class="btn small" data-ls="rate" aria-label="${esc(t('lsSpeed'))}"></button>
     <button type="button" class="btn small" data-ls="stop" hidden>${t('lsStop')}</button>
+    <select class="ls-voice" aria-label="${esc(t('lsVoice'))}" hidden></select>
     <span class="ls-note muted"></span></div>`);
   bar.querySelector('.ls-row').addEventListener('click', e => {
     const b = e.target.closest('[data-ls]');
@@ -128,6 +164,13 @@ function lsMount() {
       if (ls.on) { const run = ++ls.run; lsSynth.cancel(); setTimeout(() => lsSpeak(run), 60); } else lsPaint();
     }
   });
+  const sel = bar.querySelector('.ls-voice');
+  sel.addEventListener('change', () => {
+    const l = lsLangOf(), c = lsChosen(); c[l] = sel.value;
+    try { localStorage.setItem('ma.lsVoice', JSON.stringify(c)); } catch (e) {}
+    if (ls.on) { const run = ++ls.run; lsSynth.cancel(); setTimeout(() => lsSpeak(run), 60); }
+  });
+  lsFillVoices();
   lsPaint();
   let auto = false;
   try { auto = sessionStorage.getItem('ma.lsAuto') === '1'; sessionStorage.removeItem('ma.lsAuto'); } catch (e) {}
@@ -136,6 +179,7 @@ function lsMount() {
 
 if (lsSynth) {
   lsSynth.getVoices();
+  lsSynth.addEventListener?.('voiceschanged', lsFillVoices);
   // Leaving the page stops the voice; a new reader page gets its controls.
   window.addEventListener('hashchange', () => { if (ls.on || ls.items.length) lsStop(); });
   window.addEventListener('pagehide', () => lsSynth.cancel());

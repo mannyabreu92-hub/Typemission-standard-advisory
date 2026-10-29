@@ -851,6 +851,7 @@ I18N.it = {
   "lsSpeed": "Velocità di lettura",
   "lsStop": "Ferma",
   "lsNoVoice": "Questo telefono non ha una voce in {lang}. Può aggiungerne una nelle impostazioni.",
+  "lsVoice": "Voce",
 };
 TR.it = {
   "2019": "2019",

@@ -851,6 +851,7 @@ I18N.de = {
   "lsSpeed": "Lesegeschwindigkeit",
   "lsStop": "Stopp",
   "lsNoVoice": "Dieses Telefon hat keine Stimme für {lang}. Sie können eine in den Einstellungen hinzufügen.",
+  "lsVoice": "Stimme",
 };
 TR.de = {
   "2019": "2019",

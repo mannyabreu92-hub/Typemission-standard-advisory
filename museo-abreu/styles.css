@@ -954,3 +954,4 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .ls-row [data-ls="rate"] { min-width: 3.4rem; font-variant-numeric: tabular-nums; }
 .ls-note { font-size: .85rem; font-variant-numeric: tabular-nums; }
 .reader-text .ls-now { background: color-mix(in srgb, var(--accent) 10%, transparent); box-shadow: -.6rem 0 0 color-mix(in srgb, var(--accent) 10%, transparent), .6rem 0 0 color-mix(in srgb, var(--accent) 10%, transparent); border-radius: 2px; transition: background .3s ease; }
+.ls-voice { font: inherit; font-size: .85rem; padding: .35rem .5rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); max-width: 11rem; }
