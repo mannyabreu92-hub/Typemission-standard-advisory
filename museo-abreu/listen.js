@@ -1,5 +1,7 @@
 // Listen: the museum's audio guide for the books. The phone's own voice (the Web Speech API) reads what is on
 // the page, word for word, in the edition's language: the free sample for everyone, the whole book for Pro.
+// The voice is a curator guiding visitors through a private exhibition, with the art historian's care and the
+// documentary narrator's depth: calm, poetic, thoughtful; never commercial, assistant-like or hurried.
 // The visitor chooses one of five museum voices (Curator, Storyteller, Scholar, Narrator, Collector), never a
 // technical voice name: each is a delivery (pace, pitch, breaths, expressiveness) given the phone's best voice
 // that suits it. The text is prepared as a narrator would read it: each sentence on its own, with a timed
@@ -12,17 +14,17 @@
 Object.assign(I18N.es, { lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
   lsNoVoice: 'Este teléfono no tiene voz en {lang}. Puede añadir una en sus ajustes.', lsMin: '{n} min',
   lsPcurator: 'Curador', lsPstoryteller: 'Narrador', lsPscholar: 'Erudito', lsPnarrator: 'Voz documental', lsPcollector: 'Coleccionista',
-  lsTcurator: 'Cálido y mesurado, como una visita privada.', lsTstoryteller: 'Expresivo y cercano.', lsTscholar: 'Pausado y preciso.',
+  lsTcurator: 'Sereno y poético, como una exposición privada.', lsTstoryteller: 'Cálido y cercano.', lsTscholar: 'Pausado y preciso.',
   lsTnarrator: 'Profundo, como un documental.', lsTcollector: 'Lento e íntimo.' });
 Object.assign(I18N.en, { lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
   lsNoVoice: 'This phone has no voice for {lang}. You can add one in its settings.', lsMin: '{n} min',
   lsPcurator: 'Curator', lsPstoryteller: 'Storyteller', lsPscholar: 'Scholar', lsPnarrator: 'Narrator', lsPcollector: 'Collector',
-  lsTcurator: 'Warm and measured, like a private tour.', lsTstoryteller: 'Expressive and close.', lsTscholar: 'Unhurried and precise.',
+  lsTcurator: 'Calm and poetic, like a private exhibition.', lsTstoryteller: 'Warm and close.', lsTscholar: 'Unhurried and precise.',
   lsTnarrator: 'Deep, like a documentary.', lsTcollector: 'Slow and intimate.' });
 Object.assign(I18N.fr, { lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
   lsNoVoice: 'Ce téléphone n’a pas de voix en {lang}. Vous pouvez en ajouter une dans ses réglages.', lsMin: '{n} min',
   lsPcurator: 'Conservateur', lsPstoryteller: 'Conteur', lsPscholar: 'Érudit', lsPnarrator: 'Narrateur', lsPcollector: 'Collectionneur',
-  lsTcurator: 'Chaleureux et mesuré, comme une visite privée.', lsTstoryteller: 'Expressif et proche.', lsTscholar: 'Posé et précis.',
+  lsTcurator: 'Calme et poétique, comme une exposition privée.', lsTstoryteller: 'Chaleureux et proche.', lsTscholar: 'Posé et précis.',
   lsTnarrator: 'Profond, comme un documentaire.', lsTcollector: 'Lent et intime.' });
 
 /* ---------- The five museum voices ---------- */
@@ -32,20 +34,20 @@ Object.assign(I18N.fr, { lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause'
 // (expressiveness). emph: how much slower a name or title is said. first: the museum's chosen voices, in order
 // (the Curator's: Samantha, Karen, Daniel (Enhanced), Eddy). like: the other phone voices that suit it.
 const LS_PERSONAS = {
-  curator: { rate: .9, pitch: .97, sentence: 420, para: 800, title: 1300, wave: 1, emph: .93,
+  curator: { rate: .88, pitch: .94, sentence: 480, para: 950, title: 1500, wave: .7, emph: .92,
     first: [/^samantha\b/i, /^karen\b/i, /^daniel\b.*enhanced/i, /^eddy\b/i],
     like: /^samantha\b|^karen\b|^daniel\b.*enhanced|^eddy\b|ava|zoe|serena|jorge|mónica|amélie|thomas|anna|alice|milena|luciana|kyoko/i },
-  storyteller: { rate: .95, pitch: 1.01, sentence: 340, para: 650, title: 1100, wave: 1.6, emph: .92,
+  storyteller: { rate: .92, pitch: .97, sentence: 400, para: 800, title: 1300, wave: 1.1, emph: .92,
     like: /karen|moira|tessa|kate|mónica|paulina|audrey|amélie|petra|federica|svetlana|joana|nanami|jenny|aria/i },
-  scholar: { rate: .88, pitch: .94, sentence: 480, para: 900, title: 1400, wave: .6, emph: .94,
+  scholar: { rate: .87, pitch: .93, sentence: 500, para: 950, title: 1500, wave: .5, emph: .94,
     like: /daniel|oliver|george|ryan|thomas|jorge|markus|luca|yuri|felipe|otoya|sonia/i },
-  narrator: { rate: .9, pitch: .91, sentence: 460, para: 950, title: 1600, wave: .9, emph: .9,
+  narrator: { rate: .88, pitch: .91, sentence: 500, para: 1000, title: 1700, wave: .7, emph: .9,
     like: /arthur|aaron|guy|brian|davis|christopher|andrew|nathan|juan|álvaro|alvaro|diego|henri|conrad|killian|cosimo|dmitry|duarte|keita/i },
-  collector: { rate: .85, pitch: .93, sentence: 520, para: 1000, title: 1500, wave: .8, emph: .93,
+  collector: { rate: .84, pitch: .92, sentence: 560, para: 1100, title: 1700, wave: .6, emph: .93,
     like: /serena|kate|martha|stephanie|catherine|libby|sonia|elsa|denise|eloise|helena|katja|isabella|dariya|francisca|mayu/i },
 };
 const LS_ORDER = ['curator', 'storyteller', 'scholar', 'narrator', 'collector'];
-const LS_RATES = [1, 1.15, 1.3, .85];
+const LS_RATES = [1, 1.1, 1.2, .9];
 const LS_WAVE = [0, .035, -.02, .025, -.03, .015];
 const lsGet = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const ls = { on: false, i: 0, run: 0, items: [], lang: '', rate: +lsGet('ma.lsRate', 1) || 1, persona: LS_PERSONAS[lsGet('ma.lsPersona', '')] ? lsGet('ma.lsPersona') : 'curator', lock: null };
@@ -115,17 +117,18 @@ function lsSegments(s) {
 const lsBreaths = s => s.replace(/\.{3,}/g, '…').replace(/(?<!\d)[:;](?!\d)/g, '... ').replace(/[.。]+$/, '')
   .replace(/,(?=\S)/g, ', ').replace(/…/g, '... ').replace(/\s+/g, ' ').trim();
 
-// Each sentence's own tone and pace: questions rise, exclamations lift, a short sentence lands slower, a long
-// one moves on, quoted words take a slightly other tone.
+// Each sentence's own tone and pace, calm throughout, as a curator speaks in a private exhibition: a question
+// rises a little, an exclamation is warmed, never hurried; a short sentence lands slower; a long one keeps its
+// pace; quoted words take a slightly other tone. Nothing speeds up for effect.
 function lsTone(s, k, first, p) {
   const end = s.replace(/["')\]\s]+$/, '').slice(-1);
   let pitch = p.pitch + LS_WAVE[k % LS_WAVE.length] * p.wave, rate = p.rate;
-  if (end === '?' || end === '？') pitch += .07;
-  if (end === '!' || end === '！') { pitch += .05; rate += .03; }
-  if (/^"/.test(s)) pitch += .03;
-  if (s.length < 60) rate -= .04; else if (s.length > 170) rate += .04;
+  if (end === '?' || end === '？') pitch += .04;
+  if (end === '!' || end === '！') pitch += .02;
+  if (/^"/.test(s)) pitch += .02;
+  if (s.length < 60) rate -= .04;
   if (first) rate -= .02;
-  return { pitch: Math.min(1.25, Math.max(.8, pitch)), rate };
+  return { pitch: Math.min(1.1, Math.max(.8, pitch)), rate };
 }
 
 // What is read: the chapter's title and text, not the notes around it (the end of the sample, credits, loading).
