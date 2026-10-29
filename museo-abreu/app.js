@@ -1081,6 +1081,10 @@ function applyLang(l, remember = true) {
   document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
   langSelect.value = l;
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  // A book open in the reader follows the new language, at the same chapter, when it has that edition.
+  const bm = main.firstChild && location.hash.match(/^#\/(leer|buscar|fundamentos)\/([a-z]{2})(\/.*)?$/);
+  if (bm && bm[2] !== l && (bm[1] === 'fundamentos' ? typeof FUND_EDITIONS === 'object' && FUND_EDITIONS[l]
+    : EDITIONS.some(e => e.lang === l && e.status === 'available'))) history.replaceState(null, '', `#/${bm[1]}/${l}${bm[3] || ''}`);
   // Re-render in place; the booking in progress is kept.
   const y = window.scrollY;
   route();

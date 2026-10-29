@@ -1,5 +1,5 @@
 // Offline shell: the app opens without a connection (e.g. to show a ticket QR).
-const CACHE = 'museo-abreu-v109';
+const CACHE = 'museo-abreu-v110';
 const SHELL = ['./', 'index.html', 'styles.css', 'i18n.js', 'sample-en.js', 'sample-es.js', 'sample-fr.js', 'sample-de.js', 'sample-ru.js', 'sample-it.js', 'sample-pt.js', 'sample-ja.js', 'data.js', 'manifestos.js', 'manifestos-text.js', 'booking-config.js', 'features.js', 'gabangi.js', 'content.js', 'rsvp.js', 'checkout.js', 'auction-config.js', 'market.js', 'events-page.js', 'admin.js', 'story.js', 'aftercare.js', 'insights.js', 'remind.js', 'wishlist.js', 'alerts.js', 'newsletter.js', 'scanner.js', 'kit.js', 'contact.js', 'legal.js', 'fullbook.js', 'bookplus.js', 'sample-fund.js', 'fundamentos-parse.js', 'fundamentos.js', 'listen.js', 'director.js', 'app.js', 'agent-widget.js', 'icon.svg', 'manifest.webmanifest',
   'qrcode.js', 'img/escaping-being.jpg', 'img/passion.jpg', 'img/petrichor.jpg', 'img/resilience.jpg', 'img/limerence.jpg', 'img/echoes-of-memory.jpg',
   'img/time-on-my-face.jpg',
