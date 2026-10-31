@@ -161,7 +161,7 @@ function lsSpeak(run) {
     u.lang = voice ? voice.lang : ls.lang; if (voice) u.voice = voice;
     u.rate = tone.rate * (st.emph ? p.emph : 1) * ls.rate; u.pitch = tone.pitch - (st.emph ? .02 : 0); u.volume = 1;
     // A breath after each sentence, a longer one after a short sentence that should land; none inside one.
-    u.onend = () => st.last && n < steps.length ? setTimeout(next, (p.sentence + (st.s.length < 60 ? 220 : 0)) / ls.rate) : next();
+    u.onend = () => (ls.spoke = true) && st.last && n < steps.length ? setTimeout(next, (p.sentence + (st.s.length < 60 ? 220 : 0)) / ls.rate) : next();
     u.onstart = () => { ls.spoke = true; };
     u.onerror = e => { if (run === ls.run && e.error !== 'interrupted' && e.error !== 'canceled') lsStop(); };
     lsSynth.speak(u);
