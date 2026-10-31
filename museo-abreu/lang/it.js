@@ -864,6 +864,11 @@ I18N.it = {
   "lsTnarrator": "Profondo, come un documentario.",
   "lsTcollector": "Lento e intimo.",
   "lsSample": "Ascolta l’estratto",
+  "lsOscar": "La voce di Oscar Abreu",
+  "lsOscarNote": "Letto con la voce di Oscar Abreu, ricreata con l’intelligenza artificiale con il suo consenso.",
+  "lsAudioErr": "Non è stato possibile caricare l’audio. Controlla la connessione.",
+  "lsEmmanuel": "Letto da Emmanuel",
+  "lsEmmanuelNote": "La voce di Emmanuel, ricreata con l’intelligenza artificiale.",
 };
 TR.it = {
   "2019": "2019",

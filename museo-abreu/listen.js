@@ -11,17 +11,17 @@
 // back, the screen stays awake, and the chapter's remaining minutes show. At the end of a chapter the next
 // one follows, unless the page ends on the end of the free sample. Pausing resumes at the paragraph's start.
 
-Object.assign(I18N.es, { lsOscar: 'Voz de Oscar Abreu', lsOscarNote: 'Narrado con la voz de Oscar Abreu, recreada con inteligencia artificial con su permiso.', lsAudioErr: 'No se pudo cargar el audio. Revise su conexión.', lsSample: 'Escuchar la muestra', lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
+Object.assign(I18N.es, { lsEmmanuel: 'Leído por Emmanuel', lsEmmanuelNote: 'La voz de Emmanuel, recreada con inteligencia artificial.', lsOscar: 'Voz de Oscar Abreu', lsOscarNote: 'Narrado con la voz de Oscar Abreu, recreada con inteligencia artificial con su permiso.', lsAudioErr: 'No se pudo cargar el audio. Revise su conexión.', lsSample: 'Escuchar la muestra', lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
   lsNoVoice: 'Este teléfono no tiene voz en {lang}. Puede añadir una en sus ajustes.', lsMin: '{n} min',
   lsPcurator: 'Curador', lsPstoryteller: 'Narrador', lsPscholar: 'Erudito', lsPnarrator: 'Voz documental', lsPcollector: 'Coleccionista',
   lsTcurator: 'Sereno y poético, como una exposición privada.', lsTstoryteller: 'Cálido y cercano.', lsTscholar: 'Pausado y preciso.',
   lsTnarrator: 'Profundo, como un documental.', lsTcollector: 'Lento e íntimo.' });
-Object.assign(I18N.en, { lsOscar: 'Oscar Abreu’s voice', lsOscarNote: 'Narrated in Oscar Abreu’s own voice, recreated with AI with his permission.', lsAudioErr: 'The audio could not be loaded. Check your connection.', lsSample: 'Listen to the sample', lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
+Object.assign(I18N.en, { lsEmmanuel: 'Read by Emmanuel', lsEmmanuelNote: 'Emmanuel’s voice, recreated with AI.', lsOscar: 'Oscar Abreu’s voice', lsOscarNote: 'Narrated in Oscar Abreu’s own voice, recreated with AI with his permission.', lsAudioErr: 'The audio could not be loaded. Check your connection.', lsSample: 'Listen to the sample', lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
   lsNoVoice: 'This phone has no voice for {lang}. You can add one in its settings.', lsMin: '{n} min',
   lsPcurator: 'Curator', lsPstoryteller: 'Storyteller', lsPscholar: 'Scholar', lsPnarrator: 'Narrator', lsPcollector: 'Collector',
   lsTcurator: 'Calm and poetic, like a private exhibition.', lsTstoryteller: 'Warm and close.', lsTscholar: 'Unhurried and precise.',
   lsTnarrator: 'Deep, like a documentary.', lsTcollector: 'Slow and intimate.' });
-Object.assign(I18N.fr, { lsOscar: 'La voix d’Oscar Abreu', lsOscarNote: 'Lu avec la voix d’Oscar Abreu, recréée par intelligence artificielle avec son accord.', lsAudioErr: 'L’audio n’a pas pu être chargé. Vérifiez votre connexion.', lsSample: 'Écouter l’extrait', lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
+Object.assign(I18N.fr, { lsEmmanuel: 'Lu par Emmanuel', lsEmmanuelNote: 'La voix d’Emmanuel, recréée par intelligence artificielle.', lsOscar: 'La voix d’Oscar Abreu', lsOscarNote: 'Lu avec la voix d’Oscar Abreu, recréée par intelligence artificielle avec son accord.', lsAudioErr: 'L’audio n’a pas pu être chargé. Vérifiez votre connexion.', lsSample: 'Écouter l’extrait', lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
   lsNoVoice: 'Ce téléphone n’a pas de voix en {lang}. Vous pouvez en ajouter une dans ses réglages.', lsMin: '{n} min',
   lsPcurator: 'Conservateur', lsPstoryteller: 'Conteur', lsPscholar: 'Érudit', lsPnarrator: 'Narrateur', lsPcollector: 'Collectionneur',
   lsTcurator: 'Calme et poétique, comme une exposition privée.', lsTstoryteller: 'Chaleureux et proche.', lsTscholar: 'Posé et précis.',
@@ -202,8 +202,10 @@ function lsRecTarget() {
   const rec = c && lsIndex && lsIndex[m[1]] && lsIndex[m[1]][c.key];
   // A chapter recorded only as far as the free sample: a reader of the whole book hears it all in the phone's voice.
   if (!rec || (rec.partial && typeof readsWhole === 'function' && readsWhole(m[1]))) return null;
-  return { lang: m[1], sec: c.key };
+  return { lang: m[1], sec: c.key, voice: rec.voice || 'oscar' };
 }
+// Whose voice a recording is in, as the reader names it: [label, note].
+const LS_VOICES = { oscar: ['lsOscar', 'lsOscarNote'], emmanuel: ['lsEmmanuel', 'lsEmmanuelNote'] };
 const lsAudio = () => ls.audio ||= Object.assign(new Audio(), { preload: 'auto' });
 const lsNorm = x => String(x).replace(/[«»“”"'’‘]/g, '').replace(/\s*[—–]\s*/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 40);
 function lsPartUrl(n) {
@@ -338,12 +340,13 @@ function lsPaint(note) {
   play.setAttribute('aria-pressed', String(ls.on));
   row.querySelector('[data-ls="rate"]').textContent = String(ls.rate).replace('.', lang === 'en' ? '.' : ',') + '×';
   row.querySelector('[data-ls="stop"]').hidden = !started;
-  const oscar = !!lsRecTarget(), sel = row.querySelector('.ls-voice');
-  sel.value = ls.persona; sel.hidden = oscar;
-  row.querySelector('.ls-oscar').hidden = !oscar;
+  const oscar = lsRecTarget(), sel = row.querySelector('.ls-voice'), who = row.querySelector('.ls-oscar');
+  sel.value = ls.persona; sel.hidden = !!oscar;
+  who.hidden = !oscar;
+  if (oscar) who.textContent = t(LS_VOICES[oscar.voice] ? LS_VOICES[oscar.voice][0] : 'lsOscar');
   row.querySelector('.ls-note').textContent = note || (started
     ? `${Math.min(ls.i + 1, ls.items.length)} / ${ls.items.length} · ${t('lsMin', { n: lsMinutesLeft() })}`
-    : oscar ? t('lsOscarNote') : t('lsT' + ls.persona));
+    : oscar ? t(LS_VOICES[oscar.voice] ? LS_VOICES[oscar.voice][1] : 'lsOscarNote') : t('lsT' + ls.persona));
 }
 
 function lsMount() {

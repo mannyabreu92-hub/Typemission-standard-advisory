@@ -864,6 +864,11 @@ I18N.de = {
   "lsTnarrator": "Tief, wie ein Dokumentarfilm.",
   "lsTcollector": "Langsam und intim.",
   "lsSample": "Leseprobe anhören",
+  "lsOscar": "Die Stimme von Oscar Abreu",
+  "lsOscarNote": "Gelesen mit Oscar Abreus eigener Stimme, mit KI nachgebildet, mit seiner Zustimmung.",
+  "lsAudioErr": "Der Ton konnte nicht geladen werden. Prüfen Sie Ihre Verbindung.",
+  "lsEmmanuel": "Gelesen von Emmanuel",
+  "lsEmmanuelNote": "Emmanuels Stimme, mit KI nachgebildet.",
 };
 TR.de = {
   "2019": "2019",

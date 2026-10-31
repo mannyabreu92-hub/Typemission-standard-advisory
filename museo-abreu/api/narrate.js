@@ -111,9 +111,11 @@ module.exports = async (req, res) => {
       .filter(p => Number.isInteger(p.n));
     if (!parts.length) return res.status(400).json({ error: 'parts' });
     const at = new Date().toISOString();
-    await writeJSON(`${dir}.json`, { parts, partial: !!b.partial, at });
+    // Whose voice it is (the reader names it): oscar unless the recorder says otherwise.
+    const voice = /^[a-z]{2,20}$/.test(String(b.voice)) ? b.voice : 'oscar';
+    await writeJSON(`${dir}.json`, { parts, partial: !!b.partial, voice, at });
     const idx = (await readJSON('audio/index.json')) || {};
-    (idx[b.lang] ||= {})[b.sec] = { at, parts: parts.length, partial: !!b.partial };
+    (idx[b.lang] ||= {})[b.sec] = { at, parts: parts.length, partial: !!b.partial, voice };
     await writeJSON('audio/index.json', idx);
     return res.status(200).json({ index: idx });
   }
