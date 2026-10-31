@@ -964,3 +964,4 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .reader-text .ls-now::before { content: ''; position: absolute; inset-inline-start: -.75rem; top: .3em; bottom: .3em; width: 2px; background: var(--accent); border-radius: 2px; }
 @media (prefers-reduced-motion: reduce) { .reader-text .ls-now, .reader-text.ls-listening p { transition: none; } }
 .dir-book .dir-listen { margin-top: .6rem; }
+.ls-oscar { font-family: var(--serif); font-style: italic; font-size: 1.05rem; padding: .3rem .2rem; color: var(--ink); }

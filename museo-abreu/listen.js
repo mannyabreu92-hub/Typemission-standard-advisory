@@ -11,17 +11,17 @@
 // back, the screen stays awake, and the chapter's remaining minutes show. At the end of a chapter the next
 // one follows, unless the page ends on the end of the free sample. Pausing resumes at the paragraph's start.
 
-Object.assign(I18N.es, { lsSample: 'Escuchar la muestra', lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
+Object.assign(I18N.es, { lsOscar: 'Voz de Oscar Abreu', lsOscarNote: 'Narrado con la voz de Oscar Abreu, recreada con inteligencia artificial con su permiso.', lsAudioErr: 'No se pudo cargar el audio. Revise su conexión.', lsSample: 'Escuchar la muestra', lsVoice: 'Voz', lsListen: 'Escuchar', lsPause: 'Pausa', lsResume: 'Continuar', lsSpeed: 'Ritmo de lectura', lsStop: 'Detener',
   lsNoVoice: 'Este teléfono no tiene voz en {lang}. Puede añadir una en sus ajustes.', lsMin: '{n} min',
   lsPcurator: 'Curador', lsPstoryteller: 'Narrador', lsPscholar: 'Erudito', lsPnarrator: 'Voz documental', lsPcollector: 'Coleccionista',
   lsTcurator: 'Sereno y poético, como una exposición privada.', lsTstoryteller: 'Cálido y cercano.', lsTscholar: 'Pausado y preciso.',
   lsTnarrator: 'Profundo, como un documental.', lsTcollector: 'Lento e íntimo.' });
-Object.assign(I18N.en, { lsSample: 'Listen to the sample', lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
+Object.assign(I18N.en, { lsOscar: 'Oscar Abreu’s voice', lsOscarNote: 'Narrated in Oscar Abreu’s own voice, recreated with AI with his permission.', lsAudioErr: 'The audio could not be loaded. Check your connection.', lsSample: 'Listen to the sample', lsVoice: 'Voice', lsListen: 'Listen', lsPause: 'Pause', lsResume: 'Resume', lsSpeed: 'Reading pace', lsStop: 'Stop',
   lsNoVoice: 'This phone has no voice for {lang}. You can add one in its settings.', lsMin: '{n} min',
   lsPcurator: 'Curator', lsPstoryteller: 'Storyteller', lsPscholar: 'Scholar', lsPnarrator: 'Narrator', lsPcollector: 'Collector',
   lsTcurator: 'Calm and poetic, like a private exhibition.', lsTstoryteller: 'Warm and close.', lsTscholar: 'Unhurried and precise.',
   lsTnarrator: 'Deep, like a documentary.', lsTcollector: 'Slow and intimate.' });
-Object.assign(I18N.fr, { lsSample: 'Écouter l’extrait', lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
+Object.assign(I18N.fr, { lsOscar: 'La voix d’Oscar Abreu', lsOscarNote: 'Lu avec la voix d’Oscar Abreu, recréée par intelligence artificielle avec son accord.', lsAudioErr: 'L’audio n’a pas pu être chargé. Vérifiez votre connexion.', lsSample: 'Écouter l’extrait', lsVoice: 'Voix', lsListen: 'Écouter', lsPause: 'Pause', lsResume: 'Reprendre', lsSpeed: 'Rythme de lecture', lsStop: 'Arrêter',
   lsNoVoice: 'Ce téléphone n’a pas de voix en {lang}. Vous pouvez en ajouter une dans ses réglages.', lsMin: '{n} min',
   lsPcurator: 'Conservateur', lsPstoryteller: 'Conteur', lsPscholar: 'Érudit', lsPnarrator: 'Narrateur', lsPcollector: 'Collectionneur',
   lsTcurator: 'Calme et poétique, comme une exposition privée.', lsTstoryteller: 'Chaleureux et proche.', lsTscholar: 'Posé et précis.',
@@ -173,9 +173,9 @@ function lsSpeak(run) {
 
 // The screen stays awake while listening (a locked phone stops the voice), and the phone's lock screen and
 // headphone buttons show and control the book where the browser allows it.
-async function lsAwake(on) {
+async function lsAwake(on, audio) {
   try {
-    if (on && !ls.lock && navigator.wakeLock) ls.lock = await navigator.wakeLock.request('screen');
+    if (on && !audio && !ls.lock && navigator.wakeLock) ls.lock = await navigator.wakeLock.request('screen');
     if (!on && ls.lock) { await ls.lock.release(); ls.lock = null; }
   } catch (e) { ls.lock = null; }
   if (!('mediaSession' in navigator)) return;
@@ -187,9 +187,85 @@ async function lsAwake(on) {
   } catch (e) {}
 }
 
+/* ---------- Oscar Abreu's voice: the recorded book ---------- */
+
+// Where a chapter of Ecce Homo is recorded in Oscar Abreu's voice (api/audio.js), Listen plays the recording
+// instead of the phone's voice: part by part (a paragraph each), the paragraph being heard lit, at the chosen
+// speed, the next part fetched while one plays. It goes on with the screen locked, like any audiobook. The
+// free sample's parts are open to everyone; the rest to Pro and owners of the edition (the reading token).
+const LS_SILENT = 'data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjYwLjE2LjEwMAAAAAAAAAAAAAAA//NwwAAAAAAAAAAAAEluZm8AAAAPAAAABAAAAlgAenp6enp6enp6enp6enp6enp6enp6enp6pqampqampqampqampqampqampqampqamptPT09PT09PT09PT09PT09PT09PT09PT09P/////////////////////////////////AAAAAExhdmM2MC4zMQAAAAAAAAAAAAAAACQCcQAAAAAAAAJY+/rsqgAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVUxBTUUzLjEwMFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV//NCxKMAAANIAAAAAFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV';
+let lsIndex = null, lsIndexP = null;
+const lsLoadIndex = () => lsIndexP ||= fetch('/api/audio?index=1').then(r => r.ok ? r.json() : {}).catch(() => ({})).then(x => (lsIndex = x || {}));
+// The recorded section on screen: Ecce Homo's reader, an edition and chapter in the index.
+function lsRecTarget() {
+  const m = location.hash.match(/^#\/leer\/([a-z]{2})\/(\d+)/), c = m && typeof CHAPTERS !== 'undefined' && CHAPTERS[+m[2]];
+  return c && lsIndex && lsIndex[m[1]] && lsIndex[m[1]][c.key] ? { lang: m[1], sec: c.key } : null;
+}
+const lsAudio = () => ls.audio ||= Object.assign(new Audio(), { preload: 'auto' });
+const lsNorm = x => String(x).replace(/[«»“”"'’‘]/g, '').replace(/\s*[—–]\s*/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().slice(0, 40);
+function lsPartUrl(n) {
+  const r = ls.rec, rd = typeof fbReader === 'function' ? fbReader() : null;
+  if (r.urls[n]) return r.urls[n];
+  const q = `lang=${r.lang}&ch=${r.sec}&n=${n}` + (rd ? `&e=${rd.e}&t=${rd.t}` : '');
+  return r.urls[n] = fetch('/api/audio?' + q).then(x => { if (!x.ok) throw new Error(x.status); return x.blob(); }).then(b => URL.createObjectURL(b));
+}
+async function lsRecStart() {
+  const a = lsAudio(), target = lsRecTarget();
+  // The first sound must start within the tap on an iPhone: a moment of silence unlocks the player for what follows.
+  if (!ls.unlocked) { a.src = LS_SILENT; a.play().catch(() => {}); ls.unlocked = true; }
+  const art = document.querySelector('.reader-text');
+  // Resuming: mid-paragraph where it stopped, or with the next paragraph if it stopped between two.
+  if (ls.rec && ls.rec.sec === target.sec && ls.rec.lang === target.lang && ls.rec.started) {
+    const run = ++ls.run; ls.on = true;
+    if (a.ended || !a.currentTime) return lsRecPlay(run);
+    a.onended = () => lsRecNext(run); a.playbackRate = ls.rate; a.play().catch(() => {}); return lsPaint();
+  }
+  if (art.querySelector('#fb-text .muted')) { if ((ls.wait = (ls.wait || 0) + 1) < 40) setTimeout(lsRecStart, 250); return; }
+  ls.wait = 0;
+  const rd = typeof fbReader === 'function' ? fbReader() : null;
+  ls.on = true; ls.items = lsItems(art); ls.i = 0; lsPaint();
+  try {
+    const r = await fetch(`/api/audio?lang=${target.lang}&ch=${target.sec}` + (rd ? `&e=${rd.e}&t=${rd.t}` : ''));
+    const man = r.ok ? await r.json() : null;
+    if (!man) throw new Error('none');
+    // A locked chapter for a reader without Pro: nothing to hear here.
+    if (!man.parts.length) { ls.on = false; ls.items = []; return lsPaint(); }
+    ls.rec = { ...target, parts: man.parts, k: 0, urls: {}, started: false };
+    lsRecPlay(ls.run);
+  } catch (e) { ls.on = false; ls.items = []; lsPaint(t('lsAudioErr')); }
+}
+// A breath between paragraphs, a longer one after a title.
+function lsRecNext(run) {
+  const r = ls.rec;
+  if (!r || run !== ls.run) return;
+  const head = r.parts[r.k] && r.parts[r.k].head;
+  r.k++;
+  setTimeout(() => lsRecPlay(run), (head ? 700 : 350) / ls.rate);
+}
+async function lsRecPlay(run) {
+  const r = ls.rec;
+  if (!r || run !== ls.run || !ls.on) return;
+  const part = r.parts[r.k];
+  if (!part) return lsEnd();
+  const el = ls.items.find(x => lsNorm(x.textContent).startsWith(lsNorm(part.first).slice(0, 30)));
+  if (el) { ls.i = ls.items.indexOf(el); lsMark(el); }
+  try {
+    const url = await lsPartUrl(part.n);
+    if (r.parts[r.k + 1]) lsPartUrl(r.parts[r.k + 1].n).catch(() => {});
+    if (run !== ls.run || !ls.on) return;
+    const a = lsAudio();
+    a.src = url; a.playbackRate = ls.rate; r.started = true;
+    a.onended = () => lsRecNext(run);
+    await a.play();
+    lsAwake(true, true); lsPaint();
+  } catch (e) { if (run === ls.run) { ls.on = false; lsPaint(t('lsAudioErr')); } }
+}
+
 function lsStart(fromAuto) {
   const art = document.querySelector('.reader-text');
   if (!art) return;
+  if (lsRecTarget()) return lsRecStart();
+  if (!lsSynth) return;
   ls.lang = (art.getAttribute('lang') || lang).slice(0, 2);
   const { known, cast } = lsCast(ls.lang);
   if (known && !cast.curator) { lsPaint(t('lsNoVoice', { lang: L(LANG_NAMES[ls.lang] || { en: ls.lang }) })); return; }
@@ -208,10 +284,24 @@ function lsStart(fromAuto) {
   // A voice that was just stopped needs a moment on some phones; the first one must start within the tap (iPhone).
   if (lsSynth.speaking || lsSynth.pending) { lsSynth.cancel(); setTimeout(() => lsSpeak(run), 60); } else lsSpeak(run);
 }
-const lsRestart = () => { if (!ls.on) return lsPaint(); const run = ++ls.run; lsSynth.cancel(); setTimeout(() => lsSpeak(run), 60); };
+const lsRestart = () => {
+  if (ls.rec) { lsAudio().playbackRate = ls.rate; return lsPaint(); }
+  if (!ls.on) return lsPaint(); const run = ++ls.run; lsSynth.cancel(); setTimeout(() => lsSpeak(run), 60);
+};
 
-function lsPause() { ls.on = false; ls.run++; lsSynth.cancel(); lsAwake(false); lsPaint(); }
-function lsStop() { lsPause(); ls.i = 0; ls.items = []; lsMark(null); lsAwake(false); lsPaint(); }
+// A recording pauses where it is and resumes there; the phone's voice resumes at the paragraph's start.
+function lsPause() {
+  ls.on = false;
+  if (ls.rec) { ls.run++; lsAudio().pause(); return lsPaint(); }
+  ls.run++; lsSynth && lsSynth.cancel(); lsAwake(false); lsPaint();
+}
+function lsStop() {
+  ls.on = false; ls.run++;
+  if (ls.audio) { ls.audio.pause(); ls.audio.onended = null; }
+  if (ls.rec) Object.values(ls.rec.urls).forEach(p => p.then(u => URL.revokeObjectURL(u)).catch(() => {}));
+  ls.rec = null; lsSynth && lsSynth.cancel();
+  ls.i = 0; ls.items = []; lsMark(null); lsAwake(false); lsPaint();
+}
 
 // At the end of a chapter the next one follows, when there is one to read.
 function lsEnd() {
@@ -234,7 +324,7 @@ document.addEventListener('click', e => { if (e.target.closest('[data-ls-start]'
 // The chapter's remaining minutes, at the voice's pace (about 150 words a minute at 1×).
 function lsMinutesLeft() {
   const words = ls.items.slice(ls.i).reduce((n, el) => n + (el.textContent.match(/\S+/g) || []).length, 0);
-  return Math.max(1, Math.round(words / (150 * LS_PERSONAS[ls.persona].rate * ls.rate)));
+  return Math.max(1, Math.round(words / (150 * (ls.rec ? .95 : LS_PERSONAS[ls.persona].rate) * ls.rate)));
 }
 
 function lsPaint(note) {
@@ -245,17 +335,21 @@ function lsPaint(note) {
   play.setAttribute('aria-pressed', String(ls.on));
   row.querySelector('[data-ls="rate"]').textContent = String(ls.rate).replace('.', lang === 'en' ? '.' : ',') + '×';
   row.querySelector('[data-ls="stop"]').hidden = !started;
-  row.querySelector('.ls-voice').value = ls.persona;
+  const oscar = !!lsRecTarget(), sel = row.querySelector('.ls-voice');
+  sel.value = ls.persona; sel.hidden = oscar;
+  row.querySelector('.ls-oscar').hidden = !oscar;
   row.querySelector('.ls-note').textContent = note || (started
     ? `${Math.min(ls.i + 1, ls.items.length)} / ${ls.items.length} · ${t('lsMin', { n: lsMinutesLeft() })}`
-    : t('lsT' + ls.persona));
+    : oscar ? t('lsOscarNote') : t('lsT' + ls.persona));
 }
 
 function lsMount() {
   const bar = document.querySelector('.reader-bar');
-  if (!lsSynth || !bar || bar.querySelector('.ls-row')) return;
+  if (!bar || bar.querySelector('.ls-row')) return;
+  if (!lsSynth && !(lsIndex && lsRecTarget())) return;
   bar.insertAdjacentHTML('beforeend', `<div class="ls-row" role="group" aria-label="${esc(t('lsListen'))}">
     <button type="button" class="btn small dark ls-play" data-ls="play" aria-pressed="false"></button>
+    <span class="ls-oscar" hidden>${t('lsOscar')}</span>
     <select class="ls-voice" aria-label="${esc(t('lsVoice'))}">${LS_ORDER.map(p => `<option value="${p}">${t('lsP' + p)}</option>`).join('')}</select>
     <button type="button" class="btn small" data-ls="rate" aria-label="${esc(t('lsSpeed'))}"></button>
     <button type="button" class="btn small" data-ls="stop" aria-label="${esc(t('lsStop'))}" hidden><span aria-hidden="true">■</span></button>
@@ -283,8 +377,9 @@ function lsMount() {
   if (auto) lsStart(true);
 }
 
-if (lsSynth) {
-  lsSynth.getVoices();
+if (lsSynth) lsSynth.getVoices();
+lsLoadIndex().then(() => { lsMount(); lsPaint(); });
+{
   if ('mediaSession' in navigator) try {
     navigator.mediaSession.setActionHandler('play', () => lsStart());
     navigator.mediaSession.setActionHandler('pause', () => lsPause());
@@ -293,8 +388,8 @@ if (lsSynth) {
   // Leaving the page stops the voice; a new reader page gets its controls; coming back to the app re-asks for
   // the awake screen, which the phone drops when the app is hidden.
   window.addEventListener('hashchange', () => { if (ls.on || ls.items.length) lsStop(); });
-  window.addEventListener('pagehide', () => lsSynth.cancel());
-  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && ls.on) { ls.lock = null; lsAwake(true); } });
+  window.addEventListener('pagehide', () => lsSynth && lsSynth.cancel());
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && ls.on && !ls.rec) { ls.lock = null; lsAwake(true); } });
   new MutationObserver(() => {
     if (ls.items.length && !ls.items[0].isConnected) lsStop();
     lsMount();

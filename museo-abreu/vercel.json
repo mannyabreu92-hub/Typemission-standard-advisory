@@ -101,6 +101,9 @@
     },
     "api/calendar.js": {
       "includeFiles": "{index.html,seo/*.json}"
+    },
+    "api/narrate.js": {
+      "maxDuration": 60
     }
   }
 }
