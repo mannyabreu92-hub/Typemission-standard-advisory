@@ -10,6 +10,9 @@
 //   POST make { lang, sec, n, text, prev, next } → records part n as audio/<lang>/<sec>/<n>.mp3
 //   POST done { lang, sec, parts, partial } → audio/<lang>/<sec>.json and audio/index.json (api/audio.js)
 //   POST remove { lang, sec }             → deletes the section's recording
+// Recordings made elsewhere (Oscar Abreu's voice cloned with the open-source Chatterbox model, run outside
+// Vercel): make with { mp3: base64 } stores that part as it is, without ElevenLabs. Such a recorder signs in
+// with NARRATE_UPLOAD_KEY (x-narrate-key) instead of the dashboard password.
 const crypto = require('crypto');
 const { put, list, del } = require('@vercel/blob');
 const { readJSON, writeJSON } = require('./_lib');
@@ -56,8 +59,9 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const pass = process.env.ADMIN_PASSWORD;
   if (!pass) return res.status(503).json({ error: 'not-configured' });
-  const given = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
-  if (!given || !same(given, pass)) { await new Promise(r => setTimeout(r, 800)); return res.status(401).json({ error: 'password' }); }
+  const given = String(req.headers.authorization || '').replace(/^Bearer\s+/i, ''), upKey = process.env.NARRATE_UPLOAD_KEY, upGiven = String(req.headers['x-narrate-key'] || '');
+  const byRecorder = !!(upKey && upGiven && same(upGiven, upKey));
+  if (!byRecorder && (!given || !same(given, pass))) { await new Promise(r => setTimeout(r, 800)); return res.status(401).json({ error: 'password' }); }
   const configured = !!(KEY() && VOICE());
 
   if (req.method === 'GET') {
@@ -85,8 +89,14 @@ module.exports = async (req, res) => {
     return res.status(200).json({ parts, chars: parts.reduce((n, p) => n + p.text.length, 0), partial });
   }
   if (b.action === 'make') {
-    if (!configured) return res.status(503).json({ error: 'elevenlabs' });
     const n = Number(b.n), text = String(b.text || '');
+    if (b.mp3) {
+      const mp3 = Buffer.from(String(b.mp3), 'base64');
+      if (!Number.isInteger(n) || n < 0 || n > 999 || mp3.length < 200 || mp3.length > 3e6) return res.status(400).json({ error: 'request' });
+      await put(`${dir}/${n}.mp3`, mp3, { access: 'private', contentType: 'audio/mpeg', addRandomSuffix: false, allowOverwrite: true });
+      return res.status(200).json({ ok: true, n, bytes: mp3.length });
+    }
+    if (!configured) return res.status(503).json({ error: 'elevenlabs' });
     if (!Number.isInteger(n) || n < 0 || n > 999 || !text.trim() || text.length > 9000) return res.status(400).json({ error: 'request' });
     try {
       const mp3 = await speak(text, b.prev, b.next);
