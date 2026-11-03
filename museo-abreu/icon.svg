@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#16120f"/>
+  <path d="M70 120 L200 96 L300 130 L440 104 L452 250 L420 410 L280 432 L150 404 L60 420 L84 270 Z" fill="#c2410c"/>
+  <path d="M150 170 L260 150 L380 180 L370 330 L250 370 L140 340 Z" fill="#f6f1e9" opacity=".92"/>
+  <text x="256" y="318" text-anchor="middle" font-family="Georgia, serif" font-size="190" font-weight="700" fill="#16120f">A</text>
+</svg>
