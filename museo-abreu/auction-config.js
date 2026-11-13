@@ -2,9 +2,8 @@
 // (To end it live at an event instead, set `live` to { event, tier } from EVENTS, e.g. the ART GABANGI dinner.)
 // Shared by the app and the bidding server (api/auction.js), which enforces these rules.
 //
-// A lot opens for online bids only when it has a starting bid and a closing time. The lots below
-// are EXAMPLES (example: true) until the museum confirms which works go to auction and the closing date:
-// to publish one, remove `example: true` and set `closesAt` (here, or on the lot).
+// A lot opens for online bids only when it has a starting bid and a closing time. A lot marked
+// `example: true` is hidden (the two sculptures below, until the museum confirms them).
 var AUCTION = {
   live: null,                                     // online only (no live finale)
   increment: 100,                                 // USD; each bid must beat the current one by this much
@@ -14,6 +13,13 @@ var AUCTION = {
   softClose: { window: 120, extend: 120 },
   closesAt: '2026-12-15T20:00:00-04:00',          // December 15, 2026, 8 pm in Santo Domingo (AST)
   lots: [
+    // Paintings by Oscar Abreu, from the works on oscarabreu.com (the miniature Pasión is sold, so it is not offered).
+    { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000 },
+    { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000 },
+    { id: 'time-on-my-face', kind: 'painting', work: 'time-on-my-face', title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face', fr: 'Le temps sur mon visage' }, img: 'img/time-on-my-face.jpg', startBid: 1000 },
+    { id: 'escaping-being', kind: 'painting', work: 'escaping-being', title: { es: 'El Ser que se Escapa', en: 'The Escaping Being', fr: 'L’Être qui s’échappe' }, img: 'img/escaping-being.jpg', startBid: 1000 },
+    { id: 'petrichor', kind: 'painting', work: 'petrichor', title: { es: 'Petricor', en: 'Petrichor', fr: 'Pétrichor' }, img: 'img/petrichor.jpg', startBid: 1000 },
+    { id: 'limerence', kind: 'painting', work: 'limerence', title: { es: 'Limerencia', en: 'Limerence', fr: 'Limerence' }, img: 'img/limerence.jpg', startBid: 1000 },
     // Works by Wilson Abreu (Dominican, b. 1972), as published in ART GABANGI · Top 100 Artist (pp. 25–27).
     { id: 'enfrentamiento', kind: 'painting', artist: 'Wilson Abreu', year: 2018, img: 'img/wilson-enfrentamiento.jpg', thumb: 'img/wilson-enfrentamiento-600.jpg', w: 1196, h: 427,
       title: { es: 'Enfrentamiento', en: 'Enfrentamiento (Confrontation)', fr: 'Enfrentamiento' },
@@ -23,9 +29,6 @@ var AUCTION = {
       title: { es: 'El Poeta', en: 'El Poeta (The Poet)', fr: 'El Poeta' },
       spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg. (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
       startBid: 1000 },
-    { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000, example: true },
-    { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000, example: true },
-    { id: 'time-on-my-face', kind: 'painting', work: 'time-on-my-face', title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face', fr: 'Le temps sur mon visage' }, img: 'img/time-on-my-face.jpg', startBid: 1000, example: true },
     // By José Almonte (Dominican, b. 1969), from the same book; its title and size are not given there (the caption
     // under it repeats another work's), so it is listed by its artist until the museum confirms them.
     { id: 'almonte', kind: 'painting', artist: 'José Almonte', img: 'img/almonte-100.jpg', thumb: 'img/almonte-100-600.jpg', w: 1073, h: 1073,
@@ -249,9 +252,6 @@ var AUCTION = {
       title: { es: 'Juan Marichal', en: 'Juan Marichal', fr: 'Juan Marichal' },
       spec: { es: 'Técnica mixta sobre panel de madera · 24 × 24 pulg.', en: 'Mixed media on wood panel · 24 × 24 in', fr: 'Technique mixte sur panneau de bois · 24 × 24 po' },
       startBid: 1000 },
-    { id: 'escaping-being', kind: 'painting', work: 'escaping-being', title: { es: 'El Ser que se Escapa', en: 'The Escaping Being', fr: 'L’Être qui s’échappe' }, img: 'img/escaping-being.jpg', startBid: 1000, example: true },
-    { id: 'petrichor', kind: 'painting', work: 'petrichor', title: { es: 'Petricor', en: 'Petrichor', fr: 'Pétrichor' }, img: 'img/petrichor.jpg', startBid: 1000, example: true },
-    { id: 'limerence', kind: 'painting', work: 'limerence', title: { es: 'Limerencia', en: 'Limerence', fr: 'Limerence' }, img: 'img/limerence.jpg', startBid: 1000, example: true },
     { id: 'sculpture-3', kind: 'sculpture', n: 3, img: 'img/sculpture/3.jpg', startBid: null, example: true },
     { id: 'sculpture-7', kind: 'sculpture', n: 7, img: 'img/sculpture/7.jpg', startBid: null, example: true },
   ],
