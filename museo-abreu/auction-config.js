@@ -26,6 +26,11 @@ var AUCTION = {
     { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000, example: true },
     { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000, example: true },
     { id: 'time-on-my-face', kind: 'painting', work: 'time-on-my-face', title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face', fr: 'Le temps sur mon visage' }, img: 'img/time-on-my-face.jpg', startBid: 1000, example: true },
+    // By José Almonte (Dominican, b. 1969), from the same book; its title and size are not given there (the caption
+    // under it repeats another work's), so it is listed by its artist until the museum confirms them.
+    { id: 'almonte', kind: 'painting', artist: 'José Almonte', img: 'img/almonte-100.jpg', thumb: 'img/almonte-100-600.jpg', w: 1073, h: 1073,
+      title: { es: 'Obra de José Almonte', en: 'Work by José Almonte', fr: 'Œuvre de José Almonte' },
+      startBid: 1000, example: true },
     { id: 'escaping-being', kind: 'painting', work: 'escaping-being', title: { es: 'El Ser que se Escapa', en: 'The Escaping Being', fr: 'L’Être qui s’échappe' }, img: 'img/escaping-being.jpg', startBid: 1000, example: true },
     { id: 'petrichor', kind: 'painting', work: 'petrichor', title: { es: 'Petricor', en: 'Petrichor', fr: 'Pétrichor' }, img: 'img/petrichor.jpg', startBid: 1000, example: true },
     { id: 'limerence', kind: 'painting', work: 'limerence', title: { es: 'Limerencia', en: 'Limerence', fr: 'Limerence' }, img: 'img/limerence.jpg', startBid: 1000, example: true },
