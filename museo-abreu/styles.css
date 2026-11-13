@@ -1034,3 +1034,27 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 }
 /* The featured work keeps to about half a phone screen, so the bid, countdown and the rest of the works stay near. */
 @media (max-width: 639px) { .au-feature-img img { max-height: 46vh; width: 100%; object-fit: contain; background: var(--paper-2); } }
+
+/* Auction: the artists first. Their names lead the page, each opening the artist's room. */
+.au-artist-list { list-style: none; padding: 0; margin: 1.2rem 0 0; border-top: 1px solid var(--line); }
+.au-artist { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: .9rem; padding: 1.05rem 0; border-bottom: 1px solid var(--line); color: var(--ink); text-decoration: none; }
+.au-artist-text { display: grid; gap: .2rem; min-width: 0; }
+.au-artist-name { font-family: var(--serif); font-weight: 600; font-size: clamp(1.45rem, 5.4vw, 2.1rem); line-height: 1.05; letter-spacing: .01em; }
+.au-artist-line { font-size: .82rem; color: var(--ink-3); letter-spacing: .02em; }
+.au-artist-n { font: 600 .7rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); }
+:root[lang="ar"] .au-artist-n { letter-spacing: 0; }
+.au-artist-strip { display: flex; }
+.au-artist-strip img { width: 46px; height: 46px; object-fit: cover; border-radius: 4px; border: 2px solid var(--paper); background: var(--paper-2); margin-inline-start: -14px; }
+.au-artist-strip img:first-child { margin-inline-start: 0; }
+.au-artist .arr { font-size: 1.6rem; line-height: 1; color: var(--gold-ink); transition: transform .2s; }
+.au-artist:hover .arr, .au-artist:focus-visible .arr { transform: translateX(4px); }
+:root[dir="rtl"] .au-artist:hover .arr, :root[dir="rtl"] .au-artist:focus-visible .arr { transform: translateX(-4px) scaleX(-1); }
+@media (max-width: 380px) { .au-artist-strip img:nth-child(n+3) { display: none; } }
+@media (min-width: 640px) { .au-artist-strip img { width: 64px; height: 64px; } }
+.au-room-name { font-size: clamp(2.4rem, 10vw, 4.2rem); line-height: 1; margin-top: .4rem; }
+.au-room-line { margin-top: .6rem; color: var(--ink-2); }
+.au-room-src { font-size: .85rem; }
+.au-feature-artist a, .lot-info .au-feature-artist a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); }
+.dir-au-artists-h { margin-top: 1.6rem; }
+.dir-au-artists { list-style: none; padding: 0; margin: .6rem 0 0; display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; }
+.dir-au-artists a { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); display: inline-block; padding: .35rem 0; }

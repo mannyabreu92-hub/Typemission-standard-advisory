@@ -22,6 +22,7 @@ var AUCTION = {
     'Ángel Castillo': { born: 1973 }, 'Máximo Caminero': { born: 1962 }, 'Freddie Cabral': { born: 1948 },
     'José Cestero': { born: 1937, died: 2025 }, 'Benjamín Cruz': { born: 1986 }, 'Jorge Checo': { born: 1968 },
     'Jesús Desangles': {}, 'Ney Díaz Henríquez': { born: 1974, died: 2015 },
+    'Oscar Abreu': { born: 1978 }, // San Juan de la Maguana, 1978 (data.js, his biography)
   },
   lots: [
     // The works from ART GABANGI · Top 100 Artist come first (lots 1–53), then Oscar Abreu's own.
