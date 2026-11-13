@@ -82,6 +82,11 @@ var AUCTION = {
       title: { es: 'Fin de un Sueño en el Este', en: 'Fin de un Sueño en el Este (The End of a Dream in the East)', fr: 'Fin de un Sueño en el Este' },
       spec: { es: 'Técnica mixta sobre lienzo · 40 × 50 pulg. (101,6 × 127 cm)', en: 'Mixed media on canvas · 40 × 50 in (101.6 × 127 cm)', fr: 'Technique mixte sur toile · 40 × 50 po (101,6 × 127 cm)' },
       startBid: 1000, example: true },
+    // By Aquiles Azar Billini (Dominican, b. 1965), from the same book.
+    { id: 'composicion-de-la-forma', kind: 'painting', artist: 'Aquiles Azar Billini', year: 2017, img: 'img/azar-composicion.jpg', thumb: 'img/azar-composicion-600.jpg', w: 538, h: 823,
+      title: { es: 'Composición de la Forma', en: 'Composición de la Forma (Composition of Form)', fr: 'Composición de la Forma' },
+      spec: { es: 'Técnica mixta sobre papel · 40 × 26 pulg. (101,6 × 66 cm)', en: 'Mixed media on paper · 40 × 26 in (101.6 × 66 cm)', fr: 'Technique mixte sur papier · 40 × 26 po (101,6 × 66 cm)' },
+      startBid: 1000, example: true },
     { id: 'escaping-being', kind: 'painting', work: 'escaping-being', title: { es: 'El Ser que se Escapa', en: 'The Escaping Being', fr: 'L’Être qui s’échappe' }, img: 'img/escaping-being.jpg', startBid: 1000, example: true },
     { id: 'petrichor', kind: 'painting', work: 'petrichor', title: { es: 'Petricor', en: 'Petrichor', fr: 'Pétrichor' }, img: 'img/petrichor.jpg', startBid: 1000, example: true },
     { id: 'limerence', kind: 'painting', work: 'limerence', title: { es: 'Limerencia', en: 'Limerence', fr: 'Limerence' }, img: 'img/limerence.jpg', startBid: 1000, example: true },
