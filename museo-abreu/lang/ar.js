@@ -893,6 +893,17 @@ I18N.ar = {
   "auDrawing": "رسم",
   "auDrawingN": "الرسم رقم {n}",
   "auGalleryN": "لوحة المعرض رقم {n}",
+  "auInfo": "التفاصيل",
+  "auAsk": "استفسر عن هذا العمل",
+  "auFrom": "جمهورية الدومينيكان",
+  "auBorn": "مواليد {y}",
+  "auArtist": "الفنان",
+  "auType": "النوع",
+  "auMedium": "التقنية",
+  "auSize": "المقاسات",
+  "auAboutOscar": "عن أوسكار أبرو",
+  "auOpenLot": "عرض القطعة والمزايدة",
+  "auSrcBook": "ART GABANGI · Top 100 Artist",
 };
 TR.ar = {
   "2019": "2019",

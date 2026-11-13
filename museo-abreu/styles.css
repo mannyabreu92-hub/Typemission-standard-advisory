@@ -1005,3 +1005,8 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 
 .lot-img img.contain { object-fit: contain; background: var(--paper-2); }
 .au-feature-artist { margin: 0; font: 500 .82rem/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
+
+/* Auction: the Details button beside each lot's link */
+.lot-actions { display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; }
+.lot-actions .buy-now { margin-top: .5rem; }
+.lot-actions .btn { margin-top: .5rem; }

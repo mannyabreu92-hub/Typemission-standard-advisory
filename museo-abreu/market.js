@@ -101,17 +101,20 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auTitleAll: 'Subasta Museo Abreu', auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
+Object.assign(I18N.es, { auInfo: 'Detalles', auAsk: 'Preguntar por esta obra', auFrom: 'República Dominicana', auBorn: 'n. {y}', auArtist: 'Artista', auType: 'Tipo', auMedium: 'Técnica', auSize: 'Medidas', auAboutOscar: 'Sobre Oscar Abreu', auOpenLot: 'Ver lote y pujar', auSrcBook: 'ART GABANGI · Top 100 Artist',
+  auTitleAll: 'Subasta Museo Abreu', auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
   auBidNow: 'Pujar ahora', auBoard: 'Tabla de líderes', auBoardLead: 'Los mayores pujadores, reconocidos por su nombre.',
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auTitleAll: 'Museo Abreu Auction', auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
+Object.assign(I18N.en, { auInfo: 'Details', auAsk: 'Ask about this work', auFrom: 'Dominican Republic', auBorn: 'b. {y}', auArtist: 'Artist', auType: 'Type', auMedium: 'Medium', auSize: 'Size', auAboutOscar: 'About Oscar Abreu', auOpenLot: 'View lot and bid', auSrcBook: 'ART GABANGI · Top 100 Artist',
+  auTitleAll: 'Museo Abreu Auction', auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
   auBidNow: 'Bid now', auBoard: 'Leaderboard', auBoardLead: 'The highest bidders, recognized by name.',
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auTitleAll: 'Vente aux enchères Museo Abreu', auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
+Object.assign(I18N.fr, { auInfo: 'Détails', auAsk: 'Se renseigner sur cette œuvre', auFrom: 'République dominicaine', auBorn: 'né(e) en {y}', auArtist: 'Artiste', auType: 'Type', auMedium: 'Technique', auSize: 'Dimensions', auAboutOscar: 'À propos d’Oscar Abreu', auOpenLot: 'Voir le lot et enchérir', auSrcBook: 'ART GABANGI · Top 100 Artist',
+  auTitleAll: 'Vente aux enchères Museo Abreu', auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
   auBidNow: 'Enchérir', auBoard: 'Classement', auBoardLead: 'Les meilleurs enchérisseurs, cités par leur nom.',
   auBoardEmpty: 'Aucune enchère pour l’instant. La première ouvre le classement.', auShowName: 'Afficher mon nom au classement (sinon, seulement mes initiales)',
   auQuick: 'Enchère rapide', auEndsIn: 'Clôture dans', auD: 'jours', auH: 'h', auM: 'min', auS: 's', auEnded: 'Close',
@@ -178,7 +181,8 @@ function auFeatureHTML(lot, h = 'h2') {
       <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
       <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
       ${c ? `<div class="au-feature-cd"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t(auClosedKey())}</span>`}</div>` : ''}
-      ${open ? `<a class="btn primary au-bid-now" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}
+      <div class="btn-row">${open ? `<a class="btn primary au-bid-now" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}
+        <button class="btn" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')}</button></div>
     </div>
   </article>`;
 }
@@ -255,7 +259,8 @@ function lotCard(lot, h = 'h3') {
     <${h} class="lot-title"><a href="#/subasta/${lot.id}">${esc(lotTitle(lot))}</a></${h}>
     <p class="lot-state">${lotPriceLine(lot)}</p>
     ${lotCloseLine(lot)}
-    <a class="buy-now" href="#/subasta/${lot.id}">${t('auView')} <span class="arr" aria-hidden="true">›</span></a>
+    <div class="lot-actions"><a class="buy-now" href="#/subasta/${lot.id}">${t('auView')} <span class="arr" aria-hidden="true">›</span></a>
+      <button class="btn small" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')}</button></div>
   </article>`;
 }
 
@@ -313,6 +318,7 @@ function pageLot(lot, fin) {
         <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}${lot.example ? ` · <span class="chip">${t('auExample')}</span>` : ''}</p>
         <h1 class="lot-h1">${esc(lotTitle(lot))}</h1>
         <p class="au-feature-artist">${esc(lotArtist(lot))}</p>
+        ${artistLine(lot) ? `<p class="muted">${esc(artistLine(lot))}</p>` : ''}
         ${spec ? `<p class="muted">${esc(spec)}</p>` : ''}
         <p class="lot-state big">${lotPriceLine(lot)}</p>
         ${auCloses(lot) && auOpen(lot) ? `<div class="au-feature-cd"><small>${t('auEndsIn')}</small>${cdHTML(auCloses(lot), true)}</div>` : lotCloseLine(lot)}
@@ -321,7 +327,7 @@ function pageLot(lot, fin) {
         ${open ? `<p class="muted au-rules">${t('auIncr', { start: auUSD(lot.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>` : ''}
         <h2 class="h3" style="margin-top:1.4rem">${t('auBoard')}</h2>${auBoardHTML((s.leaders || []).slice(0, 10))}
         <p class="muted" style="margin-top:1rem">${t('auWinner')}</p>
-        <div class="btn-row"><button class="btn" data-action="lotShare" data-lot="${lot.id}">${t('evShare')}</button></div>
+        <div class="btn-row"><button class="btn" data-action="lotInterest" data-lot="${lot.id}">${t('auAsk')}</button><button class="btn" data-action="lotShare" data-lot="${lot.id}">${t('evShare')}</button></div>
         <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
       </div>
     </section>
@@ -359,6 +365,57 @@ EXTRA_FORMS.bid = async form => {
     else say(t('auErr'));
   } catch (e) { say(t('auErr')); }
   btn.disabled = false;
+};
+
+// "Dominican Republic · b. 1972" (or the years of a late artist), from AUCTION.artists.
+function artistLine(lot) {
+  const a = lot.artist && AUCTION.artists && AUCTION.artists[lot.artist];
+  if (!a) return '';
+  const years = a.died ? `${a.born}–${a.died}` : a.born ? t('auBorn', { y: a.born }) : '';
+  return [t('auFrom'), years].filter(Boolean).join(' · ');
+}
+// A work's facts as [year, medium, size]: Oscar Abreu's from WORKS, the others from the lot's own spec ("medium · size").
+function lotFacts(lot) {
+  const w = lot.work && workById(lot.work);
+  if (w && w.spec) { const sp = L(w.spec); return [sp[0], sp[1], sp[2]]; }
+  const sp = lot.spec ? L(lot.spec).split(' · ') : [];
+  return [lot.year || '', sp[0] || '', sp.slice(1).join(' · ')];
+}
+// The Details panel: everything known about the work, its price and close, and a way to ask the museum about it.
+EXTRA_ACTIONS.lotInfo = el => {
+  const lot = AUCTION.lots.find(l => l.id === el.dataset.lot);
+  if (!lot) return;
+  const s = auSt(lot) || {}, c = auCloses(lot), open = auOpen(lot), [year, medium, size] = lotFacts(lot);
+  const row = (k, v) => v ? `<dt>${k}</dt><dd>${esc(v)}</dd>` : '';
+  const dlg = document.createElement('dialog');
+  dlg.setAttribute('aria-label', lotTitle(lot));
+  dlg.innerHTML = `<div class="dlg-body">
+    <div class="dlg-art"><img src="${lot.img}" alt="${esc(lotTitle(lot))}" width="${lot.w || 1000}" height="${lot.h || 1000}"></div>
+    <p class="eyebrow" style="margin-top:1rem">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}</p>
+    <h2 class="h3">${esc(lotTitle(lot))}</h2>
+    <dl class="specs">
+      ${row(t('auArtist'), lotArtist(lot))}
+      ${artistLine(lot) ? `<dt></dt><dd class="muted">${esc(artistLine(lot))}</dd>` : ''}
+      ${row(t('auType'), lotKind(lot))}${row(t('year'), String(year || ''))}${row(t('auMedium'), medium)}${row(t('auSize'), size)}
+      ${row(t(s.count ? 'auCurrent' : 'auStart'), lot.startBid != null ? auUSD(s.count ? s.high : lot.startBid) : '')}
+      ${s.count ? row(t('auHistory'), s.count === 1 ? t('auBid1') : t('auBidsN', { n: s.count })) : ''}
+      ${c ? row(open ? t('auEndsIn') : t('auEnded'), open ? dateTime(c) : t(auClosedKey())) : ''}
+    </dl>
+    ${lot.artist ? `<p class="muted" style="margin-top:.6rem">${t('sourceLabel')}: ${t('auSrcBook')}</p>` : lot.work ? `<p class="muted" style="margin-top:.6rem">${t('sourceLabel')}: oscarabreu.com</p>` : ''}
+    <div class="btn-row">
+      <a class="btn dark small" href="#/subasta/${lot.id}" data-dlg="close">${t(open ? 'auOpenLot' : 'auView')}</a>
+      <button class="btn small" data-dlg="ask">${t('auAsk')}</button>
+      ${lot.artist ? '' : `<a class="btn small" href="#/artista" data-dlg="close">${t('auAboutOscar')}</a>`}
+      <button class="btn small" data-dlg="close">${t('close')}</button>
+    </div></div>`;
+  document.body.appendChild(dlg);
+  dlg.addEventListener('click', e => {
+    const b = e.target.closest('[data-dlg]');
+    if (e.target === dlg || (b && b.dataset.dlg === 'close')) dlg.close();
+    if (b && b.dataset.dlg === 'ask') { dlg.close(); EXTRA_ACTIONS.lotInterest({ dataset: { lot: lot.id } }); }
+  });
+  dlg.addEventListener('close', () => dlg.remove());
+  dlg.showModal();
 };
 
 EXTRA_ACTIONS.bidQuick = el => { const i = $('#bid-amount'); if (i) { i.value = el.dataset.v; i.focus(); } };

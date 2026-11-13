@@ -893,6 +893,17 @@ I18N.de = {
   "auDrawing": "Zeichnung",
   "auDrawingN": "Zeichnung Nr. {n}",
   "auGalleryN": "Galeriegemälde Nr. {n}",
+  "auInfo": "Details",
+  "auAsk": "Nach diesem Werk fragen",
+  "auFrom": "Dominikanische Republik",
+  "auBorn": "geb. {y}",
+  "auArtist": "Künstler",
+  "auType": "Art",
+  "auMedium": "Technik",
+  "auSize": "Maße",
+  "auAboutOscar": "Über Oscar Abreu",
+  "auOpenLot": "Los ansehen und bieten",
+  "auSrcBook": "ART GABANGI · Top 100 Artist",
 };
 TR.de = {
   "2019": "2019",

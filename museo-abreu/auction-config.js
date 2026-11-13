@@ -12,6 +12,17 @@ var AUCTION = {
   // so nobody wins by bidding in the final second and everyone gets a fair chance to answer.
   softClose: { window: 120, extend: 120 },
   closesAt: '2026-12-15T20:00:00-04:00',          // December 15, 2026, 8 pm in Santo Domingo (AST)
+  // About each artist, as ART GABANGI · Top 100 Artist prints it (all Dominican; Jesús Desangles' birth year is cut
+  // off in the pages received). Shown in each work's Details panel.
+  artists: {
+    'Wilson Abreu': { born: 1972 }, 'José Almonte': { born: 1969 }, 'Juan Andújar': { born: 1986 },
+    'Elvis Avilés': { born: 1964, died: 2022 }, 'Alejandro Asencio': { born: 1971 }, 'Aquiles Azar Billini': { born: 1965 },
+    'Osiris Blanc': { born: 1983, died: 2025 }, 'Augusto Batlle': { born: 1995 }, 'Carlos Baret': { born: 1989 },
+    'Juan Bravo': { born: 1961 }, 'Félix Bonilla Gerena': { born: 1968 }, 'Dionisio Blanco': { born: 1953 },
+    'Ángel Castillo': { born: 1973 }, 'Máximo Caminero': { born: 1962 }, 'Freddie Cabral': { born: 1948 },
+    'José Cestero': { born: 1937, died: 2025 }, 'Benjamín Cruz': { born: 1986 }, 'Jorge Checo': { born: 1968 },
+    'Jesús Desangles': {}, 'Ney Díaz Henríquez': { born: 1974, died: 2015 },
+  },
   lots: [
     // The works from ART GABANGI · Top 100 Artist come first (lots 1–53), then Oscar Abreu's own.
     // Works by Wilson Abreu (Dominican, b. 1972), as published in ART GABANGI · Top 100 Artist (pp. 25–27).

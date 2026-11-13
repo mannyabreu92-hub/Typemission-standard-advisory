@@ -894,6 +894,17 @@ I18N.ru = {
   "auDrawing": "Рисунок",
   "auDrawingN": "Рисунок № {n}",
   "auGalleryN": "Картина из галереи № {n}",
+  "auInfo": "Подробнее",
+  "auAsk": "Спросить об этой работе",
+  "auFrom": "Доминиканская Республика",
+  "auBorn": "род. {y}",
+  "auArtist": "Художник",
+  "auType": "Тип",
+  "auMedium": "Техника",
+  "auSize": "Размеры",
+  "auAboutOscar": "Об Оскаре Абреу",
+  "auOpenLot": "Открыть лот и сделать ставку",
+  "auSrcBook": "ART GABANGI · Top 100 Artist",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

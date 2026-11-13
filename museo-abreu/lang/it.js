@@ -893,6 +893,17 @@ I18N.it = {
   "auDrawing": "Disegno",
   "auDrawingN": "Disegno n. {n}",
   "auGalleryN": "Dipinto della galleria n. {n}",
+  "auInfo": "Dettagli",
+  "auAsk": "Chiedi informazioni su quest’opera",
+  "auFrom": "Repubblica Dominicana",
+  "auBorn": "n. {y}",
+  "auArtist": "Artista",
+  "auType": "Tipo",
+  "auMedium": "Tecnica",
+  "auSize": "Misure",
+  "auAboutOscar": "Su Oscar Abreu",
+  "auOpenLot": "Vedi il lotto e fai un’offerta",
+  "auSrcBook": "ART GABANGI · Top 100 Artist",
 };
 TR.it = {
   "2019": "2019",
