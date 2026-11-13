@@ -12,9 +12,9 @@ const T = {
   kind: { painting: { es: 'Pintura', en: 'Painting', fr: 'Peinture' }, sculpture: { es: 'Escultura', en: 'Sculpture', fr: 'Sculpture' } },
   auction: { es: 'Subasta Museo Abreu', en: 'Museo Abreu auction', fr: 'Enchères Museo Abreu' },
   lotDesc: {
-    es: '{kind} de Oscar Abreu en subasta. Puje en línea; la subasta termina en vivo en la Cena de Subasta y Premios de ART GABANGI.',
-    en: '{kind} by Oscar Abreu at auction. Bid online; the auction ends live at the ART GABANGI Auction & Awards Dinner.',
-    fr: '{kind} d’Oscar Abreu aux enchères. Enchérissez en ligne ; la vente se termine en direct lors du dîner de vente aux enchères et remise des prix d’ART GABANGI.',
+    es: '{kind} de {artist} en subasta. Puje en línea; la subasta termina en vivo en la Cena de Subasta y Premios de ART GABANGI.',
+    en: '{kind} by {artist} at auction. Bid online; the auction ends live at the ART GABANGI Auction & Awards Dinner.',
+    fr: '{kind} de {artist} aux enchères. Enchérissez en ligne ; la vente se termine en direct lors du dîner de vente aux enchères et remise des prix d’ART GABANGI.',
   },
   start: { es: 'Precio de salida: USD {p}.', en: 'Starting bid: USD {p}.', fr: 'Mise à prix : {p} USD.' },
   // The book: title and subtitles as printed, and the first sentence of the app's synopsis.
@@ -36,7 +36,7 @@ module.exports = (req, res) => {
     if (!lot) { res.statusCode = 302; res.setHeader('Location', '/#/subasta'); return res.end(); }
     const name = lot.title ? lot.title[l] : fill(T.sculpture[l], { n: lot.n });
     title = `${fill(T.lot[l], { n: i + 1 })} · ${name} — ${T.auction[l]}`;
-    desc = fill(T.lotDesc[l], { kind: T.kind[lot.kind][l] }) + (lot.startBid != null && lotOpen(lot) ? ' ' + fill(T.start[l], { p: lot.startBid.toLocaleString('en-US') }) : '');
+    desc = fill(T.lotDesc[l], { kind: T.kind[lot.kind][l], artist: lot.artist || 'Oscar Abreu' }) + (lot.startBid != null && lotOpen(lot) ? ' ' + fill(T.start[l], { p: lot.startBid.toLocaleString('en-US') }) : '');
     img = lot.img; path = '/l/' + lot.id; target = '/#/subasta/' + lot.id;
   }
   res.setHeader('Content-Type', 'text/html; charset=utf-8');

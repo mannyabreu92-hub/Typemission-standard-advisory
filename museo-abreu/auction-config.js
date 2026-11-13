@@ -14,6 +14,15 @@ var AUCTION = {
   softClose: { window: 120, extend: 120 },
   closesAt: null,                                 // default online close, e.g. '2027-07-14T12:00:00-04:00'
   lots: [
+    // Works by Wilson Abreu (Dominican, b. 1972), as published in ART GABANGI · Top 100 Artist (pp. 25–27).
+    { id: 'enfrentamiento', kind: 'painting', artist: 'Wilson Abreu', year: 2018, img: 'img/wilson-enfrentamiento.jpg', thumb: 'img/wilson-enfrentamiento-600.jpg', w: 1196, h: 427,
+      title: { es: 'Enfrentamiento', en: 'Enfrentamiento (Confrontation)', fr: 'Enfrentamiento' },
+      spec: { es: 'Técnica mixta sobre lienzo · 30 × 80 pulg. (76,2 × 203,2 cm)', en: 'Mixed media on canvas · 30 × 80 in (76.2 × 203.2 cm)', fr: 'Technique mixte sur toile · 30 × 80 po (76,2 × 203,2 cm)' },
+      startBid: 1000, example: true },
+    { id: 'el-poeta', kind: 'painting', artist: 'Wilson Abreu', img: 'img/wilson-el-poeta.jpg', thumb: 'img/wilson-el-poeta-600.jpg', w: 514, h: 698,
+      title: { es: 'El Poeta', en: 'El Poeta (The Poet)', fr: 'El Poeta' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg. (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
+      startBid: 1000, example: true },
     { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000, example: true },
     { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000, example: true },
     { id: 'time-on-my-face', kind: 'painting', work: 'time-on-my-face', title: { es: 'El Tiempo en mi Rostro', en: 'Time on My Face', fr: 'Le temps sur mon visage' }, img: 'img/time-on-my-face.jpg', startBid: 1000, example: true },
@@ -25,7 +34,8 @@ var AUCTION = {
   ],
 };
 
-// `title` (paintings) is used by the link previews (api/share-item.js); the app shows the title from WORKS.
+// `title` (paintings) is used by the link previews (api/share-item.js); the app shows the title from WORKS, or the
+// lot's own title, `artist`, `spec` and `year` for a work by another artist. `w`/`h` give a picture's shape.
 // A lot is open online when it has a starting bid and its closing time has not passed. `state` is the lot's
 // bidding state (api/auction.js): a soft close may have moved its close later.
 function lotCloses(lot, state) {

@@ -888,6 +888,7 @@ I18N.ru = {
   "auEnded": "Завершено",
   "auSoft": "Ставка в последние 2 минуты продлевает торги на 2 минуты.",
   "auIncr": "Ставки от {start}, с шагом {inc}.",
+  "auTitleAll": "Аукцион Museo Abreu",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

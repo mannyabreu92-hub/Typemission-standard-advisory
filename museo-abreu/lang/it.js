@@ -887,6 +887,7 @@ I18N.it = {
   "auEnded": "Chiusa",
   "auSoft": "Un’offerta negli ultimi 2 minuti prolunga la chiusura di 2 minuti.",
   "auIncr": "Offerte da {start}, con rilanci di {inc}.",
+  "auTitleAll": "Asta Museo Abreu",
 };
 TR.it = {
   "2019": "2019",

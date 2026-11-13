@@ -98,17 +98,17 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
+Object.assign(I18N.es, { auTitleAll: 'Subasta Museo Abreu', auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
   auBidNow: 'Pujar ahora', auBoard: 'Tabla de líderes', auBoardLead: 'Los mayores pujadores, reconocidos por su nombre.',
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
+Object.assign(I18N.en, { auTitleAll: 'Museo Abreu Auction', auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
   auBidNow: 'Bid now', auBoard: 'Leaderboard', auBoardLead: 'The highest bidders, recognized by name.',
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
+Object.assign(I18N.fr, { auTitleAll: 'Vente aux enchères Museo Abreu', auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
   auBidNow: 'Enchérir', auBoard: 'Classement', auBoardLead: 'Les meilleurs enchérisseurs, cités par leur nom.',
   auBoardEmpty: 'Aucune enchère pour l’instant. La première ouvre le classement.', auShowName: 'Afficher mon nom au classement (sinon, seulement mes initiales)',
   auQuick: 'Enchère rapide', auEndsIn: 'Clôture dans', auD: 'jours', auH: 'h', auM: 'min', auS: 's', auEnded: 'Close',
@@ -167,10 +167,11 @@ function auFeatureHTML(lot, h = 'h2') {
   if (!auState && !auFailed) fetchAuction().then(() => { if (document.querySelector('.au-feature')) route(); });
   const s = auSt(lot) || {}, c = auCloses(lot), open = auOpen(lot), lead = s.leaders && s.leaders[0];
   return `<article class="au-feature">
-    <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="1000" height="1000"></a>
+    <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="${lot.w || 1000}" height="${lot.h || 1000}"></a>
     <div class="au-feature-body">
       <p class="eyebrow">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
       <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(lotTitle(lot))}</a></${h}>
+      <p class="au-feature-artist">${esc(lotArtist(lot))}</p>
       <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
       <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
       ${c ? `<div class="au-feature-cd"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t('auClosed')}</span>`}</div>` : ''}
@@ -181,8 +182,13 @@ function auFeatureHTML(lot, h = 'h2') {
 
 function lotTitle(lot) {
   const w = lot.work && workById(lot.work);
-  return w ? L(w.title) : t('auSculptureN', { n: lot.n });
+  return w ? L(w.title) : lot.title ? L(lot.title) : t('auSculptureN', { n: lot.n });
 }
+const lotArtist = lot => lot.artist || 'Oscar Abreu';
+// A picture that is far from square (a diptych, a tall canvas) is shown whole rather than cropped.
+const lotFit = lot => lot.w && lot.h && Math.abs(lot.w / lot.h - 1) > .15 ? ' class="contain"' : '';
+// The auction's title names Oscar Abreu while every work is his; with other artists' works, the museum's.
+const auTitleText = () => t(auLots().some(l => l.artist) ? 'auTitleAll' : 'auTitle');
 const lotNumber = lot => AUCTION.lots.indexOf(lot) + 1;
 // Lots shown to visitors: the real ones. Example lots (example: true in auction-config.js) appear nowhere, and
 // until a real lot is published the auction is out of the menus (the bottom tab opens the book instead).
@@ -235,8 +241,8 @@ function lotCloseLine(lot) {
 }
 function lotCard(lot, h = 'h3') {
   return `<article class="lot-card">
-    <a href="#/subasta/${lot.id}" class="lot-img" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" loading="lazy" width="600" height="600"></a>
-    <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}${lot.example ? ` · <span class="chip">${t('auExample')}</span>` : ''}</p>
+    <a href="#/subasta/${lot.id}" class="lot-img" tabindex="-1" aria-hidden="true"><img src="${lot.thumb || lot.img}" alt=""${lotFit(lot)} loading="lazy" width="600" height="600"></a>
+    <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)} · ${esc(lotArtist(lot))}${lot.example ? ` · <span class="chip">${t('auExample')}</span>` : ''}</p>
     <${h} class="lot-title"><a href="#/subasta/${lot.id}">${esc(lotTitle(lot))}</a></${h}>
     <p class="lot-state">${lotPriceLine(lot)}</p>
     ${lotCloseLine(lot)}
@@ -256,7 +262,7 @@ function pageAuction(id) {
       <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p></section></div>`;
   return `<div class="wrap">
     <section class="section au-top">
-      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1">${t('auTitle')}</h1>
+      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1">${auTitleText()}</h1>
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
       <p class="muted au-rules">${t('auIncr', { start: auUSD(AUCTION.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>
@@ -270,7 +276,7 @@ function pageAuction(id) {
 
 function pageLot(lot, fin) {
   const w = lot.work && workById(lot.work), s = (auState && auState[lot.id]) || { count: 0, last: [] };
-  const spec = w && w.spec ? L(w.spec).join(' · ') : '';
+  const spec = w && w.spec ? L(w.spec).join(' · ') : lot.spec ? [lot.year, L(lot.spec)].filter(Boolean).join(' · ') : '';
   const open = auOpen(lot), min = open ? lotMinBid(lot, s) : null;
   const action = open ? `<form class="bid-form" data-form="bid" data-lot="${lot.id}" novalidate>
       <div class="field"><label for="bid-amount">${t('auYourBid')}</label>
@@ -293,10 +299,11 @@ function pageLot(lot, fin) {
   return `<div class="wrap lot-page">
     <a href="#/subasta" class="btn small"><span class="arr">←</span> ${t('auBack')}</a>
     <section class="section lot-detail">
-      <figure class="lot-figure"><img src="${lot.img}" alt="${esc(lotTitle(lot))}" width="1400" height="1400"><figcaption>Oscar Abreu · ${esc(lotTitle(lot))}</figcaption></figure>
+      <figure class="lot-figure"><img src="${lot.img}" alt="${esc(lotTitle(lot))}" width="${lot.w || 1400}" height="${lot.h || 1400}"><figcaption>${esc(lotArtist(lot))} · ${esc(lotTitle(lot))}</figcaption></figure>
       <div class="lot-info">
         <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}${lot.example ? ` · <span class="chip">${t('auExample')}</span>` : ''}</p>
         <h1 class="lot-h1">${esc(lotTitle(lot))}</h1>
+        <p class="au-feature-artist">${esc(lotArtist(lot))}</p>
         ${spec ? `<p class="muted">${esc(spec)}</p>` : ''}
         <p class="lot-state big">${lotPriceLine(lot)}</p>
         ${auCloses(lot) && auOpen(lot) ? `<div class="au-feature-cd"><small>${t('auEndsIn')}</small>${cdHTML(auCloses(lot), true)}</div>` : lotCloseLine(lot)}
