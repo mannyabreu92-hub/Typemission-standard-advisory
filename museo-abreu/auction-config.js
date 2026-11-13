@@ -3,7 +3,7 @@
 // Shared by the app and the bidding server (api/auction.js), which enforces these rules.
 //
 // A lot opens for online bids only when it has a starting bid and a closing time. A lot marked
-// `example: true` is hidden (the two sculptures below, until the museum confirms them).
+// `example: true` is hidden.
 var AUCTION = {
   live: null,                                     // online only (no live finale)
   increment: 100,                                 // USD; each bid must beat the current one by this much
@@ -20,6 +20,19 @@ var AUCTION = {
     { id: 'escaping-being', kind: 'painting', work: 'escaping-being', title: { es: 'El Ser que se Escapa', en: 'The Escaping Being', fr: 'L’Être qui s’échappe' }, img: 'img/escaping-being.jpg', startBid: 1000 },
     { id: 'petrichor', kind: 'painting', work: 'petrichor', title: { es: 'Petricor', en: 'Petrichor', fr: 'Pétrichor' }, img: 'img/petrichor.jpg', startBid: 1000 },
     { id: 'limerence', kind: 'painting', work: 'limerence', title: { es: 'Limerencia', en: 'Limerence', fr: 'Limerence' }, img: 'img/limerence.jpg', startBid: 1000 },
+    // Sculptures by Oscar Abreu, published by number on oscarabreu.com/sculpture (no titles given there).
+    { id: 'sculpture-1', kind: 'sculpture', n: 1, img: 'img/sculpture/1.jpg', thumb: 'img/sculpture/1-600.jpg', w: 767, h: 1000, startBid: 1000 },
+    { id: 'sculpture-2', kind: 'sculpture', n: 2, img: 'img/sculpture/2.jpg', thumb: 'img/sculpture/2-600.jpg', w: 1000, h: 878, startBid: 1000 },
+    { id: 'sculpture-3', kind: 'sculpture', n: 3, img: 'img/sculpture/3.jpg', thumb: 'img/sculpture/3-600.jpg', w: 931, h: 1000, startBid: 1000 },
+    { id: 'sculpture-4', kind: 'sculpture', n: 4, img: 'img/sculpture/4.jpg', thumb: 'img/sculpture/4-600.jpg', w: 859, h: 1000, startBid: 1000 },
+    { id: 'sculpture-5', kind: 'sculpture', n: 5, img: 'img/sculpture/5.jpg', thumb: 'img/sculpture/5-600.jpg', w: 996, h: 1000, startBid: 1000 },
+    { id: 'sculpture-6', kind: 'sculpture', n: 6, img: 'img/sculpture/6.jpg', thumb: 'img/sculpture/6-600.jpg', w: 928, h: 1000, startBid: 1000 },
+    { id: 'sculpture-7', kind: 'sculpture', n: 7, img: 'img/sculpture/7.jpg', thumb: 'img/sculpture/7-600.jpg', w: 616, h: 1000, startBid: 1000 },
+    { id: 'sculpture-8', kind: 'sculpture', n: 8, img: 'img/sculpture/8.jpg', thumb: 'img/sculpture/8-600.jpg', w: 584, h: 1000, startBid: 1000 },
+    { id: 'sculpture-9', kind: 'sculpture', n: 9, img: 'img/sculpture/9.jpg', thumb: 'img/sculpture/9-600.jpg', w: 1000, h: 836, startBid: 1000 },
+    { id: 'sculpture-10', kind: 'sculpture', n: 10, img: 'img/sculpture/10.jpg', thumb: 'img/sculpture/10-600.jpg', w: 898, h: 1000, startBid: 1000 },
+    { id: 'sculpture-11', kind: 'sculpture', n: 11, img: 'img/sculpture/11.jpg', thumb: 'img/sculpture/11-600.jpg', w: 1000, h: 801, startBid: 1000 },
+    { id: 'sculpture-12', kind: 'sculpture', n: 12, img: 'img/sculpture/12.jpg', thumb: 'img/sculpture/12-600.jpg', w: 1000, h: 635, startBid: 1000 },
     // Works by Wilson Abreu (Dominican, b. 1972), as published in ART GABANGI · Top 100 Artist (pp. 25–27).
     { id: 'enfrentamiento', kind: 'painting', artist: 'Wilson Abreu', year: 2018, img: 'img/wilson-enfrentamiento.jpg', thumb: 'img/wilson-enfrentamiento-600.jpg', w: 1196, h: 427,
       title: { es: 'Enfrentamiento', en: 'Enfrentamiento (Confrontation)', fr: 'Enfrentamiento' },
@@ -252,8 +265,6 @@ var AUCTION = {
       title: { es: 'Juan Marichal', en: 'Juan Marichal', fr: 'Juan Marichal' },
       spec: { es: 'Técnica mixta sobre panel de madera · 24 × 24 pulg.', en: 'Mixed media on wood panel · 24 × 24 in', fr: 'Technique mixte sur panneau de bois · 24 × 24 po' },
       startBid: 1000 },
-    { id: 'sculpture-3', kind: 'sculpture', n: 3, img: 'img/sculpture/3.jpg', startBid: null, example: true },
-    { id: 'sculpture-7', kind: 'sculpture', n: 7, img: 'img/sculpture/7.jpg', startBid: null, example: true },
   ],
 };
 
