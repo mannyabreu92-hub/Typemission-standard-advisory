@@ -904,6 +904,18 @@ I18N.ar = {
   "auAboutOscar": "عن أوسكار أبرو",
   "auOpenLot": "عرض القطعة والمزايدة",
   "auSrcBook": "ART GABANGI · Top 100 Artist",
+  "auCatBook": "Top 100 Artist",
+  "auCatOscar": "لوحات · أوسكار أبرو",
+  "auCatSculpture": "منحوتات · أوسكار أبرو",
+  "auCatDrawing": "رسوم · أوسكار أبرو",
+  "auCatAll": "الكل",
+  "auCats": "تصفّح الأعمال",
+  "auAllArtists": "جميع الفنانين",
+  "auArtistPick": "الفنان",
+  "auMore": "عرض المزيد ({n})",
+  "auShowing": "{a} من {b} عملًا",
+  "auBoardAll": "عرض لوحة المتصدّرين كاملة",
+  "auAllClose": "تُغلق جميع الأعمال في {date}.",
 };
 TR.ar = {
   "2019": "2019",

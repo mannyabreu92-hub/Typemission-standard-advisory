@@ -904,6 +904,18 @@ I18N.de = {
   "auAboutOscar": "Über Oscar Abreu",
   "auOpenLot": "Los ansehen und bieten",
   "auSrcBook": "ART GABANGI · Top 100 Artist",
+  "auCatBook": "Top 100 Artist",
+  "auCatOscar": "Gemälde · Oscar Abreu",
+  "auCatSculpture": "Skulpturen · Oscar Abreu",
+  "auCatDrawing": "Zeichnungen · Oscar Abreu",
+  "auCatAll": "Alle",
+  "auCats": "Werke durchsuchen",
+  "auAllArtists": "Alle Künstler",
+  "auArtistPick": "Künstler",
+  "auMore": "Mehr anzeigen ({n})",
+  "auShowing": "{a} von {b} Werken",
+  "auBoardAll": "Ganze Rangliste ansehen",
+  "auAllClose": "Alle Werke schließen am {date}.",
 };
 TR.de = {
   "2019": "2019",

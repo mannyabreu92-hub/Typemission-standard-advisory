@@ -1010,3 +1010,27 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .lot-actions { display: flex; align-items: center; justify-content: space-between; gap: .8rem; flex-wrap: wrap; }
 .lot-actions .buy-now { margin-top: .5rem; }
 .lot-actions .btn { margin-top: .5rem; }
+
+/* Auction: works in groups (tabs), an artist picker, two columns on phones, "Show more" */
+.au-cats { display: flex; flex-wrap: wrap; gap: .45rem; }
+.au-cat { flex: none; display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .45rem .85rem; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink); font: 600 .9rem/1 var(--sans); cursor: pointer; white-space: nowrap; }
+.au-cat[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.au-cat .au-n { font-weight: 400; opacity: .75; font-size: .8rem; }
+@media (max-width: 420px) { .au-cat { font-size: .82rem; padding: .4rem .7rem; } }
+.au-pick { max-width: 360px; margin-top: .6rem; }
+.au-allclose, .au-count { margin: .6rem 0 0; font-size: .88rem; }
+.au-browse .lots { margin-top: 1rem; }
+.au-more-row { display: flex; justify-content: center; margin-top: 1.6rem; }
+.au-board-more { margin-top: .6rem; }
+.au-board-more summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; }
+@media (max-width: 639px) {
+  .lots { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem .9rem; }
+  .lots .lot-title { font-size: 1rem; }
+  .lots .lot-meta { font-size: .64rem; letter-spacing: .08em; }
+  .lots .lot-price { font-size: .98rem; }
+  .lots .lot-state .muted { font-size: .78rem; }
+  .lots .lot-actions { flex-direction: column; align-items: stretch; gap: 0; }
+  .lots .lot-actions .btn { width: 100%; }
+}
+/* The featured work keeps to about half a phone screen, so the bid, countdown and the rest of the works stay near. */
+@media (max-width: 639px) { .au-feature-img img { max-height: 46vh; width: 100%; object-fit: contain; background: var(--paper-2); } }

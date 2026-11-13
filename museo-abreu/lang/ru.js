@@ -905,6 +905,18 @@ I18N.ru = {
   "auAboutOscar": "Об Оскаре Абреу",
   "auOpenLot": "Открыть лот и сделать ставку",
   "auSrcBook": "ART GABANGI · Top 100 Artist",
+  "auCatBook": "Top 100 Artist",
+  "auCatOscar": "Картины · Оскар Абреу",
+  "auCatSculpture": "Скульптуры · Оскар Абреу",
+  "auCatDrawing": "Рисунки · Оскар Абреу",
+  "auCatAll": "Все",
+  "auCats": "Смотреть работы",
+  "auAllArtists": "Все художники",
+  "auArtistPick": "Художник",
+  "auMore": "Показать ещё ({n})",
+  "auShowing": "{a} из {b} работ",
+  "auBoardAll": "Вся таблица лидеров",
+  "auAllClose": "Все работы закрываются {date}.",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",
