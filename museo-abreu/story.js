@@ -102,9 +102,11 @@ Object.assign(EXTRA_ACTIONS, {
   },
   lotStory: el => {
     const lot = AUCTION.lots.find(l => l.id === el.dataset.lot), fin = liveFinale();
-    storyShare({ img: lot.img, credit: `Oscar Abreu · ${lotTitle(lot)}`, eyebrow: t('auEyebrow'), title: lotTitle(lot),
+    const closes = auCloses(lot);
+    storyShare({ img: lot.img, credit: `${lotArtist(lot)} · ${lotTitle(lot)}`, eyebrow: t('auEyebrow'), title: lotTitle(lot),
       sub: `${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}`,
-      lines: [t('auLiveAt', { event: fin.name, date: fmtDate(fin.date, { day: 'numeric', month: 'long', year: 'numeric' }) })],
+      lines: fin ? [t('auLiveAt', { event: fin.name, date: fmtDate(fin.date, { day: 'numeric', month: 'long', year: 'numeric' }) })]
+        : closes ? [t('auClosesOn', { date: dateTime(closes) })] : [],
       link: `${storyHost()}/l/${lot.id}` }, `museo-abreu-${lot.id}.png`, 'share-status');
   },
   bookStory: () => storyShare({ img: 'img/time-on-my-face.jpg', credit: `Oscar Abreu · ${L(workById('time-on-my-face').title)}`, eyebrow: 'Oscar Abreu',

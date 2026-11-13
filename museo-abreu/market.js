@@ -2,7 +2,7 @@
 // features.js. The bottom menu is Home · Events · Auction · Shop · Account.
 //
 // Auction: online bidding through api/auction.js until each lot's close, then the auction ends
-// live in the room (AUCTION.live, auction-config.js). Shop: the printed and digital Ecce Homo.
+// live in the room when AUCTION.live names an event (auction-config.js); otherwise online only. Shop: the printed and digital Ecce Homo.
 
 Object.assign(I18N.es, {
   navAuction: 'Subasta', navShop: 'Tienda',
@@ -12,7 +12,8 @@ Object.assign(I18N.es, {
   auExample: 'Ejemplo', auLot: 'Lote {n}', auPainting: 'Pintura', auSculpture: 'Escultura', auSculptureN: 'Escultura n.º {n}',
   auStart: 'Precio de salida', auCurrent: 'Puja actual', auBidsN: '{n} pujas', auBid1: '1 puja', auNoBids: 'Sin pujas todavía', auTba: 'Por anunciar',
   auClosesIn: 'Cierra {time}', auClosesOn: 'Puja en línea hasta el {date}',
-  auClosed: 'Puja en línea cerrada. La puja más alta pasa a la sala.', auLiveAt: 'Final en vivo: {event}, {date}',
+  auClosed: 'Puja en línea cerrada. La puja más alta pasa a la sala.', auClosedOnline: 'Subasta cerrada. Gana la puja más alta.',
+  auLeadOnline: 'Pinturas y esculturas en subasta. Puje en línea hasta el cierre; gana la puja más alta.', auLiveAt: 'Final en vivo: {event}, {date}',
   auView: 'Ver lote', auYourBid: 'Su puja (USD)', auMin: 'Mínimo {amount}', auBidBtn: 'Pujar',
   auTerms: 'Entiendo que mi puja es un compromiso de compra si resulta ganadora. El museo me contactará para confirmar.',
   auThanks: 'Puja registrada: {amount}. Usted es el mejor postor.', auTooLow: 'Otra persona pujó más. La puja mínima ahora es {amount}.',
@@ -36,7 +37,8 @@ Object.assign(I18N.en, {
   auExample: 'Example', auLot: 'Lot {n}', auPainting: 'Painting', auSculpture: 'Sculpture', auSculptureN: 'Sculpture no. {n}',
   auStart: 'Starting bid', auCurrent: 'Current bid', auBidsN: '{n} bids', auBid1: '1 bid', auNoBids: 'No bids yet', auTba: 'To be announced',
   auClosesIn: 'Closes {time}', auClosesOn: 'Online bidding until {date}',
-  auClosed: 'Online bidding closed. The highest bid carries into the room.', auLiveAt: 'Live finale: {event}, {date}',
+  auClosed: 'Online bidding closed. The highest bid carries into the room.', auClosedOnline: 'Bidding closed. The highest bid wins.',
+  auLeadOnline: 'Paintings and sculptures at auction. Bid online until the close; the highest bid wins.', auLiveAt: 'Live finale: {event}, {date}',
   auView: 'View lot', auYourBid: 'Your bid (USD)', auMin: 'Minimum {amount}', auBidBtn: 'Place bid',
   auTerms: 'I understand my bid is a commitment to buy if it wins. The museum will contact me to confirm.',
   auThanks: 'Bid placed: {amount}. You are the highest bidder.', auTooLow: 'Someone bid higher. The minimum bid is now {amount}.',
@@ -60,7 +62,8 @@ Object.assign(I18N.fr, {
   auExample: 'Exemple', auLot: 'Lot {n}', auPainting: 'Peinture', auSculpture: 'Sculpture', auSculptureN: 'Sculpture n° {n}',
   auStart: 'Mise à prix', auCurrent: 'Enchère actuelle', auBidsN: '{n} enchères', auBid1: '1 enchère', auNoBids: 'Aucune enchère pour l’instant', auTba: 'À annoncer',
   auClosesIn: 'Clôture {time}', auClosesOn: 'Enchères en ligne jusqu’au {date}',
-  auClosed: 'Enchères en ligne closes. L’enchère la plus haute est reprise en salle.', auLiveAt: 'Finale en direct : {event}, {date}',
+  auClosed: 'Enchères en ligne closes. L’enchère la plus haute est reprise en salle.', auClosedOnline: 'Enchères closes. L’enchère la plus haute l’emporte.',
+  auLeadOnline: 'Peintures et sculptures aux enchères. Enchérissez en ligne jusqu’à la clôture ; l’enchère la plus haute l’emporte.', auLiveAt: 'Finale en direct : {event}, {date}',
   auView: 'Voir le lot', auYourBid: 'Votre enchère (USD)', auMin: 'Minimum {amount}', auBidBtn: 'Enchérir',
   auTerms: 'Je comprends que mon enchère est un engagement d’achat si elle l’emporte. Le musée me contactera pour confirmer.',
   auThanks: 'Enchère enregistrée : {amount}. Vous êtes le meilleur enchérisseur.', auTooLow: 'Quelqu’un a enchéri plus haut. L’enchère minimale est maintenant de {amount}.',
@@ -174,7 +177,7 @@ function auFeatureHTML(lot, h = 'h2') {
       <p class="au-feature-artist">${esc(lotArtist(lot))}</p>
       <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
       <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
-      ${c ? `<div class="au-feature-cd"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t('auClosed')}</span>`}</div>` : ''}
+      ${c ? `<div class="au-feature-cd"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t(auClosedKey())}</span>`}</div>` : ''}
       ${open ? `<a class="btn primary au-bid-now" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}
     </div>
   </article>`;
@@ -189,7 +192,8 @@ const lotArtist = lot => lot.artist || 'Oscar Abreu';
 const lotFit = lot => lot.w && lot.h && Math.abs(lot.w / lot.h - 1) > .15 ? ' class="contain"' : '';
 // The auction's title names Oscar Abreu while every work is his; with other artists' works, the museum's.
 const auTitleText = () => t(auLots().some(l => l.artist) ? 'auTitleAll' : 'auTitle');
-const lotNumber = lot => AUCTION.lots.indexOf(lot) + 1;
+// Numbered among the published lots (the example ones are left out), in the order of auction-config.js.
+const lotNumber = lot => (lot.example ? AUCTION.lots : auLots()).indexOf(lot) + 1;
 // Lots shown to visitors: the real ones. Example lots (example: true in auction-config.js) appear nowhere, and
 // until a real lot is published the auction is out of the menus (the bottom tab opens the book instead).
 const auLots = () => AUCTION.lots.filter(l => !l.example);
@@ -201,6 +205,7 @@ if (!auLots().length) {
 }
 const lotKind = lot => t(lot.kind === 'sculpture' ? 'auSculpture' : 'auPainting');
 function liveFinale() {
+  if (!AUCTION.live) return null;
   const gb = EVENTS.find(e => e.id === AUCTION.live.event), tier = gb.tiers.find(x => x.id === AUCTION.live.tier);
   return { name: `${L(tier.name)} · ${eventTitle(gb)}`, date: addDays(eventDate(gb), tier.day), time: tier.time };
 }
@@ -209,6 +214,8 @@ function relTime(iso) {
   const d = ms / 864e5, h = ms / 36e5;
   return Math.abs(d) >= 1 ? rtf.format(Math.round(d), 'day') : Math.abs(h) >= 1 ? rtf.format(Math.round(h), 'hour') : rtf.format(Math.round(ms / 6e4), 'minute');
 }
+const auClosedKey = () => AUCTION.live ? 'auClosed' : 'auClosedOnline';
+const liveLine = fin => fin ? `<p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p>` : '';
 const dateTime = iso => fmtDate(iso.slice(0, 10), { day: 'numeric', month: 'long' }) + ' · ' + new Date(iso).toLocaleTimeString(lang, { hour: 'numeric', minute: '2-digit', timeZone: 'America/Santo_Domingo' });
 
 async function fetchAuction() {
@@ -237,7 +244,7 @@ function lotPriceLine(lot) {
 function lotCloseLine(lot) {
   const c = auCloses(lot);
   if (!c) return '';
-  return auOpen(lot) ? `<p class="lot-close">${t('auEndsIn')} ${cdHTML(c)} · ${t('auClosesOn', { date: dateTime(c) })}</p>` : `<p class="lot-close">${t('auClosed')}</p>`;
+  return auOpen(lot) ? `<p class="lot-close">${t('auEndsIn')} ${cdHTML(c)} · ${t('auClosesOn', { date: dateTime(c) })}</p>` : `<p class="lot-close">${t(auClosedKey())}</p>`;
 }
 function lotCard(lot, h = 'h3') {
   return `<article class="lot-card">
@@ -259,7 +266,7 @@ function pageAuction(id) {
   if (!auLots().length) return `<div class="wrap"><section class="section">
       <p class="eyebrow">${t('auEyebrow')}</p><h1>${t('auTitle')}</h1>
       <p class="lead" style="margin-top:.8rem">${t('auSoon')}</p>
-      <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p></section></div>`;
+      ${liveLine(fin)}</section></div>`;
   return `<div class="wrap">
     <section class="section au-top">
       <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1">${auTitleText()}</h1>
@@ -269,8 +276,8 @@ function pageAuction(id) {
     </section>
     <section class="section au-board-wrap"><h2>${t('auBoard')}</h2><p class="muted">${t('auBoardLead')}</p>${auBoardHTML(auAllLeaders(), true)}</section>
     <section class="section"><div class="lots">${auLots().filter(l => l !== auFeatured()).map(l => lotCard(l, 'h2')).join('')}</div></section>
-    <section class="section"><p class="lead">${t('auLead', { event: esc(fin.name) })}</p>
-      <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p></section>
+    <section class="section"><p class="lead">${fin ? t('auLead', { event: esc(fin.name) }) : t('auLeadOnline')}</p>
+      ${liveLine(fin)}</section>
   </div>`;
 }
 
@@ -307,7 +314,7 @@ function pageLot(lot, fin) {
         ${spec ? `<p class="muted">${esc(spec)}</p>` : ''}
         <p class="lot-state big">${lotPriceLine(lot)}</p>
         ${auCloses(lot) && auOpen(lot) ? `<div class="au-feature-cd"><small>${t('auEndsIn')}</small>${cdHTML(auCloses(lot), true)}</div>` : lotCloseLine(lot)}
-        <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p>
+        ${liveLine(fin)}
         ${action}
         ${open ? `<p class="muted au-rules">${t('auIncr', { start: auUSD(lot.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>` : ''}
         <h2 class="h3" style="margin-top:1.4rem">${t('auBoard')}</h2>${auBoardHTML((s.leaders || []).slice(0, 10))}

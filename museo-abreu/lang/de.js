@@ -888,6 +888,8 @@ I18N.de = {
   "auSoft": "Ein Gebot in den letzten 2 Minuten verlängert das Ende um 2 Minuten.",
   "auIncr": "Gebote ab {start}, in Schritten von {inc}.",
   "auTitleAll": "Auktion Museo Abreu",
+  "auLeadOnline": "Gemälde und Skulpturen zur Auktion. Bieten Sie online bis zum Ende; das höchste Gebot gewinnt.",
+  "auClosedOnline": "Auktion beendet. Das höchste Gebot gewinnt.",
 };
 TR.de = {
   "2019": "2019",

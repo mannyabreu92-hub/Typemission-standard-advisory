@@ -12,9 +12,9 @@ const T = {
   kind: { painting: { es: 'Pintura', en: 'Painting', fr: 'Peinture' }, sculpture: { es: 'Escultura', en: 'Sculpture', fr: 'Sculpture' } },
   auction: { es: 'Subasta Museo Abreu', en: 'Museo Abreu auction', fr: 'Enchères Museo Abreu' },
   lotDesc: {
-    es: '{kind} de {artist} en subasta. Puje en línea; la subasta termina en vivo en la Cena de Subasta y Premios de ART GABANGI.',
-    en: '{kind} by {artist} at auction. Bid online; the auction ends live at the ART GABANGI Auction & Awards Dinner.',
-    fr: '{kind} de {artist} aux enchères. Enchérissez en ligne ; la vente se termine en direct lors du dîner de vente aux enchères et remise des prix d’ART GABANGI.',
+    es: '{kind} de {artist} en subasta. Puje en línea; gana la puja más alta.',
+    en: '{kind} by {artist} at auction. Bid online; the highest bid wins.',
+    fr: '{kind} de {artist} aux enchères. Enchérissez en ligne ; l’enchère la plus haute l’emporte.',
   },
   start: { es: 'Precio de salida: USD {p}.', en: 'Starting bid: USD {p}.', fr: 'Mise à prix : {p} USD.' },
   // The book: title and subtitles as printed, and the first sentence of the app's synopsis.

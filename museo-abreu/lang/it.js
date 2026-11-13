@@ -888,6 +888,8 @@ I18N.it = {
   "auSoft": "Un’offerta negli ultimi 2 minuti prolunga la chiusura di 2 minuti.",
   "auIncr": "Offerte da {start}, con rilanci di {inc}.",
   "auTitleAll": "Asta Museo Abreu",
+  "auLeadOnline": "Dipinti e sculture all’asta. Fate la vostra offerta online fino alla chiusura; vince l’offerta più alta.",
+  "auClosedOnline": "Asta chiusa. Vince l’offerta più alta.",
 };
 TR.it = {
   "2019": "2019",
