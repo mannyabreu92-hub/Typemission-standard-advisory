@@ -199,7 +199,7 @@ function pageHomeDirector() {
     </section>
     <section class="section dir-auction">
       <div class="section-head"><h2>${t('navAuction')}</h2><a href="#/subasta">${t('shAllLots')}</a></div>
-      ${auLots().length ? `<div class="lots">${auLots().slice(0, 3).map(l => lotCard(l)).join('')}</div>`
+      ${auLots().length ? auFeatureHTML(auFeatured(), 'h3') + `<div class="lots">${auLots().filter(l => l !== auFeatured()).slice(0, 3).map(l => lotCard(l)).join('')}</div>`
         : `<a class="card dir-card dir-au-soon" href="#/subasta"><p class="eyebrow">ART GABANGI · Auction & Awards</p><p>${t('auSoon')}</p><p class="dir-link">${t('shAllLots')} <span class="arr">→</span></p></a>`}
     </section>
     <section class="section dir-upcoming"><div class="section-head"><h2>${t('hmUpcoming')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>

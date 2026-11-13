@@ -965,3 +965,39 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 @media (prefers-reduced-motion: reduce) { .reader-text .ls-now, .reader-text.ls-listening p { transition: none; } }
 .dir-book .dir-listen { margin-top: .6rem; }
 .ls-oscar { font-family: var(--serif); font-style: italic; font-size: 1.05rem; padding: .3rem .2rem; color: var(--ink); }
+
+/* Auction as a live room (market.js): the work with the highest bid leads, a countdown runs to the close,
+   and a leaderboard names the highest bidders. */
+.au-feature { display: grid; gap: 1.2rem; align-items: center; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius, 14px); overflow: hidden; }
+@media (min-width: 760px) { .au-feature { grid-template-columns: 1.1fr 1fr; } }
+.au-feature-img img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.au-feature-body { padding: 0 1.2rem 1.4rem; display: grid; gap: .55rem; }
+@media (min-width: 760px) { .au-feature-body { padding: 1.6rem 1.6rem 1.6rem 0; } }
+.au-feature-title { font-family: var(--serif); font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.05; margin: 0; }
+.au-feature-title a { color: inherit; text-decoration: none; }
+.au-feature-price { display: grid; font: 600 clamp(1.8rem, 7vw, 2.4rem)/1.1 var(--sans); margin: .2rem 0 0; font-variant-numeric: tabular-nums; }
+.au-feature-price small, .au-feature-cd small { font: 500 .72rem/1.4 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.au-feature-lead { margin: 0; font-size: 1rem; }
+.au-crown { color: #9a7b1c; }
+.au-feature-cd { display: grid; gap: .3rem; margin: .3rem 0; }
+.cd { font-variant-numeric: tabular-nums; font-weight: 600; }
+.cd-big { display: flex; gap: .5rem; flex-wrap: wrap; }
+.cd-u { display: grid; justify-items: center; min-width: 3.4rem; padding: .45rem .5rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+.cd-u b { font: 600 1.5rem/1 var(--sans); }
+.cd-u small { font-size: .66rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; margin-top: .2rem; }
+.cd-soon .cd-u b, .lot-close .cd-soon { color: var(--accent); }
+.cd-end { font-weight: 600; }
+.au-bid-now { justify-self: start; margin-top: .4rem; }
+.au-rules { margin-top: .8rem; font-size: .88rem; }
+.au-board { list-style: none; padding: 0; margin: .8rem 0 0; display: grid; gap: .45rem; }
+.au-rank { display: grid; grid-template-columns: 2.2rem 1fr auto; align-items: center; gap: .7rem; padding: .6rem .8rem; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
+.au-pos { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; font-weight: 600; background: var(--paper); border: 1px solid var(--line); }
+.au-rank.r1 .au-pos { background: #e7cf7a; border-color: #c9a93c; color: #3b2f05; }
+.au-rank.r2 .au-pos { background: #dcdcdc; border-color: #b9b9b9; color: #2a2a2a; }
+.au-rank.r3 .au-pos { background: #e3b48a; border-color: #c48b5a; color: #3a210b; }
+.au-rank.r1 { border-color: #c9a93c; }
+.au-who { display: grid; font-weight: 500; overflow-wrap: anywhere; }
+.au-who small { font-weight: 400; color: var(--ink-3); font-size: .8rem; }
+.au-amt { font-variant-numeric: tabular-nums; }
+.bid-quick { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+.au-top .au-h1 { margin-bottom: 1.2rem; }

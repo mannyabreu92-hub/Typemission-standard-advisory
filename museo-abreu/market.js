@@ -96,6 +96,89 @@ const printSub = p => L(p.name) + ' · Ediciones ARTFORO';
 const auUSD = n => 'USD ' + money(Number(n));
 let auState = null, auFailed = false, auTimer = null;
 
+// The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
+// and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
+Object.assign(I18N.es, { auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
+  auBidNow: 'Pujar ahora', auBoard: 'Tabla de líderes', auBoardLead: 'Los mayores pujadores, reconocidos por su nombre.',
+  auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
+  auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
+  auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
+Object.assign(I18N.en, { auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
+  auBidNow: 'Bid now', auBoard: 'Leaderboard', auBoardLead: 'The highest bidders, recognized by name.',
+  auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
+  auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
+  auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
+Object.assign(I18N.fr, { auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
+  auBidNow: 'Enchérir', auBoard: 'Classement', auBoardLead: 'Les meilleurs enchérisseurs, cités par leur nom.',
+  auBoardEmpty: 'Aucune enchère pour l’instant. La première ouvre le classement.', auShowName: 'Afficher mon nom au classement (sinon, seulement mes initiales)',
+  auQuick: 'Enchère rapide', auEndsIn: 'Clôture dans', auD: 'jours', auH: 'h', auM: 'min', auS: 's', auEnded: 'Close',
+  auSoft: 'Une enchère dans les 2 dernières minutes prolonge la clôture de 2 minutes.', auIncr: 'Enchères à partir de {start}, par paliers de {inc}.' });
+
+const auSt = lot => (auState && auState[lot.id]) || null;
+const auCloses = lot => lotCloses(lot, auSt(lot));
+const auOpen = lot => lotOpen(lot, Date.now(), auSt(lot));
+const lotValue = lot => (auSt(lot) && auSt(lot).high) || lot.startBid || 0;
+// The work that leads the page: the open lot with the highest bid (or opening bid); with none open, the highest of all.
+function auFeatured() {
+  const open = auLots().filter(auOpen), pool = open.length ? open : auLots();
+  return pool.slice().sort((a, b) => lotValue(b) - lotValue(a))[0];
+}
+
+// Countdowns: every [data-cd] element shows the time left to its close and is refreshed each second; when a
+// close passes, the bids are fetched again (a soft close may have moved it) and the page redrawn.
+function cdHTML(iso, big) {
+  return `<span class="cd${big ? ' cd-big' : ''}" data-cd="${iso}" role="timer">${cdText(iso, big)}</span>`;
+}
+function cdText(iso, big) {
+  const ms = Date.parse(iso) - Date.now();
+  if (ms <= 0) return `<span class="cd-end">${t('auEnded')}</span>`;
+  const s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+  const two = n => String(n).padStart(2, '0');
+  if (!big) return (d ? `${d} ${t('auD')} ` : '') + `${two(h)}:${two(m)}:${two(x)}`;
+  return [[d, 'auD'], [h, 'auH'], [m, 'auM'], [x, 'auS']].filter((p, i) => i || d).map(([n, k]) => `<span class="cd-u"><b>${two(n)}</b><small>${t(k)}</small></span>`).join('');
+}
+let cdBusy = false;
+setInterval(() => {
+  let ended = false;
+  document.querySelectorAll('[data-cd]').forEach(el => {
+    const left = Date.parse(el.dataset.cd) - Date.now();
+    el.innerHTML = cdText(el.dataset.cd, el.classList.contains('cd-big'));
+    el.classList.toggle('cd-soon', left > 0 && left < 3.6e6);
+    if (left <= 0 && !el.dataset.done) { el.dataset.done = '1'; ended = true; }
+  });
+  if (ended && !cdBusy) { cdBusy = true; fetchAuction().then(() => { cdBusy = false; if (!document.activeElement || !document.activeElement.closest('form')) route(); }); }
+}, 1000);
+
+// The leaderboard: rank, name (or initials), best bid, and on the auction page the work it is for.
+function auBoardHTML(rows, withLot) {
+  if (!rows.length) return `<p class="muted">${t('auBoardEmpty')}</p>`;
+  return `<ol class="au-board">${rows.map((r, i) => `<li class="au-rank${i < 3 ? ' r' + (i + 1) : ''}">
+    <span class="au-pos" aria-hidden="true">${i + 1}</span>
+    <span class="au-who">${esc(r.who || '—')}${withLot ? `<small>${esc(r.lot)}</small>` : ''}</span>
+    <strong class="au-amt">${auUSD(r.amount)}</strong></li>`).join('')}</ol>`;
+}
+function auAllLeaders() {
+  return auLots().flatMap(l => ((auSt(l) && auSt(l).leaders) || []).map(r => ({ ...r, lot: lotTitle(l) })))
+    .sort((a, b) => b.amount - a.amount).slice(0, 10);
+}
+// The featured work: large picture, current bid, who leads, the countdown and the way to bid.
+function auFeatureHTML(lot, h = 'h2') {
+  if (!lot) return '';
+  if (!auState && !auFailed) fetchAuction().then(() => { if (document.querySelector('.au-feature')) route(); });
+  const s = auSt(lot) || {}, c = auCloses(lot), open = auOpen(lot), lead = s.leaders && s.leaders[0];
+  return `<article class="au-feature">
+    <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="1000" height="1000"></a>
+    <div class="au-feature-body">
+      <p class="eyebrow">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
+      <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(lotTitle(lot))}</a></${h}>
+      <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
+      <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
+      ${c ? `<div class="au-feature-cd"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t('auClosed')}</span>`}</div>` : ''}
+      ${open ? `<a class="btn primary au-bid-now" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}
+    </div>
+  </article>`;
+}
+
 function lotTitle(lot) {
   const w = lot.work && workById(lot.work);
   return w ? L(w.title) : t('auSculptureN', { n: lot.n });
@@ -132,23 +215,23 @@ async function fetchAuction() {
 // Refreshes the bids every 20 s while an auction page is open and nobody is typing in the form.
 function auPoll() {
   clearInterval(auTimer);
-  if (!location.hash.startsWith('#/subasta') || !AUCTION.lots.some(l => lotOpen(l))) return;
+  if (!location.hash.startsWith('#/subasta') || !AUCTION.lots.some(l => auOpen(l))) return;
   auTimer = setInterval(async () => {
     if (!location.hash.startsWith('#/subasta')) return clearInterval(auTimer);
     await fetchAuction();
     if (!document.activeElement || !document.activeElement.closest('form')) route();
-  }, 20000);
+  }, 10000);
 }
 
 function lotPriceLine(lot) {
   const s = auState && auState[lot.id];
-  if (s && s.count) return `<span class="lot-price"><small>${t('auCurrent')}</small>${auUSD(s.high)}</span><span class="muted">${s.count === 1 ? t('auBid1') : t('auBidsN', { n: s.count })}</span>`;
+  if (s && s.count) return `<span class="lot-price"><small>${t('auCurrent')}</small>${auUSD(s.high)}</span><span class="muted">${s.count === 1 ? t('auBid1') : t('auBidsN', { n: s.count })}${s.leaders && s.leaders[0] ? ' · ' + esc(t('auLeader', { name: s.leaders[0].who })) : ''}</span>`;
   return `<span class="lot-price"><small>${t('auStart')}</small>${lot.startBid != null ? auUSD(lot.startBid) : t('auTba')}</span>${lot.startBid != null ? `<span class="muted">${t('auNoBids')}</span>` : ''}`;
 }
 function lotCloseLine(lot) {
-  const c = lotCloses(lot);
+  const c = auCloses(lot);
   if (!c) return '';
-  return lotOpen(lot) ? `<p class="lot-close">${t('auClosesIn', { time: relTime(c) })} · ${t('auClosesOn', { date: dateTime(c) })}</p>` : `<p class="lot-close">${t('auClosed')}</p>`;
+  return auOpen(lot) ? `<p class="lot-close">${t('auEndsIn')} ${cdHTML(c)} · ${t('auClosesOn', { date: dateTime(c) })}</p>` : `<p class="lot-close">${t('auClosed')}</p>`;
 }
 function lotCard(lot, h = 'h3') {
   return `<article class="lot-card">
@@ -172,34 +255,39 @@ function pageAuction(id) {
       <p class="lead" style="margin-top:.8rem">${t('auSoon')}</p>
       <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p></section></div>`;
   return `<div class="wrap">
-    <section class="section">
-      <p class="eyebrow">${t('auEyebrow')}</p><h1>${t('auTitle')}</h1>
-      <p class="lead" style="margin-top:.8rem">${t('auLead', { event: esc(fin.name) })}</p>
-      <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p>
-      ${auFailed && AUCTION.lots.some(l => lotOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
+    <section class="section au-top">
+      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1">${t('auTitle')}</h1>
+      ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
+      ${auFeatureHTML(auFeatured())}
+      <p class="muted au-rules">${t('auIncr', { start: auUSD(AUCTION.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>
     </section>
-    <section class="section"><div class="lots">${auLots().map(l => lotCard(l, 'h2')).join('')}</div></section>
+    <section class="section au-board-wrap"><h2>${t('auBoard')}</h2><p class="muted">${t('auBoardLead')}</p>${auBoardHTML(auAllLeaders(), true)}</section>
+    <section class="section"><div class="lots">${auLots().filter(l => l !== auFeatured()).map(l => lotCard(l, 'h2')).join('')}</div></section>
+    <section class="section"><p class="lead">${t('auLead', { event: esc(fin.name) })}</p>
+      <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p></section>
   </div>`;
 }
 
 function pageLot(lot, fin) {
   const w = lot.work && workById(lot.work), s = (auState && auState[lot.id]) || { count: 0, last: [] };
   const spec = w && w.spec ? L(w.spec).join(' · ') : '';
-  const open = lotOpen(lot), min = open ? lotMinBid(lot, s) : null;
+  const open = auOpen(lot), min = open ? lotMinBid(lot, s) : null;
   const action = open ? `<form class="bid-form" data-form="bid" data-lot="${lot.id}" novalidate>
       <div class="field"><label for="bid-amount">${t('auYourBid')}</label>
         <input id="bid-amount" type="number" inputmode="numeric" min="${min}" step="${AUCTION.increment}" value="${min}" required>
-        <small class="muted">${t('auMin', { amount: auUSD(min) })}</small></div>
+        <small class="muted">${t('auMin', { amount: auUSD(min) })}</small>
+        <div class="bid-quick" role="group" aria-label="${t('auQuick')}">${[0, 500, 1000].map(x => `<button type="button" class="btn small" data-action="bidQuick" data-v="${min + x}">${auUSD(min + x)}</button>`).join('')}</div></div>
       <div class="grid two">
         <div class="field"><label for="bid-name">${t('name')}</label><input id="bid-name" required autocomplete="name" value="${esc(profile.name || '')}"></div>
         <div class="field"><label for="bid-email">${t('email')}</label><input id="bid-email" type="email" required autocomplete="email" value="${esc(profile.email || '')}"></div>
       </div>
       <div class="field"><label for="bid-phone">${t('phone')}</label><input id="bid-phone" type="tel" required autocomplete="tel" value="${esc(profile.phone || '')}"></div>
+      <label class="bid-accept"><input type="checkbox" id="bid-show" checked> <span>${t('auShowName')}</span></label>
       <label class="bid-accept"><input type="checkbox" id="bid-accept"> <span>${t('auTerms')}</span></label>
       <p class="status" id="bid-status" role="status" aria-live="polite" hidden></p>
       <button class="btn primary co-pay" type="submit">${t('auBidBtn')}</button>
     </form>`
-    : lotCloses(lot) && lot.startBid != null ? '' // closed online: carries into the room
+    : auCloses(lot) && lot.startBid != null ? '' // closed online: carries into the room
     : `<p class="muted">${t('auNotOpen')}</p>
        <button class="btn" data-action="lotInterest" data-lot="${lot.id}">${t('auInterest')}</button>`;
   return `<div class="wrap lot-page">
@@ -211,11 +299,11 @@ function pageLot(lot, fin) {
         <h1 class="lot-h1">${esc(lotTitle(lot))}</h1>
         ${spec ? `<p class="muted">${esc(spec)}</p>` : ''}
         <p class="lot-state big">${lotPriceLine(lot)}</p>
-        ${lotCloseLine(lot)}
+        ${auCloses(lot) && auOpen(lot) ? `<div class="au-feature-cd"><small>${t('auEndsIn')}</small>${cdHTML(auCloses(lot), true)}</div>` : lotCloseLine(lot)}
         <p class="lot-live">${t('auLiveAt', { event: esc(fin.name), date: fmtDate(fin.date) + ' · ' + rsvpTime(fin.time) })}</p>
         ${action}
-        ${s.last && s.last.length ? `<h2 class="h3" style="margin-top:1.4rem">${t('auHistory')}</h2>
-          <ol class="bid-list">${s.last.map(b => `<li><strong>${auUSD(b.amount)}</strong> <span class="muted">${esc(b.who || '')} · ${dateTime(b.at)}</span></li>`).join('')}</ol>` : ''}
+        ${open ? `<p class="muted au-rules">${t('auIncr', { start: auUSD(lot.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>` : ''}
+        <h2 class="h3" style="margin-top:1.4rem">${t('auBoard')}</h2>${auBoardHTML((s.leaders || []).slice(0, 10))}
         <p class="muted" style="margin-top:1rem">${t('auWinner')}</p>
         <div class="btn-row"><button class="btn" data-action="lotShare" data-lot="${lot.id}">${t('evShare')}</button></div>
         <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
@@ -238,7 +326,7 @@ EXTRA_FORMS.bid = async form => {
   btn.disabled = true;
   try {
     const r = await fetch('/api/auction', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lot: lot.id, amount: Number(v('bid-amount')), name: profile.name, email: profile.email, phone: profile.phone, accept: true }) });
+      body: JSON.stringify({ lot: lot.id, amount: Number(v('bid-amount')), name: profile.name, email: profile.email, phone: profile.phone, accept: true, show: $('#bid-show', form).checked }) });
     const data = await r.json().catch(() => ({}));
     if (r.ok) {
       auState = { ...(auState || {}), [lot.id]: data };
@@ -251,10 +339,13 @@ EXTRA_FORMS.bid = async form => {
       auState = { ...(auState || {}), [lot.id]: data };
       const input = $('#bid-amount', form); input.min = data.min; input.value = data.min;
       say(t('auTooLow', { amount: auUSD(data.min) }));
-    } else say(t('auErr'));
+    } else if (data.error === 'closed') { auState = { ...(auState || {}), [lot.id]: data }; route(); }
+    else say(t('auErr'));
   } catch (e) { say(t('auErr')); }
   btn.disabled = false;
 };
+
+EXTRA_ACTIONS.bidQuick = el => { const i = $('#bid-amount'); if (i) { i.value = el.dataset.v; i.focus(); } };
 
 EXTRA_ACTIONS.lotInterest = el => {
   const lot = AUCTION.lots.find(l => l.id === el.dataset.lot);
