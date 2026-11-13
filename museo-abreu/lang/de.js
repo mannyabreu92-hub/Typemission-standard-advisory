@@ -890,6 +890,9 @@ I18N.de = {
   "auTitleAll": "Auktion Museo Abreu",
   "auLeadOnline": "Gemälde und Skulpturen zur Auktion. Bieten Sie online bis zum Ende; das höchste Gebot gewinnt.",
   "auClosedOnline": "Auktion beendet. Das höchste Gebot gewinnt.",
+  "auDrawing": "Zeichnung",
+  "auDrawingN": "Zeichnung Nr. {n}",
+  "auGalleryN": "Galeriegemälde Nr. {n}",
 };
 TR.de = {
   "2019": "2019",

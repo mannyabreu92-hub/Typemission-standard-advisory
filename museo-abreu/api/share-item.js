@@ -9,7 +9,8 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 const T = {
   lot: { es: 'Lote {n}', en: 'Lot {n}', fr: 'Lot {n}' },
   sculpture: { es: 'Escultura n.º {n}', en: 'Sculpture no. {n}', fr: 'Sculpture n° {n}' },
-  kind: { painting: { es: 'Pintura', en: 'Painting', fr: 'Peinture' }, sculpture: { es: 'Escultura', en: 'Sculpture', fr: 'Sculpture' } },
+  drawing: { es: 'Dibujo n.º {n}', en: 'Drawing no. {n}', fr: 'Dessin n° {n}' },
+  kind: { painting: { es: 'Pintura', en: 'Painting', fr: 'Peinture' }, sculpture: { es: 'Escultura', en: 'Sculpture', fr: 'Sculpture' }, drawing: { es: 'Dibujo', en: 'Drawing', fr: 'Dessin' } },
   auction: { es: 'Subasta Museo Abreu', en: 'Museo Abreu auction', fr: 'Enchères Museo Abreu' },
   lotDesc: {
     es: '{kind} de {artist} en subasta. Puje en línea; gana la puja más alta.',
@@ -34,7 +35,7 @@ module.exports = (req, res) => {
   } else {
     const i = AUCTION.lots.findIndex(x => x.id === req.query.id), lot = AUCTION.lots[i];
     if (!lot) { res.statusCode = 302; res.setHeader('Location', '/#/subasta'); return res.end(); }
-    const name = lot.title ? lot.title[l] : fill(T.sculpture[l], { n: lot.n });
+    const name = lot.title ? lot.title[l] : fill(T[lot.kind === 'drawing' ? 'drawing' : 'sculpture'][l], { n: lot.n });
     title = `${fill(T.lot[l], { n: i + 1 })} · ${name} — ${T.auction[l]}`;
     desc = fill(T.lotDesc[l], { kind: T.kind[lot.kind][l], artist: lot.artist || 'Oscar Abreu' }) + (lot.startBid != null && lotOpen(lot) ? ' ' + fill(T.start[l], { p: lot.startBid.toLocaleString('en-US') }) : '');
     img = lot.img; path = '/l/' + lot.id; target = '/#/subasta/' + lot.id;

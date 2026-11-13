@@ -9,7 +9,7 @@ Object.assign(I18N.es, {
   auEyebrow: 'Subasta · Museo Abreu', auTitle: 'Subasta de obras de Oscar Abreu',
   auLead: 'Pinturas y esculturas en subasta. Puje en línea hasta el cierre; la subasta termina en vivo en la {event}.',
   auExampleNote: 'Obras de ejemplo: el museo publicará los lotes reales, sus precios de salida y la fecha de cierre.',
-  auExample: 'Ejemplo', auLot: 'Lote {n}', auPainting: 'Pintura', auSculpture: 'Escultura', auSculptureN: 'Escultura n.º {n}',
+  auExample: 'Ejemplo', auLot: 'Lote {n}', auPainting: 'Pintura', auSculpture: 'Escultura', auSculptureN: 'Escultura n.º {n}', auDrawing: 'Dibujo', auDrawingN: 'Dibujo n.º {n}', auGalleryN: 'Pintura de la galería n.º {n}',
   auStart: 'Precio de salida', auCurrent: 'Puja actual', auBidsN: '{n} pujas', auBid1: '1 puja', auNoBids: 'Sin pujas todavía', auTba: 'Por anunciar',
   auClosesIn: 'Cierra {time}', auClosesOn: 'Puja en línea hasta el {date}',
   auClosed: 'Puja en línea cerrada. La puja más alta pasa a la sala.', auClosedOnline: 'Subasta cerrada. Gana la puja más alta.',
@@ -34,7 +34,7 @@ Object.assign(I18N.en, {
   auEyebrow: 'Auction · Museo Abreu', auTitle: 'Auction of works by Oscar Abreu',
   auLead: 'Paintings and sculptures at auction. Bid online until the close; the auction ends live at the {event}.',
   auExampleNote: 'Example lots: the museum will publish the real lots, their starting bids and the closing date.',
-  auExample: 'Example', auLot: 'Lot {n}', auPainting: 'Painting', auSculpture: 'Sculpture', auSculptureN: 'Sculpture no. {n}',
+  auExample: 'Example', auLot: 'Lot {n}', auPainting: 'Painting', auSculpture: 'Sculpture', auSculptureN: 'Sculpture no. {n}', auDrawing: 'Drawing', auDrawingN: 'Drawing no. {n}', auGalleryN: 'Gallery painting no. {n}',
   auStart: 'Starting bid', auCurrent: 'Current bid', auBidsN: '{n} bids', auBid1: '1 bid', auNoBids: 'No bids yet', auTba: 'To be announced',
   auClosesIn: 'Closes {time}', auClosesOn: 'Online bidding until {date}',
   auClosed: 'Online bidding closed. The highest bid carries into the room.', auClosedOnline: 'Bidding closed. The highest bid wins.',
@@ -59,7 +59,7 @@ Object.assign(I18N.fr, {
   auEyebrow: 'Enchères · Museo Abreu', auTitle: 'Vente aux enchères d’œuvres d’Oscar Abreu',
   auLead: 'Peintures et sculptures aux enchères. Enchérissez en ligne jusqu’à la clôture ; la vente se termine en direct lors du {event}.',
   auExampleNote: 'Lots d’exemple : le musée publiera les lots réels, leurs mises à prix et la date de clôture.',
-  auExample: 'Exemple', auLot: 'Lot {n}', auPainting: 'Peinture', auSculpture: 'Sculpture', auSculptureN: 'Sculpture n° {n}',
+  auExample: 'Exemple', auLot: 'Lot {n}', auPainting: 'Peinture', auSculpture: 'Sculpture', auSculptureN: 'Sculpture n° {n}', auDrawing: 'Dessin', auDrawingN: 'Dessin n° {n}', auGalleryN: 'Peinture de la galerie n° {n}',
   auStart: 'Mise à prix', auCurrent: 'Enchère actuelle', auBidsN: '{n} enchères', auBid1: '1 enchère', auNoBids: 'Aucune enchère pour l’instant', auTba: 'À annoncer',
   auClosesIn: 'Clôture {time}', auClosesOn: 'Enchères en ligne jusqu’au {date}',
   auClosed: 'Enchères en ligne closes. L’enchère la plus haute est reprise en salle.', auClosedOnline: 'Enchères closes. L’enchère la plus haute l’emporte.',
@@ -185,7 +185,9 @@ function auFeatureHTML(lot, h = 'h2') {
 
 function lotTitle(lot) {
   const w = lot.work && workById(lot.work);
-  return w ? L(w.title) : lot.title ? L(lot.title) : t('auSculptureN', { n: lot.n });
+  if (w) return L(w.title);
+  if (lot.gallery) return t('auGalleryN', { n: lot.gallery });
+  return lot.title ? L(lot.title) : t(lot.kind === 'drawing' ? 'auDrawingN' : 'auSculptureN', { n: lot.n });
 }
 const lotArtist = lot => lot.artist || 'Oscar Abreu';
 // A picture that is far from square (a diptych, a tall canvas) is shown whole rather than cropped.
@@ -203,7 +205,7 @@ if (!auLots().length) {
   const tab = document.querySelector('.tabbar [data-route="subasta"]');
   if (tab) { tab.href = '#/biblioteca'; tab.dataset.route = 'biblioteca'; tab.innerHTML = '<span class="ti">✦</span><span data-i18n="tabLibrary">Libro</span>'; }
 }
-const lotKind = lot => t(lot.kind === 'sculpture' ? 'auSculpture' : 'auPainting');
+const lotKind = lot => t({ sculpture: 'auSculpture', drawing: 'auDrawing' }[lot.kind] || 'auPainting');
 function liveFinale() {
   if (!AUCTION.live) return null;
   const gb = EVENTS.find(e => e.id === AUCTION.live.event), tier = gb.tiers.find(x => x.id === AUCTION.live.tier);

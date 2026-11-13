@@ -890,6 +890,9 @@ I18N.it = {
   "auTitleAll": "Asta Museo Abreu",
   "auLeadOnline": "Dipinti e sculture all’asta. Fate la vostra offerta online fino alla chiusura; vince l’offerta più alta.",
   "auClosedOnline": "Asta chiusa. Vince l’offerta più alta.",
+  "auDrawing": "Disegno",
+  "auDrawingN": "Disegno n. {n}",
+  "auGalleryN": "Dipinto della galleria n. {n}",
 };
 TR.it = {
   "2019": "2019",
