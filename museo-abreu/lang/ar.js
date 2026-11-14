@@ -929,6 +929,12 @@ I18N.ar = {
   "auDrawings": "رسوم",
   "auRoomBoard": "أعلى المزايدات في هذه القاعة",
   "auEnterRoom": "عرض أعماله",
+  "auPrev": "العمل السابق",
+  "auNext": "العمل التالي",
+  "auOfN": "العمل {i} من {n}",
+  "auWorksOf": "أعمال {name}",
+  "auAboutWork": "عن العمل",
+  "auBidThis": "زايد على هذا العمل",
 };
 TR.ar = {
   "2019": "2019",

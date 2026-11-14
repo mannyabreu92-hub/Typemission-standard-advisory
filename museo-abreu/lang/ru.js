@@ -930,6 +930,12 @@ I18N.ru = {
   "auDrawings": "Рисунки",
   "auRoomBoard": "Самые высокие ставки в этом зале",
   "auEnterRoom": "Смотреть работы",
+  "auPrev": "Предыдущая работа",
+  "auNext": "Следующая работа",
+  "auOfN": "Работа {i} из {n}",
+  "auWorksOf": "Работы: {name}",
+  "auAboutWork": "О работе",
+  "auBidThis": "Сделать ставку на эту работу",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

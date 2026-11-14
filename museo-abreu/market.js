@@ -101,7 +101,8 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auArtistsH: 'Los artistas', auArtistsLead: '{n} artistas. Elija uno para entrar en su sala y ver sus obras en subasta.', auWorksN: '{n} obras', auWork1: '1 obra', auBackArtists: 'Todos los artistas', auRoom: 'Sala', auAllWorks: 'Ver todas las obras ({n})', auAllWorksH: 'Todas las obras', auPaintings: 'Pinturas', auSculptures: 'Esculturas', auDrawings: 'Dibujos', auRoomBoard: 'Pujas más altas en esta sala', auEnterRoom: 'Ver sus obras',
+Object.assign(I18N.es, { auPrev: 'Obra anterior', auNext: 'Obra siguiente', auOfN: 'Obra {i} de {n}', auWorksOf: 'Obras de {name}', auAboutWork: 'Sobre la obra', auBidThis: 'Pujar por esta obra',
+  auArtistsH: 'Los artistas', auArtistsLead: '{n} artistas. Elija uno para entrar en su sala y ver sus obras en subasta.', auWorksN: '{n} obras', auWork1: '1 obra', auBackArtists: 'Todos los artistas', auRoom: 'Sala', auAllWorks: 'Ver todas las obras ({n})', auAllWorksH: 'Todas las obras', auPaintings: 'Pinturas', auSculptures: 'Esculturas', auDrawings: 'Dibujos', auRoomBoard: 'Pujas más altas en esta sala', auEnterRoom: 'Ver sus obras',
   auCatBook: 'Top 100 Artist', auCatOscar: 'Pinturas · Oscar Abreu', auCatSculpture: 'Esculturas · Oscar Abreu', auCatDrawing: 'Dibujos · Oscar Abreu', auCatAll: 'Todas', auCats: 'Ver obras', auAllArtists: 'Todos los artistas', auArtistPick: 'Artista', auMore: 'Ver más ({n})', auShowing: '{a} de {b} obras', auBoardAll: 'Ver la tabla completa', auAllClose: 'Todas las obras cierran el {date}.',
   auInfo: 'Detalles', auAsk: 'Preguntar por esta obra', auFrom: 'República Dominicana', auBorn: 'n. {y}', auArtist: 'Artista', auType: 'Tipo', auMedium: 'Técnica', auSize: 'Medidas', auAboutOscar: 'Sobre Oscar Abreu', auOpenLot: 'Ver lote y pujar', auSrcBook: 'ART GABANGI · Top 100 Artist',
   auTitleAll: 'Subasta Museo Abreu', auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
@@ -109,7 +110,8 @@ Object.assign(I18N.es, { auArtistsH: 'Los artistas', auArtistsLead: '{n} artista
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auArtistsH: 'The artists', auArtistsLead: '{n} artists. Choose one to enter their room and see their works at auction.', auWorksN: '{n} works', auWork1: '1 work', auBackArtists: 'All artists', auRoom: 'Room', auAllWorks: 'See all works ({n})', auAllWorksH: 'All works', auPaintings: 'Paintings', auSculptures: 'Sculptures', auDrawings: 'Drawings', auRoomBoard: 'Highest bids in this room', auEnterRoom: 'See their works',
+Object.assign(I18N.en, { auPrev: 'Previous work', auNext: 'Next work', auOfN: 'Work {i} of {n}', auWorksOf: 'Works by {name}', auAboutWork: 'About the work', auBidThis: 'Bid on this work',
+  auArtistsH: 'The artists', auArtistsLead: '{n} artists. Choose one to enter their room and see their works at auction.', auWorksN: '{n} works', auWork1: '1 work', auBackArtists: 'All artists', auRoom: 'Room', auAllWorks: 'See all works ({n})', auAllWorksH: 'All works', auPaintings: 'Paintings', auSculptures: 'Sculptures', auDrawings: 'Drawings', auRoomBoard: 'Highest bids in this room', auEnterRoom: 'See their works',
   auCatBook: 'Top 100 Artist', auCatOscar: 'Paintings · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Drawings · Oscar Abreu', auCatAll: 'All', auCats: 'Browse works', auAllArtists: 'All artists', auArtistPick: 'Artist', auMore: 'Show more ({n})', auShowing: '{a} of {b} works', auBoardAll: 'See the full leaderboard', auAllClose: 'All works close on {date}.',
   auInfo: 'Details', auAsk: 'Ask about this work', auFrom: 'Dominican Republic', auBorn: 'b. {y}', auArtist: 'Artist', auType: 'Type', auMedium: 'Medium', auSize: 'Size', auAboutOscar: 'About Oscar Abreu', auOpenLot: 'View lot and bid', auSrcBook: 'ART GABANGI · Top 100 Artist',
   auTitleAll: 'Museo Abreu Auction', auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
@@ -117,7 +119,8 @@ Object.assign(I18N.en, { auArtistsH: 'The artists', auArtistsLead: '{n} artists.
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auArtistsH: 'Les artistes', auArtistsLead: '{n} artistes. Choisissez-en un pour entrer dans sa salle et voir ses œuvres aux enchères.', auWorksN: '{n} œuvres', auWork1: '1 œuvre', auBackArtists: 'Tous les artistes', auRoom: 'Salle', auAllWorks: 'Voir toutes les œuvres ({n})', auAllWorksH: 'Toutes les œuvres', auPaintings: 'Peintures', auSculptures: 'Sculptures', auDrawings: 'Dessins', auRoomBoard: 'Enchères les plus hautes de cette salle', auEnterRoom: 'Voir ses œuvres',
+Object.assign(I18N.fr, { auPrev: 'Œuvre précédente', auNext: 'Œuvre suivante', auOfN: 'Œuvre {i} sur {n}', auWorksOf: 'Œuvres de {name}', auAboutWork: 'À propos de l’œuvre', auBidThis: 'Enchérir sur cette œuvre',
+  auArtistsH: 'Les artistes', auArtistsLead: '{n} artistes. Choisissez-en un pour entrer dans sa salle et voir ses œuvres aux enchères.', auWorksN: '{n} œuvres', auWork1: '1 œuvre', auBackArtists: 'Tous les artistes', auRoom: 'Salle', auAllWorks: 'Voir toutes les œuvres ({n})', auAllWorksH: 'Toutes les œuvres', auPaintings: 'Peintures', auSculptures: 'Sculptures', auDrawings: 'Dessins', auRoomBoard: 'Enchères les plus hautes de cette salle', auEnterRoom: 'Voir ses œuvres',
   auCatBook: 'Top 100 Artist', auCatOscar: 'Peintures · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Dessins · Oscar Abreu', auCatAll: 'Toutes', auCats: 'Parcourir les œuvres', auAllArtists: 'Tous les artistes', auArtistPick: 'Artiste', auMore: 'Voir plus ({n})', auShowing: '{a} sur {b} œuvres', auBoardAll: 'Voir le classement complet', auAllClose: 'Toutes les œuvres ferment le {date}.',
   auInfo: 'Détails', auAsk: 'Se renseigner sur cette œuvre', auFrom: 'République dominicaine', auBorn: 'né(e) en {y}', auArtist: 'Artiste', auType: 'Type', auMedium: 'Technique', auSize: 'Dimensions', auAboutOscar: 'À propos d’Oscar Abreu', auOpenLot: 'Voir le lot et enchérir', auSrcBook: 'ART GABANGI · Top 100 Artist',
   auTitleAll: 'Vente aux enchères Museo Abreu', auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
@@ -338,6 +341,81 @@ EXTRA_ACTIONS.auMore = () => {
   const next = document.querySelectorAll('#au-browse .lot-card .lot-title a')[before]; if (next) next.focus();
 };
 
+// An artist's room shows one work at a time, large, with everything known about it and room for its description
+// (lot.desc, by language, when the museum provides it); arrows, a swipe or the thumbnails move between works. The
+// place in the room lasts while the visitor stays in it (the page re-renders every few seconds with new bids).
+let auVScope = '', auVIdx = 0, auVLots = () => [];
+function auViewerHTML(scope, name, lots) {
+  if (scope !== auVScope) { auVScope = scope; auVIdx = 0; auCat = 'all'; }
+  auVLots = () => lots;
+  const kinds = AU_KINDS.map(([id, key, f]) => [id, key, lots.filter(f).length]).filter(k => k[2]);
+  const multi = kinds.length > 2, cat = multi ? (AU_KINDS.find(k => k[0] === auCat) || AU_KINDS[0]) : AU_KINDS[0];
+  const list = lots.filter(cat[2]);
+  if (!list.length) return '';
+  auVIdx = Math.max(0, Math.min(auVIdx, list.length - 1));
+  const lot = list[auVIdx], s = auSt(lot) || {}, open = auOpen(lot), lead = s.leaders && s.leaders[0], c = auCloses(lot);
+  const [year, medium, size] = lotFacts(lot), desc = lot.desc && L(lot.desc);
+  const row = (k, v) => v ? `<dt>${k}</dt><dd>${esc(String(v))}</dd>` : '';
+  const nav = `<div class="au-v-nav">
+      <button class="au-v-btn" data-action="auPrev" aria-label="${t('auPrev')}"${auVIdx ? '' : ' disabled'}><span aria-hidden="true">‹</span></button>
+      <span class="au-v-count" aria-live="polite">${t('auOfN', { i: auVIdx + 1, n: list.length })}</span>
+      <button class="au-v-btn" data-action="auNext" aria-label="${t('auNext')}"${auVIdx < list.length - 1 ? '' : ' disabled'}><span aria-hidden="true">›</span></button></div>`;
+  return `<section class="section au-viewer" id="au-viewer" data-name="${esc(name)}" aria-roledescription="carousel" aria-label="${esc(t('auWorksOf', { name }))}">
+    ${multi ? `<div class="au-cats" role="group" aria-label="${t('auCats')}">${kinds.map(([id, key, n]) =>
+      `<button class="au-cat" data-action="auVCat" data-cat="${id}" aria-pressed="${id === cat[0]}">${t(key)} <span class="au-n">${n}</span></button>`).join('')}</div>` : ''}
+    ${nav}
+    <article class="au-v-work" aria-roledescription="slide" aria-label="${esc(t('auOfN', { i: auVIdx + 1, n: list.length }))}">
+      <figure class="au-v-fig"><img src="${lot.img}" alt="${esc(lotTitle(lot))}" width="${lot.w || 1000}" height="${lot.h || 1000}"></figure>
+      <p class="eyebrow">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}</p>
+      <h2 class="au-v-title">${esc(lotTitle(lot))}</h2>
+      <dl class="specs">${row(t('year'), year)}${row(t('auMedium'), medium)}${row(t('auSize'), size)}</dl>
+      ${desc ? `<div class="au-v-desc"><h3 class="eyebrow">${t('auAboutWork')}</h3>${String(desc).split(/\n\s*\n/).map(p => `<p>${esc(p)}</p>`).join('')}</div>` : ''}
+      <div class="au-v-price">
+        <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
+        <p class="muted">${s.count ? (s.count === 1 ? t('auBid1') : t('auBidsN', { n: s.count })) + (lead ? ' · ' + esc(t('auLeader', { name: lead.who })) : '') : t('auFirst')}</p>
+        ${c ? `<p class="muted">${open ? `${t('auEndsIn')} ${cdHTML(c)}` : t(auClosedKey())}</p>` : ''}
+      </div>
+      <div class="btn-row">${open ? `<a class="btn primary" href="#/subasta/${lot.id}">${t('auBidThis')}</a>` : `<a class="btn" href="#/subasta/${lot.id}">${t('auView')}</a>`}
+        <button class="btn" data-action="lotInterest" data-lot="${lot.id}">${t('auAsk')}</button></div>
+    </article>
+    ${list.length > 1 ? nav.replace('au-v-nav', 'au-v-nav au-v-nav-low') : ''}
+    ${list.length > 1 ? `<div class="au-v-thumbs">${list.map((l, i) => `<button class="au-v-thumb" data-action="auGo" data-i="${i}" aria-label="${esc(lotTitle(l))}"${i === auVIdx ? ' aria-current="true"' : ''}><img src="${l.thumb || l.img}" alt="" loading="lazy" width="72" height="72"></button>`).join('')}</div>` : ''}
+  </section>`;
+}
+// Redraws only the viewer, keeping the visitor's place; focus stays on the control used (or the work's title).
+function auViewerRedraw(focusSel) {
+  const el = document.getElementById('au-viewer'); if (!el) return;
+  el.outerHTML = auViewerHTML(auVScope, el.dataset.name || '', auVLots());
+  const v = document.getElementById('au-viewer');
+  if (typeof loadImagesSoon === 'function') loadImagesSoon();
+  const f = (focusSel && v.querySelector(focusSel + ':not([disabled])')) || v.querySelector('.au-v-title');
+  if (f) { if (!f.matches('button, a')) f.setAttribute('tabindex', '-1'); f.focus({ preventScroll: true }); }
+  // On a phone the work's picture comes back into view when it changes.
+  const top = v.querySelector('.au-v-nav').getBoundingClientRect().top;
+  if (top < 0) v.querySelector('.au-v-nav').scrollIntoView({ block: 'start' });
+}
+const auVMove = d => { const n = auVLots().filter((AU_KINDS.find(k => k[0] === auCat) || AU_KINDS[0])[2]).length; const i = auVIdx + d; if (i >= 0 && i < n) { auVIdx = i; auViewerRedraw(d < 0 ? '[data-action=auPrev]' : '[data-action=auNext]'); } };
+EXTRA_ACTIONS.auPrev = () => auVMove(-1);
+EXTRA_ACTIONS.auNext = () => auVMove(1);
+EXTRA_ACTIONS.auGo = el => { auVIdx = +el.dataset.i; auViewerRedraw(`.au-v-thumb[data-i="${auVIdx}"]`); };
+EXTRA_ACTIONS.auVCat = el => { auCat = el.dataset.cat; auVIdx = 0; auViewerRedraw(`.au-cat[data-cat="${auCat}"]`); };
+// Arrow keys inside the viewer, and a sideways swipe on the picture.
+document.addEventListener('keydown', e => {
+  if (!e.target.closest || !e.target.closest('#au-viewer') || e.target.matches('input, select, textarea')) return;
+  const rtl = document.documentElement.dir === 'rtl';
+  if (e.key === 'ArrowRight') { e.preventDefault(); auVMove(rtl ? -1 : 1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); auVMove(rtl ? 1 : -1); }
+});
+{
+  let x0 = null, y0 = 0;
+  document.addEventListener('touchstart', e => { x0 = e.target.closest && e.target.closest('.au-v-fig') ? e.touches[0].clientX : null; y0 = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) auVMove((dx < 0) !== (document.documentElement.dir === 'rtl') ? 1 : -1);
+  }, { passive: true });
+}
+
 // An artist's room: the name large, the line the book prints, their works, and the highest bids among them.
 function pageArtistRoom(a) {
   const leaders = a.lots.flatMap(l => ((auSt(l) && auSt(l).leaders) || []).map(r => ({ ...r, lot: lotTitle(l) }))).sort((x, y) => y.amount - x.amount).slice(0, 10);
@@ -349,7 +427,7 @@ function pageArtistRoom(a) {
       <p class="au-room-line">${[artistLine(a.lots[0]), auWorksText(a.lots.length)].filter(Boolean).map(esc).join(' · ')}</p>
       ${a.lots[0].artist ? `<p class="muted au-room-src">${t('sourceLabel')}: ${t('auSrcBook')}</p>` : `<p><a class="btn small" href="#/artista">${t('auAboutOscar')}</a></p>`}
     </section>
-    ${auBrowseHTML('artist:' + a.slug, a.lots)}
+    ${auViewerHTML('artist:' + a.slug, a.name, a.lots)}
     ${leaders.length ? `<section class="section au-board-wrap"><h2>${t('auRoomBoard')}</h2>${auBoardHTML(leaders, true, 3)}</section>` : ''}
   </div>`;
 }

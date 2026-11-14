@@ -929,6 +929,12 @@ I18N.it = {
   "auDrawings": "Disegni",
   "auRoomBoard": "Le offerte più alte in questa sala",
   "auEnterRoom": "Vedi le opere",
+  "auPrev": "Opera precedente",
+  "auNext": "Opera successiva",
+  "auOfN": "Opera {i} di {n}",
+  "auWorksOf": "Opere di {name}",
+  "auAboutWork": "Sull’opera",
+  "auBidThis": "Fai un’offerta per quest’opera",
 };
 TR.it = {
   "2019": "2019",

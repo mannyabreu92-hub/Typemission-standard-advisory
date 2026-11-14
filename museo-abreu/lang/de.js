@@ -929,6 +929,12 @@ I18N.de = {
   "auDrawings": "Zeichnungen",
   "auRoomBoard": "Höchste Gebote in diesem Saal",
   "auEnterRoom": "Werke ansehen",
+  "auPrev": "Vorheriges Werk",
+  "auNext": "Nächstes Werk",
+  "auOfN": "Werk {i} von {n}",
+  "auWorksOf": "Werke von {name}",
+  "auAboutWork": "Über das Werk",
+  "auBidThis": "Auf dieses Werk bieten",
 };
 TR.de = {
   "2019": "2019",
