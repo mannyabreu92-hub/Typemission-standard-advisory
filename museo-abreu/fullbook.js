@@ -1,0 +1,322 @@
+// The whole of Ecce Homo inside the app. The museum uploads each edition from its Word file
+// (Dashboard › Full book, #/admin/libro): the file is read here in the browser (introduction, 70 chapters
+// with their subheadings, acknowledgements, chronology) and sent in batches to api/admin.js, which keeps it
+// privately. In the reader, chapters beyond the free sample load from api/book.js for buyers of that
+// edition (or Pro), with the reading token the app received when it unlocked the purchase.
+
+Object.assign(I18N.es, {
+  fbNotYet: 'El texto completo de esta edición estará aquí muy pronto. Mientras tanto, puede leerlo en su cuenta de Whop.',
+  fbNeedUnlock: 'Para leer aquí, active su compra con el correo que usó en Whop.', fbUnlockBtn: 'Activar mi compra',
+  fbErr: 'No se pudo cargar el capítulo. Revise su conexión.', fbNotOwned: 'Su compra no incluye esta edición.',
+  bkTitle: 'Libro completo en la app', bkLead: 'Suba cada edición desde su archivo Word (.docx). El texto se guarda en privado y solo lo leen quienes compraron esa edición (o los miembros Pro).',
+  bkFile: 'Archivo Word de una edición', bkFound: 'Encontrado: {s} secciones · {p} párrafos · primer capítulo: «{first}»', bkLang: 'Edición',
+  bkUpload: 'Subir esta edición', bkUploading: 'Subiendo… {n} de {total}', bkDone: 'Edición subida: {lang}.', bkErr: 'No se pudo subir. Revise la conexión e inténtelo de nuevo.',
+  bkBad: 'Este archivo no parece una edición de Ecce Homo: no se encontraron capítulos.', bkWarn: 'Atención: se esperaban 73 secciones (introducción, 70 capítulos, agradecimientos y cronología).',
+  bkStatus: 'Subida el {date} · {s} secciones', bkMissing: 'Aún no subida', bkShort: 'Incompleta: {s} de 73 secciones. Vuelva a subir el archivo Word completo de esta edición.', adBook: 'Libro completo', bkPdf: 'Este archivo es un PDF. Elija la versión Word (.docx) del libro.', bkNotWord: 'Este archivo no es un documento Word (.docx). Elija el archivo Word del libro.', bkReading: 'Leyendo el archivo…',
+});
+Object.assign(I18N.en, {
+  fbNotYet: 'The full text of this edition will be here very soon. Meanwhile, you can read it in your Whop account.',
+  fbNeedUnlock: 'To read here, unlock your purchase with the email you used on Whop.', fbUnlockBtn: 'Unlock my purchase',
+  fbErr: 'The chapter could not be loaded. Check your connection.', fbNotOwned: 'Your purchase does not include this edition.',
+  bkTitle: 'The full book in the app', bkLead: 'Upload each edition from its Word file (.docx). The text is kept privately and only buyers of that edition (or Pro members) can read it.',
+  bkFile: 'Word file of an edition', bkFound: 'Found: {s} sections · {p} paragraphs · first chapter: “{first}”', bkLang: 'Edition',
+  bkUpload: 'Upload this edition', bkUploading: 'Uploading… {n} of {total}', bkDone: 'Edition uploaded: {lang}.', bkErr: 'Could not upload. Check the connection and try again.',
+  bkBad: 'This file does not look like an edition of Ecce Homo: no chapters were found.', bkWarn: 'Note: 73 sections were expected (introduction, 70 chapters, acknowledgements and chronology).',
+  bkStatus: 'Uploaded on {date} · {s} sections', bkMissing: 'Not uploaded yet', bkShort: 'Incomplete: {s} of 73 sections. Upload this edition’s complete Word file again.', adBook: 'Full book', bkPdf: 'This file is a PDF. Choose the Word (.docx) version of the book.', bkNotWord: 'This file is not a Word document (.docx). Choose the book’s Word file.', bkReading: 'Reading the file…',
+});
+Object.assign(I18N.fr, {
+  fbNotYet: 'Le texte intégral de cette édition sera ici très bientôt. En attendant, vous pouvez le lire dans votre compte Whop.',
+  fbNeedUnlock: 'Pour lire ici, activez votre achat avec l’e-mail utilisé sur Whop.', fbUnlockBtn: 'Activer mon achat',
+  fbErr: 'Le chapitre n’a pas pu être chargé. Vérifiez votre connexion.', fbNotOwned: 'Votre achat n’inclut pas cette édition.',
+  bkTitle: 'Le livre intégral dans l’app', bkLead: 'Téléversez chaque édition depuis son fichier Word (.docx). Le texte est conservé en privé et seuls les acheteurs de cette édition (ou les membres Pro) peuvent le lire.',
+  bkFile: 'Fichier Word d’une édition', bkFound: 'Trouvé : {s} sections · {p} paragraphes · premier chapitre : « {first} »', bkLang: 'Édition',
+  bkUpload: 'Téléverser cette édition', bkUploading: 'Téléversement… {n} sur {total}', bkDone: 'Édition téléversée : {lang}.', bkErr: 'Téléversement impossible. Vérifiez la connexion et réessayez.',
+  bkBad: 'Ce fichier ne ressemble pas à une édition d’Ecce Homo : aucun chapitre trouvé.', bkWarn: 'Attention : 73 sections étaient attendues (introduction, 70 chapitres, remerciements et chronologie).',
+  bkStatus: 'Téléversée le {date} · {s} sections', bkMissing: 'Pas encore téléversée', bkShort: 'Incomplète : {s} sections sur 73. Téléversez à nouveau le fichier Word complet de cette édition.', adBook: 'Livre intégral', bkPdf: 'Ce fichier est un PDF. Choisissez la version Word (.docx) du livre.', bkNotWord: 'Ce fichier n’est pas un document Word (.docx). Choisissez le fichier Word du livre.', bkReading: 'Lecture du fichier…',
+});
+
+/* ---------- Reading a Word file in the browser ---------- */
+
+// The Word file's text: a .docx is a zip, opened with fflate (vendor/fflate.js, loaded on first use; it works the
+// same in every browser, iPhone included). A PDF or another kind of file is reported as such.
+async function readDocx(buf) {
+  const u8 = new Uint8Array(buf), head = String.fromCharCode(...u8.subarray(0, 5));
+  if (head.startsWith('%PDF')) throw new Error('pdf');
+  if (!head.startsWith('PK')) throw new Error('notword');
+  if (typeof fflate === 'undefined') await new Promise((ok, fail) => { const sc = document.createElement('script'); sc.src = 'vendor/fflate.js'; sc.onload = ok; sc.onerror = () => fail(new Error('offline')); document.head.appendChild(sc); });
+  const want = ['word/document.xml', 'word/styles.xml'];
+  const files = fflate.unzipSync(u8, { filter: f => want.includes(f.name) });
+  if (!files['word/document.xml']) throw new Error('notword');
+  const dec = new TextDecoder();
+  return { doc: dec.decode(files['word/document.xml']), styles: files['word/styles.xml'] ? dec.decode(files['word/styles.xml']) : '' };
+}
+
+const BOOK_LANG_BY_HEADING = { 'CAPÍTULO': 'es', CHAPTER: 'en', CHAPITRE: 'fr', KAPITEL: 'de', 'ГЛАВА': 'ru', CAPITOLO: 'it' };
+// Japanese chapters read "第一章" … "第七十章".
+const JA_CHAPTER = /^第[一二三四五六七八九十百]+章$/;
+// Spanish and Portuguese chapters both read "CAPÍTULO": the Portuguese edition is told by its own headings.
+const bookLang = (word, doc) => JA_CHAPTER.test(word) ? 'ja' : word === 'CAPÍTULO' && /INTRODUÇÃO|AGRADECIMENTOS/.test(doc) ? 'pt' : BOOK_LANG_BY_HEADING[word] || '';
+const xmlText = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(+d)).replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&amp;/g, '&');
+
+// Same reading as the build scripts: the book's Word styles (Sección, Capítulo número/título/subtítulo,
+// Cronología año, Texto) mark the parts. Sections 3–5 are the introduction, acknowledgements and chronology.
+function parseBook(doc, styles) {
+  const names = {};
+  for (const m of styles.matchAll(/<w:style [^>]*w:styleId="([^"]+)"[^>]*>[\s\S]*?<w:name w:val="([^"]+)"/g)) names[m[1]] = m[2];
+  const sections = [], SEC = { 2: 'intro', 3: 'ack', 4: 'chrono' };
+  let cur = null, secN = -1, chN = 0, firstHeading = '', firstTitle = '', paragraphs = 0, pendingTitle = false;
+  for (const m of doc.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)) {
+    const p = m[0], sid = (p.match(/<w:pStyle w:val="([^"]+)"/) || [])[1], style = sid ? (names[sid] || sid) : 'Normal';
+    const runs = p.replace(/<w:(br|cr)[^>]*\/>/g, '<w:t>\n</w:t>').replace(/<w:tab\/>/g, '<w:t> </w:t>');
+    const tx = xmlText([...runs.matchAll(/<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>/g)].map(x => x[1]).join('')).trim();
+    if (!tx) continue;
+    if (style === 'Sección') { secN++; cur = SEC[secN] ? { key: SEC[secN], blocks: [] } : null; if (cur) sections.push(cur); continue; }
+    if (style === 'Capítulo número') { chN++; if (!firstHeading) firstHeading = tx; cur = { key: 'ch' + chN, blocks: [] }; sections.push(cur); pendingTitle = chN === 1; continue; }
+    if (style === 'Capítulo título') { if (pendingTitle) { firstTitle = tx; pendingTitle = false; } continue; }
+    if (!cur) continue;
+    if (style === 'Texto') { cur.blocks.push(['p', tx]); paragraphs++; }
+    else if (style === 'Capítulo subtítulo') cur.blocks.push(['h', tx]);
+    else if (style === 'Cronología año') cur.blocks.push(['y', tx]);
+  }
+  if (!chN) return parseBookByText(doc);
+  const word = firstHeading.split(/\s+/)[0].toUpperCase();
+  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: bookLang(word, doc), first: firstTitle };
+}
+
+// The same book without its Word styles: chapters are found by their headings ("CAPÍTULO IV", "KAPITEL IV"…),
+// the title is the paragraph after; the introduction, acknowledgements and chronology by their capitalised
+// headings in each language; chronology years are paragraphs that are just a year. Subheadings read as text.
+const BOOK_SECTION_HEADINGS = {
+  intro: ['INTRODUCCIÓN', 'INTRODUCTION', 'EINLEITUNG', 'ВВЕДЕНИЕ', 'INTRODUZIONE', 'INTRODUÇÃO', 'はじめに'],
+  ack: ['AGRADECIMIENTOS', 'ACKNOWLEDGMENTS', 'ACKNOWLEDGEMENTS', 'REMERCIEMENTS', 'DANKSAGUNG', 'БЛАГОДАРНОСТИ', 'RINGRAZIAMENTI', 'AGRADECIMENTOS', '謝辞'],
+  chrono: ['CRONOLOGÍA BIOGRÁFICA', 'BIOGRAPHICAL CHRONOLOGY', 'CHRONOLOGIE BIOGRAPHIQUE', 'BIOGRAFISCHE ZEITTAFEL', 'БИОГРАФИЧЕСКАЯ ХРОНИКА', 'CRONOLOGIA BIOGRAFICA', 'CRONOLOGIA BIOGRÁFICA', '年譜'],
+};
+function parseBookByText(doc) {
+  const sections = []; let cur = null, chN = 0, firstHeading = '', firstTitle = '', paragraphs = 0, needTitle = false;
+  for (const m of doc.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)) {
+    const runs = m[0].replace(/<w:(br|cr)[^>]*\/>/g, '<w:t>\n</w:t>').replace(/<w:tab\/>/g, '<w:t> </w:t>');
+    const tx = xmlText([...runs.matchAll(/<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>/g)].map(x => x[1]).join('')).trim();
+    if (!tx) continue;
+    const sec = Object.keys(BOOK_SECTION_HEADINGS).find(k => BOOK_SECTION_HEADINGS[k].includes(tx));
+    // The Japanese contents page lists はじめに and 謝辞 exactly as their headings: the later one, the section itself, wins.
+    if (sec) { const old = sections.findIndex(x => x.key === sec); if (old >= 0) sections.splice(old, 1); cur = { key: sec, blocks: [] }; sections.push(cur); continue; }
+    if (/^(CAPÍTULO|CHAPTER|CHAPITRE|KAPITEL|ГЛАВА|CAPITOLO)\s+[IVXLC]+\.?$/.test(tx) || JA_CHAPTER.test(tx)) {
+      chN++; if (!firstHeading) firstHeading = tx; cur = { key: 'ch' + chN, blocks: [] }; sections.push(cur); needTitle = true; continue;
+    }
+    if (needTitle) { if (chN === 1) firstTitle = tx; needTitle = false; continue; }
+    if (!cur) continue;
+    if (cur.key === 'chrono' && /^\d{4}(\s*[–-]\s*\d{2,4})?$/.test(tx)) cur.blocks.push(['y', tx]);
+    else { cur.blocks.push(['p', tx]); paragraphs++; }
+  }
+  const word = firstHeading.split(/\s+/)[0].toUpperCase();
+  return { sections: sections.filter(s => s.blocks.length), paragraphs, lang: bookLang(word, doc), first: firstTitle };
+}
+
+/* ---------- Dashboard › Full book ---------- */
+
+let bkParsed = null, bkMsg = '';
+function pageBook() {
+  const books = adData.books || [], langs = EDITIONS.map(e => e.lang);
+  return `<div class="wrap admin">
+    <a href="#/admin" class="btn small"><span class="arr">←</span> ${t('adBack')}</a>
+    <section class="section"><p class="eyebrow">Ecce Homo</p><h1 class="h2">${t('bkTitle')}</h1>
+      <p class="muted">${t('bkLead')}</p>
+      <ul class="bk-status">${langs.map(l => { const b = books.find(x => x.lang === l);
+        // An edition with fewer than the book's 73 sections came from an incomplete file: flagged, with the file's name.
+        return `<li><strong>${L(LANG_NAMES[l])}</strong> · ${!b ? `<span class="muted">${t('bkMissing')}</span>`
+          : b.sections === 73 ? `<span class="remind-on">${t('bkStatus', { date: adStamp(b.at), s: b.sections })}</span>` : `<span class="bk-short">${t('bkShort', { s: b.sections })}</span>`}${b && b.file ? `<br><span class="muted">${esc(b.file)}</span>` : ''}</li>`; }).join('')}</ul>
+      <form class="bk-form" data-form="book" novalidate>
+        <div class="field"><label for="bk-file">${t('bkFile')}</label><input id="bk-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></div>
+        ${bkParsed ? `<p>${esc(t('bkFound', { s: bkParsed.sections.length, p: bkParsed.paragraphs, first: bkParsed.first }))}</p>
+          ${bkParsed.sections.length !== 73 ? `<p class="status">${t('bkWarn')}</p>` : ''}
+          <div class="field"><label for="bk-lang">${t('bkLang')}</label><select id="bk-lang">${langs.map(l => `<option value="${l}"${l === bkParsed.lang ? ' selected' : ''}>${L(LANG_NAMES[l])}</option>`).join('')}</select></div>
+          <div class="btn-row"><button class="btn primary" type="submit">${t('bkUpload')}</button></div>` : ''}
+        <p class="status" id="bk-status" role="status" aria-live="polite"${bkMsg ? '' : ' hidden'}>${esc(bkMsg)}</p>
+      </form>
+    </section></div>`;
+}
+document.addEventListener('change', async e => {
+  if (e.target.id !== 'bk-file' || !e.target.files[0]) return;
+  const f = e.target.files[0], out = document.getElementById('bk-status');
+  out.textContent = t('bkReading'); out.hidden = false;
+  try {
+    const { doc, styles } = await readDocx(await f.arrayBuffer());
+    const parsed = parseBook(doc, styles);
+    if (!parsed.sections.some(s => /^ch\d/.test(s.key))) { bkParsed = null; bkMsg = t('bkBad') + ' (' + f.name + ')'; }
+    else { bkParsed = { ...parsed, file: f.name }; bkMsg = ''; }
+  } catch (err) {
+    bkParsed = null;
+    bkMsg = (err.message === 'pdf' ? t('bkPdf') : err.message === 'offline' ? t('bkErr') : t('bkNotWord')) + ' (' + f.name + ')';
+  }
+  route();
+});
+EXTRA_FORMS.book = async form => {
+  if (!bkParsed) return;
+  const lang = form.querySelector('#bk-lang').value, out = form.querySelector('#bk-status'), btn = form.querySelector('button[type=submit]');
+  const post = body => fetch('/api/admin', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adPassword() }, body: JSON.stringify(body) })
+    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+  btn.disabled = true; out.hidden = false;
+  try {
+    const secs = bkParsed.sections;
+    for (let i = 0; i < secs.length; i += 8) {
+      out.textContent = t('bkUploading', { n: Math.min(i + 8, secs.length), total: secs.length });
+      await post({ action: 'book-put', lang, sections: secs.slice(i, i + 8) });
+    }
+    const doc = await post({ action: 'book-done', lang, sections: secs.length, paragraphs: bkParsed.paragraphs, file: bkParsed.file });
+    adData.books = [...(adData.books || []).filter(b => b.lang !== lang), doc];
+    bkParsed = null; bkMsg = t('bkDone', { lang: L(LANG_NAMES[lang]) });
+    route();
+  } catch (err) { btn.disabled = false; out.textContent = t('bkErr'); }
+};
+{
+  const route0 = EXTRA_ROUTES.admin;
+  EXTRA_ROUTES.admin = (sub, ev, date) => sub === 'libro' && adData ? pageBook() : route0(sub, ev, date);
+  const admin = pageAdmin;
+  pageAdmin = () => {
+    const html = admin();
+    return adData ? html.replace('<button class="btn" data-action="adRefresh">', `<a class="btn" href="#/admin/libro">${t('adBook')}</a><button class="btn" data-action="adRefresh">`) : html;
+  };
+}
+
+/* ---------- The reader: full chapters for owners ---------- */
+
+Object.assign(I18N.es, {
+  fbOfflineTitle: 'Leer sin conexión', fbOfflineHelp: 'Guarde su edición en este teléfono y léala sin internet, en un avión o en la playa.',
+  fbSave: 'Guardar en este teléfono', fbSaving: 'Guardando…', fbSaved: 'Guardada en este teléfono ✓', fbRemove: 'Quitar del teléfono',
+  fbSaveErr: 'No se pudo guardar. Revise la conexión e inténtelo de nuevo.', fbRemoved: 'Quitada de este teléfono.', fbSize: '{mb} MB',
+  rsTitle: 'Lectura del libro', rsHelp: 'Teléfonos que abrieron el libro en la app, sin nombres. «Compradores» tienen la edición; el resto lee la muestra gratuita.',
+  rsReaders: 'Lectores', rsBuyers: 'Compradores', rsSample: 'Solo la muestra', rsFinished: 'Terminaron el libro', rsConverted: 'Leyeron la muestra y luego compraron',
+  rsReached: 'Hasta dónde llegaron los compradores', rsIntro: 'Introducción', rsChapters: 'Capítulos {a}–{b}', rsEnd: 'Hasta el final',
+});
+Object.assign(I18N.en, {
+  fbOfflineTitle: 'Read offline', fbOfflineHelp: 'Save your edition on this phone and read it without internet, on a plane or at the beach.',
+  fbSave: 'Save on this phone', fbSaving: 'Saving…', fbSaved: 'Saved on this phone ✓', fbRemove: 'Remove from phone',
+  fbSaveErr: 'Could not save. Check the connection and try again.', fbRemoved: 'Removed from this phone.', fbSize: '{mb} MB',
+  rsTitle: 'Reading the book', rsHelp: 'Phones that opened the book in the app, without names. “Buyers” own the edition; the others read the free sample.',
+  rsReaders: 'Readers', rsBuyers: 'Buyers', rsSample: 'Sample only', rsFinished: 'Finished the book', rsConverted: 'Read the sample, then bought',
+  rsReached: 'How far buyers got', rsIntro: 'Introduction', rsChapters: 'Chapters {a}–{b}', rsEnd: 'To the end',
+});
+Object.assign(I18N.fr, {
+  fbOfflineTitle: 'Lire hors connexion', fbOfflineHelp: 'Enregistrez votre édition sur ce téléphone et lisez-la sans internet, en avion ou à la plage.',
+  fbSave: 'Enregistrer sur ce téléphone', fbSaving: 'Enregistrement…', fbSaved: 'Enregistrée sur ce téléphone ✓', fbRemove: 'Retirer du téléphone',
+  fbSaveErr: 'Enregistrement impossible. Vérifiez la connexion et réessayez.', fbRemoved: 'Retirée de ce téléphone.', fbSize: '{mb} Mo',
+  rsTitle: 'Lecture du livre', rsHelp: 'Téléphones qui ont ouvert le livre dans l’app, sans noms. Les « acheteurs » possèdent l’édition ; les autres lisent l’extrait gratuit.',
+  rsReaders: 'Lecteurs', rsBuyers: 'Acheteurs', rsSample: 'Extrait seulement', rsFinished: 'Ont terminé le livre', rsConverted: 'Ont lu l’extrait, puis acheté',
+  rsReached: 'Jusqu’où sont allés les acheteurs', rsIntro: 'Introduction', rsChapters: 'Chapitres {a} à {b}', rsEnd: 'Jusqu’à la fin',
+});
+
+const fbCache = {};
+const fbReader = () => fx.get('reader', null);
+const fbBlocks = blocks => blocks.map(([k, x]) => k === 'p' ? `<p>${esc(x)}</p>` : k === 'y' ? `<h2 class="chrono-year">${esc(x)}</h2>` : `<h2 class="ch-sub">${esc(x)}</h2>`).join('');
+
+// Offline copies of whole editions live in IndexedDB on the phone ("museo-abreu" › books, keyed by edition);
+// which editions are saved is also noted in localStorage, so the library can show it at once.
+function fbIdb(mode, fn) {
+  return new Promise((ok, fail) => {
+    const open = indexedDB.open('museo-abreu', 1);
+    open.onupgradeneeded = () => open.result.createObjectStore('books');
+    open.onerror = () => fail(open.error);
+    open.onsuccess = () => { const tx = open.result.transaction('books', mode), req = fn(tx.objectStore('books')); tx.oncomplete = () => ok(req.result); tx.onerror = () => fail(tx.error); };
+  });
+}
+const fbSavedList = () => { try { return JSON.parse(localStorage.getItem('ma.offline') || '[]'); } catch (e) { return []; } };
+const fbSetSaved = list => { try { localStorage.setItem('ma.offline', JSON.stringify(list)); } catch (e) {} };
+const fbOfflineGet = l => fbSavedList().includes(l) ? fbIdb('readonly', st => st.get(l)).catch(() => null) : Promise.resolve(null);
+async function fbOfflineDrop(l) { fbSetSaved(fbSavedList().filter(x => x !== l)); await fbIdb('readwrite', st => st.delete(l)).catch(() => {}); }
+
+const fbMsg = (msg, unlock) => `<div class="empty"><p>${msg}</p>${unlock ? `<div class="btn-row" style="justify-content:center"><a class="btn primary" href="#/cuenta">${t('fbUnlockBtn')}</a></div>` : ''}</div>`;
+async function fbLoad(l, key) {
+  const box = document.getElementById('fb-text'); if (!box) return;
+  const show = blocks => { fbCache[l + ':' + key] = blocks; if (box.isConnected) box.innerHTML = fbBlocks(blocks); };
+  const copy = await fbOfflineGet(l), saved = copy && copy.sections && copy.sections[key];
+  const rd = fbReader();
+  if (!rd) return saved ? show(saved) : (box.innerHTML = fbMsg(t('fbNeedUnlock'), true));
+  if (!navigator.onLine && saved) return show(saved);
+  try {
+    const r = await fetch(`/api/book?lang=${l}&ch=${key}&e=${rd.e}&t=${rd.t}`, { cache: 'no-store' });
+    const d = await r.json().catch(() => ({}));
+    if (r.ok) return show(d.blocks);
+    // Access ended (refund) or the token no longer holds: the copy on the phone goes too.
+    if (r.status === 403) { await fbOfflineDrop(l); return (box.innerHTML = fbMsg(d.error === 'not-owned' ? t('fbNotOwned') : t('fbNeedUnlock'), true)); }
+    if (saved) return show(saved);
+    box.innerHTML = fbMsg(d.error === 'not-uploaded' ? t('fbNotYet') : t('fbErr'));
+  } catch (e) { if (saved) show(saved); else box.innerHTML = fbMsg(t('fbErr')); }
+}
+
+// Reading statistics: each chapter opened is reported once per visit, with the phone's random id only.
+const fbSent = new Set();
+function fbTrack(l, ch) {
+  if (!EDITIONS.some(e => e.lang === l) || fbSent.has(l + ch) || typeof wsDevice !== 'function') return;
+  fbSent.add(l + ch);
+  const device = wsDevice();
+  if (device) fetch('/api/reading', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ device, lang: l, ch, owner: owns(l) }) }).catch(() => {});
+}
+
+// The library: "Read offline" for each edition this phone owns (and can open with its reading token).
+function fbOfflineBlock() {
+  if (!fbReader()) return '';
+  const mine = EDITIONS.filter(e => owns(e.lang));
+  if (!mine.length) return '';
+  const saved = fbSavedList();
+  return `<section class="section fb-offline"><h2>${t('fbOfflineTitle')}</h2><p class="muted">${t('fbOfflineHelp')}</p>
+    <ul class="bk-status">${mine.map(e => `<li><strong>Ecce Homo · ${L(LANG_NAMES[e.lang])}</strong>
+      ${saved.includes(e.lang) ? `<span class="remind-on">${t('fbSaved')}</span> <button class="btn small" data-action="fbDrop" data-l="${e.lang}">${t('fbRemove')}</button>`
+        : `<button class="btn small primary" data-action="fbSave" data-l="${e.lang}">${t('fbSave')}</button>`}</li>`).join('')}</ul>
+    <p class="status" id="fb-status" role="status" aria-live="polite" hidden></p></section>`;
+}
+const fbSay = msg => { const o = document.getElementById('fb-status'); if (o) { o.textContent = msg; o.hidden = false; } };
+Object.assign(EXTRA_ACTIONS, {
+  fbSave: async el => {
+    const l = el.dataset.l, rd = fbReader(); el.disabled = true; fbSay(t('fbSaving'));
+    try {
+      const r = await fetch(`/api/book?lang=${l}&ch=all&e=${rd.e}&t=${rd.t}`, { cache: 'no-store' });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) { el.disabled = false; return fbSay(d.error === 'not-uploaded' ? t('fbNotYet') : r.status === 403 ? t('fbNeedUnlock') : t('fbSaveErr')); }
+      await fbIdb('readwrite', st => st.put({ sections: d.sections, at: new Date().toISOString() }, l));
+      fbSetSaved([...fbSavedList().filter(x => x !== l), l]);
+      if (typeof trackEvent === 'function') trackEvent('Book saved offline', { lang: l });
+      const y = window.scrollY; route(); window.scrollTo(0, y);
+      fbSay(t('fbSize', { mb: (JSON.stringify(d.sections).length / 1e6).toFixed(1) }));
+    } catch (e) { el.disabled = false; fbSay(t('fbSaveErr')); }
+  },
+  fbDrop: async el => { await fbOfflineDrop(el.dataset.l); const y = window.scrollY; route(); window.scrollTo(0, y); fbSay(t('fbRemoved')); },
+});
+
+// pageReader and pageLibrary are defined in app.js, which loads last: they are wrapped from app.js's hook.
+(window.APP_HOOKS ||= []).push(() => {
+  const reader = pageReader;
+  pageReader = (l = 'es', chStr = '0') => {
+    const html = reader(l, chStr);
+    const ch = Math.min(Math.max(0, parseInt(chStr, 10) || 0), CHAPTERS.length - 1), c = CHAPTERS[ch];
+    if (!LANG_NAMES[l]) l = 'es';
+    if (canRead(l, ch)) fbTrack(l, ch);
+    const mark = `<p class="muted" style="font-family:var(--sans);font-size:.9rem">${t('chapterPlaceholder')}</p>`;
+    if (!html.includes(mark)) return html;
+    const cached = fbCache[l + ':' + c.key];
+    if (!cached) setTimeout(() => fbLoad(l, c.key), 0);
+    return html.replace(mark, `<div id="fb-text">${cached ? fbBlocks(cached) : `<p class="muted">${t('loadingText')}</p>`}</div>`);
+  };
+  routes.leer = pageReader;
+  const library = pageLibrary;
+  pageLibrary = () => library().replace('<section class="section grid two">', fbOfflineBlock() + '<section class="section grid two">');
+  routes.biblioteca = pageLibrary;
+});
+
+// Dashboard › Overview: reading statistics per edition (api/admin.js "reading").
+{
+  const ins = insightsHTML;
+  insightsHTML = d => {
+    const html = ins(d), rd = d.reading || {}, langs = Object.keys(rd).sort((a, b) => rd[b].readers - rd[a].readers);
+    const labels = [t('rsIntro'), ...[1, 11, 21, 31, 41, 51, 61].map(a => t('rsChapters', { a, b: a === 61 ? 69 : a + 9 })), t('rsEnd')];
+    const block = `<h3>${t('rsTitle')}</h3><p class="muted ad-help">${t('rsHelp')}</p>
+      ${langs.length ? `<div class="in-grid">${langs.map(l => { const s = rd[l], top = Math.max(1, ...s.reached);
+        return `<article class="in-event"><h4>Ecce Homo · ${L(LANG_NAMES[l] || { en: l })}</h4>
+          <ul class="in-bars">${[['rsReaders', s.readers], ['rsBuyers', s.buyers], ['rsSample', s.sample], ['rsFinished', s.finished], ['rsConverted', s.converted]]
+            .map(([k, n]) => inBar(t(k), n, n / Math.max(1, s.readers))).join('')}</ul>
+          ${s.buyers ? `<p class="muted" style="margin:.8rem 0 .4rem">${t('rsReached')}</p><ul class="in-bars">${s.reached.map((n, i) => inBar(labels[i], n, n / top)).join('')}</ul>` : ''}</article>`; }).join('')}</div>`
+        : `<p class="muted">${t('adNone')}</p>`}`;
+    const at = html.lastIndexOf('</section>');
+    return html.slice(0, at) + block + html.slice(at);
+  };
+}

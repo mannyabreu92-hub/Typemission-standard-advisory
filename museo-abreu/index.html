@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Museo Abreu · Art Experiences</title>
+<meta name="description" content="Descubre a Oscar Abreu y el Psico-Expresionismo, reserva tu VIP Tour en Bávaro, Punta Cana, y lee El arte me salvó la vida.">
+<meta name="theme-color" content="#16120f">
+<!-- Link previews (WhatsApp, Instagram, Facebook, X, iMessage) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Museo Abreu">
+<meta property="og:title" content="Museo Abreu · Art Experiences">
+<meta property="og:description" content="Descubre a Oscar Abreu y el Psico-Expresionismo, reserva tu VIP Tour en Bávaro, Punta Cana, y lee El arte me salvó la vida.">
+<meta property="og:url" content="https://museo-abreu.vercel.app/">
+<meta property="og:image" content="https://museo-abreu.vercel.app/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Museo Abreu: pintura de Oscar Abreu">
+<meta property="og:locale" content="es_DO">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Saltar al contenido</a>
+
+<div class="demo-banner" role="note" data-i18n="demoBanner">Prototipo · pagos simulados · contenidos pendientes de aprobación del artista</div>
+
+<header class="topbar">
+  <a href="#/" class="brand" aria-label="Museo Abreu">
+    <span class="brand-name">Museo Abreu</span>
+    <span class="brand-desc">Art Experiences</span>
+  </a>
+  <nav class="main-nav" aria-label="Principal">
+    <a href="#/artista" data-route="artista">Oscar Abreu</a>
+    <a href="#/visita" data-route="visita" data-i18n="navVisit">Visita y VIP Tour</a>
+    <a href="#/clases" data-route="clases" data-i18n="navClasses">Clases</a>
+    <a href="#/eventos" data-route="eventos" data-i18n="navEvents">Eventos</a>
+    <a href="#/subasta" data-route="subasta" data-i18n="navAuction">Subasta</a>
+    <a href="#/tienda" data-route="tienda" data-i18n="navShop">Tienda</a>
+    <a href="#/coleccion" data-route="coleccion" data-i18n="navCollection">Círculo de Coleccionistas</a>
+    <a href="#/biblioteca" data-route="biblioteca" data-i18n="navLibrary">Biblioteca</a>
+    <a href="#/membresia" data-route="membresia" data-i18n="navMembership">Membresía</a>
+    <a href="#/cuenta" data-route="cuenta" data-i18n="navAccount">Mi cuenta</a>
+  </nav>
+  <div class="lang">
+    <select id="lang-select" aria-label="Idioma / Language / Langue / Sprache / Lingua / اللغة">
+      <option value="es" lang="es">Español</option>
+      <option value="en" lang="en">English</option>
+      <option value="fr" lang="fr">Français</option>
+      <option value="de" lang="de">Deutsch</option>
+      <option value="it" lang="it">Italiano</option>
+      <option value="ar" lang="ar" dir="rtl">العربية</option>
+      <option value="ru" lang="ru">Русский</option>
+    </select>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+<script>
+  // The home page's opening screen paints at once, before the app's scripts arrive; the app then draws the page over it
+  // and keeps the same image. Until the launch of Ecce Homo (17 November 2026, Punta Cana) it is that poster's paper.
+  if (!window.SEO_ROUTE && !/^#\/./.test(location.hash) && Date.now() < Date.parse('2026-11-18T04:00:00Z')) document.getElementById('main').innerHTML =
+    '<section class="dir-poster-hero" aria-hidden="true"><img class="dir-paper" src="img/poster-paper-1024.jpg" srcset="img/poster-paper-640.jpg 640w, img/poster-paper-1024.jpg 1024w" sizes="100vw" alt="" fetchpriority="high"></section>';
+</script>
+
+<nav class="tabbar" aria-label="Principal (móvil)">
+  <a href="#/" data-route=""><span class="ti">◐</span><span data-i18n="navHome">Inicio</span></a>
+  <a href="#/eventos" data-route="eventos"><span class="ti">◇</span><span data-i18n="navEvents">Eventos</span></a>
+  <a href="#/subasta" data-route="subasta"><span class="ti">◆</span><span data-i18n="navAuction">Subasta</span></a>
+  <a href="#/tienda" data-route="tienda"><span class="ti">❒</span><span data-i18n="navShop">Tienda</span></a>
+  <a href="#/cuenta" data-route="cuenta"><span class="ti">○</span><span data-i18n="tabAccount">Cuenta</span></a>
+</nav>
+
+<footer class="footer">
+  <p><strong>Museo Abreu</strong> · Bávaro, Punta Cana · República Dominicana</p>
+  <p class="foot-social"><span data-i18n="footFollow">Síganos</span> · <a href="https://www.instagram.com/oscarabreu_artist/" target="_blank" rel="noopener">Instagram @oscarabreu_artist</a> · <a href="https://wa.me/18098409588" target="_blank" rel="noopener">WhatsApp +1 (809) 840-9588</a> · <a href="mailto:info@oscarabreu.com">info@oscarabreu.com</a></p>
+  <p><a href="#/psico" data-i18n="navPsico">Psico-Expresionismo</a> · <a href="#/clases" data-i18n="navClasses">Clases</a> · <a href="#/eventos" data-i18n="navEvents">Eventos</a> · <a href="#/pinturas" data-i18n="paintingsTitle">Pinturas</a> · <a href="#/dibujos" data-i18n="drawingsTitle">Dibujos</a> · <a href="#/escultura" data-i18n="sculptureTitle">Escultura</a> · <a href="#/fotos" data-i18n="photosTitle">Fotos</a> · <a href="#/manifiestos" data-i18n="navManifestos">Manifiestos</a> · <a href="#/resenas" data-i18n="navReviews">Reseñas</a> · <a href="#/prensa" data-i18n="navPress">En la prensa</a> · <a href="#/kit" data-i18n="moreKit">Dossier de prensa</a> · <a href="#/exposiciones" data-i18n="navExhibits">Exposiciones</a> · <a href="#/contacto" data-i18n="navContact">Contacto</a> · <a href="#/gabangi">ART GABANGI</a> · <a href="#/galeria">Abreu Fine Art</a><span class="staff-link"> · <a href="#/personal" data-i18n="navStaff">Acceso personal</a></span></p>
+  <p class="foot-legal"><a href="#/privacidad" data-i18n="footPrivacy">Privacidad</a> · <a href="#/terminos" data-i18n="footTerms">Condiciones</a> · © Oscar Abreu</p>
+</footer>
+
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // Vercel Web Analytics (no cookies). Pages are hash routes, so app.js reports each one itself.
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  if (!/^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) && location.protocol === 'https:') {
+    const s = document.createElement('script');
+    s.defer = true; s.src = '/_vercel/insights/script.js'; s.dataset.disableAutoTrack = '1';
+    document.head.appendChild(s);
+  }
+</script>
+<script src="qrcode.js"></script>
+<script src="i18n.js"></script>
+<script src="sample-en.js"></script>
+<script src="sample-es.js"></script>
+<script src="sample-fr.js"></script>
+<script src="sample-de.js"></script>
+<script src="sample-ru.js"></script>
+<script src="sample-it.js"></script>
+<script src="sample-pt.js"></script>
+<script src="sample-ja.js"></script>
+<script src="data.js"></script>
+<script src="manifestos.js"></script>
+<script src="booking-config.js"></script>
+<script src="features.js"></script>
+<script src="gabangi.js"></script>
+<script src="content.js"></script>
+<script src="rsvp.js"></script>
+<script src="checkout.js"></script>
+<script src="auction-config.js"></script>
+<script src="market.js"></script>
+<script src="events-page.js"></script>
+<script src="admin.js"></script>
+<script src="story.js"></script>
+<script src="aftercare.js"></script>
+<script src="insights.js"></script>
+<script src="remind.js"></script>
+<script src="wishlist.js"></script>
+<script src="alerts.js"></script>
+<script src="newsletter.js"></script>
+<script src="scanner.js"></script>
+<script src="kit.js"></script>
+<script src="contact.js"></script>
+<script src="legal.js"></script>
+<script src="fullbook.js"></script>
+<script src="bookplus.js"></script>
+<script src="sample-fund.js"></script>
+<script src="fundamentos-parse.js"></script>
+<script src="fundamentos.js"></script>
+<script src="listen.js"></script>
+<script src="audiobook.js"></script>
+<script src="director.js"></script>
+<script src="app.js"></script>
+<script src="agent-widget.js" defer></script>
+</body>
+</html>
