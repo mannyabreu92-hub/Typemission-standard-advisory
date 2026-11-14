@@ -1095,3 +1095,7 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-bio p { margin: .5rem 0 0; }
 .au-bio-src { font-size: .82rem; }
 .au-bio-src a { color: inherit; }
+
+/* The auction page's title: the featured work's artist, in capitals */
+.au-h1-artist { text-transform: uppercase; letter-spacing: .04em; font-size: clamp(2.1rem, 9vw, 3.8rem); }
+.au-h1-artist a { color: inherit; text-decoration: none; }

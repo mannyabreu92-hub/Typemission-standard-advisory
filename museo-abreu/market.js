@@ -489,7 +489,7 @@ function pageAuction(id) {
       ${liveLine(fin)}</section></div>`;
   return `<div class="wrap">
     <section class="section au-top">
-      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1">${auTitleText()}</h1>
+      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1 au-h1-artist">${auFeatured() ? `<a href="${auRoomHref(lotArtist(auFeatured()))}">${esc(lotArtist(auFeatured()))}</a>` : auTitleText()}</h1>
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
       <p class="muted au-rules">${t('auIncr', { start: auUSD(AUCTION.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>
