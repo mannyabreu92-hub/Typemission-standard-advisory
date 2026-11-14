@@ -1086,3 +1086,7 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-about-text p { margin: .9rem 0 0; }
 .au-about-more summary { cursor: pointer; font: 600 .95rem/1 var(--sans); min-height: 44px; display: flex; align-items: center; margin-top: .6rem; }
 .au-about .au-room-src { margin-top: 1rem; font-size: .85rem; }
+/* Artists' names in capitals, as the book sets them */
+.au-artist-name, .au-room-name, .dir-au-artists a, .au-feature-artist { text-transform: uppercase; letter-spacing: .04em; }
+.au-room-name { font-size: clamp(2.1rem, 9vw, 3.8rem); }
+.au-artist-name { font-size: clamp(1.3rem, 5vw, 1.9rem); }
