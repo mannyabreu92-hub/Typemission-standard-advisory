@@ -935,6 +935,10 @@ I18N.de = {
   "auWorksOf": "Werke von {name}",
   "auAboutWork": "Über das Werk",
   "auBidThis": "Auf dieses Werk bieten",
+  "auAboutArtist": "Über den Künstler",
+  "auReadAll": "Den ganzen Text lesen",
+  "auEssayNote": "Text aus ART GABANGI · Top 100 Artist (auf Englisch).",
+  "auBioNote": "Biografie, veröffentlicht auf oscarabreu.com.",
 };
 TR.de = {
   "2019": "2019",

@@ -341,3 +341,126 @@ function lotOpen(lot, now = Date.now(), state) { return lot.startBid != null && 
 function lotMinBid(lot, state) { return state && state.count ? state.high + AUCTION.increment : lot.startBid; }
 
 if (typeof module !== 'undefined') module.exports = { AUCTION, lotCloses, lotOpen, lotMinBid };
+
+// Each artist's text, exactly as ART GABANGI · Top 100 Artist prints it (published in English): the headline under the
+// name and the essay. Paragraphs are separated by a blank line; a single line break is kept as printed. Shown in the
+// artist's room (market.js). Oscar Abreu's room uses his biography from oscarabreu.com (data.js BIO_SITE).
+AUCTION.essays = {
+  'Wilson Abreu': { head: 'The image as an open wound', text: `Wilson Abreu’s work is not made to be contemplated comfortably, but to be confronted from a position of uneasy proximity. There is no safe distance between the image and the viewer because the painting behaves like unstable surface where the human figure does not appear in order to be recognized, but to be placed in crisis.
+
+In that displacement, the body ceases to function as organized form.
+It becomes rupture.
+
+A zone where identity decomposes, shifts, and resists stabilization.
+
+Within his work, drawing does not fulfill descriptive function, but active one. The line does not calmly organize the image; it cuts through it, fractures, accelerates, interrupts itself, and pushes forward as though attempting to sustain something already collapsing.
+
+Every mark responds to urgency.
+Not to correction.
+Not to refinement.
+
+But to the need to hold the human figure precisely at the moment it begins to transform into something unstable and unresolved. The gesture never seeks perfection.
+It seeks intensity.
+
+The figures he constructs are never complete, and that incompleteness is not accident or deficiency, but structural decision. Bodies fragment, merge, deform, and drift toward an intermediate state between the human and the animal, between memory and erosion, between presence and disappearance.
+
+What may initially appear as distortion gradually reveals itself as revelation.
+Because what the work exposes is not the external form of the body, but its permanent vulnerability.
+
+Painting here does not operate psychologically first.
+It operates physically.
+
+Matter itself becomes unstable participant within the image. The paint is never entirely controlled, and that apparent loss of control forms essential part of the language. It spills, accumulates, breaks apart, drags across the surface, and records the violence and immediacy of the gesture directly.
+
+There are moments when the image appears close to collapse.
+
+And it is precisely at that edge that the work acquires its greatest force.
+
+The paintings seem to react against the very bodies they attempt to contain.
+
+Another important dimension of his work lies in its relationship to the social. Yet this relationship never manifests itself through illustration or explicit political narrative.
+
+It does not need to.
+The figures already carry that weight within themselves.
+
+They do not represent singular stories, yet they appear marked by many: conditions of marginality, violence, displacement, exhaustion, emotional fracture, and social instability emerge not as themes, but as states of being embedded into the surface of the image itself.
+
+In this sense, his characters do not seek empathy in conventional terms, nor do they establish comforting relationships with the viewer. They impose themselves from an uncomfortable place from a presence that refuses softening or simplification.
+
+And it is precisely there that the work acquires ethical dimension.
+
+Not through declaration.
+But through what it refuses to allow the viewer to ignore.
+
+Within contemporary Dominican art, Wilson Abreu occupies a territory of conscious instability. His work belongs neither to tranquil figuration nor to controlled abstraction, but to a zone where the image remains in constant tension.
+Form never fully settles.
+
+And that impossibility of stability constitutes part of the work’s power.
+
+The paintings resist closure because the human condition they expose also resists resolution. Gesture, matter, body, and fragmentation remain suspended in active conflict.
+
+In a contemporary context where many images are designed for rapid circulation, easy consumption, and immediate readability, Wilson Abreu introduces resistance. His paintings refuse simplification.
+
+They force the gaze to stop.
+To remain.
+
+To confront what is not always comfortable to confront.
+
+Wilson Abreu does not paint the human figure in order to organize it into stable image. He paints it at the exact moment it begins to overflow its own limits. In that gesture, his work reveals something fundamental: that the image is not always made to be understood peacefully.
+
+Sometimes it is made to be faced.
+
+His painting offers neither closure nor reconciliation. It remains open, active, and permanently tense a space where form, matter, and the human condition continue colliding without resolution.` },
+  'José Almonte': { head: 'Painting as a cartography of thought and existence', text: `José Almonte’s work exists within a territory where painting ceases to operate as representation and becomes instead a system. His compositions do not describe scenes; they organize relationships between figure, space, and symbol within structures where every element participates in a larger internal logic.
+
+In this sense, his painting does not illustrate.
+It thinks.
+
+Within his works, the human figure appears reduced, fragmented, or only partially visible, yet it never fully disappears. The figure does not present itself as protagonist, but as point of reference within a broader field of relations. The body does not dominate the image.
+
+It inhabits it.
+
+Its scale in relation to geometric elements circles, trajectories, surfaces, orbital structures introduces a tension between the individual and the universal, between human presence and systems extending beyond it.
+
+Pictorial space is constructed with remarkable precision. The dominant use of blue does not respond to superficial aesthetic preference, but to the creation of a field in which the image becomes mental, almost suspended. There is no traditional depth.
+
+There is conceptual atmosphere.
+
+The painting is not organized through physical planes, but through levels of perception and consciousness. The viewer enters not into a literal environment, but into a psychological and symbolic space where thought itself seems spatialized.
+Geometry plays a fundamental role throughout his language. Circles, orbits, curves, and directional lines traverse the surface, establishing visual routes suggesting trajectories, cycles, displacement, and continuity. These forms do not decorate the image.
+
+They structure it.
+
+They function as invisible maps organizing the relationship between all elements within the composition. Geometry becomes not merely formal device, but conceptual architecture.
+
+The objects appearing within his work a paper airplane, a bench, an isolated figure, a golden disc operate as signs. They are never fully explained, yet they activate associations and psychological resonance. Every element appears charged with intention, though that intention never reveals itself completely.
+
+The work remains open.
+And it is precisely that openness which gives the paintings their intellectual depth.
+
+There exists throughout his practice a constant relationship with the idea of displacement not necessarily physical displacement, but existential movement. The figures appear suspended within moments of transition, positioned somewhere between departure and destination without fully belonging to either.
+
+The painting does not narrate that journey.
+It contains it.
+
+The use of gold introduces another symbolic dimension. It functions as a point of concentration within the chromatic field, but also as an element suggesting value, center, energy, and symbolic gravity. Gold never appears as decorative accent.
+
+It appears as nucleus.
+
+Its presence reorganizes perception and establishes internal hierarchies within the composition, creating focal points around which the image seems to orbit psychologically as well as visually.
+
+Within the context of contemporary Dominican art, José Almonte occupies a singular position in which painting becomes an instrument of thought. His work does not seek immediate impact or rapid emotional consumption, but instead constructs experiences unfolding gradually through time and contemplation.
+
+His paintings are not consumed quickly.
+They are traversed.
+That distinction is essential.
+
+Because his work resists the simplification dominating much contemporary visual culture. Rather than reducing complexity in order to facilitate circulation, José Almonte introduces complexity without sacrificing clarity. The paintings demand pause, observation, and connection-making from the viewer.
+
+His practice reveals a strong structural coherence. Each work does not attempt to rupture completely from the previous one, but rather to deepen the same visual and conceptual system in which the relationship between figure, geometry, and symbol becomes increasingly refined. This persistence is not repetition.
+It is calibration.
+
+José Almonte does not paint in order to represent scenes or construct closed images. He paints in order to generate cartographies. In that gesture, his work proposes a fundamental idea: that painting can function as a space where existence is not described, but organized.` },
+  'Juan Andújar': { head: 'The face as rhythmic system' },
+  'Ney Díaz Henríquez': { head: 'Painting as a field of tension between figure and matter' },
+};

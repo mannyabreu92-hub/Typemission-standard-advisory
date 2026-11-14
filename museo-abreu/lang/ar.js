@@ -935,6 +935,10 @@ I18N.ar = {
   "auWorksOf": "أعمال {name}",
   "auAboutWork": "عن العمل",
   "auBidThis": "زايد على هذا العمل",
+  "auAboutArtist": "عن الفنان",
+  "auReadAll": "اقرأ النص كاملًا",
+  "auEssayNote": "نص منشور في ART GABANGI · Top 100 Artist (بالإنجليزية).",
+  "auBioNote": "سيرة منشورة على oscarabreu.com.",
 };
 TR.ar = {
   "2019": "2019",

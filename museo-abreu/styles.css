@@ -1078,3 +1078,11 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-v-thumb { flex: none; width: 60px; height: 60px; padding: 0; border: 2px solid transparent; border-radius: 6px; background: var(--paper-2); cursor: pointer; overflow: hidden; opacity: .7; }
 .au-v-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .au-v-thumb[aria-current="true"] { border-color: var(--ink); opacity: 1; }
+
+/* Auction: each artist's headline and essay, as the book prints them */
+.au-room-head-line, .au-artist-head { font: 600 .74rem/1.4 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.au-room-head-line { margin-top: .5rem; font-size: .82rem; }
+.au-about-text { max-width: 62ch; font-family: var(--serif); font-size: 1.15rem; line-height: 1.55; }
+.au-about-text p { margin: .9rem 0 0; }
+.au-about-more summary { cursor: pointer; font: 600 .95rem/1 var(--sans); min-height: 44px; display: flex; align-items: center; margin-top: .6rem; }
+.au-about .au-room-src { margin-top: 1rem; font-size: .85rem; }

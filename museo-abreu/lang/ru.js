@@ -936,6 +936,10 @@ I18N.ru = {
   "auWorksOf": "Работы: {name}",
   "auAboutWork": "О работе",
   "auBidThis": "Сделать ставку на эту работу",
+  "auAboutArtist": "О художнике",
+  "auReadAll": "Читать полностью",
+  "auEssayNote": "Текст из ART GABANGI · Top 100 Artist (на английском).",
+  "auBioNote": "Биография с сайта oscarabreu.com.",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

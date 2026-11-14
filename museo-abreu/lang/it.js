@@ -935,6 +935,10 @@ I18N.it = {
   "auWorksOf": "Opere di {name}",
   "auAboutWork": "Sull’opera",
   "auBidThis": "Fai un’offerta per quest’opera",
+  "auAboutArtist": "Sull’artista",
+  "auReadAll": "Leggi il testo completo",
+  "auEssayNote": "Testo pubblicato in ART GABANGI · Top 100 Artist (in inglese).",
+  "auBioNote": "Biografia pubblicata su oscarabreu.com.",
 };
 TR.it = {
   "2019": "2019",
