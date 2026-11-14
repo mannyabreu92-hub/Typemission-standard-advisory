@@ -1090,3 +1090,8 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-artist-name, .au-room-name, .dir-au-artists a, .au-feature-artist { text-transform: uppercase; letter-spacing: .04em; }
 .au-room-name { font-size: clamp(2.1rem, 9vw, 3.8rem); }
 .au-artist-name { font-size: clamp(1.3rem, 5vw, 1.9rem); }
+
+.au-bio { margin: .8rem 0 1.4rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--line); max-width: 62ch; }
+.au-bio p { margin: .5rem 0 0; }
+.au-bio-src { font-size: .82rem; }
+.au-bio-src a { color: inherit; }

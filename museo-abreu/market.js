@@ -101,7 +101,8 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el texto completo', auEssayNote: 'Texto publicado en ART GABANGI · Top 100 Artist (en inglés).', auBioNote: 'Biografía publicada en oscarabreu.com.',
+Object.assign(I18N.es, { auFromPR: 'Puerto Rico', auBio: 'Biografía', auSources: 'Fuentes',
+  auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el texto completo', auEssayNote: 'Texto publicado en ART GABANGI · Top 100 Artist (en inglés).', auBioNote: 'Biografía publicada en oscarabreu.com.',
   auPrev: 'Obra anterior', auNext: 'Obra siguiente', auOfN: 'Obra {i} de {n}', auWorksOf: 'Obras de {name}', auAboutWork: 'Sobre la obra', auBidThis: 'Pujar por esta obra',
   auArtistsH: 'Los artistas', auArtistsLead: '{n} artistas. Elija uno para entrar en su sala y ver sus obras en subasta.', auWorksN: '{n} obras', auWork1: '1 obra', auBackArtists: 'Todos los artistas', auRoom: 'Sala', auAllWorks: 'Ver todas las obras ({n})', auAllWorksH: 'Todas las obras', auPaintings: 'Pinturas', auSculptures: 'Esculturas', auDrawings: 'Dibujos', auRoomBoard: 'Pujas más altas en esta sala', auEnterRoom: 'Ver sus obras',
   auCatBook: 'Top 100 Artist', auCatOscar: 'Pinturas · Oscar Abreu', auCatSculpture: 'Esculturas · Oscar Abreu', auCatDrawing: 'Dibujos · Oscar Abreu', auCatAll: 'Todas', auCats: 'Ver obras', auAllArtists: 'Todos los artistas', auArtistPick: 'Artista', auMore: 'Ver más ({n})', auShowing: '{a} de {b} obras', auBoardAll: 'Ver la tabla completa', auAllClose: 'Todas las obras cierran el {date}.',
@@ -111,7 +112,8 @@ Object.assign(I18N.es, { auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el 
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auAboutArtist: 'About the artist', auReadAll: 'Read the full text', auEssayNote: 'As published in ART GABANGI · Top 100 Artist.', auBioNote: 'Biography as published on oscarabreu.com.',
+Object.assign(I18N.en, { auFromPR: 'Puerto Rico', auBio: 'Biography', auSources: 'Sources',
+  auAboutArtist: 'About the artist', auReadAll: 'Read the full text', auEssayNote: 'As published in ART GABANGI · Top 100 Artist.', auBioNote: 'Biography as published on oscarabreu.com.',
   auPrev: 'Previous work', auNext: 'Next work', auOfN: 'Work {i} of {n}', auWorksOf: 'Works by {name}', auAboutWork: 'About the work', auBidThis: 'Bid on this work',
   auArtistsH: 'The artists', auArtistsLead: '{n} artists. Choose one to enter their room and see their works at auction.', auWorksN: '{n} works', auWork1: '1 work', auBackArtists: 'All artists', auRoom: 'Room', auAllWorks: 'See all works ({n})', auAllWorksH: 'All works', auPaintings: 'Paintings', auSculptures: 'Sculptures', auDrawings: 'Drawings', auRoomBoard: 'Highest bids in this room', auEnterRoom: 'See their works',
   auCatBook: 'Top 100 Artist', auCatOscar: 'Paintings · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Drawings · Oscar Abreu', auCatAll: 'All', auCats: 'Browse works', auAllArtists: 'All artists', auArtistPick: 'Artist', auMore: 'Show more ({n})', auShowing: '{a} of {b} works', auBoardAll: 'See the full leaderboard', auAllClose: 'All works close on {date}.',
@@ -121,7 +123,8 @@ Object.assign(I18N.en, { auAboutArtist: 'About the artist', auReadAll: 'Read the
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auAboutArtist: 'À propos de l’artiste', auReadAll: 'Lire le texte intégral', auEssayNote: 'Texte publié dans ART GABANGI · Top 100 Artist (en anglais).', auBioNote: 'Biographie publiée sur oscarabreu.com.',
+Object.assign(I18N.fr, { auFromPR: 'Porto Rico', auBio: 'Biographie', auSources: 'Sources',
+  auAboutArtist: 'À propos de l’artiste', auReadAll: 'Lire le texte intégral', auEssayNote: 'Texte publié dans ART GABANGI · Top 100 Artist (en anglais).', auBioNote: 'Biographie publiée sur oscarabreu.com.',
   auPrev: 'Œuvre précédente', auNext: 'Œuvre suivante', auOfN: 'Œuvre {i} sur {n}', auWorksOf: 'Œuvres de {name}', auAboutWork: 'À propos de l’œuvre', auBidThis: 'Enchérir sur cette œuvre',
   auArtistsH: 'Les artistes', auArtistsLead: '{n} artistes. Choisissez-en un pour entrer dans sa salle et voir ses œuvres aux enchères.', auWorksN: '{n} œuvres', auWork1: '1 œuvre', auBackArtists: 'Tous les artistes', auRoom: 'Salle', auAllWorks: 'Voir toutes les œuvres ({n})', auAllWorksH: 'Toutes les œuvres', auPaintings: 'Peintures', auSculptures: 'Sculptures', auDrawings: 'Dessins', auRoomBoard: 'Enchères les plus hautes de cette salle', auEnterRoom: 'Voir ses œuvres',
   auCatBook: 'Top 100 Artist', auCatOscar: 'Peintures · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Dessins · Oscar Abreu', auCatAll: 'Toutes', auCats: 'Parcourir les œuvres', auAllArtists: 'Tous les artistes', auArtistPick: 'Artiste', auMore: 'Voir plus ({n})', auShowing: '{a} sur {b} œuvres', auBoardAll: 'Voir le classement complet', auAllClose: 'Toutes les œuvres ferment le {date}.',
@@ -423,17 +426,24 @@ document.addEventListener('keydown', e => {
 // "About the artist": the book's essay in its own words (English, as printed), its first paragraphs open and the
 // rest a tap away; for Oscar Abreu, his biography from oscarabreu.com in the visitor's language where published.
 const auEssay = name => (AUCTION.essays && AUCTION.essays[name]) || {};
+function auBioHTML(name) {
+  const a = AUCTION.artists && AUCTION.artists[name], b = a && a.bio;
+  if (!b) return '';
+  const dl = document.documentElement.lang, bl = b[dl] ? dl : 'en';
+  return `<div class="au-bio"><h3 class="eyebrow">${t('auBio')}</h3><p lang="${bl}">${esc(b[bl])}</p>
+    <p class="muted au-bio-src">${t('auSources')}: ${b.src.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname.replace(/^www\./, ''))}</a>`).join(' · ')}</p></div>`;
+}
 function auAboutHTML(name) {
-  const e = auEssay(name);
+  const e = auEssay(name), bio = auBioHTML(name);
   let paras, lang = 'en', note = t('auEssayNote');
   if (e.text) paras = e.text.split(/\n\s*\n/);
   else if (name === 'Oscar Abreu' && typeof BIO_SITE !== 'undefined') {
     const dl = document.documentElement.lang, bl = BIO_SITE[dl] ? dl : 'en', b = BIO_SITE[bl];
     lang = bl; paras = [b.intro, b.circuit].filter(Boolean); note = t('auBioNote');
   }
-  if (!paras || !paras.length) return '';
+  if (!paras || !paras.length) return bio ? `<section class="section au-about"><h2 class="eyebrow">${t('auAboutArtist')}</h2>${bio}</section>` : '';
   const P = x => `<p>${esc(x).replace(/\n/g, '<br>')}</p>`, first = paras.slice(0, 3), rest = paras.slice(3);
-  return `<section class="section au-about"><h2 class="eyebrow">${t('auAboutArtist')}</h2>
+  return `<section class="section au-about"><h2 class="eyebrow">${t('auAboutArtist')}</h2>${bio}
     <div class="au-about-text" lang="${lang}">${first.map(P).join('')}
       ${rest.length ? `<details class="au-about-more"><summary>${t('auReadAll')}</summary>${rest.map(P).join('')}</details>` : ''}</div>
     <p class="muted au-room-src">${note}</p></section>`;
@@ -575,7 +585,7 @@ function artistLine(lot) {
   const a = AUCTION.artists && AUCTION.artists[lotArtist(lot)];
   if (!a) return '';
   const years = a.died ? `${a.born}–${a.died}` : a.born ? t('auBorn', { y: a.born }) : '';
-  return [t('auFrom'), years].filter(Boolean).join(' · ');
+  return [t(a.country === 'pr' ? 'auFromPR' : 'auFrom'), years].filter(Boolean).join(' · ');
 }
 // A work's facts as [year, medium, size]: Oscar Abreu's from WORKS, the others from the lot's own spec ("medium · size").
 function lotFacts(lot) {

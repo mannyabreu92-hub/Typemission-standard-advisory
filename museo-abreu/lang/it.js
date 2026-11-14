@@ -939,6 +939,9 @@ I18N.it = {
   "auReadAll": "Leggi il testo completo",
   "auEssayNote": "Testo pubblicato in ART GABANGI · Top 100 Artist (in inglese).",
   "auBioNote": "Biografia pubblicata su oscarabreu.com.",
+  "auFromPR": "Porto Rico",
+  "auBio": "Biografia",
+  "auSources": "Fonti",
 };
 TR.it = {
   "2019": "2019",

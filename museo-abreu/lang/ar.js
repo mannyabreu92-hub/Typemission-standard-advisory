@@ -939,6 +939,9 @@ I18N.ar = {
   "auReadAll": "اقرأ النص كاملًا",
   "auEssayNote": "نص منشور في ART GABANGI · Top 100 Artist (بالإنجليزية).",
   "auBioNote": "سيرة منشورة على oscarabreu.com.",
+  "auFromPR": "بورتوريكو",
+  "auBio": "السيرة",
+  "auSources": "المصادر",
 };
 TR.ar = {
   "2019": "2019",

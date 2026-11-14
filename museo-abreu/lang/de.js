@@ -939,6 +939,9 @@ I18N.de = {
   "auReadAll": "Den ganzen Text lesen",
   "auEssayNote": "Text aus ART GABANGI · Top 100 Artist (auf Englisch).",
   "auBioNote": "Biografie, veröffentlicht auf oscarabreu.com.",
+  "auFromPR": "Puerto Rico",
+  "auBio": "Biografie",
+  "auSources": "Quellen",
 };
 TR.de = {
   "2019": "2019",

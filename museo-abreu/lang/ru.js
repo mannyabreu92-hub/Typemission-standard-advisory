@@ -940,6 +940,9 @@ I18N.ru = {
   "auReadAll": "Читать полностью",
   "auEssayNote": "Текст из ART GABANGI · Top 100 Artist (на английском).",
   "auBioNote": "Биография с сайта oscarabreu.com.",
+  "auFromPR": "Пуэрто-Рико",
+  "auBio": "Биография",
+  "auSources": "Источники",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",
