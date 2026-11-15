@@ -714,3 +714,31 @@ Object.assign(ROUTE_SECTION, { rsvp: 'eventos', gracias: 'tienda' });
     return p ? { item: 'Ecce Homo · ' + t('shPrint') + ' · ' + L(p.name), text: t('shPrintNote') } : info(key);
   };
 }
+
+// The auction's countdown in the top bar, beside the languages, on every page while bidding is open: a sense of
+// urgency, one tap from the auction. It ticks each second and follows the visitor's language.
+{
+  const close = () => AUCTION.closesAt && auLots().some(auOpen) ? AUCTION.closesAt : null;
+  const short = iso => {
+    const s = Math.max(0, Math.floor((Date.parse(iso) - Date.now()) / 1000)), two = n => String(n).padStart(2, '0');
+    const d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    const dd = /^(ar|ru)$/.test(document.documentElement.lang) ? ' ' + t('auD') : t('auD').charAt(0);
+    return (d ? `${d}${dd} ` : '') + `${two(h)}:${two(m)}:${two(x)}`;
+  };
+  const lang = document.querySelector('.topbar .lang');
+  if (lang) {
+    const a = document.createElement('a');
+    a.className = 'tb-cd'; a.href = '#/subasta'; a.hidden = true;
+    lang.before(a);
+    const tick = () => {
+      if (typeof t !== 'function') return; // app.js (which defines t) loads after this file
+      const c = close();
+      a.hidden = !c;
+      if (!c) return;
+      a.innerHTML = `<small>${t('navAuction')}</small><span>${short(c)}</span>`;
+      a.setAttribute('aria-label', `${t('navAuction')}: ${t('auEndsIn')} ${cdText(c).replace(/<[^>]+>/g, '')}`);
+      a.classList.toggle('tb-cd-soon', Date.parse(c) - Date.now() < 864e5);
+    };
+    addEventListener('load', tick); setInterval(tick, 1000);
+  }
+}

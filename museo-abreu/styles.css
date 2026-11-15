@@ -1107,3 +1107,12 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 
 /* The artist's years beside the name */
 .au-name-years { font-size: .5em; letter-spacing: .06em; text-transform: none; color: var(--ink-3); font-weight: 500; white-space: nowrap; vertical-align: .25em; margin-inline-start: .25em; }
+/* The auction countdown in the top bar */
+.tb-cd { margin-inline-start: auto; display: grid; justify-items: center; line-height: 1.1; padding: .3rem .7rem; border-radius: 999px; background: var(--ink); color: var(--paper); text-decoration: none; font-variant-numeric: tabular-nums; flex: none; }
+.tb-cd[hidden] { display: none; }
+.tb-cd small { font: 600 .55rem/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: #d8c196; }
+.tb-cd span { font: 700 .82rem/1.2 var(--sans); }
+.tb-cd-soon { background: var(--accent, #8b2e1f); }
+.tb-cd:not([hidden]) + .lang { margin-inline-start: 0; }
+@media (max-width: 420px) { .topbar { gap: .55rem; } .topbar .brand-name { font-size: 1.3rem; } .tb-cd { padding: .28rem .55rem; } .tb-cd span { font-size: .76rem; } }
+:root[lang="ar"] .tb-cd small { letter-spacing: 0; }
