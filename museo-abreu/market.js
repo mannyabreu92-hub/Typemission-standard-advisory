@@ -305,8 +305,8 @@ function auArtistsHTML() {
   return `<section class="section au-artists" id="artistas">
     <h2>${t('auArtistsH')}</h2><p class="muted">${t('auArtistsLead', { n: list.length })}</p>
     <ol class="au-artist-list">${list.map(a => `<li><a class="au-artist" href="${auRoomHref(a.name)}">
-      <span class="au-artist-text"><span class="au-artist-name">${esc(a.name)}</span>
-        ${artistLine(a.lots[0]) ? `<span class="au-artist-line">${esc(artistLine(a.lots[0]))}</span>` : ''}
+      <span class="au-artist-text"><span class="au-artist-name">${esc(a.name)}${auNameYears(a.name)}</span>
+        ${artistLine(a.lots[0], true) ? `<span class="au-artist-line">${esc(artistLine(a.lots[0], true))}</span>` : ''}
         ${auEssay(a.name).head ? `<span class="au-artist-head" lang="en">${esc(auEssay(a.name).head)}</span>` : ''}
         <span class="au-artist-n">${auWorksText(a.lots.length)}</span></span>
       <span class="au-artist-strip" aria-hidden="true">${a.lots.slice(0, 3).map(l => `<img src="${l.thumb || l.img}" alt="" loading="lazy" width="120" height="120">`).join('')}</span>
@@ -459,9 +459,9 @@ function pageArtistRoom(a) {
     <a href="#/subasta" class="btn small"><span class="arr">←</span> ${t('auBackArtists')}</a>
     <section class="section au-room-head">
       <p class="eyebrow">${t('auEyebrow')} · ${t('auRoom')}</p>
-      <h1 class="au-room-name">${esc(a.name)}</h1>
+      <h1 class="au-room-name">${esc(a.name)}${auNameYears(a.name)}</h1>
       ${auEssay(a.name).head ? `<p class="au-room-head-line" lang="en">${esc(auEssay(a.name).head)}</p>` : ''}
-      <p class="au-room-line">${[artistLine(a.lots[0]), auWorksText(a.lots.length)].filter(Boolean).map(esc).join(' · ')}</p>
+      <p class="au-room-line">${[artistLine(a.lots[0], true), auWorksText(a.lots.length)].filter(Boolean).map(esc).join(' · ')}</p>
       ${a.lots[0].artist ? '' : `<p><a class="btn small" href="#/artista">${t('auAboutOscar')}</a></p>`}
     </section>
     ${auAboutHTML(a.name)}
@@ -492,7 +492,7 @@ function pageAuction(id) {
       ${liveLine(fin)}</section></div>`;
   return `<div class="wrap">
     <section class="section au-top">
-      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1 au-h1-artist">${auFeatured() ? `<a href="${auRoomHref(lotArtist(auFeatured()))}">${esc(lotArtist(auFeatured()))}</a>` : auTitleText()}</h1>
+      <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1 au-h1-artist">${auFeatured() ? `<a href="${auRoomHref(lotArtist(auFeatured()))}">${esc(lotArtist(auFeatured()))}</a>${auNameYears(lotArtist(auFeatured()))}` : auTitleText()}</h1>
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
       <p class="muted au-rules">${t('auIncr', { start: auUSD(AUCTION.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>
@@ -584,12 +584,18 @@ EXTRA_FORMS.bid = async form => {
 };
 
 // "Dominican Republic · b. 1972" (or the years of a late artist), from AUCTION.artists.
-function artistLine(lot) {
+function artistLine(lot, noYears) {
   const a = AUCTION.artists && AUCTION.artists[lotArtist(lot)];
   if (!a) return '';
-  const years = a.died ? `${a.born}–${a.died}` : a.born ? t('auBorn', { y: a.born }) : '';
-  return [t(a.country === 'pr' ? 'auFromPR' : 'auFrom'), years].filter(Boolean).join(' · ');
+  return [t(a.country === 'pr' ? 'auFromPR' : 'auFrom'), noYears ? '' : auYears(lotArtist(lot))].filter(Boolean).join(' · ');
 }
+// "b. 1972", or "1964–2022" for an artist who has died.
+function auYears(name) {
+  const a = AUCTION.artists && AUCTION.artists[name];
+  return !a ? '' : a.died ? `${a.born}–${a.died}` : a.born ? t('auBorn', { y: a.born }) : '';
+}
+// The years beside an artist's name, smaller.
+const auNameYears = name => auYears(name) ? ` <span class="au-name-years">${esc(auYears(name))}</span>` : '';
 // A work's facts as [year, medium, size]: Oscar Abreu's from WORKS, the others from the lot's own spec ("medium · size").
 function lotFacts(lot) {
   const w = lot.work && workById(lot.work);
