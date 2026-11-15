@@ -191,10 +191,10 @@ function auFeatureHTML(lot, h = 'h2') {
   if (!lot) return '';
   if (!auState && !auFailed) fetchAuction().then(() => { if (document.querySelector('.au-feature')) route(); });
   const s = auSt(lot) || {}, c = auCloses(lot), open = auOpen(lot), lead = s.leaders && s.leaders[0];
-  // The countdown leads the card; under the title, its year; under that, its size (or medium when the size is not known).
+  // The countdown lives in the top bar; once bidding closes, the card says so on top. Under the title, its year; under that, its size (or medium when the size is not known).
   const [year, medium, size] = lotFacts(lot), title = lotTitle(lot).replace(/\s*\([^)]*\)\s*$/, '');
   return `<article class="au-feature">
-    ${c ? `<div class="au-feature-cd au-feature-top"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t(auClosedKey())}</span>`}</div>` : ''}
+    ${c && !open ? `<div class="au-feature-cd au-feature-top"><span class="cd-end">${t(auClosedKey())}</span></div>` : ''}
     <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="${lot.w || 1000}" height="${lot.h || 1000}"></a>
     <div class="au-feature-body">
       <p class="eyebrow">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
