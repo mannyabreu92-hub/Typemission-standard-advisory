@@ -1104,7 +1104,7 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 
 /* Featured work: countdown on top, then the picture; under the title its year and size */
 .au-feature-top { grid-column: 1 / -1; padding: 1.1rem 1.4rem 0; margin: 0; }
-.au-feature-year { margin: .1rem 0 0; font: 400 1.35rem/1.2 var(--serif); color: var(--ink-2); }
+.au-feature-year { font: 400 .55em/1 Arial, Helvetica, sans-serif; color: var(--ink-2); white-space: nowrap; margin-inline-start: .2em; }
 .au-feature-size { margin: .35rem 0 0; font: 500 .92rem/1.4 var(--sans); color: var(--ink-2); }
 
 /* The artist's years beside the name */

@@ -198,8 +198,7 @@ function auFeatureHTML(lot, h = 'h2') {
     <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="${lot.w || 1000}" height="${lot.h || 1000}"></a>
     <div class="au-feature-body">
       <p class="eyebrow">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
-      <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(title)}</a></${h}>
-      ${year ? `<p class="au-feature-year">${esc(String(year))}</p>` : ''}
+      <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(title)}</a>${year ? ` <span class="au-feature-year">${esc(String(year))}</span>` : ''}</${h}>
       ${size || medium ? `<p class="au-feature-size">${esc(size || medium)}</p>` : ''}
       <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
       <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
