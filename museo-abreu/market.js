@@ -495,7 +495,6 @@ function pageAuction(id) {
       <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1 au-h1-artist">${auFeatured() ? `<a href="${auRoomHref(lotArtist(auFeatured()))}">${esc(lotArtist(auFeatured()))}</a>${auNameYears(lotArtist(auFeatured()))}` : auTitleText()}</h1>
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
-      <p class="muted au-rules">${t('auIncr', { start: auUSD(AUCTION.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>
     </section>
     <section class="section au-board-wrap"><h2>${t('auBoard')}</h2><p class="muted">${t('auBoardLead')}</p>${auBoardHTML(auAllLeaders(), true, 3)}</section>
     ${auArtistsHTML()}
@@ -540,7 +539,6 @@ function pageLot(lot, fin) {
         ${auCloses(lot) && auOpen(lot) ? `<div class="au-feature-cd"><small>${t('auEndsIn')}</small>${cdHTML(auCloses(lot), true)}</div>` : lotCloseLine(lot)}
         ${liveLine(fin)}
         ${action}
-        ${open ? `<p class="muted au-rules">${t('auIncr', { start: auUSD(lot.startBid), inc: auUSD(AUCTION.increment) })} ${AUCTION.softClose ? t('auSoft') : ''}</p>` : ''}
         <h2 class="h3" style="margin-top:1.4rem">${t('auBoard')}</h2>${auBoardHTML((s.leaders || []).slice(0, 10))}
         <p class="muted" style="margin-top:1rem">${t('auWinner')}</p>
         <div class="btn-row"><button class="btn" data-action="lotInterest" data-lot="${lot.id}">${t('auAsk')}</button><button class="btn" data-action="lotShare" data-lot="${lot.id}">${t('evShare')}</button></div>
