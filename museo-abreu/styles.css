@@ -988,7 +988,9 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .cd-u small { font-size: .66rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; margin-top: .2rem; }
 .cd-soon .cd-u b, .lot-close .cd-soon { color: var(--accent); }
 .cd-end { font-weight: 600; }
-.au-bid-now { justify-self: start; margin-top: .4rem; }
+.au-bid-now { justify-self: start; }
+.au-feature .btn-row { align-items: stretch; }
+.au-feature .btn-row .btn { margin: 0; min-width: 9rem; }
 .au-rules { margin-top: .8rem; font-size: .88rem; }
 .au-board { list-style: none; padding: 0; margin: .8rem 0 0; display: grid; gap: .45rem; }
 .au-rank { display: grid; grid-template-columns: 2.2rem 1fr auto; align-items: center; gap: .7rem; padding: .6rem .8rem; border: 1px solid var(--line); border-radius: 12px; background: var(--card); }
