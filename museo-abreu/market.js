@@ -191,15 +191,18 @@ function auFeatureHTML(lot, h = 'h2') {
   if (!lot) return '';
   if (!auState && !auFailed) fetchAuction().then(() => { if (document.querySelector('.au-feature')) route(); });
   const s = auSt(lot) || {}, c = auCloses(lot), open = auOpen(lot), lead = s.leaders && s.leaders[0];
+  // The countdown leads the card; under the title, its year; under that, its size (or medium when the size is not known).
+  const [year, medium, size] = lotFacts(lot), title = lotTitle(lot).replace(/\s*\([^)]*\)\s*$/, '');
   return `<article class="au-feature">
+    ${c ? `<div class="au-feature-cd au-feature-top"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t(auClosedKey())}</span>`}</div>` : ''}
     <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="${lot.w || 1000}" height="${lot.h || 1000}"></a>
     <div class="au-feature-body">
       <p class="eyebrow">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
-      <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(lotTitle(lot))}</a></${h}>
-      <p class="au-feature-artist"><a href="${auRoomHref(lotArtist(lot))}">${esc(lotArtist(lot))}</a></p>
+      <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(title)}</a></${h}>
+      ${year ? `<p class="au-feature-year">${esc(String(year))}</p>` : ''}
+      ${size || medium ? `<p class="au-feature-size">${esc(size || medium)}</p>` : ''}
       <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
       <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
-      ${c ? `<div class="au-feature-cd"><small>${open ? t('auEndsIn') : ''}</small>${open ? cdHTML(c, true) : `<span class="cd-end">${t(auClosedKey())}</span>`}</div>` : ''}
       <div class="btn-row">${open ? `<a class="btn primary au-bid-now" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}
         <button class="btn" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')}</button></div>
     </div>
