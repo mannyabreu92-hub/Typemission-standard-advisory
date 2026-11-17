@@ -950,6 +950,7 @@ I18N.ru = {
   "auPlay": "Воспроизвести",
   "auSeeWorks": "Смотреть работы",
   "auStartAt": "Ставки от",
+  "auCritique": "Критика",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

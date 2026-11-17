@@ -101,7 +101,7 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auStory: 'La historia de {name}', auStoryPrev: 'Anterior', auStoryNext: 'Siguiente', auPause: 'Pausa', auPlay: 'Reproducir', auSeeWorks: 'Ver sus obras', auStartAt: 'Pujas desde',
+Object.assign(I18N.es, { auCritique: 'Crítica', auStory: 'La historia de {name}', auStoryPrev: 'Anterior', auStoryNext: 'Siguiente', auPause: 'Pausa', auPlay: 'Reproducir', auSeeWorks: 'Ver sus obras', auStartAt: 'Pujas desde',
   auFromPR: 'Puerto Rico', auBio: 'Biografía', auSources: 'Fuentes',
   auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el texto completo', auEssayNote: 'Texto publicado en ART GABANGI · Top 100 Artist (en inglés).', auBioNote: 'Biografía publicada en oscarabreu.com.',
   auPrev: 'Obra anterior', auNext: 'Obra siguiente', auOfN: 'Obra {i} de {n}', auWorksOf: 'Obras de {name}', auAboutWork: 'Sobre la obra', auBidThis: 'Pujar por esta obra',
@@ -113,7 +113,7 @@ Object.assign(I18N.es, { auStory: 'La historia de {name}', auStoryPrev: 'Anterio
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auStory: 'The story of {name}', auStoryPrev: 'Previous', auStoryNext: 'Next', auPause: 'Pause', auPlay: 'Play', auSeeWorks: 'See the works', auStartAt: 'Bids from',
+Object.assign(I18N.en, { auCritique: 'Critique', auStory: 'The story of {name}', auStoryPrev: 'Previous', auStoryNext: 'Next', auPause: 'Pause', auPlay: 'Play', auSeeWorks: 'See the works', auStartAt: 'Bids from',
   auFromPR: 'Puerto Rico', auBio: 'Biography', auSources: 'Sources',
   auAboutArtist: 'About the artist', auReadAll: 'Read the full text', auEssayNote: 'As published in ART GABANGI · Top 100 Artist.', auBioNote: 'Biography as published on oscarabreu.com.',
   auPrev: 'Previous work', auNext: 'Next work', auOfN: 'Work {i} of {n}', auWorksOf: 'Works by {name}', auAboutWork: 'About the work', auBidThis: 'Bid on this work',
@@ -125,7 +125,7 @@ Object.assign(I18N.en, { auStory: 'The story of {name}', auStoryPrev: 'Previous'
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auStory: 'L’histoire de {name}', auStoryPrev: 'Précédent', auStoryNext: 'Suivant', auPause: 'Pause', auPlay: 'Lecture', auSeeWorks: 'Voir les œuvres', auStartAt: 'Enchères dès',
+Object.assign(I18N.fr, { auCritique: 'Critique', auStory: 'L’histoire de {name}', auStoryPrev: 'Précédent', auStoryNext: 'Suivant', auPause: 'Pause', auPlay: 'Lecture', auSeeWorks: 'Voir les œuvres', auStartAt: 'Enchères dès',
   auFromPR: 'Porto Rico', auBio: 'Biographie', auSources: 'Sources',
   auAboutArtist: 'À propos de l’artiste', auReadAll: 'Lire le texte intégral', auEssayNote: 'Texte publié dans ART GABANGI · Top 100 Artist (en anglais).', auBioNote: 'Biographie publiée sur oscarabreu.com.',
   auPrev: 'Œuvre précédente', auNext: 'Œuvre suivante', auOfN: 'Œuvre {i} sur {n}', auWorksOf: 'Œuvres de {name}', auAboutWork: 'À propos de l’œuvre', auBidThis: 'Enchérir sur cette œuvre',
@@ -381,7 +381,7 @@ function auViewerHTML(scope, name, lots) {
       <p class="eyebrow">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}</p>
       <h2 class="au-v-title">${esc(lotTitle(lot))}</h2>
       <dl class="specs">${row(t('year'), year)}${row(t('auMedium'), medium)}${row(t('auSize'), size)}</dl>
-      ${desc ? `<div class="au-v-desc"><h3 class="eyebrow">${t('auAboutWork')}</h3>${String(desc).split(/\n\s*\n/).map(p => `<p>${esc(p)}</p>`).join('')}</div>` : ''}
+      ${desc ? `<div class="au-v-desc"><h3 class="eyebrow">${t('auCritique')}</h3>${String(desc).split(/\n\s*\n/).map(p => `<p>${esc(p)}</p>`).join('')}</div>` : ''}
       <div class="au-v-price">
         <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
         <p class="muted">${s.count ? (s.count === 1 ? t('auBid1') : t('auBidsN', { n: s.count })) + (lead ? ' · ' + esc(t('auLeader', { name: lead.who })) : '') : t('auFirst')}</p>
@@ -435,91 +435,32 @@ function auBioHTML(name) {
   const a = AUCTION.artists && AUCTION.artists[name], b = a && a.bio;
   if (!b) return '';
   const dl = document.documentElement.lang, bl = b[dl] ? dl : 'en';
-  return `<div class="au-bio"><h3 class="eyebrow">${t('auBio')}</h3><p lang="${bl}">${esc(b[bl])}</p>
+  return `<div class="au-bio"><p lang="${bl}">${esc(b[bl])}</p>
     <p class="muted au-bio-src">${t('auSources')}: ${b.src.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname.replace(/^www\./, ''))}</a>`).join(' · ')}</p></div>`;
 }
 function auAboutHTML(name) {
-  const e = auEssay(name), bio = auBioHTML(name);
-  let paras, lang = 'en', note = t('auEssayNote');
-  if (e.text) paras = e.text.split(/\n\s*\n/);
-  else if (name === 'Oscar Abreu' && typeof BIO_SITE !== 'undefined') {
+  // First the biography (researched, or Oscar Abreu's own from oscarabreu.com), then the critique: the essay ART
+  // GABANGI · Top 100 Artist prints on the artist, word for word.
+  const e = auEssay(name);
+  let bio = auBioHTML(name);
+  if (!bio && name === 'Oscar Abreu' && typeof BIO_SITE !== 'undefined') {
     const dl = document.documentElement.lang, bl = BIO_SITE[dl] ? dl : 'en', b = BIO_SITE[bl];
-    lang = bl; paras = [b.intro, b.circuit].filter(Boolean); note = t('auBioNote');
+    bio = `<div class="au-bio" lang="${bl}">${[b.intro, b.circuit].filter(Boolean).map(x => `<p>${esc(x)}</p>`).join('')}<p class="muted au-bio-src">${t('auBioNote')}</p></div>`;
   }
-  if (!paras || !paras.length) return bio ? `<section class="section au-about"><h2 class="eyebrow">${t('auAboutArtist')}</h2>${bio}</section>` : '';
+  const paras = e.text ? e.text.split(/\n\s*\n/) : [];
   const P = x => `<p>${esc(x).replace(/\n/g, '<br>')}</p>`, first = paras.slice(0, 3), rest = paras.slice(3);
-  return `<section class="section au-about"><h2 class="eyebrow">${t('auAboutArtist')}</h2>${bio}
-    <div class="au-about-text" lang="${lang}">${first.map(P).join('')}
-      ${rest.length ? `<details class="au-about-more"><summary>${t('auReadAll')}</summary>${rest.map(P).join('')}</details>` : ''}</div>
-    <p class="muted au-room-src">${note}</p></section>`;
+  return (bio ? `<section class="section au-about"><h2 class="au-about-h">${t('auBio')}</h2>${bio}</section>` : '')
+    + (paras.length ? `<section class="section au-about"><h2 class="au-about-h">${t('auCritique')}</h2>
+      <div class="au-about-text" lang="en">${first.map(P).join('')}
+        ${rest.length ? `<details class="au-about-more"><summary>${t('auReadAll')}</summary>${rest.map(P).join('')}</details>` : ''}</div>
+      <p class="muted au-room-src">${t('auEssayNote')}</p></section>` : '');
 }
 
 // An artist's room: the name large, the line the book prints, their works, and the highest bids among them.
-// Each room opens with the artist's story, told like a film: dark slides, one fact at a time, a key year in gold.
-// Only what we hold: the name and years, each sentence of the researched biography (or Oscar Abreu's own), the
-// book's headline and a line of its essay, then the works and the starting bid. Slides advance every 5 s (tap
-// either side or use the buttons; Pause stops it; with reduced motion it never moves by itself).
-const AU_STORY_MS = 5000;
-let auStoryScope = '', auStoryI = 0, auStoryPaused = false, auStoryAt = 0;
-function auStorySlides(a) {
-  const meta = (AUCTION.artists && AUCTION.artists[a.name]) || {}, e = auEssay(a.name), dl = document.documentElement.lang;
-  const imgs = a.lots.map(l => l.img), img = i => imgs[i % imgs.length];
-  const slides = [{ img: img(0), eyebrow: t('auRoom'), name: a.name, line: artistLine(a.lots[0]) }];
-  let bio = meta.bio && (meta.bio[dl] || meta.bio.en), bioLang = meta.bio && (meta.bio[dl] ? dl : 'en');
-  if (!bio && a.name === 'Oscar Abreu' && typeof BIO_SITE !== 'undefined') { bioLang = BIO_SITE[dl] ? dl : 'en'; bio = BIO_SITE[bioLang].intro; }
-  if (bio) bio.split(/(?<=[.;])\s+(?=[A-ZÁÉÍÓÚÑ«“"])/).slice(0, 4).forEach((x, i) => {
-    const year = (x.match(/\b(1[89]\d\d|20\d\d)\b/) || [])[0];
-    slides.push({ img: img(i + 1), big: year, line: x, lang: bioLang });
-  });
-  if (e.head) slides.push({ img: img(slides.length), eyebrow: t('auSrcBook'), head: e.head });
-  if (e.text) { const q = e.text.split(/\n\s*\n/).map(p => p.replace(/\n/g, ' ')).find(p => p.length > 30 && p.length < 150); if (q) slides.push({ img: img(slides.length), quote: q }); }
-  slides.push({ img: img(slides.length), eyebrow: `${auWorksText(a.lots.length)} · ${t('auStartAt')}`, big: auUSD(Math.min(...a.lots.map(l => l.startBid || AUCTION.startBid))), end: true });
-  return slides;
-}
-function auStoryHTML(a) {
-  const sl = auStorySlides(a);
-  if (auStoryScope !== a.slug) { auStoryScope = a.slug; auStoryI = 0; auStoryAt = Date.now(); auStoryPaused = matchMedia('(prefers-reduced-motion: reduce)').matches; }
-  auStoryI = Math.min(auStoryI, sl.length - 1);
-  const s = sl[auStoryI];
-  return `<section class="au-story" id="au-story" aria-roledescription="carousel" aria-label="${esc(t('auStory', { name: a.name }))}" data-n="${sl.length}">
-    <div class="au-story-bars" aria-hidden="true">${sl.map((_, i) => `<span class="${i < auStoryI ? 'done' : i === auStoryI ? 'now' : ''}"><i style="${i === auStoryI && !auStoryPaused ? `animation-duration:${AU_STORY_MS}ms;animation-delay:-${Math.min(Date.now() - auStoryAt, AU_STORY_MS)}ms` : ''}"></i></span>`).join('')}</div>
-    <img class="au-story-img" src="${s.img}" alt="" aria-hidden="true">
-    <div class="au-story-text" aria-live="${auStoryPaused ? 'polite' : 'off'}">
-      ${s.eyebrow ? `<p class="au-story-eyebrow">${esc(s.eyebrow)}</p>` : ''}
-      ${s.name ? `<h2 class="au-story-name">${esc(s.name)}</h2>` : ''}
-      ${s.head ? `<p class="au-story-head" lang="en">${esc(s.head)}</p>` : ''}
-      ${s.big ? `<p class="au-story-big">${esc(s.big)}</p><span class="au-story-rule" aria-hidden="true"></span>` : ''}
-      ${s.quote ? `<blockquote class="au-story-quote" lang="en">“${esc(s.quote)}”</blockquote>` : ''}
-      ${s.line ? `<p class="au-story-line"${s.lang ? ` lang="${s.lang}"` : ''}>${esc(s.line)}</p>` : ''}
-      ${s.end ? `<button type="button" class="btn au-story-cta" data-action="auStoryWorks">${t('auSeeWorks')}</button>` : ''}
-    </div>
-    <button class="au-story-tap prev" data-action="auStoryPrev" aria-label="${t('auStoryPrev')}"${auStoryI ? '' : ' disabled'}></button>
-    <button class="au-story-tap next" data-action="auStoryNext" aria-label="${t('auStoryNext')}"${auStoryI < sl.length - 1 ? '' : ' disabled'}></button>
-    <button class="au-story-pause" data-action="auStoryPause" aria-label="${t(auStoryPaused ? 'auPlay' : 'auPause')}"><span aria-hidden="true">${auStoryPaused ? '▶' : 'II'}</span></button>
-  </section>`;
-}
-function auStoryRedraw(focus) {
-  const el = document.getElementById('au-story'); if (!el) return;
-  const a = auArtists().find(x => x.slug === auStoryScope); if (!a) return;
-  el.outerHTML = auStoryHTML(a);
-  const f = focus && document.querySelector(`#au-story [data-action="${focus}"]:not([disabled])`); if (f) f.focus({ preventScroll: true });
-}
-const auStoryGo = (d, focus) => { const el = document.getElementById('au-story'); if (!el) return; const n = +el.dataset.n, i = auStoryI + d; if (i < 0 || i >= n) return; auStoryI = i; auStoryAt = Date.now(); auStoryRedraw(focus); };
-EXTRA_ACTIONS.auStoryPrev = () => auStoryGo(-1, 'auStoryPrev');
-EXTRA_ACTIONS.auStoryNext = () => auStoryGo(1, 'auStoryNext');
-EXTRA_ACTIONS.auStoryPause = () => { auStoryPaused = !auStoryPaused; auStoryAt = Date.now(); auStoryRedraw('auStoryPause'); };
-EXTRA_ACTIONS.auStoryWorks = () => { auStoryPaused = true; const v = document.getElementById('au-viewer'); if (v) { v.scrollIntoView({ behavior: 'smooth' }); const h = v.querySelector('.au-v-title'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } } };
-setInterval(() => {
-  const el = document.getElementById('au-story');
-  if (!el || auStoryPaused || document.hidden || Date.now() - auStoryAt < AU_STORY_MS) return;
-  if (auStoryI < +el.dataset.n - 1) auStoryGo(1); else { auStoryPaused = true; auStoryRedraw(); }
-}, 250);
-
 function pageArtistRoom(a) {
   const leaders = a.lots.flatMap(l => ((auSt(l) && auSt(l).leaders) || []).map(r => ({ ...r, lot: lotTitle(l) }))).sort((x, y) => y.amount - x.amount).slice(0, 10);
   return `<div class="wrap au-room">
     <a href="#/subasta" class="btn small"><span class="arr">←</span> ${t('auBackArtists')}</a>
-    ${auStoryHTML(a)}
     <section class="section au-room-head">
       <p class="eyebrow">${t('auEyebrow')} · ${t('auRoom')}</p>
       <h1 class="au-room-name">${esc(a.name)}${auNameYears(a.name)}</h1>

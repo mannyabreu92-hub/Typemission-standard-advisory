@@ -949,6 +949,7 @@ I18N.it = {
   "auPlay": "Riproduci",
   "auSeeWorks": "Vedi le opere",
   "auStartAt": "Offerte da",
+  "auCritique": "Critica",
 };
 TR.it = {
   "2019": "2019",
