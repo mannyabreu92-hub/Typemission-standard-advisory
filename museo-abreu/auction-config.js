@@ -502,7 +502,54 @@ It is calibration.
 
 José Almonte does not paint in order to represent scenes or construct closed images. He paints in order to generate cartographies. In that gesture, his work proposes a fundamental idea: that painting can function as a space where existence is not described, but organized.` },
   'Juan Andújar': { head: 'The face as rhythmic system' },
-  'Ney Díaz Henríquez': { head: 'Painting as a field of tension between figure and matter' },
+  'Ney Díaz Henríquez': { head: 'Painting as a field of tension between figure and matter', text: `Ney Díaz Henríquez’s work is constructed within a territory where the human figure does not present itself as stable form, but as a body in constant transformation. His images do not seek to fix identity or represent a definitive state; rather, they expose the process through which the figure is constructed, altered, and decomposed within the painting itself.
+
+Within his compositions, the body appears traversed by matter. It is not contained by drawing nor fully defined by form. Instead, it merges with stains, glazes, transparencies, and gestures that interrupt its stability. The figure never fully disappears, yet neither does it completely impose itself upon the surface.
+
+It remains in tension.
+
+That instability is central to the work.
+
+Because Ney Díaz Henríquez understands the figure not as certainty, but as fragile presence continually subjected to transformation.
+
+Pictorial gesture is decisive within his language. It does not function as superficial expressive device, but as an action capable of modifying the very structure of the image. Paint is not applied in order to complete the figure.
+
+It is applied in order to question it.
+
+Every intervention alters perception, destabilizes equilibrium, and forces the image to remain open. The surface never resolves itself completely. Instead, the painting preserves traces of construction, interruption, correction, and displacement simultaneously.
+
+Color intensifies this condition further. Reds, yellows, blues, and neutral zones coexist across surfaces where contrast does not seek harmony, but friction. Color does not accompany form.
+
+It passes through it.
+
+The figure remains exposed to chromatic tension continuously transforming it from within. The body appears vulnerable to the force of color, as though identity itself were unstable under the pressure of matter and gesture.
+
+There is also a direct psychological dimension running throughout his work. The bodies do not appear to represent specific characters, but rather emotional and existential states. The painting does not describe what we see externally; it reveals internal conditions that resist fixed definition.
+
+The image functions as a space where emotion and materiality intersect without ever fully resolving themselves.
+In this sense, his work belongs to a territory where figuration ceases to function merely as representation and becomes instead a field of conflict. The painting does not seek clarity or stability.
+
+It seeks uncertainty held in active tension.
+
+That distinction is fundamental.
+
+Because the work gains its force precisely through its refusal to settle into either pure figuration or complete abstraction. Ney Díaz Henríquez inhabits an intermediate space where both conditions coexist and continuously affect one another. The figure emerges from matter only to dissolve back into it again.
+
+Within the context of contemporary Dominican art, his work occupies a singular position because of its ability to tension the very limits of painting itself. His practice reveals a remarkable coherence in which each work does not attempt to resolve conflict, but to deepen it. The repetition of body, gesture, and material intervention does not function as empty insistence, but as continuous exploration of the possibilities of the image.
+
+That persistence gives the work depth.
+
+Because each painting feels less like conclusion than ongoing process.
+
+In a contemporary context where many paintings seek immediate readability, his work proposes the opposite. It does not surrender itself quickly because it is constructed through instability. The viewer is required to accept that the image never fully fixes itself, but changes according to time, perception, and emotional proximity.
+
+Ney Díaz Henríquez does not paint in order to represent the human figure.
+
+He paints in order to expose its fragility within the pictorial language itself.
+
+And in that gesture, his work proposes a fundamental idea: that painting is not a space of certainty, but of transformation.
+
+His work remains active because it never fully closes itself. It functions as a surface where figure and matter continue existing in dialogue, conflict, and process long after the image has been seen.` },
   'Aurora Díaz': { head: 'Delicacy as a structure of resistance', text: `Aurora Díaz constructs an image that exists between revelation and fragmentation. In this work, the human face does not appear as a stable portrait, but as a psychological surface intervened by memory, transformation, and symbolic displacement. The figure emerges suspended between presence and dissolution, as if identity itself were in a constant process of reconstruction.
 
 What initially appears as serenity gradually reveals an internal tension.
