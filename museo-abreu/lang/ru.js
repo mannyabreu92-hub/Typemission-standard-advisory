@@ -943,6 +943,13 @@ I18N.ru = {
   "auFromPR": "Пуэрто-Рико",
   "auBio": "Биография",
   "auSources": "Источники",
+  "auStory": "История: {name}",
+  "auStoryPrev": "Назад",
+  "auStoryNext": "Далее",
+  "auPause": "Пауза",
+  "auPlay": "Воспроизвести",
+  "auSeeWorks": "Смотреть работы",
+  "auStartAt": "Ставки от",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

@@ -942,6 +942,13 @@ I18N.de = {
   "auFromPR": "Puerto Rico",
   "auBio": "Biografie",
   "auSources": "Quellen",
+  "auStory": "Die Geschichte von {name}",
+  "auStoryPrev": "Zurück",
+  "auStoryNext": "Weiter",
+  "auPause": "Pause",
+  "auPlay": "Abspielen",
+  "auSeeWorks": "Werke ansehen",
+  "auStartAt": "Gebote ab",
 };
 TR.de = {
   "2019": "2019",

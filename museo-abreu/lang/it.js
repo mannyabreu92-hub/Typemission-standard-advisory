@@ -942,6 +942,13 @@ I18N.it = {
   "auFromPR": "Porto Rico",
   "auBio": "Biografia",
   "auSources": "Fonti",
+  "auStory": "La storia di {name}",
+  "auStoryPrev": "Indietro",
+  "auStoryNext": "Avanti",
+  "auPause": "Pausa",
+  "auPlay": "Riproduci",
+  "auSeeWorks": "Vedi le opere",
+  "auStartAt": "Offerte da",
 };
 TR.it = {
   "2019": "2019",

@@ -942,6 +942,13 @@ I18N.ar = {
   "auFromPR": "بورتوريكو",
   "auBio": "السيرة",
   "auSources": "المصادر",
+  "auStory": "قصة {name}",
+  "auStoryPrev": "السابق",
+  "auStoryNext": "التالي",
+  "auPause": "إيقاف مؤقت",
+  "auPlay": "تشغيل",
+  "auSeeWorks": "عرض الأعمال",
+  "auStartAt": "المزايدة تبدأ من",
 };
 TR.ar = {
   "2019": "2019",
