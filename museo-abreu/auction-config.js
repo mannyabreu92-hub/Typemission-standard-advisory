@@ -22,6 +22,7 @@ var AUCTION = {
     'Ángel Castillo': { born: 1973 }, 'Máximo Caminero': { born: 1962 }, 'Freddie Cabral': { born: 1948 },
     'José Cestero': { born: 1937, died: 2025 }, 'Benjamín Cruz': { born: 1986 }, 'Jorge Checo': { born: 1968 },
     'Jesús Desangles': {}, 'Ney Díaz Henríquez': { born: 1974, died: 2015 },
+    'Aurora Díaz': { born: 1969 }, 'María Dolores': { born: 1956 }, 'Gerald Ellis': { born: 1976 },
     'Oscar Abreu': { born: 1978 }, // San Juan de la Maguana, 1978 (data.js, his biography)
   },
   lots: [
@@ -258,6 +259,45 @@ var AUCTION = {
       title: { es: 'Juan Marichal', en: 'Juan Marichal', fr: 'Juan Marichal' },
       spec: { es: 'Técnica mixta sobre panel de madera · 24 × 24 pulg.', en: 'Mixed media on wood panel · 24 × 24 in', fr: 'Technique mixte sur panneau de bois · 24 × 24 po' },
       startBid: 1000 },
+    { id: 'instante-de-introspeccion', kind: 'painting', artist: 'Ney Díaz Henríquez', year: 2008, img: 'img/ney-instante.jpg', thumb: 'img/ney-instante-600.jpg', w: 814, h: 1030,
+      title: { es: 'Instante de Introspección', en: 'Instante de Introspección (Moment of Introspection)', fr: 'Instante de Introspección' },
+      spec: { es: 'Técnica mixta sobre lienzo · 54 × 44 1/4 pulg. (137,2 × 112,4 cm)', en: 'Mixed media on canvas · 54 × 44 1/4 in (137.2 × 112.4 cm)', fr: 'Technique mixte sur toile · 54 × 44 1/4 po (137,2 × 112,4 cm)' },
+      startBid: 1000 },
+    { id: 'acrobacia-de-amor', kind: 'painting', artist: 'Ney Díaz Henríquez', year: 2008, img: 'img/ney-acrobacia.jpg', thumb: 'img/ney-acrobacia-600.jpg', w: 381, h: 455,
+      title: { es: 'Acrobacia de Amor', en: 'Acrobacia de Amor (Acrobatics of Love)', fr: 'Acrobacia de Amor' },
+      spec: { es: 'Técnica mixta sobre lienzo · 70 × 60 pulg. (177,8 × 152,4 cm)', en: 'Mixed media on canvas · 70 × 60 in (177.8 × 152.4 cm)', fr: 'Technique mixte sur toile · 70 × 60 po (177,8 × 152,4 cm)' },
+      startBid: 1000 },
+    { id: 'mujeres-en-la-fiesta', kind: 'painting', artist: 'Ney Díaz Henríquez', year: 2008, img: 'img/ney-mujeres.jpg', thumb: 'img/ney-mujeres-600.jpg', w: 381, h: 460,
+      title: { es: 'Mujeres en la Fiesta', en: 'Mujeres en la Fiesta (Women at the Celebration)', fr: 'Mujeres en la Fiesta' },
+      spec: { es: 'Técnica mixta sobre lienzo · 54 × 44 1/4 pulg. (137,2 × 112,4 cm)', en: 'Mixed media on canvas · 54 × 44 1/4 in (137.2 × 112.4 cm)', fr: 'Technique mixte sur toile · 54 × 44 1/4 po (137,2 × 112,4 cm)' },
+      startBid: 1000 },
+    { id: 'metamorfosis', kind: 'painting', artist: 'Ney Díaz Henríquez', year: 2008, img: 'img/ney-metamorfosis.jpg', thumb: 'img/ney-metamorfosis-600.jpg', w: 814, h: 1020,
+      title: { es: 'Metamorfosis', en: 'Metamorfosis (Metamorphosis)', fr: 'Metamorfosis' },
+      spec: { es: 'Técnica mixta sobre lienzo · 54 × 44 1/4 pulg. (137,2 × 112,4 cm)', en: 'Mixed media on canvas · 54 × 44 1/4 in (137.2 × 112.4 cm)', fr: 'Technique mixte sur toile · 54 × 44 1/4 po (137,2 × 112,4 cm)' },
+      startBid: 1000 },
+    { id: 'equilibrio-del-ser', kind: 'painting', artist: 'Ney Díaz Henríquez', year: 2008, img: 'img/ney-equilibrio.jpg', thumb: 'img/ney-equilibrio-600.jpg', w: 812, h: 1223,
+      title: { es: 'Equilibrio del Ser', en: 'Equilibrio del Ser (Balance of Being)', fr: 'Equilibrio del Ser' },
+      spec: { es: 'Técnica mixta sobre lienzo · 76 1/2 × 51 pulg. (194,3 × 129,5 cm)', en: 'Mixed media on canvas · 76 1/2 × 51 in (194.3 × 129.5 cm)', fr: 'Technique mixte sur toile · 76 1/2 × 51 po (194,3 × 129,5 cm)' },
+      startBid: 1000 },
+    // By Aurora Díaz (Dominican, b. 1969), from the same book.
+    { id: 'the-noise-of-silence', kind: 'painting', artist: 'Aurora Díaz', year: 2018, img: 'img/aurora-noise.jpg', thumb: 'img/aurora-noise-600.jpg', w: 814, h: 605,
+      title: { es: 'The noise of silence', en: 'The noise of silence', fr: 'The noise of silence' },
+      spec: { es: 'Técnica mixta sobre lienzo · 48 × 36 pulg.', en: 'Mixed media on canvas · 48 × 36 in', fr: 'Technique mixte sur toile · 48 × 36 po' },
+      startBid: 1000 },
+    // By María Dolores (Dominican, b. 1956), from the same book.
+    { id: 'fragmento-de-identidad', kind: 'painting', artist: 'María Dolores', year: 2026, img: 'img/dolores-fragmento.jpg', thumb: 'img/dolores-fragmento-600.jpg', w: 381, h: 482,
+      title: { es: 'Fragmento de Identidad', en: 'Fragmento de Identidad (Fragment of Identity)', fr: 'Fragmento de Identidad' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg. (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
+      startBid: 1000 },
+    { id: 'la-estructura-del-alma', kind: 'painting', artist: 'María Dolores', year: 2026, img: 'img/dolores-estructura.jpg', thumb: 'img/dolores-estructura-600.jpg', w: 814, h: 1037,
+      title: { es: 'La Estructura del Alma', en: 'La Estructura del Alma (The Structure of the Soul)', fr: 'La Estructura del Alma' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg. (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
+      startBid: 1000 },
+    // By Gerald Ellis (Dominican, b. 1976), from the same book.
+    { id: 'mujer-descansando-ii', kind: 'painting', artist: 'Gerald Ellis', year: 2021, img: 'img/ellis-mujer.jpg', thumb: 'img/ellis-mujer-600.jpg', w: 814, h: 580,
+      title: { es: 'Mujer descansando II', en: 'Mujer descansando II (Woman Resting II)', fr: 'Mujer descansando II' },
+      spec: { es: 'Óleo sobre tela · 35 × 48 pulg.', en: 'Oil on canvas · 35 × 48 in', fr: 'Huile sur toile · 35 × 48 po' },
+      startBid: 1000 },
     // Paintings by Oscar Abreu, from the works on oscarabreu.com (the miniature Pasión is sold, so it is not offered).
     { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000 },
     { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000 },
@@ -463,6 +503,51 @@ It is calibration.
 José Almonte does not paint in order to represent scenes or construct closed images. He paints in order to generate cartographies. In that gesture, his work proposes a fundamental idea: that painting can function as a space where existence is not described, but organized.` },
   'Juan Andújar': { head: 'The face as rhythmic system' },
   'Ney Díaz Henríquez': { head: 'Painting as a field of tension between figure and matter' },
+  'Aurora Díaz': { head: 'Delicacy as a structure of resistance', text: `Aurora Díaz constructs an image that exists between revelation and fragmentation. In this work, the human face does not appear as a stable portrait, but as a psychological surface intervened by memory, transformation, and symbolic displacement. The figure emerges suspended between presence and dissolution, as if identity itself were in a constant process of reconstruction.
+
+What initially appears as serenity gradually reveals an internal tension.
+
+The gaze remains fixed and conscious, yet the face is invaded by an organic structure that disrupts visual harmony and transforms the portrait into a territory of psychological conflict. This intervention does not operate through literal violence, but through emotional disturbance. The image becomes a space where beauty, fragility, and mutation coexist simultaneously.
+
+Within the composition, blue functions as something beyond color.
+
+It becomes atmosphere.
+
+Aurora Díaz uses chromatic restraint to construct emotional space. The tonal field generates silence, introspection, and distance, allowing the painting to breathe through suspension rather than excess. The drippings that traverse the surface reinforce this sensation of instability, as if the image were dissolving while simultaneously attempting to preserve itself.
+
+Equally significant is the presence of the winged insect positioned beside the face. Its function is not decorative, but symbolic. The insect introduces ideas of metamorphosis, vulnerability, and transition, establishing a dialogue between the organic and the psychological. Its delicate presence contrasts with the fragmentation of the face, creating a constant tension between destruction and transformation.
+
+The geometric patterns integrated throughout the composition intensify this relationship even further. They introduce order into an image governed by emotional instability, suggesting the human necessity to construct structure within uncertainty. In Aurora Díaz, geometry does not neutralize emotion.
+
+It contains it.
+
+One of the strongest aspects of her work is control. The painting never collapses into visual excess despite the emotional complexity it sustains. Every element gesture, color, symbol, and space operates through measured precision. This restraint allows the work to maintain sophistication without losing psychological intensity.
+
+Aurora Díaz does not construct literal narratives. Her paintings resist direct explanation because their true operation occurs beyond anecdote. What matters is not the story itself, but the emotional and symbolic condition that emerges from the relationship between image and perception.
+
+Within the context of Dominican contemporary art, her work occupies a singular position grounded in sensibility, introspection, and symbolic refinement. Her painting transforms the image into a space where the visible and the invisible coexist; where identity becomes unstable, memory becomes atmosphere, and silence acquires form.
+
+What emerges from this work is not simply a portrait.
+
+It is a psychological state suspended in paint.` },
+  'María Dolores': { head: 'The emotional geometry of the face', text: `The work of María Dolores (1956), particularly within her series of heads, exists in a territory where figuration and abstraction achieve a delicate structural balance. Her compositions do not seek to reproduce the human face through traditional anatomical logic; instead, they reconstruct it as a symbolic system of lines, forms, and chromatic tensions. Each head functions as an emotional architecture in which geometry becomes psychological language.
+
+In her paintings, the face ceases to represent individual identity and transforms into a universal sign. María Dolores simplifies forms, fragments volumes, and reorganizes facial structure through a network of curves, internal divisions, and planes of color that constantly interact with one another. The artist appears to understand that the human being cannot be reduced to literal representation; for this reason, her figures function more as interior maps than as conventional portraits.
+
+One of the most significant aspects of this series is her ability to synthesize visual complexity through an apparent formal simplicity. Thick black lines operate as constructive axes that sustain the composition, while vibrant colors generate visual rhythms of remarkable intensity. Reds, yellows, greens, whites, and blacks coexist within a carefully calculated equilibrium that recalls certain explorations of Cubism, Latin American modernism, and lyrical abstraction, though always filtered through a profoundly personal sensibility.
+
+The repetition of the head motif should not be interpreted as thematic limitation, but rather as an ongoing investigation into the human condition. Each variation introduces new relationships between form and space, between emptiness and density, between geometric control and emotional spontaneity. María Dolores transforms the face into a visual laboratory where she explores identity, memory, energy, and perception.
+
+There is also within her work a playful dimension that gives freshness to the composition. Dots, patterns, stripes, and geometric modules generate a sensation of internal movement that prevents the structure from becoming rigid. Her paintings retain a vitality close to musical language: the forms appear to move across the canvas like notes organized within a visual score.
+
+Yet beneath this apparent formal lightness lies a rigorous compositional awareness. Nothing within her paintings appears arbitrary. Every curve, intersection, and chromatic block participates in a carefully balanced architecture. María Dolores understands painting as construction, but also as sensitivity. Her work succeeds in articulating order and emotion without sacrificing the expressive force of either element.
+
+The frontal quality of the heads also establishes a direct relationship with the viewer. Although the faces are fragmented and reduced to essential structures, they retain a powerful psychological presence. The gaze emerges from within abstraction. The viewer is not confronted merely with a geometric composition, but with a human presence transformed into symbol.
+
+Within the context of contemporary Dominican art, María Dolores’s work represents a coherent and sustained investigation into the expressive possibilities of formal synthesis. Her work demonstrates that abstraction and figuration are not opposing territories, but complementary dimensions capable of coexisting within the same visual structure. In her hands, the human face becomes a territory of both aesthetic and emotional exploration.
+
+For this reason, María Dolores’s inclusion in ART GABANGI 2026: Top 100 Artists recognizes an artist who has developed a solid, identifiable, and profoundly contemporary visual language. Her series of heads confirms an artistic vision in which geometry, color, and sensitivity converge to construct images charged with balance, rhythm, and humanity.` },
+  'Gerald Ellis': { head: 'The image as a territory of memory and presence' },
 };
 
 // Short biographies researched from published sources (each lists them), approved by the museum. `src` are shown as links.
