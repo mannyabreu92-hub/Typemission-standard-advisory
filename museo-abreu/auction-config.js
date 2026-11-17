@@ -294,7 +294,7 @@ var AUCTION = {
       spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg. (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
       startBid: 1000 },
     // By Gerald Ellis (Dominican, b. 1976), from the same book.
-    { id: 'mujer-descansando-ii', kind: 'painting', artist: 'Gerald Ellis', year: 2021, img: 'img/ellis-mujer.jpg', thumb: 'img/ellis-mujer-600.jpg', w: 814, h: 580,
+    { id: 'mujer-descansando-ii', kind: 'painting', artist: 'Gerald Ellis', year: 2021, img: 'img/ellis-mujer.jpg', thumb: 'img/ellis-mujer-600.jpg', w: 811, h: 577,
       title: { es: 'Mujer descansando II', en: 'Mujer descansando II (Woman Resting II)', fr: 'Mujer descansando II' },
       spec: { es: 'Óleo sobre tela · 35 × 48 pulg.', en: 'Oil on canvas · 35 × 48 in', fr: 'Huile sur toile · 35 × 48 po' },
       startBid: 1000 },
@@ -594,7 +594,23 @@ The frontal quality of the heads also establishes a direct relationship with the
 Within the context of contemporary Dominican art, María Dolores’s work represents a coherent and sustained investigation into the expressive possibilities of formal synthesis. Her work demonstrates that abstraction and figuration are not opposing territories, but complementary dimensions capable of coexisting within the same visual structure. In her hands, the human face becomes a territory of both aesthetic and emotional exploration.
 
 For this reason, María Dolores’s inclusion in ART GABANGI 2026: Top 100 Artists recognizes an artist who has developed a solid, identifiable, and profoundly contemporary visual language. Her series of heads confirms an artistic vision in which geometry, color, and sensitivity converge to construct images charged with balance, rhythm, and humanity.` },
-  'Gerald Ellis': { head: 'The image as a territory of memory and presence' },
+  'Gerald Ellis': { head: 'The image as a territory of memory and presence', text: `Gerald Ellis does not approach the image as simple representation, but as a territory where memory, identity, and human presence are reorganized through a deeply visual sensibility. His work begins with the figure, yet does not remain confined to it; rather, it uses it as an entry point to construct an atmosphere in which the human becomes symbol, tension, and permanence.
+
+In his language, the figure does not appear as an isolated body, but as a presence charged with history. Each face, gesture, and posture seems to contain an inner dimension that exceeds the visible, as if the work were not concerned with describing the subject, but with revealing what sustains it emotionally.
+
+One of the most significant aspects of his practice is the way he articulates color, gesture, and composition to construct images of strong expressive intensity. Color does not function as ornament, but as psychological force; it organizes the gaze, generates emotional temperature, and transforms the surface into an active field where the figure breathes, asserts itself, and endures.
+
+His work operates between figuration and a degree of expressive freedom that avoids falling into literal description. There is no cold pursuit of likeness, nor absolute adherence to realism; what emerges instead is a will to capture presence an energy, a human condition. In this sense, Ellis understands that the image does not need to replicate reality in order to convey a deeper truth.
+
+A more critical reading: his greatest strength the ability to charge the figure with emotional intensity also demands vigilance. When expressive gesture becomes too recognizable, the work risks stabilizing into a formula. The challenge lies in pushing the figure toward greater zones of tension, where color, composition, and material do not simply accompany the subject, but place it into crisis.
+
+When that tension appears, something essential occurs:
+
+painting ceases to be image and becomes experience.
+
+Gerald Ellis does not paint figures to be quickly consumed; he constructs presences that compel the viewer to pause, to look again, and to recognize that behind each image lies a human charge that cannot be exhausted at the surface.
+
+For this reason, more than a painter of bodies or faces, Gerald Ellis can be understood as a builder of presences. His work affirms that painting remains a valid space for thinking the human not through appearance, but through the emotional memory that each image is capable of sustaining.` },
 };
 
 // Short biographies researched from published sources (each lists them), approved by the museum. `src` are shown as links.
