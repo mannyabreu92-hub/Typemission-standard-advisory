@@ -954,6 +954,7 @@ I18N.it = {
   "auNextArtist": "Artista successivo",
   "auNextArtists": "Artisti successivi",
   "auPrevArtist": "Artista precedente",
+  "auFromCU": "Cuba",
 };
 TR.it = {
   "2019": "2019",

@@ -23,6 +23,7 @@ var AUCTION = {
     'José Cestero': { born: 1937, died: 2025 }, 'Benjamín Cruz': { born: 1986 }, 'Jorge Checo': { born: 1968 },
     'Jesús Desangles': {}, 'Ney Díaz Henríquez': { born: 1974, died: 2015 },
     'Aurora Díaz': { born: 1969 }, 'María Dolores': { born: 1956 }, 'Gerard Ellis': { born: 1976 },
+    'Raúl Emmanuel': { born: 1958, country: 'cu' }, 'Renato Encarnación': { born: 1984 },
     'Oscar Abreu': { born: 1978 }, // San Juan de la Maguana, 1978 (data.js, his biography)
   },
   lots: [
@@ -306,6 +307,20 @@ var AUCTION = {
       title: { es: 'Mujer descansando II', en: 'Mujer descansando II (Woman Resting II)', fr: 'Mujer descansando II' },
       spec: { es: 'Óleo sobre tela · 35 × 48 pulg.', en: 'Oil on canvas · 35 × 48 in', fr: 'Huile sur toile · 35 × 48 po' },
       startBid: 1000 },
+    // By Raúl Emmanuel (Cuban, b. 1958), from the same book.
+    { id: 'larga-bicicleta', kind: 'painting', artist: 'Raúl Emmanuel', year: 2011, img: 'img/raul-bicicleta.jpg', thumb: 'img/raul-bicicleta-600.jpg', w: 988, h: 648,
+      title: { es: 'Larga Bicicleta', en: 'Larga Bicicleta (Long Bicycle)', fr: 'Larga Bicicleta' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 60 pulg. (101,6 × 152,4 cm)', en: 'Mixed media on canvas · 40 × 60 in (101.6 × 152.4 cm)', fr: 'Technique mixte sur toile · 40 × 60 po (101,6 × 152,4 cm)' },
+      startBid: 1000 },
+    { id: 'la-cantante', kind: 'painting', artist: 'Raúl Emmanuel', year: 2010, img: 'img/raul-cantante.jpg', thumb: 'img/raul-cantante-600.jpg', w: 988, h: 467,
+      title: { es: 'La Cantante', en: 'La Cantante (The Singer)', fr: 'La Cantante' },
+      spec: { es: 'Técnica mixta sobre lienzo · 27 1/2 × 57 1/2 pulg. (69,9 × 146,1 cm)', en: 'Mixed media on canvas · 27 1/2 × 57 1/2 in (69.9 × 146.1 cm)', fr: 'Technique mixte sur toile · 27 1/2 × 57 1/2 po (69,9 × 146,1 cm)' },
+      startBid: 1000 },
+    // By Renato Encarnación (Dominican, b. 1984), from the same book.
+    { id: 'un-recorrido-por-la-ciudad', kind: 'painting', artist: 'Renato Encarnación', year: 2008, img: 'img/renato-recorrido.jpg', thumb: 'img/renato-recorrido-600.jpg', w: 988, h: 742,
+      title: { es: 'Un Recorrido por la Ciudad', en: 'Un Recorrido por la Ciudad (A Journey Through the City)', fr: 'Un Recorrido por la Ciudad' },
+      spec: { es: 'Técnica mixta sobre lienzo · 30 × 38 pulg. (76,2 × 96,5 cm)', en: 'Mixed media on canvas · 30 × 38 in (76.2 × 96.5 cm)', fr: 'Technique mixte sur toile · 30 × 38 po (76,2 × 96,5 cm)' },
+      startBid: 1000 },
     // Paintings by Oscar Abreu, from the works on oscarabreu.com (the miniature Pasión is sold, so it is not offered).
     { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000 },
     { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000 },
@@ -457,6 +472,24 @@ AUCTION.essaysTr = {
   "fr": {
    "head": "L’image comme territoire de mémoire et de présence",
    "text": "Gerard Ellis n’aborde pas l’image comme une simple représentation, mais comme un territoire où la mémoire, l’identité et la présence humaine se réorganisent à travers une sensibilité profondément visuelle. Son œuvre part de la figure sans s’y enfermer ; elle s’en sert comme point d’entrée pour construire une atmosphère où l’humain devient symbole, tension et permanence.\n\nDans son langage, la figure n’apparaît pas comme un corps isolé, mais comme une présence chargée d’histoire. Chaque visage, chaque geste et chaque posture semble contenir une dimension intérieure qui dépasse le visible, comme si l’œuvre ne cherchait pas à décrire le sujet, mais à révéler ce qui le soutient émotionnellement.\n\nL’un des aspects les plus significatifs de sa pratique est la manière dont il articule la couleur, le geste et la composition pour construire des images d’une forte intensité expressive. La couleur ne fonctionne pas comme ornement, mais comme force psychologique : elle organise le regard, crée une température émotionnelle et transforme la surface en un champ actif où la figure respire, s’affirme et perdure.\n\nSon œuvre se situe entre la figuration et une liberté expressive qui évite de tomber dans la description littérale. Il n’y a ni recherche froide de la ressemblance ni adhésion absolue au réalisme ; ce qui émerge, c’est une volonté de saisir une présence, une énergie, une condition humaine. En ce sens, Ellis comprend que l’image n’a pas besoin de reproduire la réalité pour transmettre une vérité plus profonde.\n\nUne lecture plus critique : sa plus grande force — la capacité de charger la figure d’une intensité émotionnelle — exige aussi de la vigilance. Lorsque le geste expressif devient trop reconnaissable, l’œuvre risque de se figer en formule. Le défi consiste à pousser la figure vers des zones de tension plus fortes, où la couleur, la composition et la matière n’accompagnent pas seulement le sujet, mais le mettent en crise.\n\nLorsque cette tension apparaît, quelque chose d’essentiel se produit :\n\nla peinture cesse d’être image et devient expérience.\n\nGerard Ellis ne peint pas des figures destinées à être consommées rapidement ; il construit des présences qui obligent le spectateur à s’arrêter, à regarder de nouveau et à reconnaître que derrière chaque image se trouve une charge humaine qui ne peut s’épuiser à la surface.\n\nC’est pourquoi, plus qu’un peintre de corps ou de visages, Gerard Ellis peut être compris comme un bâtisseur de présences. Son œuvre affirme que la peinture reste un espace légitime pour penser l’humain, non par l’apparence, mais par la mémoire émotionnelle que chaque image est capable de porter."
+  }
+ },
+ "Raúl Emmanuel": {
+  "es": {
+   "head": "La figura como arquitectura sensible",
+   "text": "La pintura de Raúl Emmanuel se construye a partir de una relación precisa entre figura y estructura. No es abstracción libre ni figuración tradicional; ocupa, más bien, un territorio intermedio donde la imagen se reorganiza mediante el plano, el color y la fragmentación.\n\nLa figura humana nunca desaparece del todo, pero tampoco se presenta de forma directa. Se desmonta, se reconfigura y se contiene dentro de una lógica geométrica que la transforma en una especie de arquitectura emocional.\n\nAquí ocurre algo esencial:\n\nel espacio no funciona como fondo.\n\nFunciona como un componente activo de la construcción. Los planos cromáticos —verdes, rojos, magentas— no rodean a la figura; la penetran. La dividen, la tensan, la sostienen. El cuerpo existe dentro de un sistema espacial donde forma y atmósfera se vuelven inseparables.\n\nEn su obra, el color se entiende con profundidad. No es decorativo.\n\nEs estructural.\n\nCada bloque cromático define peso, dirección, equilibrio y ritmo visual. Hay una clara inteligencia en la distribución del color en la composición. La pintura nunca depende del exceso para generar presencia; su fuerza surge de relaciones medidas entre tensión y contención.\n\nLa composición revela una fuerte conciencia del orden. Aunque la imagen parece fragmentada, todo se sostiene sobre una lógica interna. Nada parece arbitrario. Nada opera como accidente.\n\nY, sin embargo, lo más cautivador de la obra no es la estructura en sí, sino la tensión que se genera dentro de ella.\n\nPorque la figura parece resistirse al mismo sistema que intenta contenerla.\n\nHay una sensación de presión, de compresión interna, de algo que se organiza pero nunca se domestica del todo. El orden geométrico intenta estabilizar la imagen, mientras la figura sigue sugiriendo movimiento, vulnerabilidad e inestabilidad emocional.\n\nAhí surge el verdadero valor de la obra.\n\nCuando esa tensión se mantiene activa, las pinturas funcionan con una fuerza notable.\n\nCuando la estructura se vuelve demasiado rígida, la obra corre el riesgo de perder vitalidad.\n\nPero en estas piezas, Raúl Emmanuel logra algo esencial: un equilibrio entre control y sensibilidad.\n\nEse equilibrio es difícil de sostener en la pintura contemporánea. Muchos artistas caen en la frialdad formal o pierden coherencia estructural por un exceso de gesto emocional. Emmanuel evita ambos extremos. Su obra conserva la disciplina sin sacrificar la humanidad.\n\nEn el contexto del arte dominicano contemporáneo, este tipo de pintura tiene una clara proyección internacional. Dialoga con lenguajes visuales modernos sin perder identidad cultural ni especificidad emocional. La obra entiende la abstracción no como una huida de la realidad, sino como una manera de reorganizar la percepción misma.\n\nNo depende del ruido.\nNo depende del espectáculo.\nDepende de la construcción.\n\nY cuando la construcción opera con este nivel de precisión, la obra adquiere un peso real.\n\nPorque Raúl Emmanuel no se limita a pintar figuras.\n\nConstruye estructuras emocionales a través de ellas."
+  },
+  "fr": {
+   "head": "La figure comme architecture sensible",
+   "text": "La peinture de Raúl Emmanuel se construit à partir d’une relation précise entre la figure et la structure. Elle n’est ni abstraction libre ni figuration traditionnelle ; elle occupe plutôt un territoire intermédiaire où l’image se réorganise par le plan, la couleur et la fragmentation.\n\nLa figure humaine ne disparaît jamais tout à fait, mais elle n’est jamais présentée directement. Elle est démontée, reconfigurée et contenue dans une logique géométrique qui la transforme en une sorte d’architecture émotionnelle.\n\nIl se passe ici quelque chose d’essentiel :\n\nl’espace ne fonctionne pas comme un fond.\n\nIl fonctionne comme un élément actif de la construction. Les plans chromatiques — verts, rouges, magentas — n’entourent pas la figure ; ils la pénètrent. Ils la divisent, la mettent en tension, la soutiennent. Le corps existe dans un système spatial où la forme et l’atmosphère deviennent inséparables.\n\nDans son œuvre, la couleur est profondément comprise. Elle n’est pas décorative.\n\nElle est structurelle.\n\nChaque bloc chromatique définit un poids, une direction, un équilibre et un rythme visuel. Il y a une intelligence évidente dans la répartition de la couleur à travers la composition. La peinture ne dépend jamais de l’excès pour créer une présence ; sa force naît de relations mesurées entre tension et retenue.\n\nLa composition révèle une forte conscience de l’ordre. Bien que l’image paraisse fragmentée, tout est soutenu par une logique interne. Rien ne semble arbitraire. Rien n’opère comme un accident.\n\nEt pourtant, l’aspect le plus saisissant de l’œuvre n’est pas la structure elle-même, mais la tension qui s’y crée.\n\nCar la figure semble résister au système même qui tente de la contenir.\n\nIl y a une sensation de pression, de compression interne, de quelque chose qui s’organise sans jamais être entièrement domestiqué. L’ordre géométrique tente de stabiliser l’image, tandis que la figure continue de suggérer le mouvement, la vulnérabilité et l’instabilité émotionnelle.\n\nC’est là qu’apparaît la vraie valeur de l’œuvre.\n\nLorsque cette tension reste active, les peintures fonctionnent avec une force remarquable.\n\nLorsque la structure devient trop rigide, l’œuvre risque de perdre sa vitalité.\n\nMais dans ces pièces, Raúl Emmanuel atteint quelque chose d’essentiel : un équilibre entre maîtrise et sensibilité.\n\nCet équilibre est difficile à tenir dans la peinture contemporaine. Beaucoup d’artistes sombrent dans la froideur formelle ou perdent leur cohérence structurelle par un excès de geste émotionnel. Emmanuel évite ces deux extrêmes. Son œuvre garde la discipline sans sacrifier l’humanité.\n\nDans le contexte de l’art dominicain contemporain, ce type de peinture possède une nette portée internationale. Il dialogue avec les langages visuels modernes sans perdre son identité culturelle ni sa spécificité émotionnelle. L’œuvre comprend l’abstraction non comme une fuite hors du réel, mais comme une manière de réorganiser la perception elle-même.\n\nElle ne dépend pas du bruit.\nElle ne dépend pas du spectacle.\nElle dépend de la construction.\n\nEt lorsque la construction opère à ce niveau de précision, l’œuvre acquiert un poids réel.\n\nCar Raúl Emmanuel ne se contente pas de peindre des figures.\n\nIl construit, à travers elles, des structures émotionnelles."
+  }
+ },
+ "Renato Encarnación": {
+  "es": {
+   "head": "La poética felina de la libertad"
+  },
+  "fr": {
+   "head": "La poétique féline de la liberté"
   }
  }
 };
@@ -675,6 +708,52 @@ The frontal quality of the heads also establishes a direct relationship with the
 Within the context of contemporary Dominican art, María Dolores’s work represents a coherent and sustained investigation into the expressive possibilities of formal synthesis. Her work demonstrates that abstraction and figuration are not opposing territories, but complementary dimensions capable of coexisting within the same visual structure. In her hands, the human face becomes a territory of both aesthetic and emotional exploration.
 
 For this reason, María Dolores’s inclusion in ART GABANGI 2026: Top 100 Artists recognizes an artist who has developed a solid, identifiable, and profoundly contemporary visual language. Her series of heads confirms an artistic vision in which geometry, color, and sensitivity converge to construct images charged with balance, rhythm, and humanity.` },
+  'Raúl Emmanuel': { head: 'The figure as sensitive architecture', text: `Raúl Emmanuel’s painting is constructed through a precise relationship between figure and structure. It is neither free abstraction nor traditional figuration; rather, it occupies an intermediate territory where the image is reorganized through plane, color, and fragmentation.
+
+The human figure never fully disappears, yet it is never presented directly. It is dismantled, reconfigured, and contained within a geometric logic that transforms it into a kind of emotional architecture.
+
+There is something essential happening here:
+
+space does not function as background.
+
+It functions as an active component of construction. The chromatic planes greens, reds, magentas do not surround the figure; they penetrate it. They divide it, tension it, sustain it. The body exists within a spatial system where form and atmosphere become inseparable.
+
+Color is profoundly understood within his work. It is not decorative.
+
+It is structural.
+
+Each chromatic block defines weight, direction, balance, and visual rhythm. There is a clear intelligence in the distribution of color across the composition. The painting never depends on excess in order to generate presence; its force emerges through measured relationships between tension and restraint.
+
+The composition reveals a strong awareness of order. Although the image appears fragmented, everything is sustained by an internal logic. Nothing feels arbitrary. Nothing operates as accident.
+
+And yet, the most compelling aspect of the work is not the structure itself, but the tension generated within it.
+
+Because the figure seems to resist the very system attempting to contain it.
+
+There is a sensation of pressure, of internal compression, of something being organized but never fully domesticated. The geometric order attempts to stabilize the image, while the figure continues to suggest movement, vulnerability, and emotional instability.
+
+That is where the real value of the work emerges.
+
+When that tension remains active, the paintings function with remarkable strength.
+
+When the structure becomes too rigid, the work risks losing vitality.
+
+But in these pieces, Raúl Emmanuel achieves something essential: an equilibrium between control and sensitivity.
+
+That balance is difficult to sustain within contemporary painting. Many artists either collapse into formal coldness or lose structural coherence through excessive emotional gesture. Emmanuel avoids both extremes. His work preserves discipline without sacrificing humanity.
+
+Within the context of contemporary Dominican art, this type of painting possesses clear international projection. It engages modern visual languages without losing cultural identity or emotional specificity. The work understands abstraction not as escape from reality, but as a way of reorganizing perception itself.
+
+It does not depend on noise.
+It does not depend on spectacle.
+It depends on construction.
+
+And when construction operates at this level of precision, the work acquires real weight.
+
+Because Raúl Emmanuel does not merely paint figures.
+
+He constructs emotional structures through them.` },
+  'Renato Encarnación': { head: 'The feline poetics of freedom' },
   'Gerard Ellis': { head: 'The image as a territory of memory and presence', text: `Gerard Ellis does not approach the image as simple representation, but as a territory where memory, identity, and human presence are reorganized through a deeply visual sensibility. His work begins with the figure, yet does not remain confined to it; rather, it uses it as an entry point to construct an atmosphere in which the human becomes symbol, tension, and permanence.
 
 In his language, the figure does not appear as an isolated body, but as a presence charged with history. Each face, gesture, and posture seems to contain an inner dimension that exceeds the visible, as if the work were not concerned with describing the subject, but with revealing what sustains it emotionally.

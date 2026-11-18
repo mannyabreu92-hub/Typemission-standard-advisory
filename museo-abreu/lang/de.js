@@ -954,6 +954,7 @@ I18N.de = {
   "auNextArtist": "Nächster Künstler",
   "auNextArtists": "Nächste Künstler",
   "auPrevArtist": "Vorheriger Künstler",
+  "auFromCU": "Kuba",
 };
 TR.de = {
   "2019": "2019",
