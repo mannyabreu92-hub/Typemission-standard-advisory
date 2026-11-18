@@ -529,8 +529,8 @@ function pageArtistRoom(a) {
       <p class="au-room-line">${[artistLine(a.lots[0], true), auWorksText(a.lots.length)].filter(Boolean).map(esc).join(' · ')}</p>
       ${a.lots[0].artist ? '' : `<p><a class="btn small" href="#/artista">${t('auAboutOscar')}</a></p>`}
     </section>
-    ${auAboutHTML(a.name)}
     ${auViewerHTML('artist:' + a.slug, a.name, a.lots)}
+    ${auAboutHTML(a.name)}
     ${leaders.length ? `<section class="section au-board-wrap"><h2>${t('auRoomBoard')}</h2>${auBoardHTML(leaders, true, 3)}</section>` : ''}
     ${auNextArtistHTML(a)}
   </div>`;
