@@ -423,7 +423,8 @@ const auVMove = d => {
   if (!to) return;
   auVStartLast = d < 0;
   location.hash = `#/subasta/artista-${to.slug}`;
-  requestAnimationFrame(() => { const v = document.getElementById('au-viewer'); if (v) { v.scrollIntoView({ block: 'start' }); const b = v.querySelector(`[data-action=${d < 0 ? 'auPrev' : 'auNext'}]`); if (b) b.focus({ preventScroll: true }); } });
+  // The new room opens at its top: the artist's name, biography and critique, then the works.
+  requestAnimationFrame(() => { scrollTo(0, 0); const h = document.querySelector('.au-room-name'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } });
 };
 EXTRA_ACTIONS.auPrev = () => auVMove(-1);
 EXTRA_ACTIONS.auNext = () => auVMove(1);
