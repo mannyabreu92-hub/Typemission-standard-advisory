@@ -1127,3 +1127,13 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-v-count { display: grid; justify-items: center; text-align: center; }
 .au-v-nextname { font: 500 .7rem/1.3 var(--sans); letter-spacing: .04em; text-transform: none; color: var(--ink-3); margin-top: .2rem; }
 .au-v-btn-artist:not(:disabled) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* Top of a room: previous artist · all artists · next artist */
+.au-artnav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .6rem; margin: .2rem 0 0; padding: .4rem 0; border-bottom: 1px solid var(--line); }
+.au-artnav a { color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: .5rem; min-height: 48px; }
+.au-artnav-next { justify-content: flex-end; text-align: end; }
+.au-artnav span small { display: block; font: 600 .62rem/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); }
+.au-artnav span { font: 600 .9rem/1.2 var(--serif); }
+.au-artnav .arr { font-size: 1.7rem; line-height: 1; color: var(--ink); }
+.au-artnav-all { width: 44px; height: 44px; justify-content: center; border: 1px solid var(--line); border-radius: 50%; font-size: 1rem; min-height: 0 !important; }
+:root[lang="ar"] .au-artnav span small { letter-spacing: 0; }

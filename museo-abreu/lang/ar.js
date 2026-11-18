@@ -953,6 +953,7 @@ I18N.ar = {
   "auToArtist": "الانتقال إلى {name}",
   "auNextArtist": "الفنان التالي",
   "auNextArtists": "الفنانون التاليون",
+  "auPrevArtist": "الفنان السابق",
 };
 TR.ar = {
   "2019": "2019",

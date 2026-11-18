@@ -101,7 +101,7 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auNextArtists: 'Siguientes artistas', auToArtist: 'Ir a {name}', auNextArtist: 'Siguiente artista', auEssayNoteTr: 'Traducción del museo del texto publicado en inglés en ART GABANGI · Top 100 Artist.', auCritique: 'Crítica', auStory: 'La historia de {name}', auStoryPrev: 'Anterior', auStoryNext: 'Siguiente', auPause: 'Pausa', auPlay: 'Reproducir', auSeeWorks: 'Ver sus obras', auStartAt: 'Pujas desde',
+Object.assign(I18N.es, { auPrevArtist: 'Artista anterior', auNextArtists: 'Siguientes artistas', auToArtist: 'Ir a {name}', auNextArtist: 'Siguiente artista', auEssayNoteTr: 'Traducción del museo del texto publicado en inglés en ART GABANGI · Top 100 Artist.', auCritique: 'Crítica', auStory: 'La historia de {name}', auStoryPrev: 'Anterior', auStoryNext: 'Siguiente', auPause: 'Pausa', auPlay: 'Reproducir', auSeeWorks: 'Ver sus obras', auStartAt: 'Pujas desde',
   auFromPR: 'Puerto Rico', auBio: 'Biografía', auSources: 'Fuentes',
   auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el texto completo', auEssayNote: 'Texto publicado en ART GABANGI · Top 100 Artist (en inglés).', auBioNote: 'Biografía publicada en oscarabreu.com.',
   auPrev: 'Obra anterior', auNext: 'Obra siguiente', auOfN: 'Obra {i} de {n}', auWorksOf: 'Obras de {name}', auAboutWork: 'Sobre la obra', auBidThis: 'Pujar por esta obra',
@@ -113,7 +113,7 @@ Object.assign(I18N.es, { auNextArtists: 'Siguientes artistas', auToArtist: 'Ir a
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auNextArtists: 'Next artists', auToArtist: 'Go to {name}', auNextArtist: 'Next artist', auEssayNoteTr: 'As published in ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'The story of {name}', auStoryPrev: 'Previous', auStoryNext: 'Next', auPause: 'Pause', auPlay: 'Play', auSeeWorks: 'See the works', auStartAt: 'Bids from',
+Object.assign(I18N.en, { auPrevArtist: 'Previous artist', auNextArtists: 'Next artists', auToArtist: 'Go to {name}', auNextArtist: 'Next artist', auEssayNoteTr: 'As published in ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'The story of {name}', auStoryPrev: 'Previous', auStoryNext: 'Next', auPause: 'Pause', auPlay: 'Play', auSeeWorks: 'See the works', auStartAt: 'Bids from',
   auFromPR: 'Puerto Rico', auBio: 'Biography', auSources: 'Sources',
   auAboutArtist: 'About the artist', auReadAll: 'Read the full text', auEssayNote: 'As published in ART GABANGI · Top 100 Artist.', auBioNote: 'Biography as published on oscarabreu.com.',
   auPrev: 'Previous work', auNext: 'Next work', auOfN: 'Work {i} of {n}', auWorksOf: 'Works by {name}', auAboutWork: 'About the work', auBidThis: 'Bid on this work',
@@ -125,7 +125,7 @@ Object.assign(I18N.en, { auNextArtists: 'Next artists', auToArtist: 'Go to {name
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auNextArtists: 'Artistes suivants', auToArtist: 'Aller à {name}', auNextArtist: 'Artiste suivant', auEssayNoteTr: 'Traduction du musée du texte publié en anglais dans ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'L’histoire de {name}', auStoryPrev: 'Précédent', auStoryNext: 'Suivant', auPause: 'Pause', auPlay: 'Lecture', auSeeWorks: 'Voir les œuvres', auStartAt: 'Enchères dès',
+Object.assign(I18N.fr, { auPrevArtist: 'Artiste précédent', auNextArtists: 'Artistes suivants', auToArtist: 'Aller à {name}', auNextArtist: 'Artiste suivant', auEssayNoteTr: 'Traduction du musée du texte publié en anglais dans ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'L’histoire de {name}', auStoryPrev: 'Précédent', auStoryNext: 'Suivant', auPause: 'Pause', auPlay: 'Lecture', auSeeWorks: 'Voir les œuvres', auStartAt: 'Enchères dès',
   auFromPR: 'Porto Rico', auBio: 'Biographie', auSources: 'Sources',
   auAboutArtist: 'À propos de l’artiste', auReadAll: 'Lire le texte intégral', auEssayNote: 'Texte publié dans ART GABANGI · Top 100 Artist (en anglais).', auBioNote: 'Biographie publiée sur oscarabreu.com.',
   auPrev: 'Œuvre précédente', auNext: 'Œuvre suivante', auOfN: 'Œuvre {i} sur {n}', auWorksOf: 'Œuvres de {name}', auAboutWork: 'À propos de l’œuvre', auBidThis: 'Enchérir sur cette œuvre',
@@ -496,10 +496,31 @@ function auNextArtistHTML(a) {
       <span class="arr" aria-hidden="true">›</span></a></li>`).join('')}</ol>
     <p style="margin-top:1rem"><a class="btn small" href="#/subasta/artistas">${t('auBackArtists')}</a></p></section>`;
 }
+// The top of a room: previous artist · all artists · next artist, and a sideways swipe on the room's heading,
+// biography or critique moves between artists, so nobody has to scroll down to the works to change room.
+function auArtNavHTML(a) {
+  const nb = auNeighbour('artist:' + a.slug);
+  const link = (n, dir) => n ? `<a class="au-artnav-${dir}" href="${auRoomHref(n.name)}" aria-label="${esc(t(dir === 'prev' ? 'auPrevArtist' : 'auNextArtist') + ': ' + n.name)}">
+      ${dir === 'prev' ? '<span class="arr" aria-hidden="true">‹</span>' : ''}<span><small>${t(dir === 'prev' ? 'auPrevArtist' : 'auNextArtist')}</small>${esc(n.name)}</span>${dir === 'next' ? '<span class="arr" aria-hidden="true">›</span>' : ''}</a>` : '<span></span>';
+  return `<nav class="au-artnav" aria-label="${t('auArtistsH')}">${link(nb.prev, 'prev')}
+    <a class="au-artnav-all" href="#/subasta/artistas" aria-label="${t('auBackArtists')}"><span aria-hidden="true">☰</span></a>${link(nb.next, 'next')}</nav>`;
+}
+{
+  let x0 = null, y0 = 0;
+  document.addEventListener('touchstart', e => { const el = e.target.closest && e.target.closest('.au-artnav, .au-room-head, .au-about'); x0 = el ? e.touches[0].clientX : null; y0 = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2) return;
+    const rtl = document.documentElement.dir === 'rtl', fwd = (dx < 0) !== rtl;
+    const to = auNeighbour(auVScope)[fwd ? 'next' : 'prev'];
+    if (to) location.hash = `#/subasta/artista-${to.slug}`;
+  }, { passive: true });
+}
 function pageArtistRoom(a) {
   const leaders = a.lots.flatMap(l => ((auSt(l) && auSt(l).leaders) || []).map(r => ({ ...r, lot: lotTitle(l) }))).sort((x, y) => y.amount - x.amount).slice(0, 10);
   return `<div class="wrap au-room">
-    <a href="#/subasta" class="btn small"><span class="arr">←</span> ${t('auBackArtists')}</a>
+    ${auArtNavHTML(a)}
     <section class="section au-room-head">
       <p class="eyebrow">${t('auEyebrow')} · ${t('auRoom')}</p>
       <h1 class="au-room-name">${esc(a.name)}${auNameYears(a.name)}</h1>

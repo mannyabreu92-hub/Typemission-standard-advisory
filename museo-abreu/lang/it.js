@@ -953,6 +953,7 @@ I18N.it = {
   "auToArtist": "Vai a {name}",
   "auNextArtist": "Artista successivo",
   "auNextArtists": "Artisti successivi",
+  "auPrevArtist": "Artista precedente",
 };
 TR.it = {
   "2019": "2019",
