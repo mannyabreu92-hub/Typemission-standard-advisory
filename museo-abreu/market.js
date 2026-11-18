@@ -442,7 +442,7 @@ function auBioHTML(name) {
   if (!b) return '';
   const dl = document.documentElement.lang, bl = b[dl] ? dl : 'en';
   return `<div class="au-bio"><p lang="${bl}">${esc(b[bl])}</p>
-    <p class="muted au-bio-src">${t('auSources')}: ${b.src.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname.replace(/^www\./, ''))}</a>`).join(' · ')}</p></div>`;
+    <p class="muted au-bio-src">${t('auSources')}: ${b.srcNames ? b.srcNames.map(esc).join(' · ') : b.src.map(u => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(new URL(u).hostname.replace(/^www\./, ''))}</a>`).join(' · ')}</p></div>`;
 }
 function auAboutHTML(name) {
   // First the biography (researched, or Oscar Abreu's own from oscarabreu.com), then the critique: the essay ART
