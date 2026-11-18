@@ -950,6 +950,8 @@ I18N.de = {
   "auSeeWorks": "Werke ansehen",
   "auStartAt": "Gebote ab",
   "auCritique": "Kritik",
+  "auToArtist": "Zu {name}",
+  "auNextArtist": "Nächster Künstler",
 };
 TR.de = {
   "2019": "2019",

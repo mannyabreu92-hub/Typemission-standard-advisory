@@ -1122,3 +1122,8 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 
 .au-about-h { font: 600 .74rem/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-ink); margin: 0 0 .4rem; }
 .au-about + .au-about { padding-top: 0; }
+
+/* Past the last work, the arrow leads to the next artist */
+.au-v-count { display: grid; justify-items: center; text-align: center; }
+.au-v-nextname { font: 500 .7rem/1.3 var(--sans); letter-spacing: .04em; text-transform: none; color: var(--ink-3); margin-top: .2rem; }
+.au-v-btn-artist:not(:disabled) { background: var(--ink); color: var(--paper); border-color: var(--ink); }

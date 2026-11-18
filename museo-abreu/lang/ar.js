@@ -950,6 +950,8 @@ I18N.ar = {
   "auSeeWorks": "عرض الأعمال",
   "auStartAt": "المزايدة تبدأ من",
   "auCritique": "قراءة نقدية",
+  "auToArtist": "الانتقال إلى {name}",
+  "auNextArtist": "الفنان التالي",
 };
 TR.ar = {
   "2019": "2019",

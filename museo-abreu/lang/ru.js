@@ -951,6 +951,8 @@ I18N.ru = {
   "auSeeWorks": "Смотреть работы",
   "auStartAt": "Ставки от",
   "auCritique": "Критика",
+  "auToArtist": "Перейти: {name}",
+  "auNextArtist": "Следующий художник",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

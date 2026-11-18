@@ -950,6 +950,8 @@ I18N.it = {
   "auSeeWorks": "Vedi le opere",
   "auStartAt": "Offerte da",
   "auCritique": "Critica",
+  "auToArtist": "Vai a {name}",
+  "auNextArtist": "Artista successivo",
 };
 TR.it = {
   "2019": "2019",
