@@ -497,7 +497,8 @@ function auNextArtistHTML(a) {
     <p style="margin-top:1rem"><a class="btn small" href="#/subasta/artistas">${t('auBackArtists')}</a></p></section>`;
 }
 // The top of a room: previous artist · all artists · next artist, and a sideways swipe on the room's heading,
-// biography or critique moves between artists, so nobody has to scroll down to the works to change room.
+// anywhere in a room moves between artists (on the painting it moves between works), so nobody has to scroll
+// to change room.
 function auArtNavHTML(a) {
   const nb = auNeighbour('artist:' + a.slug);
   const link = (n, dir) => n ? `<a class="au-artnav-${dir}" href="${auRoomHref(n.name)}" aria-label="${esc(t(dir === 'prev' ? 'auPrevArtist' : 'auNextArtist') + ': ' + n.name)}">
@@ -507,7 +508,7 @@ function auArtNavHTML(a) {
 }
 {
   let x0 = null, y0 = 0;
-  document.addEventListener('touchstart', e => { const el = e.target.closest && e.target.closest('.au-artnav, .au-room-head, .au-about'); x0 = el ? e.touches[0].clientX : null; y0 = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchstart', e => { const t0 = e.target.closest ? e.target : null, el = t0 && t0.closest('.au-room') && !t0.closest('.au-v-fig, .au-v-thumbs, .au-cats, input, select, textarea, dialog'); x0 = el ? e.touches[0].clientX : null; y0 = e.touches[0].clientY; }, { passive: true });
   document.addEventListener('touchend', e => {
     if (x0 == null) return;
     const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
