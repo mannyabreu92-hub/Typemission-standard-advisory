@@ -952,6 +952,7 @@ I18N.ar = {
   "auCritique": "قراءة نقدية",
   "auToArtist": "الانتقال إلى {name}",
   "auNextArtist": "الفنان التالي",
+  "auNextArtists": "الفنانون التاليون",
 };
 TR.ar = {
   "2019": "2019",
