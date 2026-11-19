@@ -279,14 +279,18 @@ function lotCloseLine(lot, compact) {
   return auOpen(lot) ? `<p class="lot-close">${t('auEndsIn')} ${cdHTML(c)} · ${t('auClosesOn', { date: dateTime(c) })}</p>` : `<p class="lot-close">${t(auClosedKey())}</p>`;
 }
 function lotCard(lot, h = 'h3') {
+  // Laid out like a sale catalogue: lot number, artist, the title in italics, the facts, then the bid.
+  const facts = [lotKind(lot), lot.year].filter(Boolean).join(' · ');
   return `<article class="lot-card">
     <a href="#/subasta/${lot.id}" class="lot-img" tabindex="-1" aria-hidden="true"><img src="${lot.thumb || lot.img}" alt=""${lotFit(lot)} loading="lazy" width="600" height="600"></a>
-    <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)} · ${esc(lotArtist(lot))}${lot.example ? ` · <span class="chip">${t('auExample')}</span>` : ''}</p>
+    <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })}${lot.example ? ` · <span class="chip">${t('auExample')}</span>` : ''}</p>
+    <p class="lot-artist">${esc(lotArtist(lot))}</p>
     <${h} class="lot-title"><a href="#/subasta/${lot.id}">${esc(lotTitle(lot))}</a></${h}>
+    <p class="lot-facts">${esc(facts)}</p>
     <p class="lot-state">${lotPriceLine(lot)}</p>
     ${lotCloseLine(lot, true)}
-    <div class="lot-actions"><a class="buy-now" href="#/subasta/${lot.id}">${t('auView')} <span class="arr" aria-hidden="true">›</span></a>
-      <button class="btn small" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')}</button></div>
+    <div class="lot-actions"><a class="lot-go" href="#/subasta/${lot.id}">${t('auView')} <span class="arr" aria-hidden="true">→</span></a>
+      <button class="lot-more" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')}</button></div>
   </article>`;
 }
 

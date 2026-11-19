@@ -1203,3 +1203,39 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-cat[aria-pressed="true"] { background: none; color: var(--ink); border-color: transparent; border-bottom-color: var(--ink); }
 .au-cat .au-n { letter-spacing: 0; }
 @media (max-width: 420px) { .au-cat { font-size: .74rem; padding: .4rem 0; } }
+/* Lot cards as in a sale catalogue */
+.lot-card { gap: 0; }
+.lot-card .lot-meta { margin-top: .9rem; font: 600 .66rem/1.4 var(--sans); letter-spacing: .2em; color: var(--gold-ink); }
+.lot-artist { margin: .35rem 0 0; font: 600 .8rem/1.35 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.lot-card .lot-title { margin: .2rem 0 0; font: italic 500 1.3rem/1.2 var(--serif); }
+.lot-card .lot-title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.lot-facts { margin: .3rem 0 0; font: 400 .82rem/1.4 var(--sans); color: var(--ink-3); }
+.lot-card .lot-state { margin-top: .8rem; padding-top: .7rem; border-top: 1px solid var(--line); flex-direction: column; align-items: flex-start; gap: .15rem; }
+.lot-card .lot-price { font: 500 1.15rem/1.2 var(--serif); }
+.lot-card .lot-price small { font: 600 .62rem/1.4 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+.lot-card .lot-state .muted { font-size: .78rem; }
+.lot-card .lot-close { margin-top: .3rem; font-size: .8rem; }
+.lot-card .lot-actions { justify-content: flex-start; gap: 0 1.4rem; margin-top: .4rem; }
+.lot-go, .lot-more { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font: 600 .7rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+.lot-more { color: var(--ink-3); }
+.lot-go:hover, .lot-more:hover { color: var(--accent); }
+.lot-go .arr { transition: transform .2s; }
+.lot-go:hover .arr { transform: translateX(3px); }
+:root[dir="rtl"] .lot-go .arr { transform: scaleX(-1); }
+:root[lang="ar"] .lot-artist, :root[lang="ar"] .lot-go, :root[lang="ar"] .lot-more, :root[lang="ar"] .lot-card .lot-price small { letter-spacing: 0; text-transform: none; }
+.lot-img { display: block; overflow: hidden; border-radius: 2px; }
+.lot-img img, .lot-img img.contain { border-radius: 2px; transition: transform .5s ease; }
+.lot-card:hover .lot-img img { transform: scale(1.02); }
+@media (max-width: 639px) {
+  .lots .lot-card .lot-title { font-size: 1.08rem; }
+  .lots .lot-artist { font-size: .68rem; letter-spacing: .06em; }
+  .lots .lot-card .lot-meta { font-size: .6rem; letter-spacing: .14em; }
+  .lots .lot-card .lot-actions { flex-direction: row; align-items: center; gap: 0 1rem; }
+  .lot-go, .lot-more { font-size: .64rem; letter-spacing: .12em; }
+}
+@media (prefers-reduced-motion: reduce) { .lot-img img, .lot-go .arr { transition: none; } }
+.au-cat .au-n { opacity: 1; color: var(--ink-3); }
+/* A quieter heart on the catalogue cards */
+.lot-card .wish { top: .35rem; inset-inline-end: .35rem; background: rgba(13, 12, 11, .45); color: #f6f1e9; box-shadow: none; border: 0; backdrop-filter: blur(4px); }
+.lot-card .wish:hover { background: rgba(13, 12, 11, .7); }
+.lot-card .wish.on { color: #f59e6b; }
