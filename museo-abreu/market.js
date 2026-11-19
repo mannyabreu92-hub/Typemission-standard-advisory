@@ -716,12 +716,12 @@ function pageAuction(id) {
       <p class="lead" style="margin-top:.8rem">${t('auSoon')}</p>
       ${liveLine(fin)}</section></div>`;
   return `<div class="wrap">
+    ${auFinderHTML(false)}
     <section class="section au-top">
       <p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-h1 au-h1-artist">${auFeatured() ? `<a href="${auRoomHref(lotArtist(auFeatured()))}">${esc(lotArtist(auFeatured()))}</a>${auNameYears(lotArtist(auFeatured()))}` : auTitleText()}</h1>
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
     </section>
-    ${auFinderHTML(false)}
     <section class="section au-board-wrap"><h2>${t('auBoard')}</h2><p class="muted">${t('auBoardLead')}</p>${auBoardHTML(auAllLeaders(), true, 3)}</section>
     ${auArtistsHTML()}
     <section class="section"><p class="lead">${fin ? t('auLead', { event: esc(fin.name) }) : t('auLeadOnline')}</p>
