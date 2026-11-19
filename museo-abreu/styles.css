@@ -1137,3 +1137,9 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-artnav .arr { font-size: 1.7rem; line-height: 1; color: var(--ink); }
 .au-artnav-all { width: 44px; height: 44px; justify-content: center; border: 1px solid var(--line); border-radius: 50%; font-size: 1rem; min-height: 0 !important; }
 :root[lang="ar"] .au-artnav span small { letter-spacing: 0; }
+
+/* Black frames around the paintings */
+.au-v-fig { background: #0d0c0b; box-shadow: 0 14px 34px rgba(22, 18, 15, .28); }
+.au-v-fig img { box-shadow: 0 0 0 1px rgba(255, 255, 255, .08); }
+.au-feature-img { background: #0d0c0b; padding: .9rem; border-radius: var(--radius); }
+@media (max-width: 639px) { .au-feature-img img { background: #0d0c0b; } }
