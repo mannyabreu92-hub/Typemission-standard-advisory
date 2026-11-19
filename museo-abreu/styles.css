@@ -1154,22 +1154,52 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-v-thumb img { opacity: .7; }
 .au-v-thumb[aria-current="true"] img, .au-v-thumb:hover img { opacity: 1; }
 
-/* The auction finder: one smart box, colour swatches, sizes and a sort */
-.au-finder { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 1.2rem; }
-.au-finder h2 { margin-bottom: .2rem; }
-.au-find-form { display: flex; gap: .5rem; margin-top: .9rem; }
-.au-find-form input { flex: 1; min-width: 0; min-height: 48px; padding: .6rem .9rem; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); font: 1rem var(--sans); }
-.au-find-form input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.au-find-form .btn { flex: none; border-radius: 999px; }
-.au-swatches { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
-.au-swatch { width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; display: grid; place-items: center; }
-.au-swatch span { width: 30px; height: 30px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .18); transition: transform .15s; }
-.au-swatch:hover span { transform: scale(1.1); }
-.au-swatch[aria-pressed="true"] span { box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--ink); transform: scale(1.05); }
-.au-find-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: .9rem; }
-.au-sizes { display: flex; flex-wrap: wrap; gap: .4rem; }
-.au-sort { display: inline-flex; align-items: center; gap: .5rem; font: 600 .9rem var(--sans); }
-.au-sort select { min-height: 44px; padding: .4rem .7rem; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink); font: .9rem var(--sans); }
-.au-understood { margin-top: .9rem; font: 600 .85rem var(--sans); color: var(--ink-2); }
-.au-u-bit { display: inline-block; margin: .15rem .1rem; padding: .2rem .6rem; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 600; }
-.au-find-actions { margin-top: .9rem; }
+/* The auction finder: a quiet search line, then facets in small capitals, as in a sale catalogue */
+.au-finder { padding: 1.6rem 0 1.4rem; border-bottom: 1px solid var(--line); margin-bottom: .5rem; }
+.au-find-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .2rem 1rem; }
+.au-find-h { font: 600 .74rem/1.4 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--ink); margin: 0; }
+.au-find-meta { font: italic 400 1.05rem/1.4 var(--serif); color: var(--ink-2); }
+.au-find-form { display: flex; align-items: center; gap: .6rem; margin-top: .7rem; border-bottom: 1.5px solid var(--ink); }
+.au-find-icon { flex: none; width: 22px; height: 22px; fill: none; stroke: var(--ink); stroke-width: 1.4; stroke-linecap: round; }
+.au-find-form input { flex: 1; min-width: 0; min-height: 56px; padding: .4rem 0; border: 0; background: transparent; color: var(--ink); font: 400 clamp(1.35rem, 5vw, 1.9rem)/1.2 var(--serif); }
+.au-find-form input::placeholder { color: var(--ink-3); opacity: 1; }
+.au-find-form input:focus { outline: none; }
+.au-find-form:focus-within { border-bottom-color: var(--accent); box-shadow: 0 1.5px 0 var(--accent); }
+.au-find-form input::-webkit-search-cancel-button { cursor: pointer; }
+.au-find-go { flex: none; min-height: 44px; padding: 0 .2rem; border: 0; background: none; color: var(--ink); font: 600 .74rem var(--sans); letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
+.au-find-go:hover { color: var(--accent); }
+.au-facets { display: grid; gap: .9rem; margin-top: 1.1rem; }
+.au-facet { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .9rem; }
+.au-facet-l { flex: none; min-width: 4.6rem; font: 600 .68rem var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+.au-swatches { display: flex; flex-wrap: wrap; gap: 0; margin-inline-start: -8px; }
+.au-swatch { width: 40px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
+.au-swatch span { width: 22px; height: 22px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .16); transition: transform .2s, box-shadow .2s; }
+.au-swatch:hover span { transform: scale(1.12); }
+.au-swatch[aria-pressed="true"] span { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3px var(--ink); }
+.au-swatch:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; border-radius: 6px; }
+.au-sizes { display: flex; flex-wrap: wrap; gap: 0; border: 1px solid var(--line); border-radius: 2px; }
+.au-size { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 48px; min-width: 5.4rem; padding: .35rem .8rem; border: 0; border-inline-end: 1px solid var(--line); background: transparent; color: var(--ink); font: 500 .86rem/1.2 var(--sans); cursor: pointer; }
+.au-size:last-child { border-inline-end: 0; }
+.au-size small { font-size: .7rem; color: var(--ink-3); font-weight: 400; }
+.au-size[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.au-size[aria-pressed="true"] small { color: rgba(246, 241, 233, .78); }
+.au-sort-sel { min-height: 44px; padding: .3rem 1.8rem .3rem 0; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink); font: 500 .92rem var(--sans); appearance: none; -webkit-appearance: none; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: right .7rem center, right .4rem center; background-size: 5px 5px; background-repeat: no-repeat; }
+[dir="rtl"] .au-sort-sel { padding: .3rem 0 .3rem 1.8rem; background-position: left .4rem center, left .7rem center; }
+.au-understood { margin-top: 1rem; font: 400 .9rem var(--sans); color: var(--ink-2); }
+.au-u-bit { display: inline-block; margin: .15rem .1rem; padding: .15rem .55rem; border: 1px solid var(--ink); border-radius: 2px; color: var(--ink); font: 500 .8rem var(--sans); letter-spacing: .02em; }
+.au-find-actions { display: flex; flex-wrap: wrap; gap: .2rem 1.6rem; margin-top: .9rem; }
+.au-link { min-height: 44px; padding: 0; border: 0; background: none; color: var(--ink); font: 600 .74rem var(--sans); letter-spacing: .18em; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid transparent; }
+.au-link:hover { color: var(--accent); }
+.au-link .arr { display: inline-block; transition: transform .2s; }
+.au-link:hover .arr { transform: translateX(3px); }
+.au-link-quiet { color: var(--ink-3); }
+.au-find-form input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+@media (max-width: 480px) { .au-swatch { width: 34px; } .au-facet-l { width: 100%; } }
+/* Kinds of work as catalogue tabs: words, with a rule under the one chosen */
+.au-cats { gap: 1.4rem; border-bottom: 1px solid var(--line); }
+.au-cat { min-height: 44px; padding: .4rem 0; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; color: var(--ink-2); font: 500 .8rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; margin-bottom: -1px; }
+.au-cat:hover { color: var(--ink); }
+.au-cat[aria-pressed="true"] { background: none; color: var(--ink); border-color: transparent; border-bottom-color: var(--ink); }
+.au-cat .au-n { letter-spacing: 0; }
+@media (max-width: 420px) { .au-cat { font-size: .74rem; padding: .4rem 0; } }
