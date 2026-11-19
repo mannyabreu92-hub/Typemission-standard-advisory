@@ -959,6 +959,7 @@ I18N.ar = {
   "auEssayNoteEs": "نص منشور في ART GABANGI · Top 100 Artist (بالإسبانية).",
   "auEssayNoteTrEs": "ترجمة المتحف للنص المنشور بالإسبانية في ART GABANGI · Top 100 Artist.",
   "auFromES": "إسبانيا",
+  "auFromFR": "فرنسا",
 };
 TR.ar = {
   "2019": "2019",

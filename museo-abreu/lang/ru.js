@@ -960,6 +960,7 @@ I18N.ru = {
   "auEssayNoteEs": "Текст из ART GABANGI · Top 100 Artist (на испанском).",
   "auEssayNoteTrEs": "Перевод музея текста, опубликованного на испанском в ART GABANGI · Top 100 Artist.",
   "auFromES": "Испания",
+  "auFromFR": "Франция",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",
