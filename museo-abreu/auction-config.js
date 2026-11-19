@@ -39,6 +39,7 @@ var AUCTION = {
     'Junior Reyes Ocre': { born: 1976 }, 'Amaurys Reyes': { born: 1973 }, 'Luis Alfonso Reyes': { born: 1962 }, 'Héctor Reynoso': { born: 1983 },
     'Geo Ripley': { born: 1950 }, 'Van Robert': { born: 1974 }, 'Franklin Rodríguez': { born: 1969 }, 'Juan Elías Rodríguez': { born: 1971 },
     'Kikito Rodríguez': { born: 1963 }, 'Carlos Romaguera': { born: 1957, country: 'es' },
+    'Joaquín Rosario': { born: 1971 }, 'Mariano Sánchez': { born: 1964 }, 'Ramón Sandoval': { born: 1968 },
     'Oscar Abreu': { born: 1978 }, // San Juan de la Maguana, 1978 (data.js, his biography)
   },
   lots: [
@@ -1012,6 +1013,33 @@ var AUCTION = {
       title: { es: 'Sin título', en: 'Untitled (Sin Título)', fr: 'Sans titre' },
       spec: { es: 'Técnica mixta sobre lienzo · 33 1/4 × 29 3/4 pulg, (84,5 × 75,6 cm)', en: 'Mixed media on canvas · 33 1/4 × 29 3/4 in (84.5 × 75.6 cm)', fr: 'Technique mixte sur toile · 33 1/4 × 29 3/4 po (84,5 × 75,6 cm)' },
       startBid: 1000 },
+    // By Joaquín Rosario (Dominican, b. 1971), from the same book.
+    { id: 'aun-falta-tiempo-i', kind: 'painting', artist: 'Joaquín Rosario', year: 2019, img: 'img/rosario-aun1.jpg', thumb: 'img/rosario-aun1-600.jpg', w: 506, h: 671,
+      title: { es: 'Aún Falta Tiempo I', en: 'Aún Falta Tiempo I (There Is Still Time I)', fr: 'Aún Falta Tiempo I' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg, (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
+      startBid: 1000 },
+    { id: 'aun-falta-tiempo', kind: 'painting', artist: 'Joaquín Rosario', year: 2019, img: 'img/rosario-aun.jpg', thumb: 'img/rosario-aun-600.jpg', w: 509, h: 702,
+      title: { es: 'Aún Falta Tiempo', en: 'Aún Falta Tiempo (There Is Still Time)', fr: 'Aún Falta Tiempo' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 30 pulg, (101,6 × 76,2 cm)', en: 'Mixed media on canvas · 40 × 30 in (101.6 × 76.2 cm)', fr: 'Technique mixte sur toile · 40 × 30 po (101,6 × 76,2 cm)' },
+      startBid: 1000 },
+    // By Mariano Sánchez (Dominican, b. 1964), from the same book; "My Goddes" as the caption prints it.
+    { id: 'perfume-of-a-woman', kind: 'painting', artist: 'Mariano Sánchez', year: 2013, img: 'img/msanchez-perfume.jpg', thumb: 'img/msanchez-perfume-600.jpg', w: 1095, h: 1403,
+      title: { es: 'Perfume of a Woman', en: 'Perfume of a Woman', fr: 'Perfume of a Woman' },
+      spec: { es: 'Técnica mixta sobre lienzo · 30 × 24 pulg, (76,2 × 61 cm)', en: 'Mixed media on canvas · 30 × 24 in (76.2 × 61 cm)', fr: 'Technique mixte sur toile · 30 × 24 po (76,2 × 61 cm)' },
+      startBid: 1000 },
+    { id: 'my-goddes', kind: 'painting', artist: 'Mariano Sánchez', year: 2013, img: 'img/msanchez-goddess.jpg', thumb: 'img/msanchez-goddess-600.jpg', w: 1094, h: 1456,
+      title: { es: 'My Goddes', en: 'My Goddes', fr: 'My Goddes' },
+      spec: { es: 'Técnica mixta sobre lienzo · 30 × 24 pulg, (76,2 × 61 cm)', en: 'Mixed media on canvas · 30 × 24 in (76.2 × 61 cm)', fr: 'Technique mixte sur toile · 30 × 24 po (76,2 × 61 cm)' },
+      startBid: 1000 },
+    { id: 'la-princesa', kind: 'painting', artist: 'Mariano Sánchez', year: 2013, img: 'img/msanchez-princesa.jpg', thumb: 'img/msanchez-princesa-600.jpg', w: 509, h: 635,
+      title: { es: 'La Princesa', en: 'La Princesa (The Princess)', fr: 'La Princesa' },
+      spec: { es: 'Técnica mixta sobre lienzo · 30 × 24 pulg, (76,2 × 61 cm)', en: 'Mixed media on canvas · 30 × 24 in (76.2 × 61 cm)', fr: 'Technique mixte sur toile · 30 × 24 po (76,2 × 61 cm)' },
+      startBid: 1000 },
+    // By Ramón Sandoval (Dominican, b. 1968), from the same book.
+    { id: 'sin-titulo-ramon-sandoval', kind: 'painting', artist: 'Ramón Sandoval', year: 2020, img: 'img/sandoval-sintitulo.jpg', thumb: 'img/sandoval-sintitulo-600.jpg', w: 1096, h: 726,
+      title: { es: 'Sin título', en: 'Untitled (Sin Título)', fr: 'Sans titre' },
+      spec: { es: 'Técnica mixta sobre lienzo · 40 × 60 pulg, (101,6 × 152,4 cm)', en: 'Mixed media on canvas · 40 × 60 in (101.6 × 152.4 cm)', fr: 'Technique mixte sur toile · 40 × 60 po (101,6 × 152,4 cm)' },
+      startBid: 1000 },
     // Paintings by Oscar Abreu, from the works on oscarabreu.com (the miniature Pasión is sold, so it is not offered).
     { id: 'resilience', kind: 'painting', work: 'resilience', title: { es: 'Resiliencia', en: 'Resilience', fr: 'Résilience' }, img: 'img/resilience.jpg', startBid: 1000 },
     { id: 'echoes-of-memory', kind: 'painting', work: 'echoes-of-memory', title: { es: 'Ecos de la memoria', en: 'Echoes of Memory', fr: 'Échos de la mémoire' }, img: 'img/echoes-of-memory.jpg', startBid: 1000 },
@@ -1741,6 +1769,34 @@ AUCTION.essaysTr = {
   },
   "fr": {
    "head": "La figure comme territoire d’inscription symbolique"
+  }
+ },
+ "Joaquín Rosario": {
+  "es": {
+   "head": "La imagen como territorio de umbral y tensión contenida",
+   "text": "Joaquín Rosario no construye la pintura como un campo de contemplación, sino como un territorio donde la abstracción se convierte en un sistema capaz de contener el conflicto, la memoria y la espera. Su obra no parte de la imagen como representación de lo visible, sino como una estructura que traduce experiencias límite, la frontera, la interrupción, el vacío, a un lenguaje visual sostenido por la tensión.\n\nEn su práctica, la abstracción no es evasión: es confrontación.\n\nLejos de la abstracción decorativa o puramente formal, Rosario articula un espacio pictórico en el que el color, la materia y la composición operan como fuerzas opuestas. Las superficies no buscan una armonía inmediata; se organizan mediante contrastes: zonas densas frente a áreas abiertas, interrupciones que rompen cualquier continuidad complaciente. La pintura no fluye; se detiene, corta, se repliega.\n\nEs aquí donde ocurre algo esencial: la imagen no representa la frontera: la construye.\n\nLa noción de «apagón», presente en parte de su producción, funciona como una clave de su lenguaje. No es solo oscuridad literal, sino una condición más compleja en la que la ausencia de luz se convierte en un espacio de incertidumbre y de posibilidad. Dentro de ese vacío, la obra no se apaga; se activa desde otro registro.\n\nEl color, en este contexto, asume un papel ambiguo. A veces se condensa en zonas densas, casi opacas; otras, aparece como un punto de liberación en la superficie que sugiere apertura. No hay una lógica decorativa, solo una construcción emocional en la que cada tono participa de la tensión general.\n\nLa materia refuerza esta condición. Capas, texturas y cambios de densidad producen una superficie que no es uniforme ni neutra, sino cargada, trabajada, insistente. La pintura no oculta su proceso; lo expone como parte de su estructura. Cada intervención deja una huella; cada decisión altera el equilibrio.\n\nUna dimensión simbólica recorre la obra, pero nunca aparece de forma literal. La frontera no se representa como una imagen reconocible, sino como una condición que se manifiesta en la fragmentación, la interrupción y la tensión entre zonas opuestas. La obra no narra una historia: la sugiere a través de su comportamiento.\n\nUna lectura más exigente: su mayor fortaleza, la capacidad de construir una abstracción cargada de sentido, puede convertirse también en una zona de estabilidad si la obra no introduce rupturas más radicales en su propia estructura.\n\nCuando la tensión se mantiene en un solo registro, cuando el lenguaje se sostiene con una coherencia excesiva, existe el riesgo de que la obra se asiente en una estética reconocible donde la fuerza conceptual disminuye. Lo que su práctica pide, y lo que en ciertas obras ya surge, es una interrupción más decidida, un gesto capaz de desplazar el equilibrio y obligar a la pintura a reconfigurarse.\n\nNo se trata de abandonar la abstracción. Se trata de llevarla a su límite.\n\nCuando ese límite se activa, ocurre algo fundamental: la pintura deja de ser estructura y se convierte en una experiencia inevitable.\n\nEn el arte dominicano contemporáneo, Joaquín Rosario ocupa una posición singular. Su obra no se alinea con la abstracción vacía ni con la figuración narrativa, sino con un territorio en el que la pintura opera como un sistema de pensamiento crítico. No ofrece respuestas visuales inmediatas, sino espacios de tensión que hay que habitar.\n\nNo son imágenes para consumir deprisa, sino superficies que exigen pausa, exigen lectura, exigen compromiso.\n\nPor eso, más que un pintor de abstracciones, Joaquín Rosario es un constructor de límites visuales.\n\nY en ese gesto, plantea una idea esencial: que la pintura no necesita representar la realidad para ser política; solo necesita tensarla."
+  },
+  "fr": {
+   "head": "L’image comme territoire de seuil et de tension contenue",
+   "text": "Joaquín Rosario ne construit pas la peinture comme un champ de contemplation, mais comme un territoire où l’abstraction devient un système capable de contenir le conflit, la mémoire et l’attente. Son œuvre ne part pas de l’image comme représentation du visible, mais comme une structure qui traduit des expériences limites, la frontière, l’interruption, le vide, en un langage visuel porté par la tension.\n\nDans sa pratique, l’abstraction n’est pas une évasion : c’est une confrontation.\n\nLoin de l’abstraction décorative ou purement formelle, Rosario articule un espace pictural où la couleur, la matière et la composition agissent comme des forces opposées. Les surfaces ne cherchent pas une harmonie immédiate ; elles s’organisent par contrastes : zones denses face à des espaces ouverts, interruptions qui brisent toute continuité complaisante. Le tableau ne coule pas ; il s’arrête, coupe, se rétracte.\n\nC’est ici que se produit quelque chose d’essentiel : l’image ne représente pas la frontière : elle la construit.\n\nLa notion de « coupure de courant », présente dans une partie de sa production, est une clé de son langage. Ce n’est pas seulement une obscurité littérale, mais une condition plus complexe où l’absence de lumière devient un espace d’incertitude et de possibilité. Dans ce vide, l’œuvre ne s’éteint pas ; elle s’active depuis un autre registre.\n\nLa couleur, dans ce contexte, prend un rôle ambigu. Tantôt elle se condense en zones denses, presque opaques ; tantôt elle apparaît comme un point de libération dans la surface, suggérant une ouverture. Il n’y a pas de logique décorative, seulement une construction émotionnelle où chaque ton participe à la tension d’ensemble.\n\nLa matière renforce cette condition. Couches, textures et variations de densité produisent une surface ni uniforme ni neutre, mais chargée, travaillée, insistante. Le tableau ne cache pas son processus ; il l’expose comme une partie de sa structure. Chaque intervention laisse une trace ; chaque décision modifie l’équilibre.\n\nUne dimension symbolique traverse l’œuvre, sans jamais apparaître sous une forme littérale. La frontière n’est pas représentée comme une image reconnaissable, mais comme une condition qui se manifeste par la fragmentation, l’interruption et la tension entre des zones opposées. L’œuvre ne raconte pas une histoire : elle la suggère par son comportement.\n\nUne lecture plus exigeante : sa plus grande force, la capacité à construire une abstraction chargée de sens, peut aussi devenir une zone de stabilité si l’œuvre n’introduit pas de ruptures plus radicales dans sa propre structure.\n\nQuand la tension reste dans un seul registre, quand le langage se maintient avec une cohérence excessive, l’œuvre risque de s’installer dans une esthétique reconnaissable où la force conceptuelle diminue. Ce que sa pratique appelle, et ce qui apparaît déjà dans certaines œuvres, c’est une interruption plus franche, un geste capable de déplacer l’équilibre et d’obliger le tableau à se reconfigurer.\n\nIl ne s’agit pas d’abandonner l’abstraction. Il s’agit de la pousser jusqu’à sa limite.\n\nQuand cette limite s’active, quelque chose de fondamental se produit : le tableau cesse d’être une structure pour devenir une expérience inévitable.\n\nDans l’art dominicain contemporain, Joaquín Rosario occupe une place singulière. Son œuvre ne s’aligne ni sur une abstraction vide ni sur la figuration narrative, mais sur un territoire où la peinture fonctionne comme un système de pensée critique. Elle n’offre pas de réponses visuelles immédiates, mais des espaces de tension qu’il faut habiter.\n\nCe ne sont pas des images à consommer vite, mais des surfaces qui exigent une pause, exigent une lecture, exigent un engagement.\n\nC’est pourquoi, plus qu’un peintre d’abstractions, Joaquín Rosario est un bâtisseur de limites visuelles.\n\nEt dans ce geste, il avance une idée essentielle : la peinture n’a pas besoin de représenter la réalité pour être politique ; il lui suffit de la mettre en tension."
+  }
+ },
+ "Mariano Sánchez": {
+  "es": {
+   "head": "La imagen como memoria suspendida",
+   "text": "La obra de Mariano Sánchez se construye en un territorio donde la figura no se presenta como representación inmediata, sino como aparición. Sus rostros no pertenecen del todo al presente ni por completo al pasado; existen en una zona intermedia donde la imagen parece surgir de la memoria más que de la observación directa.\n\nEn ese desplazamiento, la pintura deja de describir.\n\nEmpieza a evocar.\n\nEn sus composiciones, el rostro femenino asume una presencia central que no responde al retrato tradicional. La intención no es captar una identidad concreta, sino construir una imagen que funcione como símbolo. La figura no habla, no se mueve ni se explica.\n\nPermanece.\n\nY en esa permanencia surge una tensión particular, una en la que el espectador no encuentra claridad narrativa, sino una experiencia silenciosa.\n\nEse silencio es fundamental en la obra.\n\nPorque Mariano Sánchez entiende que las imágenes más poderosas no siempre son las que más revelan, sino las que sostienen el misterio sin caer en la oscuridad.\n\nUno de los aspectos más decisivos de su lenguaje es su relación con la superficie misma. La piel de sus figuras nunca aparece limpia ni del todo definida, sino intervenida por capas, veladuras, manchas, abrasiones y huellas de erosión que sugieren el paso del tiempo.\n\nLa pintura no oculta su proceso.\n\nLo incorpora a la imagen misma.\n\nLa figura aparece desgastada, casi arqueológica, como si hubiera atravesado años, historia y memoria antes de llegar al lienzo. Esa fragilidad material transforma el retrato en algo mucho más psicológico y temporal.\n\nEl color participa activamente en esta construcción. Tonos verdosos, dorados apagados, pigmentos tierra y atmósferas tenues no funcionan como decisiones estéticas aisladas, sino como condiciones emocionales. Generan la sensación de que la figura no está del todo presente ni del todo ausente.\n\nLa imagen flota.\n\nLa pintura se vuelve densa, casi orgánica, como si la figura surgiera y desapareciera continuamente al mismo tiempo.\n\nExiste en toda su obra una clara relación con la tradición pictórica, en particular con el lenguaje del retrato clásico. Pero esa referencia nunca permanece intacta. Se altera, se desgasta, se interrumpe y se reinterpreta.\n\nMariano Sánchez no imita el pasado.\n\nLo atraviesa.\n\nSus figuras conservan fundamentos estructurales reconocibles y, a la vez, son intervenidas por una sensibilidad contemporánea que introduce fractura, ambigüedad, deterioro y desplazamiento temporal.\n\nEn este sentido, su pintura no se organiza mediante la ruptura modernista radical ni mediante la repetición académica nostálgica.\n\nSe organiza mediante el diálogo.\n\nUn diálogo entre lo clásico y lo contemporáneo, entre la figura y la materialidad, entre la imagen y la erosión. Ese equilibrio le permite construir una obra en la que la tradición no se repite de forma mecánica, sino que se transforma a través del tiempo y la percepción.\n\nEn el arte dominicano contemporáneo, Mariano Sánchez ocupa una posición singular precisamente por su capacidad de sostener la figuración sin caer en la ilustración. Sus rostros no buscan agradar ni seducir al espectador.\n\nTampoco buscan un impacto inmediato.\n\nSe sostienen mediante una intensidad contenida, mediante la atmósfera, el silencio y una presencia emocional sin resolver.\n\nLa mirada de sus figuras es especialmente importante. No confronta de forma directa, sino que aparece desplazada, introspectiva, distante. Esa distancia crea una relación en la que el espectador no puede entrar en la imagen deprisa ni cómodamente.\n\nHay que detenerse.\n\nObservar.\n\nAceptar el silencio que propone la obra.\n\nY es en ese silencio donde las pinturas adquieren su profundidad emocional.\n\nEn un momento en que muchas imágenes se construyen desde la velocidad, la inmediatez y el exceso visual, Mariano Sánchez introduce otra temporalidad por completo. Sus pinturas no se resuelven con rapidez. Permanecen suspendidas, abiertas, casi desligadas del tiempo lineal.\n\nEl espectador no consume la imagen.\n\nLa habita poco a poco.\n\nMariano Sánchez no pinta para representar rostros. Pinta para construir imágenes en las que convergen la memoria, el tiempo y la materialidad. En ese gesto, su obra plantea una idea fundamental: que la pintura puede convertirse en un espacio donde la figura no afirma una identidad, sino que encarna una presencia.\n\nEn última instancia, su obra no se define por lo que muestra de forma explícita, sino por lo que sugiere continuamente. Y es precisamente en esa sugerencia donde la pintura adquiere su fuerza más profunda y sigue activa en la percepción como una imagen que nunca termina de revelarse."
+  },
+  "fr": {
+   "head": "L’image comme mémoire suspendue",
+   "text": "L’œuvre de Mariano Sánchez se construit sur un territoire où la figure ne se présente pas comme une représentation immédiate, mais comme une apparition. Ses visages n’appartiennent ni entièrement au présent ni complètement au passé ; ils existent dans une zone intermédiaire où l’image semble surgir de la mémoire plutôt que de l’observation directe.\n\nDans ce déplacement, la peinture cesse de décrire.\n\nElle commence à évoquer.\n\nDans ses compositions, le visage féminin occupe une présence centrale qui ne répond pas au portrait traditionnel. L’intention n’est pas de saisir une identité précise, mais de construire une image qui fonctionne comme un symbole. La figure ne parle pas, ne bouge pas, ne s’explique pas.\n\nElle demeure.\n\nEt dans cette permanence surgit une tension particulière, où le spectateur ne trouve pas la clarté d’un récit, mais une expérience silencieuse.\n\nCe silence est fondamental dans l’œuvre.\n\nCar Mariano Sánchez comprend que les images les plus puissantes ne sont pas toujours celles qui révèlent le plus, mais celles qui maintiennent le mystère sans sombrer dans l’obscurité.\n\nL’un des aspects les plus décisifs de son langage est son rapport à la surface elle-même. La peau de ses figures n’apparaît jamais propre ni entièrement définie, mais retravaillée par des couches, des glacis, des taches, des abrasions et des traces d’érosion qui suggèrent le passage du temps.\n\nLe tableau ne cache pas son processus.\n\nIl l’intègre à l’image elle-même.\n\nLa figure paraît usée, presque archéologique, comme si elle avait traversé des années, l’histoire et la mémoire avant d’arriver sur la toile. Cette fragilité matérielle transforme le portrait en quelque chose de bien plus psychologique et temporel.\n\nLa couleur participe activement à cette construction. Tons verdâtres, ors éteints, pigments de terre et atmosphères assourdies ne fonctionnent pas comme des choix esthétiques isolés, mais comme des états émotionnels. Ils donnent le sentiment que la figure n’est ni tout à fait présente ni tout à fait absente.\n\nL’image flotte.\n\nLe tableau devient dense, presque organique, comme si la figure surgissait et disparaissait sans cesse en même temps.\n\nIl existe dans toute son œuvre un lien clair avec la tradition picturale, en particulier avec le langage du portrait classique. Pourtant, cette référence ne reste jamais intacte. Elle est altérée, usée, interrompue et réinterprétée.\n\nMariano Sánchez n’imite pas le passé.\n\nIl le traverse.\n\nSes figures conservent des fondations structurelles reconnaissables tout en étant retravaillées par une sensibilité contemporaine qui introduit fracture, ambiguïté, dégradation et déplacement temporel.\n\nEn ce sens, sa peinture ne s’organise ni par la rupture moderniste radicale ni par la répétition académique nostalgique.\n\nElle s’organise par le dialogue.\n\nUn dialogue entre le classique et le contemporain, entre la figure et la matière, entre l’image et l’érosion. Cet équilibre lui permet de construire une œuvre où la tradition n’est pas répétée mécaniquement, mais transformée par le temps et la perception.\n\nDans l’art dominicain contemporain, Mariano Sánchez occupe une place singulière précisément grâce à sa capacité à maintenir la figuration sans tomber dans l’illustration. Ses visages ne cherchent ni à plaire ni à séduire le spectateur.\n\nIls ne recherchent pas non plus l’impact immédiat.\n\nIls tiennent par une intensité retenue, par l’atmosphère, le silence et une présence émotionnelle non résolue.\n\nLe regard de ses figures est particulièrement important. Il n’affronte pas directement, mais paraît décalé, introspectif, lointain. Cette distance crée une relation où le spectateur ne peut entrer dans l’image ni vite ni confortablement.\n\nIl faut s’arrêter.\n\nObserver.\n\nAccepter le silence que propose l’œuvre.\n\nEt c’est dans ce silence que les tableaux acquièrent leur profondeur émotionnelle.\n\nÀ un moment où tant d’images se construisent par la vitesse, l’immédiateté et l’excès visuel, Mariano Sánchez introduit une tout autre temporalité. Ses tableaux ne se résolvent pas rapidement. Ils restent suspendus, ouverts, presque détachés du temps linéaire.\n\nLe spectateur ne consomme pas l’image.\n\nIl l’habite peu à peu.\n\nMariano Sánchez ne peint pas pour représenter des visages. Il peint pour construire des images où convergent la mémoire, le temps et la matière. Dans ce geste, son œuvre avance une idée fondamentale : la peinture peut devenir un espace où la figure n’affirme pas une identité, mais incarne une présence.\n\nSon œuvre se définit finalement non par ce qu’elle montre explicitement, mais par ce qu’elle suggère sans cesse. Et c’est précisément dans cette suggestion que le tableau acquiert sa force la plus profonde, restant actif dans la perception comme une image qui ne se révèle jamais entièrement."
+  }
+ },
+ "Ramón Sandoval": {
+  "es": {
+   "head": "La expansión del gesto como energía pictórica"
+  },
+  "fr": {
+   "head": "L’expansion du geste comme énergie picturale"
   }
  }
 };
@@ -4039,6 +4095,107 @@ A direct reading: his greatest risk lies in the repetition of the system. The po
 Yet when he succeeds in expanding that system when the point ceases to be repetition and becomes vibration the painting reaches a high level. It becomes immersive, almost meditative.
 
 Carlos Romaguera does not paint images. He constructs universes of thought.` },
+  'Joaquín Rosario': { head: 'The image as a territory of threshold and contained tension', text: `Joaquín Rosario does not construct painting as a field of contemplation, but as a territory where abstraction becomes a system capable of containing conflict, memory, and expectation. His work does not begin with the image as representation of the visible, but as a structure that translates limit-experiences border, interruption, void into a visual language sustained by tension.
+
+In his practice, abstraction is not evasion it is confrontation.
+
+Far from decorative or purely formal abstraction, Rosario articulates a pictorial space in which color, material, and composition operate as opposing forces. The surfaces do not seek immediate harmony; they are organized through contrasts dense zones against open areas, interruptions that break any complacent continuity. The painting does not flow; it halts, cuts, retracts.
+
+It is here that something essential occurs: the image does not represent the border it constructs it.
+
+The notion of “blackout,” present in part of his production, functions as a key to his language. It is not merely literal darkness, but a more complex condition in which the absence of light becomes a space of uncertainty and possibility. Within that void, the work does not extinguish itself; it activates from another register.
+
+Color, in this context, assumes an ambiguous role. At times it condenses into dense, almost opaque zones; at others it appears as a point of release within the surface, suggesting openness. There is no decorative logic, only an emotional construction in which each tone participates in the overall tension.
+
+Material reinforces this condition. Layers, textures, and shifts in density produce a surface that is neither uniform nor neutral, but charged, worked, insistent. The painting does not conceal its process; it exposes it as part of its structure. Each intervention leaves a trace; each decision alters the balance.
+
+A symbolic dimension runs through the work, yet never appears in literal form. The border is not depicted as a recognizable image, but as a condition manifested through fragmentation, interruption, and the tension between opposing zones. The work does not narrate a story it suggests it through behavior.
+
+A more demanding reading: his greatest strength the capacity to construct an abstraction charged with meaning can also become a zone of stability if the work does not introduce more radical ruptures within its own structure.
+
+When tension remains within a single register, when the language sustains itself with excessive coherence, there is a risk that the work settles into a recognizable aesthetic where conceptual force diminishes. What his practice calls for and what in certain works already emerges is a more decisive interruption, a gesture capable of displacing the equilibrium and forcing the painting to reconfigure itself.
+
+This is not about abandoning abstraction. It is about pushing it to its limit.
+
+When that limit is activated, something fundamental occurs: the painting ceases to be structure and becomes an inevitable experience.
+
+Within contemporary Dominican art, Joaquín Rosario occupies a singular position. His work does not align with empty abstraction nor with narrative figuration, but with a territory in which painting operates as a system of critical thought. It does not offer immediate visual answers, but spaces of tension that must be inhabited.
+
+These are not images to be consumed quickly, but surfaces that demand pause demand reading, demand engagement.
+
+For this reason, more than a painter of abstractions, Joaquín Rosario is a constructor of visual limits.
+
+And in that gesture, he advances an essential idea: that painting does not need to represent reality in order to be political it only needs to tension it.` },
+  'Mariano Sánchez': { head: 'The image as suspended memory', text: `Mariano Sánchez’s work is constructed within a territory where the figure does not present itself as immediate representation, but as apparition. His faces belong neither entirely to the present nor completely to the past; they exist within an intermediate zone where the image seems to emerge from memory rather than direct observation.
+
+In that displacement, painting ceases to describe.
+
+It begins to evoke.
+
+Within his compositions, the female face assumes a central presence that does not respond to traditional portraiture. The intention is not to capture a specific identity, but to construct an image functioning as symbol. The figure does not speak, move, or explain itself.
+
+It remains.
+
+And within that permanence a particular tension emerges, one in which the viewer encounters not narrative clarity, but silent experience.
+
+That silence is fundamental to the work.
+
+Because Mariano Sánchez understands that the most powerful images are not always those that reveal the most, but those that sustain mystery without collapsing into obscurity.
+
+One of the most decisive aspects of his language is his relationship with the surface itself. The skin of his figures never appears clean or completely defined, but intervened by layers, glazes, stains, abrasions, and traces of erosion suggesting the passage of time.
+
+The painting does not conceal its process.
+
+It incorporates it into the image itself.
+
+The figure appears weathered, almost archaeological, as though it had crossed through years, history, and memory before arriving at the canvas. That material fragility transforms the portrait into something far more psychological and temporal.
+
+Color actively participates in this construction. Greenish tones, muted golds, earth pigments, and subdued atmospheres do not function as isolated aesthetic decisions, but as emotional conditions. They generate the sensation that the figure is neither fully present nor fully absent.
+
+The image hovers.
+
+The painting becomes dense, almost organic, as though the figure were continuously emerging and disappearing at the same time.
+
+There exists throughout his work a clear relationship with pictorial tradition, particularly with the language of classical portraiture. Yet this reference never remains intact. It is altered, worn down, interrupted, and reinterpreted.
+
+Mariano Sánchez does not imitate the past.
+
+He moves through it.
+
+His figures preserve recognizable structural foundations while simultaneously being intervened by a contemporary sensibility introducing fracture, ambiguity, deterioration, and temporal displacement.
+
+In this sense, his painting is not organized through radical modernist rupture nor through nostalgic academic repetition.
+
+It is organized through dialogue.
+
+A dialogue between the classical and the contemporary, between figure and materiality, between image and erosion. That equilibrium allows him to construct a body of work in which tradition is not repeated mechanically, but transformed through time and perception.
+
+Within contemporary Dominican art, Mariano Sánchez occupies a singular position precisely because of his ability to sustain figuration without collapsing into illustration. His faces do not seek to please or seduce the viewer.
+
+Nor do they seek immediate impact.
+
+They sustain themselves through restrained intensity, through atmosphere, silence, and unresolved emotional presence.
+
+The gaze of his figures is particularly important. It does not confront directly, but appears displaced, introspective, distant. That distance creates a relationship in which the viewer cannot enter the image quickly or comfortably.
+
+One must pause.
+
+Observe.
+
+Accept the silence proposed by the work.
+
+And it is within that silence that the paintings acquire their emotional depth.
+
+In a moment where many images are constructed through speed, immediacy, and visual excess, Mariano Sánchez introduces another temporality altogether. His paintings do not resolve themselves rapidly. They remain suspended, open, almost detached from linear time itself.
+
+The viewer does not consume the image.
+
+The viewer inhabits it gradually.
+
+Mariano Sánchez does not paint in order to represent faces. He paints in order to construct images in which memory, time, and materiality converge. In that gesture, his work proposes a fundamental idea: that painting can become a space where the figure does not affirm identity, but embodies presence.
+
+His work is ultimately defined not by what it explicitly shows, but by what it continuously suggests. And it is precisely within that suggestion that the painting acquires its deepest force, remaining active within perception as an image that never fully reveals itself.` },
+  'Ramón Sandoval': { head: 'The expansion of gesture as pictorial energy' },
   'Franklin Rodríguez': { head: 'The figure as a territory of symbolic inscription' },
   'Jesús Desangles': { head: 'The image as a carnival of inner forces', text: `The work of Jesús Desangles is constructed through a pictorial energy in which the image does not seek to represent the world in a stable manner, but rather to make it vibrate continuously. His compositions do not emerge from calmness or objective description; they arise from movement, fragmentation, line, and a visual intensity that transforms the pictorial surface into a territory of permanent tension. In Desangles, painting does not merely present figures or recognizable scenes; it activates visual, cultural, and symbolic forces that displace the image toward a dimension where the human, the ritual, and the imaginary constantly intersect.
 
