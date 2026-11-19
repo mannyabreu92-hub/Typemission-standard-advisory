@@ -1143,3 +1143,13 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-v-fig img { box-shadow: 0 0 0 1px rgba(255, 255, 255, .08); }
 .au-feature-img { background: #0d0c0b; padding: .9rem; border-radius: var(--radius); }
 @media (max-width: 639px) { .au-feature-img img { background: #0d0c0b; } }
+
+/* Black frames on the small previews too */
+.au-v-thumb { background: #0d0c0b; border-color: #0d0c0b; padding: 3px; }
+.au-v-thumb img { border-radius: 2px; }
+.au-v-thumb[aria-current="true"] { border-color: #0d0c0b; box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent); }
+.au-artist-strip img { border-color: #0d0c0b; background: #0d0c0b; box-sizing: content-box; padding: 2px; }
+.lot-img img, .lot-img img.contain { background: #0d0c0b; padding: 6px; box-sizing: border-box; }
+.au-v-thumb { opacity: 1; }
+.au-v-thumb img { opacity: .7; }
+.au-v-thumb[aria-current="true"] img, .au-v-thumb:hover img { opacity: 1; }
