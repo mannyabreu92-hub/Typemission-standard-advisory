@@ -260,6 +260,14 @@ var AUCTION = {
       title: { es: 'Rostros del Tambor Sagrado', en: 'Rostros del Tambor Sagrado', fr: 'Rostros del Tambor Sagrado' },
       spec: { es: 'Técnica mixta sobre fiberboard · 24 × 24 pulg.', en: 'Mixed media on fiberboard · 24 × 24 in', fr: 'Technique mixte sur panneau de fibres · 24 × 24 po' },
       startBid: 1000 },
+    { id: 'african-roots', kind: 'painting', artist: 'Jesús Desangles', year: 2019, img: 'img/desangles-african.jpg', thumb: 'img/desangles-african-600.jpg', w: 1061, h: 714,
+      title: { es: 'African Roots', en: 'African Roots', fr: 'African Roots' },
+      spec: { es: 'Técnica mixta sobre lienzo · 30 × 40 pulg.', en: 'Mixed media on canvas · 30 × 40 in', fr: 'Technique mixte sur toile · 30 × 40 po' },
+      startBid: 1000 },
+    { id: 'ecos-de-la-madre-africa', kind: 'painting', artist: 'Jesús Desangles', year: 2020, img: 'img/desangles-ecos.jpg', thumb: 'img/desangles-ecos-600.jpg', w: 496, h: 488,
+      title: { es: 'Ecos de la Madre África', en: 'Ecos de la Madre África', fr: 'Ecos de la Madre África' },
+      spec: { es: 'Técnica mixta sobre fiberboard · 24 × 24 pulg.', en: 'Mixed media on fiberboard · 24 × 24 in', fr: 'Technique mixte sur panneau de fibres · 24 × 24 po' },
+      startBid: 1000 },
     // By Ney Díaz Henríquez (Dominican, 1974–2015), from the same book.
     { id: 'forest-stain', kind: 'painting', artist: 'Ney Díaz Henríquez', year: 2008, img: 'img/ney-forest-stain.jpg', thumb: 'img/ney-forest-stain-600.jpg', w: 1111, h: 1098,
       title: { es: 'Forest Stain', en: 'Forest Stain', fr: 'Forest Stain' },
@@ -587,6 +595,14 @@ AUCTION.essaysTr = {
   },
   "fr": {
    "head": "La peinture comme permanence"
+  }
+ },
+ "Jesús Desangles": {
+  "es": {
+   "head": "La imagen como carnaval de fuerzas interiores"
+  },
+  "fr": {
+   "head": "L’image comme carnaval de forces intérieures"
   }
  }
 };
@@ -997,6 +1013,7 @@ He constructs trajectories.
 
 And in that gesture, his work advances a fundamental idea: that art can transform weight into movement, movement into experience, and experience into the active memory of space.` },
   'Pedro Gallardo': { head: 'Painting as permanence' },
+  'Jesús Desangles': { head: 'The image as a carnival of inner forces' },
   'Gerard Ellis': { head: 'The image as a territory of memory and presence', text: `Gerard Ellis does not approach the image as simple representation, but as a territory where memory, identity, and human presence are reorganized through a deeply visual sensibility. His work begins with the figure, yet does not remain confined to it; rather, it uses it as an entry point to construct an atmosphere in which the human becomes symbol, tension, and permanence.
 
 In his language, the figure does not appear as an isolated body, but as a presence charged with history. Each face, gesture, and posture seems to contain an inner dimension that exceeds the visible, as if the work were not concerned with describing the subject, but with revealing what sustains it emotionally.
