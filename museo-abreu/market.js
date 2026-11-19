@@ -106,7 +106,7 @@ Object.assign(I18N.es, { auFromFR: 'Francia', auFromES: 'España', auEssayNoteEs
   auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el texto completo', auEssayNote: 'Texto publicado en ART GABANGI · Top 100 Artist (en inglés).', auBioNote: 'Biografía publicada en oscarabreu.com.',
   auPrev: 'Obra anterior', auNext: 'Obra siguiente', auOfN: 'Obra {i} de {n}', auWorksOf: 'Obras de {name}', auAboutWork: 'Sobre la obra', auBidThis: 'Pujar por esta obra',
   auArtistsH: 'Los artistas', auArtistsLead: '{n} artistas. Elija uno para entrar en su sala y ver sus obras en subasta.', auWorksN: '{n} obras', auWork1: '1 obra', auBackArtists: 'Todos los artistas', auRoom: 'Sala', auAllWorks: 'Ver todas las obras ({n})', auAllWorksH: 'Todas las obras', auPaintings: 'Pinturas', auSculptures: 'Esculturas', auDrawings: 'Dibujos', auRoomBoard: 'Pujas más altas en esta sala', auEnterRoom: 'Ver sus obras',
-  auCatBook: 'Top 100 Artist', auCatOscar: 'Pinturas · Oscar Abreu', auCatSculpture: 'Esculturas · Oscar Abreu', auCatDrawing: 'Dibujos · Oscar Abreu', auCatAll: 'Todas', auCats: 'Ver obras', auAllArtists: 'Todos los artistas', auArtistPick: 'Artista', auMore: 'Ver más ({n})', auShowing: '{a} de {b} obras', auBoardAll: 'Ver la tabla completa', auAllClose: 'Todas las obras cierran el {date}.',
+  auCatBook: 'Top 100 Artist', auCatOscar: 'Pinturas · Oscar Abreu', auCatSculpture: 'Esculturas · Oscar Abreu', auCatDrawing: 'Dibujos · Oscar Abreu', auCatAll: 'Todas', auCats: 'Ver obras', auAllArtists: 'Todos los artistas', auArtistPick: 'Artista', auMore: 'Ver más ({n})', auShowing: '{a} de {b} obras', auBoardAll: 'Ver la tabla completa', auAllClose: 'Todas las obras cierran el {date}.', auFindH: "Encuentre su obra", auFindLead: "Escriba lo que busca: un artista, un color, un tamaño, un año. O toque un color.", auFindLabel: "Buscar entre las obras", auFindPh: "Pruebe «azul», «grande», «años 90» o un artista", auFindGo: "Buscar", auColor: "Color", auSizeF: "Tamaño", auSizeS: "Pequeña (hasta 24 in)", auSizeM: "Mediana (25–40 in)", auSizeL: "Grande (más de 40 in)", auSort: "Ordenar", auSortBook: "Orden del libro", auSortBids: "Más pujas", auSortNew: "Más recientes", auSortOld: "Más antiguas", auSortBig: "Más grandes", auSortSmall: "Más pequeñas", auSortAZ: "Artista A–Z", auUnderstood: "Buscando:", auClear: "Borrar todo", auSurprise: "Sorpréndame", auNone: "Ninguna obra coincide. Pruebe con menos palabras o borre los filtros.", auDecade: "Años {d}", auPriceMax: "Hasta {p}", auPriceMin: "Desde {p}", auColRed: "Rojo", auColOrange: "Naranja", auColYellow: "Amarillo", auColGreen: "Verde", auColBlue: "Azul", auColPink: "Rosa", auColBrown: "Marrón", auColBlack: "Negro", auColWhite: "Blanco", auColGrey: "Gris",
   auInfo: 'Detalles', auAsk: 'Preguntar por esta obra', auFrom: 'República Dominicana', auBorn: 'n. {y}', auArtist: 'Artista', auType: 'Tipo', auMedium: 'Técnica', auSize: 'Medidas', auAboutOscar: 'Sobre Oscar Abreu', auOpenLot: 'Ver lote y pujar', auSrcBook: 'ART GABANGI · Top 100 Artist',
   auTitleAll: 'Subasta Museo Abreu', auFeatured: 'Obra destacada', auTopBid: 'La puja más alta', auLeader: 'Lidera: {name}', auFirst: 'Sea el primero en pujar',
   auBidNow: 'Pujar ahora', auBoard: 'Tabla de líderes', auBoardLead: 'Los mayores pujadores, reconocidos por su nombre.',
@@ -118,7 +118,7 @@ Object.assign(I18N.en, { auFromFR: 'France', auFromES: 'Spain', auEssayNoteEs: '
   auAboutArtist: 'About the artist', auReadAll: 'Read the full text', auEssayNote: 'As published in ART GABANGI · Top 100 Artist.', auBioNote: 'Biography as published on oscarabreu.com.',
   auPrev: 'Previous work', auNext: 'Next work', auOfN: 'Work {i} of {n}', auWorksOf: 'Works by {name}', auAboutWork: 'About the work', auBidThis: 'Bid on this work',
   auArtistsH: 'The artists', auArtistsLead: '{n} artists. Choose one to enter their room and see their works at auction.', auWorksN: '{n} works', auWork1: '1 work', auBackArtists: 'All artists', auRoom: 'Room', auAllWorks: 'See all works ({n})', auAllWorksH: 'All works', auPaintings: 'Paintings', auSculptures: 'Sculptures', auDrawings: 'Drawings', auRoomBoard: 'Highest bids in this room', auEnterRoom: 'See their works',
-  auCatBook: 'Top 100 Artist', auCatOscar: 'Paintings · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Drawings · Oscar Abreu', auCatAll: 'All', auCats: 'Browse works', auAllArtists: 'All artists', auArtistPick: 'Artist', auMore: 'Show more ({n})', auShowing: '{a} of {b} works', auBoardAll: 'See the full leaderboard', auAllClose: 'All works close on {date}.',
+  auCatBook: 'Top 100 Artist', auCatOscar: 'Paintings · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Drawings · Oscar Abreu', auCatAll: 'All', auCats: 'Browse works', auAllArtists: 'All artists', auArtistPick: 'Artist', auMore: 'Show more ({n})', auShowing: '{a} of {b} works', auBoardAll: 'See the full leaderboard', auAllClose: 'All works close on {date}.', auFindH: "Find your work", auFindLead: "Type what you are looking for: an artist, a colour, a size, a year. Or tap a colour.", auFindLabel: "Search the works", auFindPh: "Try “blue”, “large”, “1990s” or an artist", auFindGo: "Search", auColor: "Colour", auSizeF: "Size", auSizeS: "Small (up to 24 in)", auSizeM: "Medium (25–40 in)", auSizeL: "Large (over 40 in)", auSort: "Sort", auSortBook: "Book order", auSortBids: "Most bids", auSortNew: "Newest", auSortOld: "Oldest", auSortBig: "Largest", auSortSmall: "Smallest", auSortAZ: "Artist A–Z", auUnderstood: "Looking for:", auClear: "Clear all", auSurprise: "Surprise me", auNone: "No work matches. Try fewer words or clear the filters.", auDecade: "{d}s", auPriceMax: "Up to {p}", auPriceMin: "From {p}", auColRed: "Red", auColOrange: "Orange", auColYellow: "Yellow", auColGreen: "Green", auColBlue: "Blue", auColPink: "Pink", auColBrown: "Brown", auColBlack: "Black", auColWhite: "White", auColGrey: "Grey",
   auInfo: 'Details', auAsk: 'Ask about this work', auFrom: 'Dominican Republic', auBorn: 'b. {y}', auArtist: 'Artist', auType: 'Type', auMedium: 'Medium', auSize: 'Size', auAboutOscar: 'About Oscar Abreu', auOpenLot: 'View lot and bid', auSrcBook: 'ART GABANGI · Top 100 Artist',
   auTitleAll: 'Museo Abreu Auction', auFeatured: 'Featured work', auTopBid: 'Highest bid', auLeader: 'Leading: {name}', auFirst: 'Be the first to bid',
   auBidNow: 'Bid now', auBoard: 'Leaderboard', auBoardLead: 'The highest bidders, recognized by name.',
@@ -130,7 +130,7 @@ Object.assign(I18N.fr, { auFromFR: 'France', auFromES: 'Espagne', auEssayNoteEs:
   auAboutArtist: 'À propos de l’artiste', auReadAll: 'Lire le texte intégral', auEssayNote: 'Texte publié dans ART GABANGI · Top 100 Artist (en anglais).', auBioNote: 'Biographie publiée sur oscarabreu.com.',
   auPrev: 'Œuvre précédente', auNext: 'Œuvre suivante', auOfN: 'Œuvre {i} sur {n}', auWorksOf: 'Œuvres de {name}', auAboutWork: 'À propos de l’œuvre', auBidThis: 'Enchérir sur cette œuvre',
   auArtistsH: 'Les artistes', auArtistsLead: '{n} artistes. Choisissez-en un pour entrer dans sa salle et voir ses œuvres aux enchères.', auWorksN: '{n} œuvres', auWork1: '1 œuvre', auBackArtists: 'Tous les artistes', auRoom: 'Salle', auAllWorks: 'Voir toutes les œuvres ({n})', auAllWorksH: 'Toutes les œuvres', auPaintings: 'Peintures', auSculptures: 'Sculptures', auDrawings: 'Dessins', auRoomBoard: 'Enchères les plus hautes de cette salle', auEnterRoom: 'Voir ses œuvres',
-  auCatBook: 'Top 100 Artist', auCatOscar: 'Peintures · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Dessins · Oscar Abreu', auCatAll: 'Toutes', auCats: 'Parcourir les œuvres', auAllArtists: 'Tous les artistes', auArtistPick: 'Artiste', auMore: 'Voir plus ({n})', auShowing: '{a} sur {b} œuvres', auBoardAll: 'Voir le classement complet', auAllClose: 'Toutes les œuvres ferment le {date}.',
+  auCatBook: 'Top 100 Artist', auCatOscar: 'Peintures · Oscar Abreu', auCatSculpture: 'Sculptures · Oscar Abreu', auCatDrawing: 'Dessins · Oscar Abreu', auCatAll: 'Toutes', auCats: 'Parcourir les œuvres', auAllArtists: 'Tous les artistes', auArtistPick: 'Artiste', auMore: 'Voir plus ({n})', auShowing: '{a} sur {b} œuvres', auBoardAll: 'Voir le classement complet', auAllClose: 'Toutes les œuvres ferment le {date}.', auFindH: "Trouvez votre œuvre", auFindLead: "Écrivez ce que vous cherchez : un artiste, une couleur, une taille, une année. Ou touchez une couleur.", auFindLabel: "Rechercher parmi les œuvres", auFindPh: "Essayez « bleu », « grand », « années 90 » ou un artiste", auFindGo: "Rechercher", auColor: "Couleur", auSizeF: "Taille", auSizeS: "Petite (jusqu’à 24 in)", auSizeM: "Moyenne (25–40 in)", auSizeL: "Grande (plus de 40 in)", auSort: "Trier", auSortBook: "Ordre du livre", auSortBids: "Plus d’enchères", auSortNew: "Plus récentes", auSortOld: "Plus anciennes", auSortBig: "Plus grandes", auSortSmall: "Plus petites", auSortAZ: "Artiste A–Z", auUnderstood: "Recherche :", auClear: "Tout effacer", auSurprise: "Surprenez-moi", auNone: "Aucune œuvre ne correspond. Essayez avec moins de mots ou effacez les filtres.", auDecade: "Années {d}", auPriceMax: "Jusqu’à {p}", auPriceMin: "À partir de {p}", auColRed: "Rouge", auColOrange: "Orange", auColYellow: "Jaune", auColGreen: "Vert", auColBlue: "Bleu", auColPink: "Rose", auColBrown: "Brun", auColBlack: "Noir", auColWhite: "Blanc", auColGrey: "Gris",
   auInfo: 'Détails', auAsk: 'Se renseigner sur cette œuvre', auFrom: 'République dominicaine', auBorn: 'né(e) en {y}', auArtist: 'Artiste', auType: 'Type', auMedium: 'Technique', auSize: 'Dimensions', auAboutOscar: 'À propos d’Oscar Abreu', auOpenLot: 'Voir le lot et enchérir', auSrcBook: 'ART GABANGI · Top 100 Artist',
   auTitleAll: 'Vente aux enchères Museo Abreu', auFeatured: 'Œuvre à la une', auTopBid: 'Enchère la plus haute', auLeader: 'En tête : {name}', auFirst: 'Soyez le premier à enchérir',
   auBidNow: 'Enchérir', auBoard: 'Classement', auBoardLead: 'Les meilleurs enchérisseurs, cités par leur nom.',
@@ -327,14 +327,14 @@ function auBrowseHTML(scope, lots) {
   if (scope !== auScope) { auScope = scope; auCat = 'all'; auShow = AU_PAGE; }
   auScopeLots = () => lots;
   const kinds = AU_KINDS.map(([id, key, f]) => [id, key, lots.filter(f).length]).filter(k => k[2]);
-  const multi = kinds.length > 2, cat = multi ? (AU_KINDS.find(k => k[0] === auCat) || AU_KINDS[0]) : AU_KINDS[0];
+  const multi = kinds.length > 2, cat = multi ? (AU_KINDS.find(k => k[0] === auCat && kinds.some(x => x[0] === k[0])) || AU_KINDS[0]) : AU_KINDS[0];
   const list = lots.filter(cat[2]), shown = list.slice(0, auShow);
   const closes = AUCTION.closesAt && lots.some(auOpen) ? `<p class="muted au-allclose">${t('auAllClose', { date: dateTime(AUCTION.closesAt) })}</p>` : '';
   return `<section class="section au-browse" id="au-browse">
     ${multi ? `<div class="au-cats" role="group" aria-label="${t('auCats')}">${kinds.map(([id, key, n]) =>
       `<button class="au-cat" data-action="auCat" data-cat="${id}" aria-pressed="${id === cat[0]}">${t(key)} <span class="au-n">${n}</span></button>`).join('')}</div>` : ''}
     ${closes}
-    <p class="muted au-count" aria-live="polite">${t('auShowing', { a: shown.length, b: list.length })}</p>
+    <p class="muted au-count" aria-live="polite">${list.length ? t('auShowing', { a: shown.length, b: list.length }) : t('auNone')}</p>
     <div class="lots">${shown.map(l => lotCard(l, 'h2')).join('')}</div>
     ${list.length > shown.length ? `<div class="au-more-row"><button class="btn" data-action="auMore">${t('auMore', { n: list.length - shown.length })}</button></div>` : ''}
   </section>`;
@@ -342,7 +342,7 @@ function auBrowseHTML(scope, lots) {
 // Redraws only the works, keeping the visitor's place and focus.
 function auBrowseRedraw(focusSel) {
   const el = document.getElementById('au-browse'); if (!el) return;
-  el.outerHTML = auBrowseHTML(auScope, auScopeLots());
+  el.outerHTML = auBrowseHTML(auScope, auScope === 'all' ? auFound() : auScopeLots());
   if (typeof loadImagesSoon === 'function') loadImagesSoon();
   const f = focusSel && document.querySelector(focusSel); if (f) f.focus();
 }
@@ -352,6 +352,162 @@ EXTRA_ACTIONS.auMore = () => {
   // Focus moves to the first new work, so keyboard and screen-reader users carry on where the list grew.
   const next = document.querySelectorAll('#au-browse .lot-card .lot-title a')[before]; if (next) next.focus();
 };
+
+// The finder: one box that understands plain words in any of the app's languages (an artist, a title, a colour,
+// a size, a kind of work, a country, a year or decade, a price), colour swatches from each picture's main colours
+// (auction-colors.js), sizes from the inches in each work's description, and a sort. It lives on
+// #/subasta/obras; the auction page's search box and swatches lead there.
+const auNorm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const AU_COLS = [['red', '#b3261e'], ['orange', '#e0782a'], ['yellow', '#e8c22e'], ['green', '#3f8a4a'], ['blue', '#2a5db0'],
+  ['pink', '#d9709b'], ['brown', '#7a4e2d'], ['black', '#141210'], ['white', '#f6f3ee'], ['grey', '#8d8a86']];
+const auColKey = c => 'auCol' + c[0].toUpperCase() + c.slice(1);
+// Words the box understands, by what they mean (accents and capitals do not matter).
+const AU_WORDS = {
+  col: { red: 'red rojo roja rojos rojas rouge rouges rot rote rosso rossa rossi красный красная أحمر حمراء',
+    orange: 'orange orangen naranja naranjas anaranjado anaranjada arancione arancio оранжевый برتقالي',
+    yellow: 'yellow amarillo amarilla amarillos jaune jaunes gelb giallo gialla желтый жёлтый أصفر',
+    green: 'green verde verdes vert verte grun grün grune оливковый зеленый зелёный أخضر',
+    blue: 'blue azul azules bleu bleue bleus blau blu azzurro celeste turquesa turquoise синий голубой أزرق',
+    pink: 'pink rosa rosado rosada rose roses fucsia magenta morado morada purple violet violeta lila viola розовый фиолетовый وردي بنفسجي',
+    brown: 'brown marron cafe castano brun brune braun marrone коричневый بني',
+    black: 'black negro negra negros noir noire schwarz nero nera черный чёрный أسود',
+    white: 'white blanco blanca blancos blanc blanche weiss weiß bianco bianca белый أبيض',
+    grey: 'grey gray gris grau grigio серый رمادي' },
+  size: { S: 'small little pequeno pequena pequenos pequenas chico chica petit petite petits petites klein kleine piccolo piccola mini маленький صغير',
+    M: 'medium mediano mediana medianos medianas moyen moyenne mittel mittlere средний متوسط',
+    L: 'large big huge grande grandes grand gros enorme gross groß grosse große большой كبير' },
+  kind: { painting: 'painting paintings pintura pinturas cuadro cuadros peinture peintures tableau tableaux gemalde gemälde dipinto dipinti quadro картина живопись لوحة',
+    sculpture: 'sculpture sculptures escultura esculturas skulptur scultura sculture скульптура منحوتة',
+    drawing: 'drawing drawings dibujo dibujos dessin dessins zeichnung disegno disegni рисунок رسم' },
+  country: { pr: 'boricua puertorriqueno puertorriquena portoricain', cu: 'cuba cuban cubano cubana cubain cubaine', pe: 'peru peruvian peruano peruana peruvien',
+    es: 'spain spanish espana espanol espanola espagne espagnol spanien spagna', fr: 'france french frances francesa francais francaise frankreich francia',
+    do: 'dominican dominicano dominicana dominicaine dominicain dominikanisch rd quisqueya' },
+  stop: 'the a an of de del la el los las lo en on in with con et le les du des y and or o by por par di da und mit me i im want quiero busco looking for something algo un una une show muestrame works work obra obras art arte from desde que with sin ano anos annee annees anni jahre years year decade decada'
+};
+const auDict = (() => { const m = new Map(); for (const [k, g] of Object.entries(AU_WORDS)) if (k !== 'stop') for (const [v, w] of Object.entries(g)) auNorm(w).split(' ').forEach(x => m.set(x, [k, v])); auNorm(AU_WORDS.stop).split(' ').forEach(x => m.has(x) || m.set(x, ['stop'])); return m; })();
+// The longest side, in inches, from "… · 30 × 40 in (…)"; null when the book gives no size.
+const auInches = l => { const r = ((l.spec && l.spec.en) || '').match(/(\d+(?:\.\d+)?)\s*×\s*(\d+(?:\.\d+)?)(?:\s*×\s*(\d+(?:\.\d+)?))?\s*in/); return r ? Math.max(+r[1], +r[2], +(r[3] || 0)) : null; };
+const auSizeOf = l => { const n = auInches(l); return n == null ? '' : n <= 24 ? 'S' : n <= 40 ? 'M' : 'L'; };
+const auCountry = l => ((AUCTION.artists && AUCTION.artists[lotArtist(l)]) || {}).country || 'do';
+const auPrice = l => { const s = auSt(l); return s && s.count ? s.high : l.startBid; };
+const auHay = new Map();
+const auHaystack = l => {
+  if (!auHay.has(l.id)) auHay.set(l.id, auNorm([lotArtist(l), ...Object.values(l.title || {}), ...Object.values(l.spec || {}), l.year, l.id].join(' ')).split(/[^\p{L}\p{N}]+/u).join(' '));
+  return auHay.get(l.id);
+};
+let auF = { q: '', cols: [], size: '', sort: 'book' };
+// Reads the box: returns what it understood (colours, size, kind, country, years, price) and the words left over.
+function auParse(q) {
+  const out = { cols: [], size: '', kind: '', country: '', from: 0, to: 0, max: 0, min: 0, words: [] };
+  let s = auNorm(q).replace(/puerto\s+rico/g, ' boricua ').replace(/republica\s+dominicana|dominican\s+republic|republique\s+dominicaine/g, ' dominicana ');
+  // Years: "since 2010", "antes de 2000".
+  s = s.replace(/(since|after|desde|depuis|apres|seit|nach|dal|dopo)\s+(19\d\d|20[0-3]\d)\b/g, (_, w, y) => { out.from = +y; out.to = 2099; return ' '; });
+  s = s.replace(/(before|antes de|antes del|avant|vor|prima del|prima)\s+(19\d\d|20[0-3]\d)\b/g, (_, w, y) => { out.from = 1; out.to = +y - 1; return ' '; });
+  // Prices: "under 2000", "menos de $1.500", "over 3k".
+  s = s.replace(/(under|below|less than|max|up to|menos de|hasta|bajo|moins de|jusqu'?a|unter|bis|sotto|fino a|<)\s*(?:us)?\$?\s*(\d[\d.,]*)\s*(k)?/g, (_, w, n, k) => { out.max = +n.replace(/[.,]/g, '') * (k ? 1000 : 1); return ' '; });
+  s = s.replace(/(over|above|more than|min|mas de|desde|plus de|a partir de|uber|über|ab|oltre|piu di|>)\s*(?:us)?\$?\s*(\d[\d.,]*)\s*(k)?/g, (_, w, n, k) => { out.min = +n.replace(/[.,]/g, '') * (k ? 1000 : 1); return ' '; });
+  for (const tok of s.split(/[^\p{L}\p{N}'’]+/u).filter(Boolean)) {
+    let m;
+    if ((m = tok.match(/^(19|20)?(\d)0s?$/)) && (m[1] || /s$/.test(tok) || /\b(anos|annees|anni|decada)\s+$/.test(s.slice(0, s.indexOf(tok))))) {
+      const d = m[1] ? +(m[1] + m[2] + '0') : (+m[2] >= 3 ? 1900 : 2000) + +m[2] * 10;
+      if (/^\d{4}$/.test(tok) && !/s$/.test(tok)) { out.from = out.to = d; } else { out.from = d; out.to = d + 9; }
+      continue;
+    }
+    if (/^(19[5-9]\d|20[0-3]\d)$/.test(tok)) { out.from = out.to = +tok; continue; }
+    const hit = auDict.get(tok);
+    if (hit) {
+      if (hit[0] === 'col' && !out.cols.includes(hit[1])) out.cols.push(hit[1]);
+      if (hit[0] === 'size') out.size = hit[1];
+      if (hit[0] === 'kind') out.kind = hit[1];
+      if (hit[0] === 'country') out.country = hit[1];
+      continue;
+    }
+    if (tok.length > 1) out.words.push(tok);
+  }
+  return out;
+}
+function auFound() {
+  const p = auParse(auF.q), cols = [...new Set([...auF.cols, ...p.cols])], size = auF.size || p.size;
+  let list = auLots().filter(l => (!cols.length || cols.every(c => ((typeof AU_COLORS !== 'undefined' && AU_COLORS[l.id]) || []).includes(c)))
+    && (!size || auSizeOf(l) === size) && (!p.kind || l.kind === p.kind) && (!p.country || auCountry(l) === p.country)
+    && (!p.from || (l.year >= p.from && l.year <= p.to)) && (!p.max || auPrice(l) <= p.max) && (!p.min || auPrice(l) >= p.min)
+    && p.words.every(w => (' ' + auHaystack(l)).includes(' ' + w)));
+  const by = {
+    bids: (a, b) => ((auSt(b) || {}).count || 0) - ((auSt(a) || {}).count || 0),
+    new: (a, b) => (b.year || 0) - (a.year || 0), old: (a, b) => (a.year || 1e4) - (b.year || 1e4),
+    big: (a, b) => (auInches(b) || 0) - (auInches(a) || 0), small: (a, b) => (auInches(a) || 1e4) - (auInches(b) || 1e4),
+    az: (a, b) => lotArtist(a).localeCompare(lotArtist(b), lang)
+  }[auF.sort];
+  return by ? list.slice().sort(by) : list;
+}
+// What the box understood, in the visitor's language.
+function auUnderstoodHTML() {
+  const p = auParse(auF.q), bits = [];
+  p.cols.forEach(c => bits.push(t(auColKey(c))));
+  if (p.size) bits.push(t('auSize' + p.size));
+  if (p.kind) bits.push(t({ painting: 'auPaintings', sculpture: 'auSculptures', drawing: 'auDrawings' }[p.kind]));
+  if (p.country) bits.push(t({ pr: 'auFromPR', cu: 'auFromCU', pe: 'auFromPE', es: 'auFromES', fr: 'auFromFR', do: 'auFrom' }[p.country]));
+  if (p.from) bits.push(p.from === p.to ? String(p.from) : p.to - p.from === 9 ? t('auDecade', { d: p.from }) : `${p.from > 1 ? p.from : ''}–${p.to < 2099 ? p.to : ''}`);
+  if (p.max) bits.push(t('auPriceMax', { p: auUSD(p.max) }));
+  if (p.min) bits.push(t('auPriceMin', { p: auUSD(p.min) }));
+  p.words.forEach(w => bits.push('“' + w + '”'));
+  return `<p class="au-understood" id="au-understood"${bits.length ? '' : ' hidden'}>${t('auUnderstood')} ${bits.map(b => `<span class="au-u-bit">${esc(b)}</span>`).join(' ')}</p>`;
+}
+const auSwatches = (act, on) => {
+  const n = c => auLots().filter(l => ((typeof AU_COLORS !== 'undefined' && AU_COLORS[l.id]) || []).includes(c)).length;
+  return `<div class="au-swatches" role="group" aria-label="${t('auColor')}">${AU_COLS.filter(([c]) => n(c) >= 5).map(([c, hex]) =>
+    `<button type="button" class="au-swatch" data-action="${act}" data-col="${c}" style="--sw:${hex}" aria-pressed="${on.includes(c)}" aria-label="${esc(t(auColKey(c)))}" title="${esc(t(auColKey(c)))}"><span aria-hidden="true"></span></button>`).join('')}</div>`;
+};
+function auFinderHTML(full) {
+  const any = auF.q || auF.cols.length || auF.size || auF.sort !== 'book';
+  return `<section class="section au-finder" id="au-finder" aria-labelledby="au-find-h">
+    <h2 id="au-find-h">${t('auFindH')}</h2><p class="muted">${t('auFindLead')}</p>
+    <form class="au-find-form" data-form="auFind" role="search">
+      <label class="visually-hidden" for="au-q">${t('auFindLabel')}</label>
+      <input id="au-q" type="search" name="q" value="${esc(auF.q)}" placeholder="${esc(t('auFindPh'))}" autocomplete="off" enterkeyhint="search">
+      <button class="btn primary" type="submit">${t('auFindGo')}</button>
+    </form>
+    ${auSwatches(full ? 'auFCol' : 'auGoCol', auF.cols)}
+    ${full ? `<div class="au-find-row">
+      <div class="au-sizes" role="group" aria-label="${t('auSizeF')}">${['S', 'M', 'L'].map(z => `<button type="button" class="au-cat" data-action="auFSize" data-size="${z}" aria-pressed="${auF.size === z}">${t('auSize' + z)}</button>`).join('')}</div>
+      <label class="au-sort">${t('auSort')} <select id="au-sort" data-finder="sort">${[['book', 'auSortBook'], ['bids', 'auSortBids'], ['new', 'auSortNew'], ['old', 'auSortOld'], ['big', 'auSortBig'], ['small', 'auSortSmall'], ['az', 'auSortAZ']].map(([v, k]) => `<option value="${v}"${auF.sort === v ? ' selected' : ''}>${t(k)}</option>`).join('')}</select></label>
+    </div>
+    ${auUnderstoodHTML()}` : ''}
+    <div class="btn-row au-find-actions"><button type="button" class="btn small" data-action="auSurprise">✦ ${t('auSurprise')}</button>${full && any ? `<button type="button" class="btn small" data-action="auFClear">${t('auClear')}</button>` : ''}</div>
+  </section>`;
+}
+// Redraws the finder's controls (when asked) and the works, keeping focus where it was.
+function auFinderRedraw(controls, focusSel) {
+  auShow = AU_PAGE;
+  if (controls) { const f = document.getElementById('au-finder'); if (f) f.outerHTML = auFinderHTML(true); }
+  else { const u = document.getElementById('au-understood'); if (u) u.outerHTML = auUnderstoodHTML(); }
+  auBrowseRedraw(focusSel);
+}
+EXTRA_FORMS.auFind = form => {
+  auF.q = form.q.value.trim();
+  if (!location.hash.startsWith('#/subasta/obras')) { location.hash = '#/subasta/obras'; return; }
+  auFinderRedraw(true);
+  const c = document.querySelector('#au-browse .au-count'); if (c) { c.setAttribute('tabindex', '-1'); c.focus(); }
+};
+EXTRA_ACTIONS.auFCol = el => { const c = el.dataset.col; auF.cols = auF.cols.includes(c) ? auF.cols.filter(x => x !== c) : [...auF.cols, c]; auFinderRedraw(true, `.au-swatch[data-col="${c}"]`); };
+EXTRA_ACTIONS.auGoCol = el => { auF = { q: '', cols: [el.dataset.col], size: '', sort: 'book' }; location.hash = '#/subasta/obras'; };
+EXTRA_ACTIONS.auFSize = el => { auF.size = auF.size === el.dataset.size ? '' : el.dataset.size; auFinderRedraw(true, `[data-action=auFSize][data-size="${el.dataset.size}"]`); };
+EXTRA_ACTIONS.auFClear = () => { auF = { q: '', cols: [], size: '', sort: 'book' }; auCat = 'all'; auFinderRedraw(true, '#au-q'); };
+// A random work among those the visitor is looking at (all of them on the auction page).
+EXTRA_ACTIONS.auSurprise = () => {
+  const list = location.hash.startsWith('#/subasta/obras') ? auFound() : auLots();
+  if (list.length) location.hash = '#/subasta/' + list[Math.floor(Math.random() * list.length)].id;
+};
+// Results follow the typing (after a short pause); the box keeps its focus.
+let auFTimer;
+document.addEventListener('input', e => {
+  if (e.target.id !== 'au-q' || !document.getElementById('au-browse')) return;
+  clearTimeout(auFTimer);
+  auFTimer = setTimeout(() => { auF.q = e.target.value.trim(); auFinderRedraw(false); }, 220);
+});
+document.addEventListener('change', e => {
+  if (e.target.dataset && e.target.dataset.finder === 'sort') { auF.sort = e.target.value; auFinderRedraw(true, '#au-sort'); }
+});
 
 // An artist's room shows one work at a time, large, with everything known about it and room for its description
 // (lot.desc, by language, when the museum provides it); arrows, a swipe or the thumbnails move between works. The
@@ -541,7 +697,8 @@ function pageAllWorks() {
   return `<div class="wrap">
     <a href="#/subasta" class="btn small"><span class="arr">←</span> ${t('auBackArtists')}</a>
     <section class="section au-room-head"><p class="eyebrow">${t('auEyebrow')}</p><h1 class="au-room-name">${t('auAllWorksH')}</h1></section>
-    ${auBrowseHTML('all', auLots())}
+    ${auFinderHTML(true)}
+    ${auBrowseHTML('all', auFound())}
   </div>`;
 }
 
@@ -564,6 +721,7 @@ function pageAuction(id) {
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
     </section>
+    ${auFinderHTML(false)}
     <section class="section au-board-wrap"><h2>${t('auBoard')}</h2><p class="muted">${t('auBoardLead')}</p>${auBoardHTML(auAllLeaders(), true, 3)}</section>
     ${auArtistsHTML()}
     <section class="section"><p class="lead">${fin ? t('auLead', { event: esc(fin.name) }) : t('auLeadOnline')}</p>

@@ -1153,3 +1153,23 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-v-thumb { opacity: 1; }
 .au-v-thumb img { opacity: .7; }
 .au-v-thumb[aria-current="true"] img, .au-v-thumb:hover img { opacity: 1; }
+
+/* The auction finder: one smart box, colour swatches, sizes and a sort */
+.au-finder { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); padding: 1.2rem; }
+.au-finder h2 { margin-bottom: .2rem; }
+.au-find-form { display: flex; gap: .5rem; margin-top: .9rem; }
+.au-find-form input { flex: 1; min-width: 0; min-height: 48px; padding: .6rem .9rem; border: 1px solid var(--ink); border-radius: 999px; background: var(--paper); color: var(--ink); font: 1rem var(--sans); }
+.au-find-form input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.au-find-form .btn { flex: none; border-radius: 999px; }
+.au-swatches { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
+.au-swatch { width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; display: grid; place-items: center; }
+.au-swatch span { width: 30px; height: 30px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .18); transition: transform .15s; }
+.au-swatch:hover span { transform: scale(1.1); }
+.au-swatch[aria-pressed="true"] span { box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--ink); transform: scale(1.05); }
+.au-find-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: .9rem; }
+.au-sizes { display: flex; flex-wrap: wrap; gap: .4rem; }
+.au-sort { display: inline-flex; align-items: center; gap: .5rem; font: 600 .9rem var(--sans); }
+.au-sort select { min-height: 44px; padding: .4rem .7rem; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink); font: .9rem var(--sans); }
+.au-understood { margin-top: .9rem; font: 600 .85rem var(--sans); color: var(--ink-2); }
+.au-u-bit { display: inline-block; margin: .15rem .1rem; padding: .2rem .6rem; border-radius: 999px; background: var(--ink); color: var(--paper); font-weight: 600; }
+.au-find-actions { margin-top: .9rem; }
