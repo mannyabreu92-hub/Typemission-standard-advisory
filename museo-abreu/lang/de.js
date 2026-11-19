@@ -958,6 +958,7 @@ I18N.de = {
   "auFromPE": "Peru",
   "auEssayNoteEs": "Text aus ART GABANGI · Top 100 Artist (auf Spanisch).",
   "auEssayNoteTrEs": "Übersetzung des Museums des auf Spanisch in ART GABANGI · Top 100 Artist veröffentlichten Textes.",
+  "auFromES": "Spanien",
 };
 TR.de = {
   "2019": "2019",
