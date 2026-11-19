@@ -101,7 +101,7 @@ let auState = null, auFailed = false, auTimer = null;
 
 // The auction as a live room: the work with the highest bid leads the page, a countdown runs to each close,
 // and a leaderboard names the highest bidders (by name if they chose so, by initials otherwise).
-Object.assign(I18N.es, { auFromCU: 'Cuba', auPrevArtist: 'Artista anterior', auNextArtists: 'Siguientes artistas', auToArtist: 'Ir a {name}', auNextArtist: 'Siguiente artista', auEssayNoteTr: 'Traducción del museo del texto publicado en inglés en ART GABANGI · Top 100 Artist.', auCritique: 'Crítica', auStory: 'La historia de {name}', auStoryPrev: 'Anterior', auStoryNext: 'Siguiente', auPause: 'Pausa', auPlay: 'Reproducir', auSeeWorks: 'Ver sus obras', auStartAt: 'Pujas desde',
+Object.assign(I18N.es, { auFromCU: 'Cuba', auFromPE: 'Perú', auPrevArtist: 'Artista anterior', auNextArtists: 'Siguientes artistas', auToArtist: 'Ir a {name}', auNextArtist: 'Siguiente artista', auEssayNoteTr: 'Traducción del museo del texto publicado en inglés en ART GABANGI · Top 100 Artist.', auCritique: 'Crítica', auStory: 'La historia de {name}', auStoryPrev: 'Anterior', auStoryNext: 'Siguiente', auPause: 'Pausa', auPlay: 'Reproducir', auSeeWorks: 'Ver sus obras', auStartAt: 'Pujas desde',
   auFromPR: 'Puerto Rico', auBio: 'Biografía', auSources: 'Fuentes',
   auAboutArtist: 'Sobre el artista', auReadAll: 'Leer el texto completo', auEssayNote: 'Texto publicado en ART GABANGI · Top 100 Artist (en inglés).', auBioNote: 'Biografía publicada en oscarabreu.com.',
   auPrev: 'Obra anterior', auNext: 'Obra siguiente', auOfN: 'Obra {i} de {n}', auWorksOf: 'Obras de {name}', auAboutWork: 'Sobre la obra', auBidThis: 'Pujar por esta obra',
@@ -113,7 +113,7 @@ Object.assign(I18N.es, { auFromCU: 'Cuba', auPrevArtist: 'Artista anterior', auN
   auBoardEmpty: 'Aún no hay pujas. La primera puja abre la tabla.', auShowName: 'Mostrar mi nombre en la tabla de líderes (si no, solo mis iniciales)',
   auQuick: 'Puja rápida', auEndsIn: 'Cierra en', auD: 'días', auH: 'horas', auM: 'min', auS: 'seg', auEnded: 'Cerrada',
   auSoft: 'Una puja en los últimos 2 minutos extiende el cierre 2 minutos.', auIncr: 'Pujas desde {start}, en incrementos de {inc}.' });
-Object.assign(I18N.en, { auFromCU: 'Cuba', auPrevArtist: 'Previous artist', auNextArtists: 'Next artists', auToArtist: 'Go to {name}', auNextArtist: 'Next artist', auEssayNoteTr: 'As published in ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'The story of {name}', auStoryPrev: 'Previous', auStoryNext: 'Next', auPause: 'Pause', auPlay: 'Play', auSeeWorks: 'See the works', auStartAt: 'Bids from',
+Object.assign(I18N.en, { auFromCU: 'Cuba', auFromPE: 'Peru', auPrevArtist: 'Previous artist', auNextArtists: 'Next artists', auToArtist: 'Go to {name}', auNextArtist: 'Next artist', auEssayNoteTr: 'As published in ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'The story of {name}', auStoryPrev: 'Previous', auStoryNext: 'Next', auPause: 'Pause', auPlay: 'Play', auSeeWorks: 'See the works', auStartAt: 'Bids from',
   auFromPR: 'Puerto Rico', auBio: 'Biography', auSources: 'Sources',
   auAboutArtist: 'About the artist', auReadAll: 'Read the full text', auEssayNote: 'As published in ART GABANGI · Top 100 Artist.', auBioNote: 'Biography as published on oscarabreu.com.',
   auPrev: 'Previous work', auNext: 'Next work', auOfN: 'Work {i} of {n}', auWorksOf: 'Works by {name}', auAboutWork: 'About the work', auBidThis: 'Bid on this work',
@@ -125,7 +125,7 @@ Object.assign(I18N.en, { auFromCU: 'Cuba', auPrevArtist: 'Previous artist', auNe
   auBoardEmpty: 'No bids yet. The first bid opens the board.', auShowName: 'Show my name on the leaderboard (otherwise only my initials)',
   auQuick: 'Quick bid', auEndsIn: 'Ends in', auD: 'days', auH: 'hrs', auM: 'min', auS: 'sec', auEnded: 'Closed',
   auSoft: 'A bid in the last 2 minutes extends the close by 2 minutes.', auIncr: 'Bids from {start}, in steps of {inc}.' });
-Object.assign(I18N.fr, { auFromCU: 'Cuba', auPrevArtist: 'Artiste précédent', auNextArtists: 'Artistes suivants', auToArtist: 'Aller à {name}', auNextArtist: 'Artiste suivant', auEssayNoteTr: 'Traduction du musée du texte publié en anglais dans ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'L’histoire de {name}', auStoryPrev: 'Précédent', auStoryNext: 'Suivant', auPause: 'Pause', auPlay: 'Lecture', auSeeWorks: 'Voir les œuvres', auStartAt: 'Enchères dès',
+Object.assign(I18N.fr, { auFromCU: 'Cuba', auFromPE: 'Pérou', auPrevArtist: 'Artiste précédent', auNextArtists: 'Artistes suivants', auToArtist: 'Aller à {name}', auNextArtist: 'Artiste suivant', auEssayNoteTr: 'Traduction du musée du texte publié en anglais dans ART GABANGI · Top 100 Artist.', auCritique: 'Critique', auStory: 'L’histoire de {name}', auStoryPrev: 'Précédent', auStoryNext: 'Suivant', auPause: 'Pause', auPlay: 'Lecture', auSeeWorks: 'Voir les œuvres', auStartAt: 'Enchères dès',
   auFromPR: 'Porto Rico', auBio: 'Biographie', auSources: 'Sources',
   auAboutArtist: 'À propos de l’artiste', auReadAll: 'Lire le texte intégral', auEssayNote: 'Texte publié dans ART GABANGI · Top 100 Artist (en anglais).', auBioNote: 'Biographie publiée sur oscarabreu.com.',
   auPrev: 'Œuvre précédente', auNext: 'Œuvre suivante', auOfN: 'Œuvre {i} sur {n}', auWorksOf: 'Œuvres de {name}', auAboutWork: 'À propos de l’œuvre', auBidThis: 'Enchérir sur cette œuvre',
@@ -651,7 +651,7 @@ EXTRA_FORMS.bid = async form => {
 function artistLine(lot, noYears) {
   const a = AUCTION.artists && AUCTION.artists[lotArtist(lot)];
   if (!a) return '';
-  return [t({ pr: 'auFromPR', cu: 'auFromCU' }[a.country] || 'auFrom'), noYears ? '' : auYears(lotArtist(lot))].filter(Boolean).join(' · ');
+  return [t({ pr: 'auFromPR', cu: 'auFromCU', pe: 'auFromPE' }[a.country] || 'auFrom'), noYears ? '' : auYears(lotArtist(lot))].filter(Boolean).join(' · ');
 }
 // "b. 1972", or "1964–2022" for an artist who has died.
 function auYears(name) {

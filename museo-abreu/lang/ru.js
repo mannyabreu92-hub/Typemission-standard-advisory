@@ -956,6 +956,7 @@ I18N.ru = {
   "auNextArtists": "Следующие художники",
   "auPrevArtist": "Предыдущий художник",
   "auFromCU": "Куба",
+  "auFromPE": "Перу",
 };
 TR.ru = {
   "Mixed media on MDF": "Смешанная техника на МДФ",

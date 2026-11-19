@@ -955,6 +955,7 @@ I18N.ar = {
   "auNextArtists": "الفنانون التاليون",
   "auPrevArtist": "الفنان السابق",
   "auFromCU": "كوبا",
+  "auFromPE": "بيرو",
 };
 TR.ar = {
   "2019": "2019",
