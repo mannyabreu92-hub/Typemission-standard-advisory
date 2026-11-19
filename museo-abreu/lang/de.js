@@ -956,6 +956,8 @@ I18N.de = {
   "auPrevArtist": "Vorheriger Künstler",
   "auFromCU": "Kuba",
   "auFromPE": "Peru",
+  "auEssayNoteEs": "Text aus ART GABANGI · Top 100 Artist (auf Spanisch).",
+  "auEssayNoteTrEs": "Übersetzung des Museums des auf Spanisch in ART GABANGI · Top 100 Artist veröffentlichten Textes.",
 };
 TR.de = {
   "2019": "2019",

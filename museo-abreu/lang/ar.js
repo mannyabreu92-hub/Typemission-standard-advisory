@@ -956,6 +956,8 @@ I18N.ar = {
   "auPrevArtist": "الفنان السابق",
   "auFromCU": "كوبا",
   "auFromPE": "بيرو",
+  "auEssayNoteEs": "نص منشور في ART GABANGI · Top 100 Artist (بالإسبانية).",
+  "auEssayNoteTrEs": "ترجمة المتحف للنص المنشور بالإسبانية في ART GABANGI · Top 100 Artist.",
 };
 TR.ar = {
   "2019": "2019",
