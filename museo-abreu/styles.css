@@ -1372,3 +1372,26 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .shop-page .shop-banner h3 { font: italic 500 1.6rem/1.2 var(--serif); }
 .shop-page > .section:not(.shop-head) > .eyebrow { font: 600 .78rem/1.4 var(--sans); letter-spacing: .24em; color: var(--ink); padding-bottom: .6rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 0; }
 :root[lang="ar"] .shop-by, :root[lang="ar"] .shop-page .section-head .btn.small, :root[lang="ar"] .shop-h1 { letter-spacing: 0; text-transform: none; }
+/* The homepage, in the catalogue style of the auction and the shop */
+main:has(.dir-hero) .section-head { align-items: center; padding-bottom: .6rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 1.4rem; }
+main:has(.dir-hero) .section-head h2, main:has(.dir-hero) .section > h2:not(.dir-museum-title) { margin: 0; font: 600 .78rem/1.4 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--ink); }
+main:has(.dir-hero) .section > h2:not(.dir-museum-title) { padding-bottom: .6rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 1.4rem; }
+main:has(.dir-hero) .section-head a:not(.btn) { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); font: 600 .7rem var(--sans); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+main:has(.dir-hero) .section-head a:not(.btn)::after { content: ' →'; white-space: pre; }
+main:has(.dir-hero) .section-head a:not(.btn):hover { color: var(--accent); }
+main:has(.dir-hero) .btn { border-radius: 0; font: 600 .72rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; padding-inline: 1.4rem; }
+main:has(.dir-hero) .card { background: transparent; border: 0; border-top: 1px solid var(--line); border-radius: 0; box-shadow: none; padding: 1rem 0 0; }
+main:has(.dir-hero) .card:hover { border-top-color: var(--ink); }
+main:has(.dir-hero) .card h3, main:has(.dir-hero) .card strong { font: italic 500 1.35rem/1.2 var(--serif); }
+main:has(.dir-hero) .card.hl img { border-radius: 0; background: #0d0c0b; padding: 4px; box-sizing: border-box; }
+main:has(.dir-hero) .dir-book-title, main:has(.dir-hero) .dir-museum-title, main:has(.dir-hero) .grid.two h2 { font-style: italic; font-weight: 500; }
+main:has(.dir-hero) .dir-founder h2 { text-transform: uppercase; letter-spacing: .04em; font-weight: 500; }
+main:has(.dir-hero) .layers img, main:has(.dir-hero) .layers { border-radius: 0; }
+main:has(.dir-hero) .layers { background: #0d0c0b; padding: clamp(.6rem, 2vw, 1.2rem); box-shadow: 0 14px 34px rgba(22, 18, 15, .28); }
+main:has(.dir-hero) .dir-subscribe { background: transparent; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 1.2rem 0; }
+main:has(.dir-hero) .dir-band { border-radius: 0; }
+main:has(.dir-hero) .field input, main:has(.dir-hero) .field select { border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; background: transparent; padding-inline: 0; }
+main:has(.dir-hero) .field > label, main:has(.dir-hero) fieldset legend { font: 600 .66rem/1.6 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+main:has(.dir-hero) input[type=checkbox] { accent-color: var(--ink); }
+:root[lang="ar"] main:has(.dir-hero) .section-head h2, :root[lang="ar"] main:has(.dir-hero) .section > h2, :root[lang="ar"] main:has(.dir-hero) .btn, :root[lang="ar"] main:has(.dir-hero) .section-head a:not(.btn), :root[lang="ar"] main:has(.dir-hero) .field > label { letter-spacing: 0; text-transform: none; }
+main:has(.dir-hero) .field > label small { font: 400 .7rem var(--sans); letter-spacing: .06em; text-transform: none; }
