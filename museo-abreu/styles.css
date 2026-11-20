@@ -1274,3 +1274,28 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .lot-note { margin-top: 1rem; font-size: .85rem; color: var(--ink-3); }
 :root[lang="ar"] .lot-back, :root[lang="ar"] .lot-specs dt, :root[lang="ar"] .lot-sub, :root[lang="ar"] .lot-page .bid-form label, :root[lang="ar"] .lot-page .co-pay { letter-spacing: 0; text-transform: none; }
 .lot-page .bid-form input[type=checkbox] { accent-color: var(--ink); }
+/* Artist rooms, as catalogue pages */
+@media (min-width: 860px) {
+  .au-v-work { display: grid; grid-template-columns: 1.25fr 1fr; gap: 3.5rem; align-items: start; }
+  .au-v-work .au-v-fig { margin: 0; }
+  .au-v-work .au-v-fig img { max-height: 74vh; }
+}
+.au-v-fig { border-radius: 2px; padding: clamp(.8rem, 3vw, 1.6rem); }
+.au-v-info .lot-meta { margin: .4rem 0 0; font: 600 .7rem/1.4 var(--sans); letter-spacing: .22em; color: var(--gold-ink); }
+.au-v-title { margin-top: .6rem; font: italic 500 clamp(1.9rem, 6vw, 2.7rem)/1.1 var(--serif); }
+.au-v-info .lot-specs { margin-top: 1.2rem; }
+.au-v-price { border-top: 0; padding-top: 0; margin-top: 1.4rem; }
+.au-v-price .au-feature-price { font: 500 clamp(1.8rem, 5vw, 2.3rem)/1.1 var(--serif); }
+.au-v-price .au-feature-price small { display: block; font: 600 .64rem/1.6 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3); }
+.au-v-price .muted { font-size: .88rem; }
+.au-v-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.6rem; margin-top: 1.2rem; }
+.au-v-bid { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 1.8rem; background: var(--ink); color: var(--paper); font: 600 .78rem var(--sans); letter-spacing: .18em; text-transform: uppercase; text-decoration: none; }
+.au-v-bid:hover { background: #000; }
+.au-v-desc h3 { font: 600 .66rem/1.6 var(--sans); letter-spacing: .2em; }
+.au-v-btn { border-radius: 0; width: 46px; height: 46px; background: transparent; font-size: 1.6rem; }
+.au-v-btn-artist:not(:disabled) { background: var(--ink); color: var(--paper); }
+.au-v-thumb { border-radius: 2px; }
+.au-room .au-room-head-line { font-size: .78rem; letter-spacing: .2em; }
+.au-room-line { font: italic 400 1.1rem var(--serif); }
+.au-room .au-about-h, .au-room .au-next .au-about-h { letter-spacing: .22em; }
+:root[lang="ar"] .au-v-bid, :root[lang="ar"] .au-v-price .au-feature-price small { letter-spacing: 0; text-transform: none; }

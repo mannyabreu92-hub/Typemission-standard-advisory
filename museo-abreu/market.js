@@ -531,7 +531,7 @@ function auViewerHTML(scope, name, lots) {
   auVIdx = Math.max(0, Math.min(auVIdx, list.length - 1));
   const lot = list[auVIdx], s = auSt(lot) || {}, open = auOpen(lot), lead = s.leaders && s.leaders[0], c = auCloses(lot);
   const [year, medium, size] = lotFacts(lot), desc = lot.desc && L(lot.desc);
-  const row = (k, v) => v ? `<dt>${k}</dt><dd>${esc(String(v))}</dd>` : '';
+  const row = (k, v) => v ? `<div><dt>${k}</dt><dd>${esc(String(v))}</dd></div>` : '';
   // Past the first or last work, the arrows lead to the previous or next artist's room.
   const nb = auNeighbour(scope), atStart = !auVIdx, atEnd = auVIdx >= list.length - 1;
   const navBtn = (act, sym, edge, other) => `<button class="au-v-btn${edge ? ' au-v-btn-artist' : ''}" data-action="${act}" aria-label="${edge ? esc(t('auToArtist', { name: other })) : t(act === 'auPrev' ? 'auPrev' : 'auNext')}"${edge && !other ? ' disabled' : ''}><span aria-hidden="true">${sym}</span></button>`;
@@ -545,17 +545,19 @@ function auViewerHTML(scope, name, lots) {
     ${nav}
     <article class="au-v-work" aria-roledescription="slide" aria-label="${esc(t('auOfN', { i: auVIdx + 1, n: list.length }))}">
       <figure class="au-v-fig"><img src="${lot.img}" alt="${esc(lotTitle(lot))}" width="${lot.w || 1000}" height="${lot.h || 1000}"></figure>
-      <p class="eyebrow">${t('auLot', { n: lotNumber(lot) })} · ${lotKind(lot)}</p>
+      <div class="au-v-info">
+      <p class="lot-meta">${t('auLot', { n: lotNumber(lot) })}</p>
       <h2 class="au-v-title">${esc(lotTitle(lot))}</h2>
-      <dl class="specs">${row(t('year'), year)}${row(t('auMedium'), medium)}${row(t('auSize'), size)}</dl>
+      <dl class="lot-specs">${row(t('auType'), lotKind(lot))}${row(t('year'), year)}${row(t('auMedium'), medium)}${row(t('auSize'), size)}</dl>
       ${desc ? `<div class="au-v-desc"><h3 class="eyebrow">${t('auCritique')}</h3>${String(desc).split(/\n\s*\n/).map(p => `<p>${esc(p)}</p>`).join('')}</div>` : ''}
       <div class="au-v-price">
         <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
         <p class="muted">${s.count ? (s.count === 1 ? t('auBid1') : t('auBidsN', { n: s.count })) + (lead ? ' · ' + esc(t('auLeader', { name: lead.who })) : '') : t('auFirst')}</p>
         ${c ? `<p class="muted">${open ? `${t('auEndsIn')} ${cdHTML(c)}` : t(auClosedKey())}</p>` : ''}
       </div>
-      <div class="btn-row">${open ? `<a class="btn primary" href="#/subasta/${lot.id}">${t('auBidThis')}</a>` : `<a class="btn" href="#/subasta/${lot.id}">${t('auView')}</a>`}
-        <button class="btn" data-action="lotInterest" data-lot="${lot.id}">${t('auAsk')}</button></div>
+      <div class="au-v-actions">${open ? `<a class="au-v-bid" href="#/subasta/${lot.id}">${t('auBidThis')}</a>` : `<a class="au-v-bid" href="#/subasta/${lot.id}">${t('auView')}</a>`}
+        <button class="lot-go" data-action="lotInterest" data-lot="${lot.id}">${t('auAsk')} <span class="arr" aria-hidden="true">→</span></button></div>
+      </div>
     </article>
     ${list.length > 1 ? nav.replace('au-v-nav', 'au-v-nav au-v-nav-low') : ''}
     ${list.length > 1 ? `<div class="au-v-thumbs">${list.map((l, i) => `<button class="au-v-thumb" data-action="auGo" data-i="${i}" aria-label="${esc(lotTitle(l))}"${i === auVIdx ? ' aria-current="true"' : ''}><img src="${l.thumb || l.img}" alt="" loading="lazy" width="72" height="72"></button>`).join('')}</div>` : ''}
@@ -660,7 +662,7 @@ function auNextArtistHTML(a) {
         <span class="au-artist-n">${auWorksText(n.lots.length)}</span></span>
       <span class="au-artist-strip" aria-hidden="true">${n.lots.slice(0, 3).map(l => `<img src="${l.thumb || l.img}" alt="" loading="lazy" width="120" height="120">`).join('')}</span>
       <span class="arr" aria-hidden="true">›</span></a></li>`).join('')}</ol>
-    <p style="margin-top:1rem"><a class="btn small" href="#/subasta/artistas">${t('auBackArtists')}</a></p></section>`;
+    <p style="margin-top:1rem"><a class="lot-back" href="#/subasta/artistas">${t('auBackArtists')} <span class="arr" aria-hidden="true">→</span></a></p></section>`;
 }
 // The top of a room: previous artist · all artists · next artist, and a sideways swipe on the room's heading,
 // anywhere in a room moves between artists (on the painting it moves between works), so nobody has to scroll
