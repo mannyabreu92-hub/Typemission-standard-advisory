@@ -1034,6 +1034,11 @@ I18N.it = {
   "ctPrint": "Stampa o salva in PDF",
   "ctNav": "Catalogo",
   "ctSrc": "Immagini e dati come pubblicati in ART GABANGI · Top 100 Artist e, per Oscar Abreu, su oscarabreu.com.",
+  "azNav": "Artisti per lettera",
+  "qrH": "Didascalie da parete",
+  "qrLead": "Una didascalia per opera, con un codice da scansionare nel museo. Si stampa in A4: otto didascalie per pagina.",
+  "qrScan": "Scansiona per vedere l’opera e fare un’offerta",
+  "qrNav": "Didascalie con codice QR",
 };
 TR.it = {
   "2019": "2019",

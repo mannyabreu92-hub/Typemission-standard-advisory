@@ -1034,6 +1034,11 @@ I18N.de = {
   "ctPrint": "Drucken oder als PDF speichern",
   "ctNav": "Katalog",
   "ctSrc": "Bilder und Angaben wie in ART GABANGI · Top 100 Artist veröffentlicht und, für Oscar Abreu, auf oscarabreu.com.",
+  "azNav": "Künstler nach Buchstaben",
+  "qrH": "Wandschilder",
+  "qrLead": "Ein Schild pro Werk, mit einem Code zum Scannen im Museum. Druck auf A4: acht Schilder pro Seite.",
+  "qrScan": "Scannen, um das Werk zu sehen und zu bieten",
+  "qrNav": "Wandschilder mit QR-Code",
 };
 TR.de = {
   "2019": "2019",

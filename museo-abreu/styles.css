@@ -1553,3 +1553,73 @@ dialog.wl[open] { animation: vw-in .4s cubic-bezier(.2, .7, .2, 1); }
   .ct-lot img { width: 34mm; height: 34mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   main.page-in { animation: none; }
 }
+
+/* Dark mode: the phone's setting decides. The same catalogue, by night: warm charcoal, ivory type, bronze. */
+:root { color-scheme: light dark; }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #ece6dc; --ink-2: #c9c0b4; --ink-3: #a99f92;
+    --paper: #121110; --paper-2: #1d1b19; --card: #191715;
+    --line: rgba(236, 230, 220, 0.16);
+    --accent: #e3a073; --accent-ink: #121110; --accent-soft: rgba(227, 160, 115, 0.14);
+    --ok: #7fd49b; --warn: #e6b866; --gold: #c8ad74; --gold-ink: #cdb27a;
+  }
+  .topbar { background: rgba(18, 17, 16, .92); }
+  .wish { background: rgba(25, 23, 21, .92); }
+  .sr-list mark, .sr-mark { background: #5a4a26; }
+  /* Gold buttons keep dark type, as on paper. */
+  .hero .btn.primary, .promo .btn.primary, .ci-panel .btn.primary, .dir-band .btn.primary, .btn.dir-big { color: #16120f; }
+  /* The museum's dark surfaces (the hero, the bands, the countdown pill, the dark chips, tickets) stay as they
+     are by day: they keep the day's colours inside them, so nothing on them changes. */
+  .hero, .promo, .ci-panel, .dir-band, .dir-pro, .dir-au-soon, .tb-cd, .chip.vip, .chip.annual-chip, .chip.sold, .ticket-head,
+  .video-ph, .demo-banner, .dir-poster-img, .dir-poster-date, .toast, .ph-view, .dir-ev-hero, .dir-next {
+    --ink: #16120f; --ink-2: #4a423b; --ink-3: #6b6159; --paper: #f6f1e9; --paper-2: #ece4d6; --card: #fffdf9;
+    --line: rgba(22, 18, 15, 0.14); --accent: #75602f; --gold: #a68a52; --gold-ink: #75602f;
+  }
+  .dir-band, .dir-pro, .dir-au-soon { box-shadow: inset 0 0 0 1px rgba(200, 173, 116, .55); }
+  /* By night the ink buttons are light; they brighten on hover. */
+  .au-v-bid:hover, .gd-play:hover, .lot-page .co-pay:hover { background: #fff; color: #121110; }
+  /* Black frames stand out from the dark page by a hairline. */
+  .lot-img img, .au-v-fig, .lot-page .lot-figure, .au-feature-img, .ct-lot img, .cl-bid img, .au-artist-strip img, .au-v-thumb { box-shadow: 0 0 0 1px rgba(236, 230, 220, .12); }
+  .shop-page .shop-item .cover { box-shadow: 0 0 0 1px rgba(236, 230, 220, .12); }
+  dialog.wl { background: var(--paper); }
+  .wl-room rect:first-child { fill: #e6ddd0; }
+  img.cover-art, .cover svg { filter: none; }
+}
+.au-find-actions { align-items: center; }
+.au-find-actions a.au-link { display: inline-flex; align-items: center; text-decoration: none; }
+@media (prefers-color-scheme: dark) { .au-swatch span { box-shadow: inset 0 0 0 1px rgba(236, 230, 220, .35); } }
+
+/* Artists by letter */
+.au-az { position: sticky; top: 61px; z-index: 5; margin: .8rem 0 0; padding: .3rem 0; background: var(--paper); border-bottom: 1px solid var(--line); }
+.au-az ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0; }
+.au-az li > * { display: grid; place-items: center; min-width: 34px; height: 44px; font: 500 1.05rem var(--serif); }
+.au-az button { border: 0; background: none; color: var(--ink); cursor: pointer; }
+.au-az button:hover { color: var(--accent); }
+.au-az span { color: var(--ink-3); opacity: .45; }
+.au-az-at { scroll-margin-top: 120px; }
+@media (max-width: 639px) { .au-az ol { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } .au-az ol::-webkit-scrollbar { display: none; } .au-az li > * { min-width: 30px; } }
+
+/* Wall labels with QR codes */
+.qr-head { padding: 2rem 0 1.4rem; border-bottom: 1.5px solid var(--ink); }
+.qr-head .au-v-bid { border: 0; cursor: pointer; margin-top: 1rem; }
+.qr-labels { display: grid; gap: 1rem; margin-top: 1.6rem; }
+@media (min-width: 700px) { .qr-labels { grid-template-columns: 1fr 1fr; } }
+.qr-label { display: grid; grid-template-columns: 1fr 112px; gap: 1rem; align-items: center; padding: 1.1rem 1.2rem; border: 1px solid var(--line); background: var(--card); break-inside: avoid; }
+.qr-label .lot-meta { margin: 0; font: 600 .62rem/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-ink); }
+.qr-artist { margin: .35rem 0 0; font: 600 .78rem/1.3 var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+.qr-title { margin: .15rem 0 0; font: italic 500 1.3rem/1.2 var(--serif); }
+.qr-size { margin: .35rem 0 0; font-size: .78rem; color: var(--ink-2); }
+.qr-scan { margin: .6rem 0 0; font: 600 .6rem/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3); }
+.qr-code { width: 112px; height: 112px; background: #fff; padding: 6px; }
+.qr-code svg { width: 100%; height: 100%; }
+:root[lang="ar"] .qr-label .lot-meta, :root[lang="ar"] .qr-artist, :root[lang="ar"] .qr-scan { letter-spacing: 0; }
+@media print {
+  .qr-page { width: auto; max-width: none; margin: 0; padding: 0; }
+  .qr-labels { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5mm; margin: 0; padding: 0 1mm; }
+  .qr-title { font-size: 1.1rem; }
+  .qr-code { width: 30mm !important; height: 30mm !important; }
+  .qr-label { height: 60mm; min-width: 0; padding: 5mm 6mm; border: .3mm solid #bbb; background: #fff; color: #16120f; overflow: hidden; }
+  .qr-code { width: 32mm; height: 32mm; }
+  .qr-label { grid-template-columns: 1fr 30mm; }
+}

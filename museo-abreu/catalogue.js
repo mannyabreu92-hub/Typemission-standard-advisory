@@ -101,7 +101,7 @@ function pageCatalogue() {
       <p class="shop-lead">${t('auFindLead', { n: lots.length, a: list.length })}</p>
       ${AUCTION.closesAt ? `<p class="ct-close">${t('auAllClose', { date: dateTime(AUCTION.closesAt) })}</p>` : ''}
       <p class="ct-src">${t('ctSrc')}</p>
-      <p class="ct-noprint"><button type="button" class="au-v-bid" data-action="ctPrint">${t('ctPrint')}</button></p>
+      <p class="ct-noprint"><button type="button" class="au-v-bid" data-action="ctPrint">${t('ctPrint')}</button> <a class="lot-go" href="#/subasta/qr">${t('qrNav')} <span class="arr" aria-hidden="true">→</span></a></p>
     </section>
     ${list.map(a => {
       const e = auEssay(a.name);
@@ -118,10 +118,27 @@ function pageCatalogue() {
     }).join('')}
   </div>`;
 }
+/* ---------- Wall labels with QR codes (#/subasta/qr) ---------- */
+// One label per work for the museum's walls: lot, artist, title, size, and a QR code to the work's page (its
+// share link, /l/<lot>, which opens the lot in the app). Printed eight to an A4 page.
+function pageLabels() {
+  if (typeof auTimer !== 'undefined') clearInterval(auTimer);
+  return `<div class="wrap ct-page qr-page">
+    <p class="ct-noprint"><a href="#/subasta/catalogo" class="lot-back"><span class="arr" aria-hidden="true">←</span> ${t('ctTitle')}</a></p>
+    <section class="ct-noprint qr-head"><h1 class="shop-h1">${t('qrH')}</h1><p class="shop-lead">${t('qrLead')}</p>
+      <p><button type="button" class="au-v-bid" data-action="ctPrint">${t('ctPrint')}</button></p></section>
+    <div class="qr-labels">${auLots().map(l => { const [, , s] = lotFacts(l); return `<article class="qr-label">
+      <div class="qr-text"><p class="lot-meta">${t('auLot', { n: lotNumber(l) })}</p>
+        <p class="qr-artist">${esc(lotArtist(l))}</p><p class="qr-title">${esc(lotTitle(l))}</p>
+        ${s ? `<p class="qr-size">${esc(s)}</p>` : ''}<p class="qr-scan">${t('qrScan')}</p></div>
+      <div class="qr-code" data-qr="${location.origin}/l/${l.id}" role="img" aria-label="QR · ${esc(lotTitle(l))}"></div>
+    </article>`; }).join('')}</div>
+  </div>`;
+}
 EXTRA_ACTIONS.ctPrint = () => { if (typeof trackEvent === 'function') trackEvent('Catalogue print', {}); print(); };
 {
   // Wraps pageAuction itself, as the other auction add-ons do, so the ones loaded later keep it.
   const auction = pageAuction;
-  pageAuction = id => id === 'catalogo' && auLots().length ? pageCatalogue() : auction(id);
+  pageAuction = id => id === 'catalogo' && auLots().length ? pageCatalogue() : id === 'qr' && auLots().length ? pageLabels() : auction(id);
   EXTRA_ROUTES.subasta = pageAuction;
 }
