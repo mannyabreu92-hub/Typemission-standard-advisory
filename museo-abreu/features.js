@@ -688,7 +688,7 @@ function eventCard(ev, passes) {
       <p style="margin-top:.6rem"><strong>${t('fromPrice', { price: usd(Math.min(...ev.tiers.map(x => x.price))) })}</strong> · ${t('vipFreePro')}</p>
       <h4 class="tier-group">${t('passesLabel')}</h4><div class="tiers">${group('pass')}</div>
       <h4 class="tier-group">${t('singleLabel')}</h4><div class="tiers">${group('single')}</div>
-      <div class="btn-row">${location.hash.startsWith('#/gabangi') ? '' : `<a class="btn primary" href="#/gabangi">${t('gabangiMore')}</a>`}<a class="btn dark" href="https://gabangi.com" target="_blank" rel="noopener">${t('officialSite')} · gabangi.com ↗</a></div>
+      <div class="btn-row">${routeHash().startsWith('#/gabangi') ? '' : `<a class="btn primary" href="#/gabangi">${t('gabangiMore')}</a>`}<a class="btn dark" href="https://gabangi.com" target="_blank" rel="noopener">${t('officialSite')} · gabangi.com ↗</a></div>
       <p class="muted" style="margin-top:.8rem">${t('gabangiSource')}</p>
     </article>`;
   }
@@ -932,7 +932,7 @@ const EXTRA_ACTIONS = {
       const f = document.getElementById('circulo');
       if (f) { f.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => document.getElementById('ci-name').focus({ preventScroll: true }), 400); }
     };
-    if (location.hash.startsWith('#/coleccion')) go(); else { location.hash = '#/coleccion'; setTimeout(go, 150); }
+    if (routeHash().startsWith('#/coleccion')) go(); else { location.hash = '#/coleccion'; setTimeout(go, 150); }
   },
   circleInterest: el => {
     const c = circle(), w = workById(el.dataset.work);

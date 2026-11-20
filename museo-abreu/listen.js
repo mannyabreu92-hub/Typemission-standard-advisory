@@ -198,7 +198,7 @@ let lsIndex = null, lsIndexP = null;
 const lsLoadIndex = () => lsIndexP ||= fetch('/api/audio?index=1').then(r => r.ok ? r.json() : {}).catch(() => ({})).then(x => (lsIndex = x || {}));
 // The recorded section on screen: Ecce Homo's reader, an edition and chapter in the index.
 function lsRecTarget() {
-  const m = location.hash.match(/^#\/leer\/([a-z]{2})\/(\d+)/), c = m && typeof CHAPTERS !== 'undefined' && CHAPTERS[+m[2]];
+  const m = routeHash().match(/^#\/leer\/([a-z]{2})\/(\d+)/), c = m && typeof CHAPTERS !== 'undefined' && CHAPTERS[+m[2]];
   const rec = c && lsIndex && lsIndex[m[1]] && lsIndex[m[1]][c.key];
   // A chapter recorded only as far as the free sample: a reader of the whole book hears it all in the phone's voice.
   if (!rec || (rec.partial && typeof readsWhole === 'function' && readsWhole(m[1]))) return null;

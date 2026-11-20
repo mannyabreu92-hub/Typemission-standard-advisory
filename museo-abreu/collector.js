@@ -1,9 +1,9 @@
-// The collector page (#/coleccion): the works saved with ♡, the visitor's own bids with where each stands,
+// The collector page (#/mi-coleccion; #/coleccion is the Collectors' Circle): the works saved with ♡, the visitor's own bids with where each stands,
 // the artists behind them, and works chosen for them by colour, size and artist. Everything comes from
 // this phone (the ♡ list and the bids placed from it) and from the live auction state; nothing is invented.
 
 function pageCollector() {
-  if (!auState && !auFailed) fetchAuction().then(() => { if (location.hash.startsWith('#/coleccion')) route(); });
+  if (!auState && !auFailed) fetchAuction().then(() => { if (routeHash().startsWith('#/mi-coleccion')) route(); });
   const byId = id => AUCTION.lots.find(l => l.id === id);
   const saved = wsList(), savedLots = saved.filter(k => k.startsWith('l:')).map(k => byId(k.slice(2))).filter(Boolean);
   const savedWorks = saved.filter(k => k.startsWith('w:')).map(k => findWork(k.slice(2))).filter(Boolean);
@@ -50,12 +50,12 @@ function pageCollector() {
       <div class="lots">${forYou.map(l => lotCard(l, 'h3')).join('')}</div></section>` : ''}
   </div>`;
 }
-EXTRA_ROUTES.coleccion = pageCollector;
-if (typeof ROUTE_SECTION !== 'undefined') ROUTE_SECTION.coleccion = 'cuenta';
+EXTRA_ROUTES['mi-coleccion'] = pageCollector;
+if (typeof ROUTE_SECTION !== 'undefined') ROUTE_SECTION['mi-coleccion'] = 'cuenta';
 
 // The way in: from the account page, and under the auction's search.
 {
   const acc = accountExtras;
-  accountExtras = () => `<section class="section"><a class="cl-door" href="#/coleccion"><span class="au-index-h">${t('clTitle')}</span>
+  accountExtras = () => `<section class="section"><a class="cl-door" href="#/mi-coleccion"><span class="au-index-h">${t('clTitle')}</span>
     <span class="cl-door-lead">${t('clLead')}</span><span class="lot-go">${t('clOpenCol')} <span class="arr" aria-hidden="true">→</span></span></a></section>` + acc();
 }

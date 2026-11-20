@@ -81,7 +81,7 @@ function photoDefaultDate(ev) {
 async function adLoadPhotos(ev, date) {
   try { adPhotoDoc = { event: ev, date, ...(await (await fetch(`/api/photos?event=${ev}&date=${date}`, { cache: 'no-store' })).json()) }; }
   catch (e) { adPhotoDoc = { event: ev, date, photos: [] }; }
-  if (location.hash.startsWith('#/admin/fotos')) route();
+  if (routeHash().startsWith('#/admin/fotos')) route();
 }
 
 function pagePhotos(ev, date) {

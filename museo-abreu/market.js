@@ -258,9 +258,9 @@ async function fetchAuction() {
 // Refreshes the bids every 20 s while an auction page is open and nobody is typing in the form.
 function auPoll() {
   clearInterval(auTimer);
-  if (!location.hash.startsWith('#/subasta') || !AUCTION.lots.some(l => auOpen(l))) return;
+  if (!routeHash().startsWith('#/subasta') || !AUCTION.lots.some(l => auOpen(l))) return;
   auTimer = setInterval(async () => {
-    if (!location.hash.startsWith('#/subasta')) return clearInterval(auTimer);
+    if (!routeHash().startsWith('#/subasta')) return clearInterval(auTimer);
     await fetchAuction();
     // Not while the visitor types, nor while the room's audio guide reads it aloud.
     if ((!document.activeElement || !document.activeElement.closest('form')) && !(typeof gd !== 'undefined' && gd.on)) route();
@@ -549,7 +549,7 @@ function auFinderHTML(full) {
         <select id="au-sort" class="au-sort-sel" data-finder="sort">${[['book', 'auSortBook'], ['bids', 'auSortBids'], ['new', 'auSortNew'], ['old', 'auSortOld'], ['big', 'auSortBig'], ['small', 'auSortSmall'], ['az', 'auSortAZ']].map(([v, k]) => `<option value="${v}"${auF.sort === v ? ' selected' : ''}>${t(k)}</option>`).join('')}</select></div>` : ''}
     </div>
     ${full ? auUnderstoodHTML() : ''}
-    <div class="au-find-actions"><button type="button" class="au-link" data-action="auSurprise">${t('auSurprise')} <span class="arr" aria-hidden="true">→</span></button><a class="au-link au-link-quiet" href="#/coleccion">${t('clNav')}</a><a class="au-link au-link-quiet" href="#/subasta/catalogo">${t('ctNav')}</a>${full ? `<button type="button" class="au-link au-link-quiet" data-action="auFClear">${t('auClear')}</button>` : ''}</div>
+    <div class="au-find-actions"><button type="button" class="au-link" data-action="auSurprise">${t('auSurprise')} <span class="arr" aria-hidden="true">→</span></button><a class="au-link au-link-quiet" href="#/mi-coleccion">${t('clNav')}</a><a class="au-link au-link-quiet" href="#/subasta/catalogo">${t('ctNav')}</a>${full ? `<button type="button" class="au-link au-link-quiet" data-action="auFClear">${t('auClear')}</button>` : ''}</div>
   </section>`;
 }
 // Redraws the finder's controls (when asked) and the works, keeping focus where it was.
@@ -561,7 +561,7 @@ function auFinderRedraw(controls, focusSel) {
 }
 EXTRA_FORMS.auFind = form => {
   auF.q = form.q.value.trim();
-  if (!location.hash.startsWith('#/subasta/obras')) { location.hash = '#/subasta/obras'; return; }
+  if (!routeHash().startsWith('#/subasta/obras')) { location.hash = '#/subasta/obras'; return; }
   auFinderRedraw(true);
   const c = document.querySelector('#au-browse .au-count'); if (c) { c.setAttribute('tabindex', '-1'); c.focus(); }
 };
@@ -571,7 +571,7 @@ EXTRA_ACTIONS.auFSize = el => { auF.size = auF.size === el.dataset.size ? '' : e
 EXTRA_ACTIONS.auFClear = () => { auF = { q: '', cols: [], size: '', sort: 'book' }; auCat = 'all'; auFinderRedraw(true, '#au-q'); };
 // A random work among those the visitor is looking at (all of them on the auction page).
 EXTRA_ACTIONS.auSurprise = () => {
-  const list = location.hash.startsWith('#/subasta/obras') ? auFound() : auLots();
+  const list = routeHash().startsWith('#/subasta/obras') ? auFound() : auLots();
   if (list.length) location.hash = '#/subasta/' + list[Math.floor(Math.random() * list.length)].id;
 };
 // Results follow the typing (after a short pause); the box keeps its focus.
@@ -782,7 +782,7 @@ function pageAllWorks() {
 }
 
 function pageAuction(id) {
-  if (!auState && !auFailed) fetchAuction().then(() => { if (location.hash.startsWith('#/subasta')) route(); });
+  if (!auState && !auFailed) fetchAuction().then(() => { if (routeHash().startsWith('#/subasta')) route(); });
   setTimeout(auPoll, 0);
   const fin = liveFinale();
   const lot = id && auLots().find(l => l.id === id);

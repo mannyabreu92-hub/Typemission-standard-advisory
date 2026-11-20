@@ -244,7 +244,7 @@ async function proRecheck() {
     if (!r.ok) return;
     const { keys } = await r.json();
     fx.set('proChecked', todayPC());
-    if (!(keys || []).includes('pro')) { fx.set('member', null); if (/^#\/(pro|cuenta|eventos)/.test(location.hash)) route(); }
+    if (!(keys || []).includes('pro')) { fx.set('member', null); if (/^#\/(pro|cuenta|eventos)/.test(routeHash())) route(); }
   } catch (e) {}
 }
 setTimeout(proRecheck, 3000);

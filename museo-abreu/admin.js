@@ -42,7 +42,7 @@ async function adLoad() {
     else if (!r.ok) throw new Error(r.status);
     else { adData = await r.json(); adMsg = ''; }
   } catch (e) { adMsg = t('adErr'); }
-  if (location.hash.startsWith('#/admin')) route();
+  if (routeHash().startsWith('#/admin')) route();
 }
 
 function adTable(head, rows) {

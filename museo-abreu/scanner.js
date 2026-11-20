@@ -113,7 +113,7 @@ async function scCamOn() {
     };
   }
   const loop = async () => {
-    if (!scStream || !location.hash.startsWith('#/admin/escanear')) return scCamOff();
+    if (!scStream || !routeHash().startsWith('#/admin/escanear')) return scCamOff();
     const code = await detect();
     // The same ticket held in front of the camera is read once every few seconds, not on every frame.
     if (code && !scBusy && (code !== scLast.code || Date.now() - scLast.at > 5000)) { scLast = { code, at: Date.now() }; await scCheck(code); }
@@ -134,7 +134,7 @@ Object.assign(EXTRA_ACTIONS, {
   scCam: () => (scStream ? scCamOff() : scCamOn()),
   scUndo: el => scCheck(el.dataset.code, false),
 });
-window.addEventListener('hashchange', () => { if (!location.hash.startsWith('#/admin/escanear')) scCamOff(); });
+window.addEventListener('hashchange', () => { if (!routeHash().startsWith('#/admin/escanear')) scCamOff(); });
 
 {
   const route0 = EXTRA_ROUTES.admin;

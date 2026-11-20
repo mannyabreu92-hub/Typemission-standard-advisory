@@ -54,3 +54,6 @@ module.exports = (req, res) => {
 <script>location.replace(${JSON.stringify(target)})</script>
 </head><body><p><a href="${target}">${esc(title)}</a></p></body></html>`);
 };
+
+module.exports.T = T;
+module.exports.fill = fill;

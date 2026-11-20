@@ -24,7 +24,7 @@ Object.assign(I18N.fr, {
 
 let qsText = '', qsWhere = null;
 function qsCurrent() {
-  const m = location.hash.match(/^#\/leer\/([a-z]{2})\/(\d+)/);
+  const m = routeHash().match(/^#\/leer\/([a-z]{2})\/(\d+)/);
   return m && { l: m[1], ch: Math.min(Number(m[2]), CHAPTERS.length - 1) };
 }
 // The button appears (above the bottom menu) while a passage of the reader is selected.

@@ -105,7 +105,7 @@ const routes = {
 if (typeof EXTRA_ROUTES !== 'undefined') Object.assign(routes, EXTRA_ROUTES);
 
 function route() {
-  const parts = (location.hash || (window.SEO_ROUTE ? '#/' + window.SEO_ROUTE : '')).replace(/^#\/?/, '').split('/');
+  const here = routeOf(), parts = here.split('/');
   // An address that is no page of the app shows "Page not found" (the home page only for #/ and the bare URL).
   const missing = parts[0] !== '' && !routes[parts[0]];
   const name = missing ? '' : parts[0];
@@ -123,12 +123,19 @@ function route() {
   // A last path part naming an element on the page (e.g. #/biblioteca/top100) scrolls to it.
   const anchor = parts.length > 1 && /^[a-z][\w-]*$/.test(parts.at(-1)) && document.getElementById(parts.at(-1));
   if (anchor) requestAnimationFrame(() => anchor.scrollIntoView());
+  // The page's own address in the address bar (routes.js), so the link shared from it previews this page.
+  if (!missing && location.protocol.startsWith('http')) {
+    const to = routeURL(here, lang);
+    if (location.pathname + location.search + location.hash !== to) history.replaceState(history.state, '', to);
+  }
 }
+// Back and forward between pages whose address has no "#/".
+window.addEventListener('popstate', () => { if (!/^#\//.test(location.hash)) { route(); window.scrollTo(0, 0); } });
 
 // Analytics: one page view per route the visitor opens (re-renders for a language change don't count).
 let lastTracked = null;
 function trackPage() {
-  const path = '/' + location.hash.replace(/^#\/?/, '');
+  const path = '/' + routeOf();
   if (path === lastTracked) return;
   lastTracked = path;
   window.va('pageview', { route: path, path });
@@ -197,7 +204,7 @@ function afterRender(name) {
 }
 
 function go(hash) {
-  if (location.hash === hash) route(); else location.hash = hash;
+  if (routeHash() === hash) route(); else location.hash = hash;
   window.scrollTo(0, 0);
   main.focus({ preventScroll: true });
 }
@@ -1089,7 +1096,7 @@ function applyLang(l, remember = true) {
   langSelect.value = l;
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
   // A book open in the reader follows the new language, at the same chapter, when it has that edition.
-  const bm = main.firstChild && location.hash.match(/^#\/(leer|buscar|fundamentos)\/([a-z]{2})(\/.*)?$/);
+  const bm = main.firstChild && routeHash().match(/^#\/(leer|buscar|fundamentos)\/([a-z]{2})(\/.*)?$/);
   if (bm && bm[2] !== l && (bm[1] === 'fundamentos' ? typeof FUND_EDITIONS === 'object' && FUND_EDITIONS[l]
     : EDITIONS.some(e => e.lang === l && e.status === 'available'))) history.replaceState(null, '', `#/${bm[1]}/${l}${bm[3] || ''}`);
   // Re-render in place; the booking in progress is kept.
@@ -1101,7 +1108,7 @@ langSelect.addEventListener('change', () => setLang(langSelect.value));
 
 window.addEventListener('hashchange', e => {
   if (location.hash === '#main') { // skip link: keep the current page
-    history.replaceState(null, '', e.oldURL.includes('#') ? e.oldURL.slice(e.oldURL.indexOf('#')) : '#/');
+    history.replaceState(null, '', e.oldURL);
     return main.focus();
   }
   route();

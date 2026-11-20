@@ -335,7 +335,7 @@ function pageMembership() {
 
 const PAGE_DESC = {
   eventos: () => `${t('hmUpcoming')} · ${sortedEvents().filter(ev => ev.annual).map(ev => `${eventTitle(ev)} (${fmtDate(eventDate(ev))})`).join(' · ')}. ${t('eventsLead')}`,
-  evento: () => { const ev = ANNUAL_EVENTS.find(e => e.id === location.hash.split('/')[2] || e.id === String(window.SEO_ROUTE || '').split('/')[1]); return ev ? `${fmtDate(eventDate(ev))} · Museo Abreu, Bávaro. ${L(ev.desc)}` : ''; },
+  evento: () => { const ev = ANNUAL_EVENTS.find(e => e.id === routeHash().split('/')[2] || e.id === String(window.SEO_ROUTE || '').split('/')[1]); return ev ? `${fmtDate(eventDate(ev))} · Museo Abreu, Bávaro. ${L(ev.desc)}` : ''; },
   visita: () => `${t('visitTitle')} · Museo Abreu, Bávaro, Punta Cana · ${EXPERIENCES.filter(e => e.price != null).map(e => L(e.name)).join(' · ')}.`,
   biblioteca: () => t('synopsisText'),
   fundamentos: () => t('fuLead'),

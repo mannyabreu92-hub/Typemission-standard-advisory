@@ -49,7 +49,8 @@ const fuCanRead = (l, n) => n < FUND_FREE || fuOwns(l);
 // typeface, upright (neither has italics).
 const FU_CJK_SERIF = { ja: "'Hiragino Mincho ProN', 'Yu Mincho', YuMincho, 'Noto Serif JP', serif", zh: "'Songti SC', STSong, SimSun, 'Noto Serif SC', serif" };
 const fuCoverLines = l => { const t = fuEd(l).title.toUpperCase(), i = t.indexOf(' '); return i < 0 ? [t, ''] : [t.slice(0, i), t.slice(i + 1)]; };
-const fuCover = l => { const [a, b] = fuCoverLines(l), ja = !!FU_CJK_SERIF[l], serif = FU_CJK_SERIF[l] || 'Cormorant Garamond, serif'; return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}">${artLayer(9, 1).replace('height="500"', 'height="600"')}
+// The cover: Oscar Abreu's painting of a head (as on the poster of the book's presentation at the UASD) above the title band.
+const fuCover = l => { const [a, b] = fuCoverLines(l), ja = !!FU_CJK_SERIF[l], serif = FU_CJK_SERIF[l] || 'Cormorant Garamond, serif'; return `<svg viewBox="0 0 400 600" role="img" aria-label="${esc(fuEd(l).title)}"><rect width="400" height="360" fill="#7f9bb8"/><image href="img/fundamentos-cover-art.jpg" width="400" height="360" preserveAspectRatio="xMidYMid slice"/>
   <rect y="360" width="400" height="240" fill="#16120f"/><rect x="28" y="384" width="56" height="2" fill="#c4a76c"/>
   <text x="28" y="${b ? 430 : 448}" fill="#f6f1e9" font-family="${serif}" font-size="${ja ? Math.min(40, Math.floor(320 / a.length)) : 40}" font-weight="600" letter-spacing="1.5">${a}</text>
   ${b ? `<text x="28" y="466" fill="#f6f1e9" font-family="${serif}" font-size="${Math.min(25, Math.floor((344 / b.length - 1) / 0.61))}" font-weight="600" letter-spacing="1">${b}</text>` : ''}

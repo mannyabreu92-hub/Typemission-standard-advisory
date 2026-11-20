@@ -48,10 +48,64 @@ function schema(p, l, data, m) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': g.filter(Boolean) }).replace(/</g, '\\u003c');
 }
 
+// Every other page of the app at its own address (its route: /subasta/sajoma, /evento/uasd-psico, /mi-coleccion…):
+// its own title, description and picture for link previews, else those of the main page it belongs to.
+const { AUCTION } = require('../auction-config.js');
+const SHARE = require('./share-item.js'), EVENT_SHARE = require('./event-share.js');
+const L3 = l => (['es', 'en', 'fr'].includes(l) ? l : 'en');
+const slug = n => n.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const lots = () => AUCTION.lots.filter(x => !x.example);
+const artistOf = x => x.artist || 'Oscar Abreu';
+const RT = {
+  auction: { es: 'Subasta · Museo Abreu', en: 'Auction · Museo Abreu', fr: 'Vente aux enchères · Museo Abreu' },
+  auctionDesc: { es: '{n} obras de {a} artistas en subasta. Puje en línea; gana la puja más alta.', en: '{n} works by {a} artists at auction. Bid online; the highest bid wins.', fr: '{n} œuvres de {a} artistes aux enchères. Enchérissez en ligne ; l’enchère la plus haute l’emporte.' },
+  room: { es: 'Sala de {name} · Subasta · Museo Abreu', en: '{name} · Auction room · Museo Abreu', fr: 'Salle de {name} · Enchères · Museo Abreu' },
+  works: { es: '{n} obras en subasta', en: '{n} works at auction', fr: '{n} œuvres aux enchères' },
+  work1: { es: '1 obra en subasta', en: '1 work at auction', fr: '1 œuvre aux enchères' },
+  catalogue: { es: 'Catálogo de la subasta · Museo Abreu', en: 'Sale catalogue · Museo Abreu', fr: 'Catalogue de la vente · Museo Abreu' },
+  collection: { es: 'Mi colección · Museo Abreu', en: 'My collection · Museo Abreu', fr: 'Ma collection · Museo Abreu' },
+};
+const fill = SHARE.fill;
+function routeMeta(r, l, data, paths) {
+  const k = L3(l), seg = r.split('/'), inv = Object.fromEntries(Object.entries(paths).map(([pp, rr]) => [rr, pp]));
+  const base = pp => (data.pages[pp] || data.pages['']).meta[l] || (data.pages[pp] || data.pages['']).meta.en;
+  const all = lots(), artists = [...new Set(all.map(artistOf))];
+  if (seg[0] === 'subasta') {
+    const lot = seg[1] && all.find(x => x.id === seg[1]);
+    if (lot) {
+      const n = all.indexOf(lot) + 1, name = lot.title ? (lot.title[k] || lot.title.en) : '';
+      return { title: `${name} · ${artistOf(lot)} — ${fill(SHARE.T.lot[k], { n })} · ${SHARE.T.auction[k]}`, img: lot.img,
+        desc: fill(SHARE.T.lotDesc[k], { kind: SHARE.T.kind[lot.kind][k], artist: artistOf(lot) }) + (lot.startBid != null ? ' ' + fill(SHARE.T.start[k], { p: lot.startBid.toLocaleString('en-US') }) : '') };
+    }
+    const room = seg[1] && seg[1].startsWith('artista-') && artists.find(a => 'artista-' + slug(a) === seg[1]);
+    if (room) {
+      const own = all.filter(x => artistOf(x) === room), e = AUCTION.essays && AUCTION.essays[room];
+      return { title: fill(RT.room[k], { name: room }), img: own[0].img,
+        desc: [e && e.head, fill(own.length === 1 ? RT.work1[k] : RT.works[k], { n: own.length })].filter(Boolean).join(' · ') + '. ' + fill(RT.auctionDesc[k], { n: all.length, a: artists.length }).split('. ')[1] };
+    }
+    return { title: seg[1] === 'catalogo' || seg[1] === 'qr' ? RT.catalogue[k] : RT.auction[k], img: all[0] && all[0].img, desc: fill(RT.auctionDesc[k], { n: all.length, a: artists.length }) };
+  }
+  if (seg[0] === 'evento' && EVENT_SHARE.EVENTS[seg[1]]) {
+    const ev = EVENT_SHARE.EVENTS[seg[1]], d = EVENT_SHARE.nextDate(ev), y = String(d.getUTCFullYear()), sp = (ev.byYear || {})[y] || {};
+    const loc = { es: 'es-DO', en: 'en-US', fr: 'fr-FR' }[k];
+    return { title: (sp.title ? sp.title[k] : ev.name[k]) + ' · Museo Abreu', img: ev.img,
+      desc: `${d.toLocaleDateString(loc, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })} · ${ev.place ? ev.place[k] : 'Museo Abreu, Bávaro, Punta Cana'}. ${(sp.desc || ev.desc)[k]}` };
+  }
+  if (seg[0] === 'fundamentos') return { ...base('books/fundamentos'), img: 'img/fundamentos-cover-art.jpg' };
+  if (seg[0] === 'leer' || seg[0] === 'buscar') return base('books/ecce-homo');
+  if (seg[0] === 'mi-coleccion') return { ...base(''), title: RT.collection[k], noindex: true };
+  if (inv[seg[0]]) return base(inv[seg[0]]);
+  return { ...base(''), noindex: /^(admin|personal|cuenta|gracias)$/.test(seg[0]) };
+}
+
+// The picture shown in a link's preview, where a page has its own.
+const PAGE_IMG = { 'books/fundamentos': 'img/fundamentos-cover-art.jpg', 'events/anniversary': 'img/escaping-being.jpg', 'events/group-exhibition': 'img/resilience.jpg' };
+
 module.exports = (req, res) => {
   const { html, paths, data } = load();
   const p = String(req.query.p || '').replace(/^\/|\/$/g, '');
-  if (!paths[p]) return res.status(404).send('Not found');
+  if (!paths[p] && !/^[\w\-\/%.]+$/.test(p)) return res.status(404).send('Not found');
+  if (!paths[p]) return routePage(req, res, p, html, paths, data);
   const l = LANGS.includes(String(req.query.lang)) ? String(req.query.lang) : 'en';
   const page = data.pages[p], m = page.meta[l] || page.meta.en;
   const links = Object.keys(paths).filter(k => !k.includes('/') || k.startsWith('books/')).map(k => `<li><a href="${url(k, l)}">${esc(data.pages[k].meta[l].h1 || k)}</a></li>`).join('');
@@ -69,10 +123,33 @@ ${LANGS.map(x => `<link rel="alternate" hreflang="${x}" href="${url(p, x)}">`).j
     .replace(/(<meta property="og:title" content=")[^"]*/, `$1${esc(m.title)}`)
     .replace(/(<meta property="og:description" content=")[^"]*/, `$1${esc(m.desc)}`)
     .replace(/(<meta property="og:url" content=")[^"]*/, `$1${url(p, l)}`)
+    .replace(/(<meta property="og:image" content=")[^"]*/, `$1${SITE}/${PAGE_IMG[p] || 'img/og-image.jpg'}`)
     .replace('</head>', head + '\n</head>')
     .replace(/<main id="main" tabindex="-1"><\/main>/, `<main id="main" tabindex="-1">${body}</main>`);
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=3600, stale-while-revalidate=86400');
   res.status(200).send(out);
 };
+
+// A page that is not one of the main ones: the app shows it from its route (window.SEO_ROUTE); its preview is its own.
+function routePage(req, res, r, html, paths, data) {
+  const l = LANGS.includes(String(req.query.lang)) ? String(req.query.lang) : 'en';
+  let m;
+  try { m = routeMeta(r, l, data, paths); } catch (e) { m = data.pages[''].meta[l] || data.pages[''].meta.en; }
+  const img = m.img ? `${SITE}/${m.img}` : `${SITE}/img/og-image.jpg`;
+  const out = html
+    .replace(/<html lang="[^"]*">/, `<html lang="${l}"${l === 'ar' ? ' dir="rtl"' : ''}>`)
+    .replace(/<title>[^<]*<\/title>/, `<title>${esc(m.title)}</title>`)
+    .replace(/(<meta name="description" content=")[^"]*/, `$1${esc(m.desc)}`)
+    .replace(/(<meta property="og:title" content=")[^"]*/, `$1${esc(m.title)}`)
+    .replace(/(<meta property="og:description" content=")[^"]*/, `$1${esc(m.desc)}`)
+    .replace(/(<meta property="og:url" content=")[^"]*/, `$1${url(r, l)}`)
+    .replace(/(<meta property="og:image" content=")[^"]*/, `$1${img}`)
+    .replace(/\s*<meta property="og:image:(width|height)" content="[^"]*">/g, '')
+    .replace('</head>', `<link rel="canonical" href="${url(r, l)}">${m.noindex ? '\n<meta name="robots" content="noindex">' : ''}
+<script>window.SEO_ROUTE = ${JSON.stringify(r)};</script>\n</head>`);
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=600, stale-while-revalidate=86400');
+  res.status(200).send(out);
+}
 module.exports.nextDate = nextDate;

@@ -365,7 +365,7 @@ function pageManifestos(nStr) {
   const n = Number(nStr), m = MANIFESTOS.find(x => x.n === n);
   if (m && m.n > 2 && (!m.es || (LAZY_LANGS.includes(lang) && !MANIFESTO_LANGS.has(lang)))) {
     Promise.all([loadManifestoText(), loadManifestoLang(lang)])
-      .then(() => { if (location.hash === '#/manifiestos/' + n) route(); }, () => toast(t('manifestoOffline')));
+      .then(() => { if (routeHash() === '#/manifiestos/' + n) route(); }, () => toast(t('manifestoOffline')));
     return `<div class="wrap"><section class="section"><p class="eyebrow">${t('manifestoEyebrow')} ${n}/${MANIFESTOS.length}</p>
       <h1>${L(m.title)}</h1><p class="muted" style="margin-top:1rem">${t('loadingText')}</p></section></div>`;
   }

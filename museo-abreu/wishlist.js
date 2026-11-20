@@ -71,7 +71,7 @@ function wsToggle(key) {
   // Update every heart for this item in place (no page redraw, so the scroll position stays).
   document.querySelectorAll(`[data-wish="${key}"]`).forEach(b => { const n = document.createElement('div'); n.innerHTML = wsHeart(key, b.classList.contains('wish-btn')); b.replaceWith(n.firstElementChild); });
   toast(t(on ? 'wsAdded' : 'wsRemoved'));
-  if (location.hash.startsWith('#/cuenta') && !on) route();
+  if (routeHash().startsWith('#/cuenta') && !on) route();
 }
 // Hearts sit in the page and in the artwork window (outside <main>), so one listener on the document.
 document.addEventListener('click', e => { const b = e.target.closest('[data-wish]'); if (b) { e.preventDefault(); e.stopPropagation(); wsToggle(b.dataset.wish); } }, true);

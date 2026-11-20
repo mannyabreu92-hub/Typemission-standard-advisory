@@ -83,6 +83,10 @@
     {
       "source": "/contact",
       "destination": "/api/page?p=contact"
+    },
+    {
+      "source": "/:path((?!api/|_vercel/)[^.]+)",
+      "destination": "/api/page?p=:path"
     }
   ],
   "crons": [
