@@ -1039,6 +1039,7 @@ I18N.it = {
   "qrLead": "Una didascalia per opera, con un codice da scansionare nel museo. Si stampa in A4: otto didascalie per pagina.",
   "qrScan": "Scansiona per vedere l’opera e fare un’offerta",
   "qrNav": "Didascalie con codice QR",
+  "thDark": "Modalità scura",
 };
 TR.it = {
   "2019": "2019",

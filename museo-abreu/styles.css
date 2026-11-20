@@ -1554,41 +1554,75 @@ dialog.wl[open] { animation: vw-in .4s cubic-bezier(.2, .7, .2, 1); }
   main.page-in { animation: none; }
 }
 
-/* Dark mode: the phone's setting decides. The same catalogue, by night: warm charcoal, ivory type, bronze. */
-:root { color-scheme: light dark; }
-@media (prefers-color-scheme: dark) {
-  :root {
+/* Dark mode, by choice: the ☾ button in the top bar (theme.js) sets html[data-theme="dark"]; light is the
+   museum's own look and the default. By night: warm charcoal, ivory type, bronze. */
+:root { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="dark"] {
     --ink: #ece6dc; --ink-2: #c9c0b4; --ink-3: #a99f92;
     --paper: #121110; --paper-2: #1d1b19; --card: #191715;
     --line: rgba(236, 230, 220, 0.16);
     --accent: #e3a073; --accent-ink: #121110; --accent-soft: rgba(227, 160, 115, 0.14);
     --ok: #7fd49b; --warn: #e6b866; --gold: #c8ad74; --gold-ink: #cdb27a;
   }
-  .topbar { background: rgba(18, 17, 16, .92); }
-  .wish { background: rgba(25, 23, 21, .92); }
-  .sr-list mark, .sr-mark { background: #5a4a26; }
+html[data-theme="dark"] .topbar { background: rgba(18, 17, 16, .92); }
+html[data-theme="dark"] .wish { background: rgba(25, 23, 21, .92); }
+html[data-theme="dark"] .sr-list mark,
+html[data-theme="dark"] .sr-mark { background: #5a4a26; }
   /* Gold buttons keep dark type, as on paper. */
-  .hero .btn.primary, .promo .btn.primary, .ci-panel .btn.primary, .dir-band .btn.primary, .btn.dir-big { color: #16120f; }
+html[data-theme="dark"] .hero .btn.primary,
+html[data-theme="dark"] .promo .btn.primary,
+html[data-theme="dark"] .ci-panel .btn.primary,
+html[data-theme="dark"] .dir-band .btn.primary,
+html[data-theme="dark"] .btn.dir-big { color: #16120f; }
   /* The museum's dark surfaces (the hero, the bands, the countdown pill, the dark chips, tickets) stay as they
      are by day: they keep the day's colours inside them, so nothing on them changes. */
-  .hero, .promo, .ci-panel, .dir-band, .dir-pro, .dir-au-soon, .tb-cd, .chip.vip, .chip.annual-chip, .chip.sold, .ticket-head,
-  .video-ph, .demo-banner, .dir-poster-img, .dir-poster-date, .toast, .ph-view, .dir-ev-hero, .dir-next {
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .promo,
+html[data-theme="dark"] .ci-panel,
+html[data-theme="dark"] .dir-band,
+html[data-theme="dark"] .dir-pro,
+html[data-theme="dark"] .dir-au-soon,
+html[data-theme="dark"] .tb-cd,
+html[data-theme="dark"] .chip.vip,
+html[data-theme="dark"] .chip.annual-chip,
+html[data-theme="dark"] .chip.sold,
+html[data-theme="dark"] .ticket-head,
+html[data-theme="dark"] .video-ph,
+html[data-theme="dark"] .demo-banner,
+html[data-theme="dark"] .dir-poster-img,
+html[data-theme="dark"] .dir-poster-date,
+html[data-theme="dark"] .toast,
+html[data-theme="dark"] .ph-view,
+html[data-theme="dark"] .dir-ev-hero,
+html[data-theme="dark"] .dir-next {
     --ink: #16120f; --ink-2: #4a423b; --ink-3: #6b6159; --paper: #f6f1e9; --paper-2: #ece4d6; --card: #fffdf9;
     --line: rgba(22, 18, 15, 0.14); --accent: #75602f; --gold: #a68a52; --gold-ink: #75602f;
   }
-  .dir-band, .dir-pro, .dir-au-soon { box-shadow: inset 0 0 0 1px rgba(200, 173, 116, .55); }
+html[data-theme="dark"] .dir-band,
+html[data-theme="dark"] .dir-pro,
+html[data-theme="dark"] .dir-au-soon { box-shadow: inset 0 0 0 1px rgba(200, 173, 116, .55); }
   /* By night the ink buttons are light; they brighten on hover. */
-  .au-v-bid:hover, .gd-play:hover, .lot-page .co-pay:hover { background: #fff; color: #121110; }
+html[data-theme="dark"] .au-v-bid:hover,
+html[data-theme="dark"] .gd-play:hover,
+html[data-theme="dark"] .lot-page .co-pay:hover { background: #fff; color: #121110; }
   /* Black frames stand out from the dark page by a hairline. */
-  .lot-img img, .au-v-fig, .lot-page .lot-figure, .au-feature-img, .ct-lot img, .cl-bid img, .au-artist-strip img, .au-v-thumb { box-shadow: 0 0 0 1px rgba(236, 230, 220, .12); }
-  .shop-page .shop-item .cover { box-shadow: 0 0 0 1px rgba(236, 230, 220, .12); }
-  dialog.wl { background: var(--paper); }
-  .wl-room rect:first-child { fill: #e6ddd0; }
-  img.cover-art, .cover svg { filter: none; }
-}
+html[data-theme="dark"] .lot-img img,
+html[data-theme="dark"] .au-v-fig,
+html[data-theme="dark"] .lot-page .lot-figure,
+html[data-theme="dark"] .au-feature-img,
+html[data-theme="dark"] .ct-lot img,
+html[data-theme="dark"] .cl-bid img,
+html[data-theme="dark"] .au-artist-strip img,
+html[data-theme="dark"] .au-v-thumb { box-shadow: 0 0 0 1px rgba(236, 230, 220, .12); }
+html[data-theme="dark"] .shop-page .shop-item .cover { box-shadow: 0 0 0 1px rgba(236, 230, 220, .12); }
+html[data-theme="dark"] dialog.wl { background: var(--paper); }
+html[data-theme="dark"] .wl-room rect:first-child { fill: #e6ddd0; }
+html[data-theme="dark"] img.cover-art,
+html[data-theme="dark"] .cover svg { filter: none; }
 .au-find-actions { align-items: center; }
 .au-find-actions a.au-link { display: inline-flex; align-items: center; text-decoration: none; }
-@media (prefers-color-scheme: dark) { .au-swatch span { box-shadow: inset 0 0 0 1px rgba(236, 230, 220, .35); } }
+html[data-theme="dark"] .au-swatch span { box-shadow: inset 0 0 0 1px rgba(236, 230, 220, .35); }
 
 /* Artists by letter */
 .au-az { position: sticky; top: 61px; z-index: 5; margin: .8rem 0 0; padding: .3rem 0; background: var(--paper); border-bottom: 1px solid var(--line); }
@@ -1623,3 +1657,24 @@ dialog.wl[open] { animation: vw-in .4s cubic-bezier(.2, .7, .2, 1); }
   .qr-code { width: 32mm; height: 32mm; }
   .qr-label { grid-template-columns: 1fr 30mm; }
 }
+/* The light / dark button in the top bar */
+.theme-btn { flex: none; width: 40px; height: 40px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; }
+.theme-btn:hover { border-color: var(--ink); }
+.theme-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.theme-btn svg[hidden] { display: none; }
+@media (max-width: 420px) { .theme-btn { width: 36px; height: 36px; } }
+/* Room for the light / dark button: on a phone the language picker shows as a globe (its list still names each
+   language); on a computer the menu sits a little closer. */
+.topbar { gap: .75rem; }
+@media (min-width: 900px) { .main-nav { gap: .75rem; } .main-nav a { font-size: .86rem; } }
+@media (min-width: 1240px) { .main-nav a { white-space: nowrap; } }
+@media (max-width: 639px) {
+  .topbar { gap: .5rem; }
+  .lang select { width: 40px; height: 36px; padding: 0; color: transparent; text-indent: -999px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316120f' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z'/%3E%3C/svg%3E");
+    background-size: 18px 18px; background-position: center; }
+  .lang select option { color: #16120f; text-indent: 0; }
+  html[data-theme="dark"] .lang select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ece6dc' stroke-width='1.5'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z'/%3E%3C/svg%3E"); }
+  html[data-theme="dark"] .lang select option { color: #ece6dc; background: #191715; }
+}
+@media (max-width: 370px) { .brand-name { font-size: 1.3rem; } .brand-desc { font-size: .58rem; } }

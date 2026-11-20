@@ -1039,6 +1039,7 @@ I18N.de = {
   "qrLead": "Ein Schild pro Werk, mit einem Code zum Scannen im Museum. Druck auf A4: acht Schilder pro Seite.",
   "qrScan": "Scannen, um das Werk zu sehen und zu bieten",
   "qrNav": "Wandschilder mit QR-Code",
+  "thDark": "Dunkler Modus",
 };
 TR.de = {
   "2019": "2019",
