@@ -1040,6 +1040,13 @@ I18N.it = {
   "qrScan": "Scansiona per vedere l’opera e fare un’offerta",
   "qrNav": "Didascalie con codice QR",
   "thDark": "Modalità scura",
+  "evSoonTitle": "Prossimamente",
+  "evFree": "Ingresso libero",
+  "evDirections": "Indicazioni",
+  "evHost": "Organizza",
+  "evPosterAlt": "Locandina di {event}",
+  "evAnalysis": "Analisi a cura di",
+  "evBookLaunch": "Presentazione del libro",
 };
 TR.it = {
   "2019": "2019",

@@ -2,6 +2,22 @@
 // tags below (title, date, image) to build the link preview; people are sent on to the event page.
 // Texts are the app's own (features.js); keep them in step when an event changes.
 const EVENTS = {
+ "uasd-psico": {
+  "on": "2026-11-23",
+  "time": "10:00",
+  "img": "img/uasd-2026-poster.jpg",
+  "place": { "es": "Biblioteca Pedro Mir, UASD, Santo Domingo", "en": "Biblioteca Pedro Mir, UASD, Santo Domingo", "fr": "Biblioteca Pedro Mir, UASD, Saint-Domingue" },
+  "name": {
+   "es": "Un encuentro sobre el Psico-Expresionismo · Oscar Abreu: Memoria, psique y creación",
+   "en": "A meeting on Psycho-Expressionism · Oscar Abreu: Memory, Psyche and Creation",
+   "fr": "Une rencontre sur le Psycho-Expressionnisme · Oscar Abreu : Mémoire, psyché et création"
+  },
+  "desc": {
+   "es": "Análisis a cargo de M.A. Albacelis Acosta y M.A. Juan Elías Rodríguez Morel, y presentación del libro Fundamentos del Psico-Expresionismo, de Oscar Abreu. Entrada libre.",
+   "en": "Analysis by M.A. Albacelis Acosta and M.A. Juan Elías Rodríguez Morel, and the presentation of the book Fundamentos del Psico-Expresionismo, by Oscar Abreu. Free entry.",
+   "fr": "Analyse par M.A. Albacelis Acosta et M.A. Juan Elías Rodríguez Morel, et présentation du livre Fundamentos del Psico-Expresionismo, d’Oscar Abreu. Entrée libre."
+  }
+ },
  "anniversary": {
   "m": 11,
   "d": 17,
@@ -75,6 +91,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;',
 
 // Next date of a yearly event in Punta Cana (UTC−4), counting today until the event's last day.
 function nextDate(ev) {
+  if (ev.on) return new Date(ev.on + 'T00:00:00Z'); // a one-time event
   const now = new Date(Date.now() - 4 * 3600e3), y = now.getUTCFullYear();
   const end = Date.UTC(y, ev.m - 1, ev.d + (ev.lastDay || 0), 23, 59);
   return now.getTime() <= end ? new Date(Date.UTC(y, ev.m - 1, ev.d)) : new Date(Date.UTC(y + 1, ev.m - 1, ev.d));
@@ -91,7 +108,7 @@ module.exports = (req, res) => {
   const [h, m] = ev.time.split(':').map(Number), mm = String(m).padStart(2, '0');
   const time = l === 'fr' ? `${h} h${m ? ' ' + mm : ''}` : `${h % 12 || 12}:${mm} ${h < 12 ? (l === 'es' ? 'a. m.' : 'AM') : (l === 'es' ? 'p. m.' : 'PM')}`;
   const when = ev.lastDay ? short(date) + ' – ' + fmt(new Date(date.getTime() + ev.lastDay * 864e5)) : fmt(date) + ' · ' + time;
-  const desc = `${when} · Museo Abreu, Bávaro, Punta Cana. ${(special.desc || ev.desc)[l]}`;
+  const desc = `${when} · ${ev.place ? ev.place[l] : 'Museo Abreu, Bávaro, Punta Cana'}. ${(special.desc || ev.desc)[l]}`;
   const target = `/#/evento/${id}`;
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=3600');

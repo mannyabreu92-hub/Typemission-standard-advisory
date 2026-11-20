@@ -445,6 +445,27 @@ const ANNUAL_EVENTS = [
     launchShort: { es: 'presentación del libro Ecce Homo', en: 'Ecce Homo book launch', fr: 'présentation du livre Ecce Homo' },
     desc: { es: 'Celebramos la apertura del museo, inaugurado el 17 de noviembre de 2021 con la retrospectiva Memoria del Psico-Expresionismo.',
       en: 'We celebrate the opening of the museum, inaugurated on November 17, 2021 with the retrospective Memoria del Psico-Expresionismo.', fr: 'Nous célébrons l’ouverture du musée, inauguré le 17 novembre 2021 avec la rétrospective Memoria del Psico-Expresionismo.' } },
+  // A one-time event (on: its date): Oscar Abreu at the Universidad Autónoma de Santo Domingo, as its poster announces,
+  // where the museum presents Fundamentos del Psico-Expresionismo. Free entry; no tickets or RSVP. Once its day has
+  // passed it leaves every list (eventShown).
+  { id: 'uasd-psico', on: '2026-11-23', time: '10:00', free: true, book: 'fundamentos',
+    name: { es: 'Un encuentro sobre el Psico-Expresionismo', en: 'A meeting on Psycho-Expressionism', fr: 'Une rencontre sur le Psycho-Expressionnisme',
+      de: 'Eine Begegnung über den Psycho-Expressionismus', it: 'Un incontro sul Psico-Espressionismo', ar: 'لقاء حول التعبيرية النفسية', ru: 'Встреча о психо-экспрессионизме' },
+    sub: { es: 'Oscar Abreu · Memoria, psique y creación', en: 'Oscar Abreu · Memory, Psyche and Creation', fr: 'Oscar Abreu · Mémoire, psyché et création',
+      de: 'Oscar Abreu · Erinnerung, Psyche und Schöpfung', it: 'Oscar Abreu · Memoria, psiche e creazione', ar: 'أوسكار أبريو · الذاكرة والنفس والإبداع', ru: 'Оскар Абреу · Память, психика и творчество' },
+    place: { es: 'Salón de Orientación, Biblioteca Pedro Mir, UASD · Santo Domingo', en: 'Salón de Orientación, Biblioteca Pedro Mir, UASD · Santo Domingo',
+      fr: 'Salón de Orientación, Biblioteca Pedro Mir, UASD · Saint-Domingue' },
+    placeShort: { es: 'UASD, Santo Domingo', en: 'UASD, Santo Domingo', fr: 'UASD, Saint-Domingue' },
+    map: 'https://www.google.com/maps/search/?api=1&query=Biblioteca+Pedro+Mir+UASD+Santo+Domingo',
+    host: 'Universidad Autónoma de Santo Domingo · Facultad de Artes · Asociación de Profesores de la FA',
+    poster: 'img/uasd-2026-poster.jpg',
+    desc: { es: 'Análisis a cargo de M.A. Albacelis Acosta y M.A. Juan Elías Rodríguez Morel, y presentación del libro Fundamentos del Psico-Expresionismo, de Oscar Abreu. Entrada libre.',
+      en: 'Analysis by M.A. Albacelis Acosta and M.A. Juan Elías Rodríguez Morel, and the presentation of the book Fundamentos del Psico-Expresionismo, by Oscar Abreu. Free entry.',
+      fr: 'Analyse par M.A. Albacelis Acosta et M.A. Juan Elías Rodríguez Morel, et présentation du livre Fundamentos del Psico-Expresionismo, d’Oscar Abreu. Entrée libre.',
+      de: 'Analyse von M.A. Albacelis Acosta und M.A. Juan Elías Rodríguez Morel und Vorstellung des Buches Fundamentos del Psico-Expresionismo von Oscar Abreu. Eintritt frei.',
+      it: 'Analisi a cura di M.A. Albacelis Acosta e M.A. Juan Elías Rodríguez Morel, e presentazione del libro Fundamentos del Psico-Expresionismo di Oscar Abreu. Ingresso libero.',
+      ar: 'تحليل يقدّمه M.A. Albacelis Acosta وM.A. Juan Elías Rodríguez Morel، وتقديم كتاب Fundamentos del Psico-Expresionismo لأوسكار أبريو. الدخول مجاني.',
+      ru: 'Анализ проводят M.A. Albacelis Acosta и M.A. Juan Elías Rodríguez Morel; презентация книги Оскара Абреу «Fundamentos del Psico-Expresionismo». Вход свободный.' } },
   { id: 'group-exhibition', annual: { m: 6, d: 13 }, vip: true, price: null, time: '19:00',
     name: { es: 'Exposición colectiva', en: 'Group exhibition', fr: 'Exposition collective' },
     desc: { es: 'Cada año el Museo Abreu reúne en una exposición colectiva a artistas dominicanos y obras de Oscar Abreu.',
@@ -529,7 +550,7 @@ const circleStatus = () => (circle() && circle().status) || 'none';
 /* ---------- Pages ---------- */
 
 function nextAnnualEvent() {
-  return ANNUAL_EVENTS.slice().sort((a, b) => eventDate(a).localeCompare(eventDate(b))).at(0);
+  return ANNUAL_EVENTS.filter(eventShown).sort((a, b) => eventDate(a).localeCompare(eventDate(b))).at(0);
 }
 
 function homeExtras() {
@@ -547,7 +568,7 @@ function homeExtras() {
     <span class="promo-text"><span class="eyebrow">${t('nextAnnual')}</span>
       <a class="promo-title" href="#/eventos">${eventTitle(ev)}</a>
       <span>${fmtDate(d)} · ${t('freeForPro')}</span>
-      <span class="promo-all">${ANNUAL_EVENTS.map(a => `${String(a.annual.d)}/${String(a.annual.m)}`).join(' · ')} · ${t('everyYear')}</span>
+      <span class="promo-all">${ANNUAL_EVENTS.filter(a => a.annual).map(a => `${String(a.annual.d)}/${String(a.annual.m)}`).join(' · ')} · ${t('everyYear')}</span>
       <span class="btn-row promo-actions">${buy}<a class="btn light" href="#/eventos">${t('eventDetails')}</a></span></span>
   </div></section>`;
   const tiles = [
@@ -593,7 +614,9 @@ function nextAnnual(a) {
   const iso = yr => `${yr}-${String(a.m).padStart(2, '0')}-${String(a.d).padStart(2, '0')}`;
   return iso(y) >= today ? iso(y) : iso(y + 1);
 }
-const eventDate = ev => (ev.annual ? nextAnnual(ev.annual) : addDays(todayPC(), ev.inDays));
+const eventDate = ev => (ev.on ? ev.on : ev.annual ? nextAnnual(ev.annual) : addDays(todayPC(), ev.inDays));
+// Yearly events always; a one-time event until its day is over.
+const eventShown = ev => !!ev.annual || (!!ev.on && ev.on >= todayPC());
 const daysUntil = iso => Math.round((Date.parse(iso) - Date.parse(todayPC())) / 864e5);
 const eventTitle = ev => ev.id === 'art-gabangi' ? `ART GABANGI ${eventDate(ev).slice(0, 4)}`
   : ev.id === 'group-exhibition' ? `${L(ev.name)} ${eventDate(ev).slice(0, 4)}`
@@ -608,6 +631,8 @@ function pageEvents() {
       <p class="eyebrow">${t('eventsEyebrow')}</p><h1>${t('eventsTitle')}</h1>
       <p class="lead" style="margin-top:.8rem">${t('eventsLead')}</p>
     </section>
+    ${(() => { const once = sortedEvents().filter(ev => ev.on && eventShown(ev)); return once.length ? `<section class="section"><h2>${t('evSoonTitle')}</h2>
+      <div class="grid two">${once.map(onceCard).join('')}</div></section>` : ''; })()}
     <section class="section"><h2>${t('annualTitle')}</h2><p class="muted" style="margin-bottom:1rem">${t('annualLead')}</p>
       <div class="grid two">${sortedEvents().filter(ev => ev.annual).map(ev => eventCard(ev, passes)).join('')}</div></section>
   </div>`;
@@ -639,6 +664,18 @@ function tierBlock(ev, tier, passes) {
   </article>`;
 }
 
+// A one-time event: where and when, who speaks, free entry, its page.
+function onceCard(ev) {
+  const d = eventDate(ev), n = daysUntil(d);
+  return `<article class="card event once">
+    <div class="chips" style="margin:0 0 .5rem"><span class="chip">${t('evFree')}</span></div>
+    <h3><a href="#/evento/${ev.id}">${eventTitle(ev)}</a></h3>
+    ${ev.sub ? `<p class="ev-card-sub">${esc(L(ev.sub))}</p>` : ''}
+    <p class="muted">${fmtDate(d)} · ${rsvpTime(ev.time)} · ${esc(L(ev.place))} · <strong>${n === 0 ? t('today') : t('inNDays', { n })}</strong></p>
+    <p style="margin-top:.4rem">${L(ev.desc)}</p>
+    <div class="btn-row"><a class="btn primary" href="#/evento/${ev.id}">${t('eventDetails')}</a><a class="btn" href="${ev.map}" target="_blank" rel="noopener">${t('evDirections')}</a></div>
+  </article>`;
+}
 function eventCard(ev, passes) {
   if (ev.tiers) {
     const d = eventDate(ev), n = daysUntil(d), end = addDays(d, ev.lastDay);

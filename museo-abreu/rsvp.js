@@ -54,7 +54,7 @@ Object.assign(I18N.fr, {
 });
 
 // The museum's own invitations: yearly events with no ticket price.
-const rsvpEvents = () => ANNUAL_EVENTS.filter(ev => !ev.tiers && !ev.price);
+const rsvpEvents = () => ANNUAL_EVENTS.filter(ev => !ev.tiers && !ev.price && !ev.free);
 const rsvpReplies = () => fx.get('rsvps', {});
 const rsvpTime = time => {
   const [h, m] = time.split(':').map(Number);
@@ -160,7 +160,7 @@ function rsvpICS(ev) {
   const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Museo Abreu//ES', 'BEGIN:VEVENT',
     'UID:rsvp-' + ev.id + '-' + d + '@museoabreu', 'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z',
     'DTSTART;TZID=' + TZ + ':' + start, 'DTEND;TZID=' + TZ + ':' + end,
-    'SUMMARY:' + eventTitle(ev) + ' · Museo Abreu', 'LOCATION:Museo Abreu\\, Bávaro\\, Punta Cana', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    'SUMMARY:' + eventTitle(ev) + (ev.sub ? ' · ' + L(ev.sub) : ' · Museo Abreu'), 'LOCATION:' + (ev.place ? L(ev.place) : 'Museo Abreu, Bávaro, Punta Cana').replace(/,/g, '\\,'), 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
   a.download = 'museo-abreu-' + ev.id + '.ics';

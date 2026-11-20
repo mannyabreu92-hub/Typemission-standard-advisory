@@ -1040,6 +1040,13 @@ I18N.de = {
   "qrScan": "Scannen, um das Werk zu sehen und zu bieten",
   "qrNav": "Wandschilder mit QR-Code",
   "thDark": "Dunkler Modus",
+  "evSoonTitle": "Demnächst",
+  "evFree": "Eintritt frei",
+  "evDirections": "Route",
+  "evHost": "Veranstalter",
+  "evPosterAlt": "Plakat: {event}",
+  "evAnalysis": "Analyse von",
+  "evBookLaunch": "Buchvorstellung",
 };
 TR.de = {
   "2019": "2019",

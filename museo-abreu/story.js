@@ -97,8 +97,8 @@ Object.assign(EXTRA_ACTIONS, {
     const inv = ev.invitation && ev.invitation[d.slice(0, 4)];
     const when = ev.lastDay ? `${fmtDate(d, { day: 'numeric', month: 'long' })} – ${fmtDate(addDays(d, ev.lastDay), { day: 'numeric', month: 'long', year: 'numeric' })}`
       : `${fmtDate(d, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })} · ${rsvpTime(ev.time)}`;
-    storyShare({ img: art.img, credit: L(art.cap), eyebrow: 'Museo Abreu', title: eventTitle(ev), sub: inv ? `Ecce Homo · ${L(inv.sub1)}` : '',
-      lines: [when, 'Bávaro, Punta Cana'], link: `${storyHost()}/e/${ev.id}` }, `museo-abreu-${ev.id}.png`, 'ev-status');
+    storyShare({ img: art.img, credit: L(art.cap), eyebrow: ev.free ? `Museo Abreu · ${t('evFree')}` : 'Museo Abreu', title: eventTitle(ev), sub: inv ? `Ecce Homo · ${L(inv.sub1)}` : ev.sub ? L(ev.sub) : '',
+      lines: [when, ev.place ? L(ev.place) : 'Bávaro, Punta Cana'], link: `${storyHost()}/e/${ev.id}` }, `museo-abreu-${ev.id}.png`, 'ev-status');
   },
   lotStory: el => {
     const lot = AUCTION.lots.find(l => l.id === el.dataset.lot), fin = liveFinale();

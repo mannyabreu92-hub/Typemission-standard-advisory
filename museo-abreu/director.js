@@ -94,7 +94,7 @@ const dirArt = (ev, sizes) => { const src = (EVENT_ART[ev.id] || EVENT_ART.anniv
   return src === 'img/escaping-being.jpg' ? `src="img/hero-1000.jpg" srcset="img/hero-640.jpg 640w, img/hero-1000.jpg 1000w, img/hero-1400.jpg 1400w" sizes="${sizes}"`
     : `src="${src}"${imgSet(src, sizes)}`; };
 // The event's own action: tickets for ART GABANGI, RSVP for the museum's invitations, else its page.
-const dirAct = (ev, cls = 'btn primary') => ev.tiers ? `<a class="${cls}" href="#/gabangi">${t('buyTickets')}</a>`
+const dirAct = (ev, cls = 'btn primary') => ev.free ? `<a class="${cls}" href="${ev.map}" target="_blank" rel="noopener">${t('evDirections')}</a>` : ev.tiers ? `<a class="${cls}" href="#/gabangi">${t('buyTickets')}</a>`
   : !ev.price && typeof rsvpEvents === 'function' && rsvpEvents().some(e => e.id === ev.id) ? `<a class="${cls}" href="#/rsvp/${ev.id}">${t('rsvp')}</a>`
   : `<a class="${cls}" href="${dirEventHref(ev)}">${t('eventDetails')}</a>`;
 const dirWhen = ev => { const d = eventDate(ev); return ev.lastDay ? `${fmtDate(d, { day: 'numeric', month: 'long' })} – ${fmtDate(addDays(d, ev.lastDay), { day: 'numeric', month: 'long', year: 'numeric' })}` : `${fmtDate(d)} · ${typeof rsvpTime === 'function' ? rsvpTime(ev.time) : ev.time}`; };
@@ -102,7 +102,7 @@ const dirWhen = ev => { const d = eventDate(ev); return ev.lastDay ? `${fmtDate(
 const dirEventHref = ev => ev.tiers ? '#/gabangi' : `#/evento/${ev.id}`;
 function dirUpcoming() {
   const next = nextAnnualEvent();
-  return sortedEvents().filter(ev => ev.annual && ev.id !== next.id).map(ev => { const d = eventDate(ev);
+  return sortedEvents().filter(ev => eventShown(ev) && ev.id !== next.id).map(ev => { const d = eventDate(ev);
     return `<li><a href="${dirEventHref(ev)}"><span class="dir-date"><strong>${Number(d.slice(8))}</strong><small>${fmtDate(d, { month: 'short' })}</small></span>
       <span><span class="dir-row-title">${eventTitle(ev)}</span><span class="muted">${fmtDate(d)}</span></span><span class="arr" aria-hidden="true">›</span></a></li>`; }).join('');
 }
@@ -117,7 +117,7 @@ function dirPast() {
 function dirCalendar() {
   const today = todayPC(), y0 = Number(today.slice(0, 4)), m0 = Number(today.slice(5, 7));
   const months = Array.from({ length: 12 }, (_, i) => { const m = (m0 - 1 + i) % 12 + 1, y = y0 + Math.floor((m0 - 1 + i) / 12); return `${y}-${String(m).padStart(2, '0')}`; });
-  const evs = sortedEvents().filter(ev => ev.annual);
+  const evs = sortedEvents().filter(eventShown);
   return `<ol class="dir-cal">${months.map(ym => { const here = evs.filter(ev => eventDate(ev).slice(0, 7) === ym);
     return `<li class="${here.length ? 'has' : ''}"><span class="dir-cal-m">${fmtDate(ym + '-01', { month: 'short' })}<small>${ym.slice(0, 4)}</small></span>
       ${here.map(ev => `<a href="${dirEventHref(ev)}"><strong>${Number(eventDate(ev).slice(8))}${ev.lastDay ? '–' + Number(addDays(eventDate(ev), ev.lastDay).slice(8)) : ''}</strong> ${eventTitle(ev)}</a>`).join('')}</li>`; }).join('')}</ol>`;
@@ -177,10 +177,10 @@ function pageHomeDirector() {
   <section class="hero dir-hero dir-ev-hero">
     <div class="hero-art"><img ${dirArt(next, '100vw')} alt="" fetchpriority="high"></div>
     <div class="hero-inner">
-      <p class="eyebrow">${t('nextAnnual')} · Museo Abreu, Bávaro</p>
-      <p class="dir-hero-chips"><span class="chip vip">${t('vipEvent')}</span><span class="chip annual-chip">${t('freeForPro')}</span></p>
+      <p class="eyebrow">${t('nextAnnual')} · ${next.placeShort ? esc(L(next.placeShort)) : 'Museo Abreu, Bávaro'}</p>
+      <p class="dir-hero-chips">${next.free ? `<span class="chip vip">${t('evFree')}</span>${next.book === 'fundamentos' ? `<span class="chip annual-chip">${t('evBookLaunch')}</span>` : ''}` : `<span class="chip vip">${t('vipEvent')}</span><span class="chip annual-chip">${t('freeForPro')}</span>`}</p>
       <h1 class="dir-headline dir-ev-title"><a href="${dirEventHref(next)}">${eventTitle(next).split(' · ').map((p, i) => i ? `<span class="dir-ev-title-2"><span class="visually-hidden"> · </span>${p}</span>` : p).join('')}</a></h1>
-      ${inv ? `<p class="dir-ev-sub">Ecce Homo · ${L(inv.sub1)}</p>` : ''}
+      ${inv ? `<p class="dir-ev-sub">Ecce Homo · ${L(inv.sub1)}</p>` : next.sub ? `<p class="dir-ev-sub">${esc(L(next.sub))}</p>` : ''}
       <p class="dir-ev-when">${dirWhen(next)}</p>
       ${countdownHTML(next)}
       <div class="btn-row">
