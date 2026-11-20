@@ -200,13 +200,13 @@ function auFeatureHTML(lot, h = 'h2') {
     ${c && !open ? `<div class="au-feature-cd au-feature-top"><span class="cd-end">${t(auClosedKey())}</span></div>` : ''}
     <a class="au-feature-img" href="#/subasta/${lot.id}" tabindex="-1" aria-hidden="true"><img src="${lot.img}" alt="" width="${lot.w || 1000}" height="${lot.h || 1000}"></a>
     <div class="au-feature-body">
-      <p class="eyebrow">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
+      <p class="lot-meta">${t(s.count ? 'auTopBid' : 'auFeatured')} · ${t('auLot', { n: lotNumber(lot) })}</p>
       <${h} class="au-feature-title"><a href="#/subasta/${lot.id}">${esc(title)}</a>${year ? ` <span class="au-feature-year">${esc(String(year))}</span>` : ''}</${h}>
       ${size || medium ? `<p class="au-feature-size">${esc(size || medium)}</p>` : ''}
       <p class="au-feature-price"><small>${t(s.count ? 'auCurrent' : 'auStart')}</small>${auUSD(s.count ? s.high : lot.startBid)}</p>
       <p class="au-feature-lead">${lead ? `<span class="au-crown" aria-hidden="true">♛</span> ${esc(t('auLeader', { name: lead.who }))}` : t('auFirst')}</p>
-      <div class="btn-row"><button class="btn primary" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')}</button>
-        ${open ? `<a class="btn primary au-bid-now" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}</div>
+      <div class="au-v-actions">${open ? `<a class="au-v-bid" href="#/subasta/${lot.id}">${t('auBidNow')}</a>` : ''}
+        <button class="lot-go" data-action="lotInfo" data-lot="${lot.id}" aria-label="${esc(t('auInfo') + ': ' + lotTitle(lot))}">${t('auInfo')} <span class="arr" aria-hidden="true">→</span></button></div>
     </div>
   </article>`;
 }
@@ -703,7 +703,7 @@ function pageArtistRoom(a) {
     </section>
     ${auViewerHTML('artist:' + a.slug, a.name, a.lots)}
     ${auAboutHTML(a.name)}
-    ${leaders.length ? `<section class="section au-board-wrap"><h2>${t('auRoomBoard')}</h2>${auBoardHTML(leaders, true, 3)}</section>` : ''}
+    ${leaders.length ? `<section class="section au-board-wrap"><div class="au-index-top"><h2 class="au-index-h">${t('auRoomBoard')}</h2></div>${auBoardHTML(leaders, true, 3)}</section>` : ''}
     ${auNextArtistHTML(a)}
   </div>`;
 }
@@ -736,7 +736,7 @@ function pageAuction(id) {
       ${auFailed && AUCTION.lots.some(l => auOpen(l)) ? `<p class="status">${t('auLiveOff')}</p>` : ''}
       ${auFeatureHTML(auFeatured())}
     </section>
-    <section class="section au-board-wrap"><h2>${t('auBoard')}</h2><p class="muted">${t('auBoardLead')}</p>${auBoardHTML(auAllLeaders(), true, 3)}</section>
+    <section class="section au-board-wrap"><div class="au-index-top"><h2 class="au-index-h">${t('auBoard')}</h2><p class="au-find-meta">${t('auBoardLead')}</p></div>${auBoardHTML(auAllLeaders(), true, 3)}</section>
     ${auArtistsHTML()}
     <section class="section"><p class="lead">${fin ? t('auLead', { event: esc(fin.name) }) : t('auLeadOnline')}</p>
       ${liveLine(fin)}</section>

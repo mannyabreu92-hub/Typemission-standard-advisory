@@ -1324,3 +1324,27 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 }
 :root[lang="ar"] .au-index-h, :root[lang="ar"] .au-artists .au-artist-n { letter-spacing: 0; }
 @media (max-width: 639px) { .au-artists .au-artist-n { font-size: .6rem; letter-spacing: .1em; } }
+/* The main auction page, as a catalogue cover */
+.au-feature { background: none; border: 0; border-radius: 0; overflow: visible; gap: 1.6rem; }
+@media (min-width: 760px) { .au-feature { grid-template-columns: 1.25fr 1fr; gap: 3.5rem; } .au-feature-body { padding: 0; } }
+.au-feature-body { padding: 0; gap: 0; }
+.au-feature-img { padding: clamp(.8rem, 3vw, 1.6rem) !important; background: #0d0c0b; box-shadow: 0 14px 34px rgba(22, 18, 15, .28); border-radius: 2px !important; }
+.au-feature-body .lot-meta { margin: 0; font: 600 .7rem/1.4 var(--sans); letter-spacing: .22em; color: var(--gold-ink); }
+.au-feature-title { margin-top: .7rem; font: italic 500 clamp(2rem, 6vw, 3rem)/1.1 var(--serif); }
+.au-feature-year { font: 400 .55em var(--serif); font-style: normal; color: var(--ink-3); }
+.au-feature-size { margin: .8rem 0 0; padding: .65rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font-size: .95rem; }
+.au-feature-price { margin-top: 1.4rem; font: 500 clamp(1.9rem, 6vw, 2.4rem)/1.1 var(--serif); }
+.au-feature-price small { display: block; font: 600 .64rem/1.6 var(--sans); letter-spacing: .2em; color: var(--ink-3); }
+.au-feature-lead { margin-top: .3rem; font-size: .88rem; color: var(--ink-2); }
+.au-feature .au-v-actions { margin-top: 1.4rem; }
+.au-top .au-h1 { margin-bottom: 1.4rem; }
+/* Leaderboard rows as a ruled list */
+.au-board { gap: 0; margin-top: 0; }
+.au-rank { border: 0; border-bottom: 1px solid var(--line); border-radius: 0; background: none; padding: .85rem 0; grid-template-columns: 2.4rem 1fr auto; }
+.au-pos { width: auto; height: auto; border: 0 !important; background: none !important; border-radius: 0; font: italic 400 1.15rem/1 var(--serif); color: var(--gold-ink) !important; place-items: start; }
+.au-rank.r1 { border-color: var(--line); }
+.au-who { font: 500 .95rem var(--sans); }
+.au-amt { font: 500 1.15rem var(--serif); }
+.au-board-wrap > .muted, .au-board-wrap > p.muted { margin-top: .9rem; font-size: .9rem; }
+.au-board-more summary { font: 600 .7rem var(--sans); letter-spacing: .18em; text-transform: uppercase; }
+:root[lang="ar"] .au-board-more summary { letter-spacing: 0; }
