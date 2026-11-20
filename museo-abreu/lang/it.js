@@ -1020,6 +1020,11 @@ I18N.it = {
   "auHistoryH": "Storico delle offerte",
   "auBidders": "{n} offerenti",
   "auBidder1": "1 offerente",
+  "gdH": "Audioguida",
+  "gdLead": "Il telefono legge ad alta voce questa sala: l’artista, la biografia e la critica.",
+  "wlBtn": "Vedila su una parete",
+  "wlTitle": "In scala",
+  "wlNote": "In scala: l’opera misura {size}; il divano è largo 84 in (213 cm).",
 };
 TR.it = {
   "2019": "2019",

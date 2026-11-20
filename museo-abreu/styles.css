@@ -1479,3 +1479,41 @@ main.page-in { animation: page-in .5s cubic-bezier(.2, .7, .2, 1); }
 .dir-museum-top { padding-top: clamp(2.5rem, 7vw, 4.5rem); }
 .dir-museum-top .dir-museum-title { font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.02; }
 .vw-cap, .vw-bar, .vw-close, .vw-hint { z-index: 1; }
+
+/* Outbid alerts on a lot page, in the catalogue style; after a bid the offer comes forward */
+.lot-page .lot-alerts { margin-top: 1.4rem; padding: 1.1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.lot-page .lot-alerts h2 { margin: 0; font: 600 .7rem/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; }
+.lot-page .lot-alerts .btn { border-radius: 0; font: 600 .7rem/1 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
+.lot-alerts.al-nudge { animation: al-nudge 1.6s ease 2; }
+@keyframes al-nudge { 50% { background: rgba(166, 138, 82, .14); } }
+@media (prefers-reduced-motion: reduce) { .lot-alerts.al-nudge { animation: none; background: rgba(166, 138, 82, .14); } }
+:root[lang="ar"] .lot-page .lot-alerts h2, :root[lang="ar"] .lot-page .lot-alerts .btn { letter-spacing: 0; text-transform: none; }
+
+/* See it on a wall (viewer.js) */
+dialog.wl { width: min(960px, 100vw); max-width: 100vw; max-height: 100dvh; margin: auto; padding: 0; border: 0; border-radius: 2px; background: var(--paper); color: var(--ink); }
+dialog.wl::backdrop { background: rgba(13, 12, 11, .78); }
+dialog.wl[open] { animation: vw-in .4s cubic-bezier(.2, .7, .2, 1); }
+.wl-body { position: relative; padding: clamp(1rem, 4vw, 2rem); display: grid; gap: .5rem; }
+.wl-body .lot-meta { margin: 0; font: 600 .64rem/1.4 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--gold-ink); }
+.wl-h { margin: 0 2.6rem 0 0; display: grid; gap: .15rem; }
+.wl-h .lot-artist { font: 600 .74rem/1.3 var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+.wl-h i { font: italic 500 clamp(1.3rem, 4vw, 1.8rem)/1.15 var(--serif); }
+.wl-room { width: 100%; height: auto; max-height: 68dvh; margin-top: .6rem; display: block; }
+.wl-note { margin: .4rem 0 0; font-size: .85rem; color: var(--ink-2); }
+.wl-close { position: absolute; top: .6rem; inset-inline-end: .6rem; color: var(--ink); }
+.wl-close:hover { background: var(--paper-2); }
+.wl-btn { margin-inline-start: 0; }
+
+/* The room's audio guide (guide.js) */
+.gd-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; margin-top: 1.2rem; padding: .7rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.gd-play { display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: 0 1.2rem; border: 0; background: var(--ink); color: var(--paper); font: 600 .72rem var(--sans); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+.gd-play:hover { background: #000; }
+.gd-icon { font-size: .8rem; letter-spacing: 0; }
+.gd-voice { min-height: 44px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink); font: 500 .88rem var(--sans); }
+.gd-stop { width: 44px; height: 44px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+.gd-stop[hidden] { display: none; }
+.gd-note { flex: 1 1 14rem; font: italic 400 1rem/1.35 var(--serif); color: var(--ink-2); }
+.au-room.gd-listening .au-about p:not(.gd-now), .au-room.gd-listening .au-about h2:not(.gd-now) { opacity: .6; transition: opacity .5s ease; }
+.au-room .gd-now { position: relative; opacity: 1; transition: opacity .5s ease; }
+.au-room .gd-now::before { content: ''; position: absolute; inset-inline-start: -.75rem; top: .3em; bottom: .3em; width: 2px; background: var(--gold); }
+:root[lang="ar"] .gd-play { letter-spacing: 0; text-transform: none; }

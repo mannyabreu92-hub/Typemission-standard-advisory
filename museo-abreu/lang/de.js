@@ -1020,6 +1020,11 @@ I18N.de = {
   "auHistoryH": "Gebotsverlauf",
   "auBidders": "{n} Bieter",
   "auBidder1": "1 Bieter",
+  "gdH": "Audioguide",
+  "gdLead": "Ihr Telefon liest diesen Raum vor: den Künstler, die Biografie und die Kritik.",
+  "wlBtn": "An einer Wand ansehen",
+  "wlTitle": "Maßstabsgetreu",
+  "wlNote": "Maßstabsgetreu: Das Werk misst {size}; das Sofa ist 84 in (213 cm) breit.",
 };
 TR.de = {
   "2019": "2019",

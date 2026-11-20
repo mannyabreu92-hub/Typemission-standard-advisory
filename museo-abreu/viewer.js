@@ -132,3 +132,49 @@ EXTRA_ACTIONS.vwOpen = el => {
     main.classList.remove('page-in'); void main.offsetWidth; main.classList.add('page-in');
   });
 }
+
+// "See it on a wall": the work at its true size above a sofa 84 inches (213 cm) wide, hung as museums do
+// (its centre at 57 inches, or higher when it would touch the sofa). The size is the one the book gives;
+// which side is the width is read from the picture itself. Only flat works with a known size get the button.
+function wlDims(lot) {
+  if (lot.kind === 'sculpture') return null;
+  const r = ((lot.spec && lot.spec.en) || '').match(/(\d+(?:\.\d+)?)\s*×\s*(\d+(?:\.\d+)?)\s*in\b/);
+  if (!r || /×\s*\d+(?:\.\d+)?\s*×/.test(lot.spec.en.split('·').pop())) return null;
+  const a = +r[1], b = +r[2], ratio = (lot.w || 1) / (lot.h || 1);
+  // Whichever reading matches the picture's shape.
+  return Math.abs(Math.log((b / a) / ratio)) < Math.abs(Math.log((a / b) / ratio)) ? { w: b, h: a } : { w: a, h: b };
+}
+const wlBtn = lot => wlDims(lot) ? `<button type="button" class="lot-more wl-btn" data-action="wlOpen" data-lot="${lot.id}">${t('wlBtn')}</button>` : '';
+EXTRA_ACTIONS.wlOpen = el => {
+  const lot = AUCTION.lots.find(l => l.id === el.dataset.lot), d = lot && wlDims(lot);
+  if (!d) return;
+  const back = document.activeElement;
+  // The room, in inches: floor at y = H; the sofa centred; the work above it.
+  const sofaW = 84, sofaH = 34, cy = Math.max(57, sofaH + 8 + d.h / 2);
+  const W = Math.max(150, d.w + 56), H = Math.max(108, cy + d.h / 2 + 14), x0 = (W - d.w) / 2, y0 = H - cy - d.h / 2, sx = (W - sofaW) / 2, fy = H;
+  const size = (lot.spec && L(lot.spec).split(' · ').slice(1).join(' · ')) || '';
+  const svg = `<svg class="wl-room" viewBox="0 0 ${W} ${H + 6}" role="img" aria-label="${esc(t('wlTitle') + ': ' + lotTitle(lot) + ', ' + size)}">
+    <rect x="0" y="0" width="${W}" height="${H}" fill="#efe8dc"/>
+    <rect x="0" y="${H}" width="${W}" height="6" fill="#d9cfbf"/>
+    <rect x="${x0 + .6}" y="${y0 + 1.2}" width="${d.w}" height="${d.h}" fill="rgba(22,18,15,.18)"/>
+    <image href="${lot.img}" x="${x0}" y="${y0}" width="${d.w}" height="${d.h}" preserveAspectRatio="none"/>
+    <g fill="#2b2622">
+      <rect x="${sx + 6}" y="${fy - sofaH}" width="${sofaW - 12}" height="18" rx="2.5"/>
+      <rect x="${sx + 4}" y="${fy - 19}" width="${sofaW - 8}" height="11" rx="2"/>
+      <rect x="${sx}" y="${fy - 25}" width="7" height="19" rx="2.5"/>
+      <rect x="${sx + sofaW - 7}" y="${fy - 25}" width="7" height="19" rx="2.5"/>
+      <rect x="${sx + 5}" y="${fy - 6}" width="2" height="6"/><rect x="${sx + sofaW - 7}" y="${fy - 6}" width="2" height="6"/>
+    </g></svg>`;
+  const dlg = document.createElement('dialog');
+  dlg.className = 'wl';
+  dlg.setAttribute('aria-label', t('wlTitle') + ': ' + lotTitle(lot));
+  dlg.innerHTML = `<div class="wl-body"><p class="lot-meta">${t('auLot', { n: lotNumber(lot) })} · ${t('wlTitle')}</p>
+    <h2 class="wl-h"><span class="lot-artist">${esc(lotArtist(lot))}</span> <i>${esc(lotTitle(lot))}</i></h2>
+    ${svg}<p class="wl-note">${esc(t('wlNote', { size }))}</p>
+    <button type="button" class="vw-close wl-close" data-wl="close" aria-label="${t('vwClose')}"><span aria-hidden="true">×</span></button></div>`;
+  document.body.appendChild(dlg);
+  dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('[data-wl=close]')) dlg.close(); });
+  dlg.addEventListener('close', () => { dlg.remove(); if (back && back.focus) back.focus({ preventScroll: true }); });
+  dlg.showModal();
+  dlg.querySelector('.wl-close').focus();
+};

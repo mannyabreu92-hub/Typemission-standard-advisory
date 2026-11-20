@@ -84,8 +84,9 @@ Object.assign(EXTRA_ACTIONS, {
   const auction = pageAuction;
   pageAuction = id => {
     const html = auction(id), lot = id && AUCTION.lots.find(l => l.id === id);
-    const mark = `<p class="muted" style="margin-top:1rem">${t('auWinner')}</p>`;
-    return lot ? html.replace(mark, alertsBlock(lot) + mark) : html;
+    // Right under the bid form and its links (the lot page in market.js).
+    const mark = `<div class="lot-links">`;
+    return lot && html.includes(mark) ? html.replace(mark, alertsBlock(lot) + mark) : html;
   };
   EXTRA_ROUTES.subasta = pageAuction;
   // After a bid, an existing alert learns the bidder's email, so "outbid" can reach them.
@@ -94,5 +95,10 @@ Object.assign(EXTRA_ACTIONS, {
     const email = (form.querySelector('#bid-email') || {}).value;
     await bid(form);
     if (alList().includes(form.dataset.lot) && rmCanPush()) alTurnOn(AUCTION.lots.find(l => l.id === form.dataset.lot), true, email);
+    // Just bid and no alert yet: the alert offer comes forward, so the bidder hears if someone outbids them.
+    else if ((document.getElementById('bid-status') || {}).className === 'status ok') {
+      const box = document.querySelector('.lot-alerts');
+      if (box) { box.classList.add('al-nudge'); box.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+    }
   };
 }
