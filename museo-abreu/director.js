@@ -199,7 +199,7 @@ function pageHomeDirector() {
     </section>
     <section class="section dir-auction">
       <div class="section-head"><h2>${t('navAuction')}</h2><a href="#/subasta">${t('shAllLots')}</a></div>
-      ${auLots().length ? auFeatureHTML(auFeatured(), 'h3') + `<h3 class="dir-au-artists-h">${t('auArtistsH')}</h3><ul class="dir-au-artists">${auArtists().map(a => `<li><a href="${auRoomHref(a.name)}">${esc(a.name)}</a></li>`).join('')}</ul>`
+      ${auLots().length ? auFeatureHTML(auFeatured(), 'h3') + `<div class="dir-au-artists-top"><h3 class="dir-au-artists-h" id="dir-au-artists-h">${t('auArtistsH')}</h3><span class="au-find-meta">${auArtists().length}</span></div><div class="dir-au-scroll" role="region" aria-labelledby="dir-au-artists-h"><ul class="dir-au-artists">${auArtists().map(a => `<li><a href="${auRoomHref(a.name)}">${esc(a.name)}</a></li>`).join('')}</ul></div><p><a class="lot-go" href="#/subasta/artistas">${t('auBackArtists')} <span class="arr" aria-hidden="true">→</span></a></p>`
         : `<a class="card dir-card dir-au-soon" href="#/subasta"><p class="eyebrow">ART GABANGI · Auction & Awards</p><p>${t('auSoon')}</p><p class="dir-link">${t('shAllLots')} <span class="arr">→</span></p></a>`}
     </section>
     <section class="section dir-upcoming"><div class="section-head"><h2>${t('hmUpcoming')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>

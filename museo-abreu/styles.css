@@ -1395,3 +1395,15 @@ main:has(.dir-hero) .field > label, main:has(.dir-hero) fieldset legend { font: 
 main:has(.dir-hero) input[type=checkbox] { accent-color: var(--ink); }
 :root[lang="ar"] main:has(.dir-hero) .section-head h2, :root[lang="ar"] main:has(.dir-hero) .section > h2, :root[lang="ar"] main:has(.dir-hero) .btn, :root[lang="ar"] main:has(.dir-hero) .section-head a:not(.btn), :root[lang="ar"] main:has(.dir-hero) .field > label { letter-spacing: 0; text-transform: none; }
 main:has(.dir-hero) .field > label small { font: 400 .7rem var(--sans); letter-spacing: .06em; text-transform: none; }
+/* The homepage's artist names, in a box of their own that scrolls */
+.dir-au-artists-top { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-bottom: .6rem; border-bottom: 1.5px solid var(--ink); }
+.dir-au-artists-top .dir-au-artists-h { margin: 0; font: 600 .74rem/1.4 var(--sans); letter-spacing: .22em; text-transform: uppercase; }
+.dir-au-scroll { max-height: 17rem; overflow-y: auto; overscroll-behavior: contain; padding: .4rem 0 1.6rem; border-bottom: 1px solid var(--line);
+  -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent); mask-image: linear-gradient(to bottom, #000 85%, transparent);
+  scrollbar-width: thin; scrollbar-color: var(--ink-3) transparent; }
+.dir-au-scroll::-webkit-scrollbar { width: 4px; }
+.dir-au-scroll::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 2px; }
+.dir-au-scroll .dir-au-artists { margin: 0; gap: .1rem 1rem; }
+.dir-au-scroll .dir-au-artists a { font-size: 1rem; font-weight: 500; padding: .45rem 0; }
+@media (max-width: 639px) { .dir-au-scroll { max-height: 15rem; } .dir-au-scroll .dir-au-artists a { font-size: .92rem; } }
+:root[lang="ar"] .dir-au-artists-top .dir-au-artists-h { letter-spacing: 0; }
