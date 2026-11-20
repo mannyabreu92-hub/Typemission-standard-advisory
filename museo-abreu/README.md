@@ -266,6 +266,8 @@ collection, the reader and Pro stay in the top menu and on the home page.
   signing up again updates it). Dashboard › Mailing list shows everyone with interest counts, "Remove" and a CSV
   (name, email, phone, language, interests, source, date) for an email or WhatsApp tool. Unsubscribe requests
   ("reply unsubscribe") are handled by removing the person in the dashboard.
+- **Full-screen viewing** (`viewer.js`): the ⤢ button (or a tap) on a lot's picture or an artist room's picture opens it alone on black: pinch, double-tap, the wheel or +/− zoom; swipe or the arrows move through the artist's works; swipe down or Esc closes. The same file adds the calm motion: pictures that are not yet loaded fade in, and each new page rises into place (both off with reduced motion).
+- **Collector page** (`collector.js`, `#/coleccion`): the visitor's bids from this phone (kept in `ma.bids`) with where each stands against the live highest bid, their saved works, the artists behind them and works chosen for them by colour, size and artist (`auRecommend` in `market.js`). Linked from Account and under the auction's search. A lot page also shows its bid history and "You may also like".
 - **Wishlist** (`wishlist.js`, `api/wish.js`): a ♡ on artwork cards, in the artwork window, on auction cards and on each
   piece's page saves it to Account › "My saved works" (kept on the device, `ma.wish`), with "Remove" and "Ask the museum
   about these works" (WhatsApp with the list). The list is also sent under a random device id only

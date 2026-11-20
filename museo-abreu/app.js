@@ -169,7 +169,13 @@ function pageMeta(name, missing) {
 // Images marked lazy are fetched just after the page's first paint instead of when scrolled to, so a gallery,
 // manifesto or portrait is never seen as an empty tile; the images in view are still requested first.
 function loadImagesSoon() {
-  requestAnimationFrame(() => setTimeout(() => main.querySelectorAll('img[loading="lazy"]').forEach(i => { i.loading = 'eager'; }), 250));
+  // A page with a few pictures loads them all at once, so they are there when the visitor scrolls; a page
+  // with many (the auction's hundreds of works) lets the browser load them as they come near, which on a
+  // phone saves many megabytes.
+  requestAnimationFrame(() => setTimeout(() => {
+    const lazy = main.querySelectorAll('img[loading="lazy"]');
+    if (lazy.length <= 24) lazy.forEach(i => { i.loading = 'eager'; });
+  }, 250));
 }
 // A work whose image cannot be loaded is hidden with its tile: an empty placeholder is never shown.
 document.addEventListener('error', e => {

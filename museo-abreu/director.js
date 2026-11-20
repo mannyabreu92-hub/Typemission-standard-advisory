@@ -184,6 +184,17 @@ function pageHomeDirector() {
   return `
   ${hero}
   <div class="wrap">
+    <section class="section dir-museum dir-museum-top">
+      <p class="eyebrow">Museo Abreu · Bávaro, Punta Cana</p>
+      <h2 class="dir-museum-title">${t('hmHeadline')}</h2>
+      <p class="lead">${t('hmLead')}</p>
+      <div class="btn-row"><a class="btn primary" href="#/visita">${t('hmCtaVisit')}</a><a class="btn" href="#/psico">${t('hmCtaPsico')}</a></div>
+    </section>
+    <section class="section dir-auction">
+      <div class="section-head"><h2>${t('navAuction')}</h2><a href="#/subasta">${t('shAllLots')}</a></div>
+      ${auLots().length ? auFeatureHTML(auFeatured(), 'h3') + `<div class="dir-au-artists-top"><h3 class="dir-au-artists-h" id="dir-au-artists-h">${t('auArtistsH')}</h3><span class="au-find-meta">${auArtists().length}</span></div><div class="dir-au-scroll" role="region" aria-labelledby="dir-au-artists-h"><ul class="dir-au-artists">${auArtists().map(a => `<li><a href="${auRoomHref(a.name)}">${esc(a.name)}</a></li>`).join('')}</ul></div><p><a class="lot-go" href="#/subasta/artistas">${t('auBackArtists')} <span class="arr" aria-hidden="true">→</span></a></p>`
+        : `<a class="card dir-card dir-au-soon" href="#/subasta"><p class="eyebrow">ART GABANGI · Auction & Awards</p><p>${t('auSoon')}</p><p class="dir-link">${t('shAllLots')} <span class="arr">→</span></p></a>`}
+    </section>
     <section class="section dir-book">
       <a class="dir-book-cover" href="#/biblioteca" tabindex="-1" aria-hidden="true">${coverSVG(t('bookTitle'), t('bookSub'))}</a>
       <div>
@@ -197,20 +208,9 @@ function pageHomeDirector() {
         <a class="dir-also" href="#/fundamentos/${fu}"><span class="eyebrow">${t('fuAlso')}</span> <span lang="${fu}">${esc(FUND_EDITIONS[fu].title)}</span> <span class="arr" aria-hidden="true">→</span></a>
       </div>
     </section>
-    <section class="section dir-auction">
-      <div class="section-head"><h2>${t('navAuction')}</h2><a href="#/subasta">${t('shAllLots')}</a></div>
-      ${auLots().length ? auFeatureHTML(auFeatured(), 'h3') + `<div class="dir-au-artists-top"><h3 class="dir-au-artists-h" id="dir-au-artists-h">${t('auArtistsH')}</h3><span class="au-find-meta">${auArtists().length}</span></div><div class="dir-au-scroll" role="region" aria-labelledby="dir-au-artists-h"><ul class="dir-au-artists">${auArtists().map(a => `<li><a href="${auRoomHref(a.name)}">${esc(a.name)}</a></li>`).join('')}</ul></div><p><a class="lot-go" href="#/subasta/artistas">${t('auBackArtists')} <span class="arr" aria-hidden="true">→</span></a></p>`
-        : `<a class="card dir-card dir-au-soon" href="#/subasta"><p class="eyebrow">ART GABANGI · Auction & Awards</p><p>${t('auSoon')}</p><p class="dir-link">${t('shAllLots')} <span class="arr">→</span></p></a>`}
-    </section>
     <section class="section dir-upcoming"><div class="section-head"><h2>${t('hmUpcoming')}</h2><a href="#/eventos">${t('hmAllEvents')}</a></div>
       <ul class="dir-events">${dirUpcoming()}</ul>${dirSubscribe()}
       <h3 class="dir-sub">${t('hmPast')}</h3><ul class="dir-events dir-past">${dirPast()}</ul>
-    </section>
-    <section class="section dir-museum rv">
-      <p class="eyebrow">Museo Abreu · Bávaro, Punta Cana</p>
-      <h2 class="dir-museum-title">${t('hmHeadline')}</h2>
-      <p class="lead">${t('hmLead')}</p>
-      <div class="btn-row"><a class="btn primary" href="#/visita">${t('hmCtaVisit')}</a><a class="btn" href="#/psico">${t('hmCtaPsico')}</a></div>
     </section>
     <section class="section dir-founder rv">
       <img class="dir-portrait" src="${CONTACT.photo}" alt="Oscar Abreu" loading="lazy">
