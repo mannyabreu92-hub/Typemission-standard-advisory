@@ -1025,6 +1025,15 @@ I18N.de = {
   "wlBtn": "An einer Wand ansehen",
   "wlTitle": "Maßstabsgetreu",
   "wlNote": "Maßstabsgetreu: Das Werk misst {size}; das Sofa ist 84 in (213 cm) breit.",
+  "crmBtn": "1 Stunde vor Schluss erinnern",
+  "crmCalTitle": "Gebote enden: {title}",
+  "crmCalBody": "Letzte Stunde, um auf „{title}“ ({lot}) im Museo Abreu zu bieten.",
+  "scBtn": "Als Bild teilen",
+  "scSaved": "Bild gespeichert.",
+  "ctTitle": "Auktionskatalog",
+  "ctPrint": "Drucken oder als PDF speichern",
+  "ctNav": "Katalog",
+  "ctSrc": "Bilder und Angaben wie in ART GABANGI · Top 100 Artist veröffentlicht und, für Oscar Abreu, auf oscarabreu.com.",
 };
 TR.de = {
   "2019": "2019",

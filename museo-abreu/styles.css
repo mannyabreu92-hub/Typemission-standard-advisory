@@ -1517,3 +1517,39 @@ dialog.wl[open] { animation: vw-in .4s cubic-bezier(.2, .7, .2, 1); }
 .au-room .gd-now { position: relative; opacity: 1; transition: opacity .5s ease; }
 .au-room .gd-now::before { content: ''; position: absolute; inset-inline-start: -.75rem; top: .3em; bottom: .3em; width: 2px; background: var(--gold); }
 :root[lang="ar"] .gd-play { letter-spacing: 0; text-transform: none; }
+
+/* The sale catalogue (catalogue.js): on screen, and as a printed book */
+.ct-cover { padding: clamp(2.5rem, 8vw, 5rem) 0 2rem; border-bottom: 1.5px solid var(--ink); }
+.ct-h1 { margin-top: .4rem; font: 500 clamp(2.6rem, 9vw, 5rem)/1 var(--serif); text-transform: uppercase; letter-spacing: .04em; }
+.ct-close { margin-top: 1rem; font-size: .92rem; }
+.ct-src { margin-top: .5rem; font-size: .82rem; color: var(--ink-3); }
+.ct-cover .au-v-bid { margin-top: 1.4rem; border: 0; cursor: pointer; }
+.ct-artist { padding: 2.4rem 0 1rem; border-bottom: 1px solid var(--line); }
+.ct-name { margin: 0; font: 500 clamp(1.6rem, 5vw, 2.2rem)/1.1 var(--serif); text-transform: uppercase; letter-spacing: .04em; }
+.ct-head { margin: .4rem 0 0; font: italic 400 1.15rem/1.35 var(--serif); color: var(--ink-2); }
+.ct-line { margin: .3rem 0 0; font: 600 .64rem/1.4 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+.ct-lots { display: grid; gap: 1.6rem 2rem; margin-top: 1.4rem; }
+@media (min-width: 760px) { .ct-lots { grid-template-columns: 1fr 1fr; } }
+.ct-lot { display: grid; grid-template-columns: 150px 1fr; gap: 1.1rem; align-items: start; break-inside: avoid; }
+.ct-lot img { width: 150px; height: 150px; object-fit: contain; background: #0d0c0b; padding: 5px; box-sizing: border-box; }
+.ct-lot .lot-meta { margin: 0; font: 600 .62rem/1.4 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-ink); }
+.ct-title { margin: .2rem 0 .4rem; font: italic 500 1.2rem/1.2 var(--serif); }
+.ct-lot dl { margin: 0; font-size: .8rem; }
+.ct-lot dl > div { display: grid; grid-template-columns: 6.2rem 1fr; gap: .5rem; padding: .2rem 0; border-top: 1px solid var(--line); }
+.ct-lot dt { font: 600 .58rem/1.8 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.ct-lot dd { margin: 0; }
+@media (max-width: 420px) { .ct-lot { grid-template-columns: 104px 1fr; gap: .8rem; } .ct-lot img { width: 104px; height: 104px; } .ct-lot dl > div { grid-template-columns: 5rem 1fr; } }
+:root[lang="ar"] .ct-line, :root[lang="ar"] .ct-lot dt, :root[lang="ar"] .ct-lot .lot-meta { letter-spacing: 0; }
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  .footer, .ct-noprint, .ma-fab, .ma-panel { display: none !important; }
+  .ct-page { max-width: none; padding: 0; }
+  .ct-cover { break-after: page; min-height: 240mm; display: flex; flex-direction: column; justify-content: center; border: 0; }
+  .ct-artist { break-before: auto; break-inside: auto; padding-top: 1.2rem; }
+  .ct-artist-head { break-inside: avoid; break-after: avoid; page-break-after: avoid; }
+  .ct-lots { break-before: avoid; }
+  .ct-lots { grid-template-columns: 1fr 1fr; gap: 1rem 1.4rem; }
+  .ct-lot { grid-template-columns: 34mm 1fr; }
+  .ct-lot img { width: 34mm; height: 34mm; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  main.page-in { animation: none; }
+}

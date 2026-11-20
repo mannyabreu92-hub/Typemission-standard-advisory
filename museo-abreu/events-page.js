@@ -121,7 +121,7 @@ Object.assign(EXTRA_ACTIONS, {
   lotShare: el => {
     const lot = AUCTION.lots.find(l => l.id === el.dataset.lot);
     const title = `${t('auLot', { n: lotNumber(lot) })} · ${lotTitle(lot)}`;
-    shareLink(title, `${title} · ${t('auTitle')}`, `${location.origin}/l/${lot.id}?l=${lang}`, 'share-status', { lot: lot.id });
+    shareLink(title, `${title} · ${lotArtist(lot)} · ${t('auEyebrow')}`, `${location.origin}/l/${lot.id}?l=${lang}`, 'share-status', { lot: lot.id });
   },
   bookShare: () => shareLink(`${t('bookTitle')} · ${t('bookSub')}`, `${t('bookTitle')} · ${t('bookSub')} · Oscar Abreu`, `${location.origin}/b?l=${lang}`, 'share-status', { item: 'book' }),
 });

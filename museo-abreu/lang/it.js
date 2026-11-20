@@ -1025,6 +1025,15 @@ I18N.it = {
   "wlBtn": "Vedila su una parete",
   "wlTitle": "In scala",
   "wlNote": "In scala: l’opera misura {size}; il divano è largo 84 in (213 cm).",
+  "crmBtn": "Ricordamelo 1 ora prima della chiusura",
+  "crmCalTitle": "Chiusura delle offerte: {title}",
+  "crmCalBody": "Ultima ora per fare un’offerta su «{title}» ({lot}) al Museo Abreu.",
+  "scBtn": "Condividi come immagine",
+  "scSaved": "Immagine salvata.",
+  "ctTitle": "Catalogo dell’asta",
+  "ctPrint": "Stampa o salva in PDF",
+  "ctNav": "Catalogo",
+  "ctSrc": "Immagini e dati come pubblicati in ART GABANGI · Top 100 Artist e, per Oscar Abreu, su oscarabreu.com.",
 };
 TR.it = {
   "2019": "2019",
