@@ -1299,3 +1299,28 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-room-line { font: italic 400 1.1rem var(--serif); }
 .au-room .au-about-h, .au-room .au-next .au-about-h { letter-spacing: .22em; }
 :root[lang="ar"] .au-v-bid, :root[lang="ar"] .au-v-price .au-feature-price small { letter-spacing: 0; text-transform: none; }
+/* The artists' index, as in a sale catalogue */
+.au-index-top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .2rem 1rem; padding-bottom: .6rem; border-bottom: 1.5px solid var(--ink); }
+.au-index-h { margin: 0; font: 600 .78rem/1.4 var(--sans); letter-spacing: .24em; text-transform: uppercase; }
+.au-index-lead { margin-top: .8rem; font-size: .9rem; color: var(--ink-2); }
+.au-index { border-top: 0; margin-top: .6rem; }
+.au-index .au-artist { grid-template-columns: 2.4rem 1fr auto auto; align-items: start; padding: 1.3rem 0; gap: 1rem; transition: background .2s; }
+.au-index .au-artist:hover { background: rgba(22, 18, 15, .03); }
+.au-index-n { padding-top: .45rem; font: italic 400 1.05rem/1 var(--serif); color: var(--gold-ink); }
+.au-index .au-artist-name { font-weight: 500; }
+.au-artists .au-artist-head, .au-next .au-artist-head { margin-top: .3rem; font: italic 400 1.08rem/1.35 var(--serif); letter-spacing: 0; text-transform: none; color: var(--ink-2); }
+.au-artists .au-artist-n, .au-next .au-artist-n { margin-top: .35rem; font: 600 .64rem/1.4 var(--sans); letter-spacing: .18em; color: var(--ink-3); }
+.au-artist-strip { gap: .4rem; align-self: center; }
+.au-artist-strip img { margin-inline-start: 0 !important; border-radius: 1px; padding: 3px !important; width: 58px; height: 58px; }
+@media (min-width: 640px) { .au-artist-strip img { width: 76px; height: 76px; } }
+.au-artist .arr { align-self: center; font: 400 1.1rem var(--sans); color: var(--ink); }
+.au-index-all { margin-top: 1.6rem; }
+@media (max-width: 639px) {
+  .au-index .au-artist { grid-template-columns: 1.8rem 1fr auto; gap: .7rem; }
+  .au-index .au-artist .arr { display: none; }
+  .au-artist-strip img { width: 44px; height: 44px; padding: 2px !important; }
+  .au-artist-strip img:nth-child(n+3) { display: none; }
+  .au-artists .au-artist-head { font-size: .98rem; }
+}
+:root[lang="ar"] .au-index-h, :root[lang="ar"] .au-artists .au-artist-n { letter-spacing: 0; }
+@media (max-width: 639px) { .au-artists .au-artist-n { font-size: .6rem; letter-spacing: .1em; } }

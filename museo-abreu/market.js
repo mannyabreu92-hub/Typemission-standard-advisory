@@ -308,16 +308,20 @@ const auWorksText = n => n === 1 ? t('auWork1') : t('auWorksN', { n });
 const auRoomHref = name => `#/subasta/artista-${auSlug(name)}`;
 function auArtistsHTML() {
   const list = auArtists();
+  // An index of the sale, as in a printed catalogue: number, name and dates, the book's headline in italics,
+  // country and number of works, then a few of the works.
   return `<section class="section au-artists" id="artistas">
-    <h2>${t('auArtistsH')}</h2><p class="muted">${t('auArtistsLead', { n: list.length })}</p>
-    <ol class="au-artist-list">${list.map(a => `<li><a class="au-artist" href="${auRoomHref(a.name)}">
+    <div class="au-index-top"><h2 class="au-index-h">${t('auArtistsH')}</h2>
+      <p class="au-find-meta">${t('auFindLead', { n: auLots().length, a: list.length })}</p></div>
+    <p class="au-index-lead">${t('auArtistsLead', { n: list.length })}</p>
+    <ol class="au-artist-list au-index">${list.map((a, i) => `<li><a class="au-artist" href="${auRoomHref(a.name)}">
+      <span class="au-index-n" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
       <span class="au-artist-text"><span class="au-artist-name">${esc(a.name)}${auNameYears(a.name)}</span>
-        ${artistLine(a.lots[0], true) ? `<span class="au-artist-line">${esc(artistLine(a.lots[0], true))}</span>` : ''}
         ${auEssay(a.name).head ? `<span class="au-artist-head" lang="${auEssay(a.name).headLang}">${esc(auEssay(a.name).head)}</span>` : ''}
-        <span class="au-artist-n">${auWorksText(a.lots.length)}</span></span>
+        <span class="au-artist-n">${[artistLine(a.lots[0], true), auWorksText(a.lots.length)].filter(Boolean).map(esc).join(' · ')}</span></span>
       <span class="au-artist-strip" aria-hidden="true">${a.lots.slice(0, 3).map(l => `<img src="${l.thumb || l.img}" alt="" loading="lazy" width="120" height="120">`).join('')}</span>
-      <span class="arr" aria-hidden="true">›</span></a></li>`).join('')}</ol>
-    <p style="margin-top:1.2rem"><a class="btn" href="#/subasta/obras">${t('auAllWorks', { n: auLots().length })}</a></p>
+      <span class="arr" aria-hidden="true">→</span></a></li>`).join('')}</ol>
+    <p class="au-index-all"><a class="au-v-bid" href="#/subasta/obras">${t('auAllWorks', { n: auLots().length })}</a></p>
   </section>`;
 }
 
