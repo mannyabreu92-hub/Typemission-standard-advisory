@@ -1348,3 +1348,27 @@ h1.m-title { font-size: clamp(1.9rem, 5.5vw, 2.6rem); margin-bottom: .75rem; }
 .au-board-wrap > .muted, .au-board-wrap > p.muted { margin-top: .9rem; font-size: .9rem; }
 .au-board-more summary { font: 600 .7rem var(--sans); letter-spacing: .18em; text-transform: uppercase; }
 :root[lang="ar"] .au-board-more summary { letter-spacing: 0; }
+/* The shop, in the catalogue style */
+.shop-h1 { text-transform: uppercase; letter-spacing: .04em; font-weight: 500; }
+.shop-lead { margin-top: .8rem; max-width: 46ch; font: italic 400 clamp(1.15rem, 3.5vw, 1.4rem)/1.4 var(--serif); color: var(--ink-2); }
+.shop-page .section-head.au-index-top { margin-bottom: 1.6rem; align-items: center; }
+.shop-page .au-index-top .au-index-h { margin-inline-end: auto; }
+.shop-page .au-index-top { margin-bottom: 1.6rem; align-items: center; }
+.shop-page .section-head .btn.small { min-height: 44px; padding: 0; border: 0; border-radius: 0; background: none; color: var(--ink-2); font: 600 .68rem var(--sans); letter-spacing: .18em; text-transform: uppercase; }
+.shop-page .section-head .btn.small:hover { color: var(--accent); }
+.shop-page .shop-grid { gap: 2.5rem; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+.shop-page .shop-item { gap: 0; }
+.shop-page .shop-item .cover { max-width: 220px; margin-bottom: 1.1rem; box-shadow: 0 14px 34px rgba(22, 18, 15, .22); }
+.shop-by { margin: 0; font: 600 .64rem/1.5 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--gold-ink); }
+.shop-name { margin: .35rem 0 0; font: italic 500 1.7rem/1.15 var(--serif); }
+.shop-price { margin: .7rem 0 0; padding: .6rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: 500 1.4rem/1.2 var(--serif); }
+.shop-per { font: 400 .85rem var(--sans); color: var(--ink-3); }
+.shop-note { margin: .7rem 0 0; font-size: .88rem; line-height: 1.5; color: var(--ink-2); }
+.shop-page .shop-item .field { margin-top: .9rem; }
+.shop-page .shop-item .field label { font: 600 .64rem/1.6 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); }
+.shop-page .shop-item select { border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; background-color: transparent; padding-inline: 0; }
+.shop-buy { margin-top: 1.2rem; justify-self: start; border: 0; cursor: pointer; }
+.shop-page .shop-banner { border-radius: 2px; background: transparent; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1.4rem 0; box-shadow: none; }
+.shop-page .shop-banner h3 { font: italic 500 1.6rem/1.2 var(--serif); }
+.shop-page > .section:not(.shop-head) > .eyebrow { font: 600 .78rem/1.4 var(--sans); letter-spacing: .24em; color: var(--ink); padding-bottom: .6rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 0; }
+:root[lang="ar"] .shop-by, :root[lang="ar"] .shop-page .section-head .btn.small, :root[lang="ar"] .shop-h1 { letter-spacing: 0; text-transform: none; }

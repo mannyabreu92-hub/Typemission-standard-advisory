@@ -893,9 +893,9 @@ EXTRA_ACTIONS.lotInterest = el => {
 function pageShop() {
   const digital = editionsMineFirst(EDITIONS.filter(e => e.status === 'available' && LANG_NAMES[e.lang]), myEdition());
   const price = p => p == null ? t('coPriceTbd') : auUSD(p);
-  return `<div class="wrap">
-    <section class="section"><p class="eyebrow">Museo Abreu</p><h1>${t('shTitle')}</h1><p class="lead" style="margin-top:.8rem">${shLeadText()}</p></section>
-    <section class="section"><div class="section-head"><h2 class="tier-group">${t('shBook')}</h2>
+  return `<div class="wrap shop-page">
+    <section class="section shop-head"><p class="eyebrow">Museo Abreu</p><h1 class="shop-h1">${t('shTitle')}</h1><p class="shop-lead">${shLeadText()}</p></section>
+    <section class="section"><div class="section-head au-index-top"><h2 class="au-index-h">${t('shBook')}</h2>
         <button class="btn small" data-action="bookShare">${t('evShare')}</button></div>
       <p class="status" id="share-status" role="status" aria-live="polite" hidden></p>
       <div class="shop-grid">
@@ -903,25 +903,26 @@ function pageShop() {
           const mine = typeof myEdition === 'function' ? myEdition() : lang, first = ps.find(p => p.lang === mine) || ps.find(p => p.lang === lang) || ps[0];
           return `<article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
-          <h3 class="pass-name">${t('shPrint')}</h3>
-          <p class="muted">Ediciones ARTFORO</p>
-          <p class="pass-price">${price(first.price)}</p>
+          <p class="shop-by">Ediciones ARTFORO</p>
+          <h3 class="shop-name">${t('shPrint')}</h3>
+          <p class="shop-price">${price(first.price)}</p>
           <div class="field"><label for="shop-print-lang">${t('bkLang')}</label><select id="shop-print-lang">${ps.map(p => `<option value="${p.lang}"${p === first ? ' selected' : ''}>${L(p.name)}</option>`).join('')}</select></div>
-          <p class="muted">${t('shPrintNote')}</p>
-          <button class="buy-now" data-action="buyPrint">${t('shOrder')} <span class="arr" aria-hidden="true">›</span></button>
+          <p class="shop-note">${t('shPrintNote')}</p>
+          <button class="au-v-bid shop-buy" data-action="buyPrint">${t('shOrder')}</button>
         </article>`; })()}
         <article class="shop-item">
           <div class="cover">${coverSVG(t('bookTitle'), t('bookSub'))}</div>
-          <h3 class="pass-name">${t('shDigital')}</h3>
-          <p class="muted">${t('bkProLead')}</p>
-          <p class="pass-price">${usd(PRO_WEEK)} <span class="muted">${t('perWeek')}</span></p>
-          <a class="buy-now" href="#/pro">Pro <span class="arr" aria-hidden="true">›</span></a>
+          <p class="shop-by">Pro</p>
+          <h3 class="shop-name">${t('shDigital')}</h3>
+          <p class="shop-note">${t('bkProLead')}</p>
+          <p class="shop-price">${usd(PRO_WEEK)} <span class="shop-per">${t('perWeek')}</span></p>
+          <a class="au-v-bid shop-buy" href="#/pro">Pro</a>
         </article>
       </div>
     </section>
-    ${auLots().length ? `<section class="section"><h2 class="tier-group">${t('shAuctionTitle')}</h2>
+    ${auLots().length ? `<section class="section"><div class="au-index-top"><h2 class="au-index-h">${t('shAuctionTitle')}</h2></div>
       <div class="lots">${auLots().slice(0, 3).map(l => lotCard(l)).join('')}</div>
-      <div class="btn-row"><a class="btn primary" href="#/subasta">${t('shAllLots')}</a></div>
+      <p class="au-index-all"><a class="au-v-bid" href="#/subasta">${t('shAllLots')}</a></p>
     </section>` : ''}
   </div>`;
 }
