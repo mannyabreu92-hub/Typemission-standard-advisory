@@ -15,24 +15,24 @@ Object.assign(I18N.es, {
   fuLead: 'Oscar Abreu examina los principios, el vocabulario visual, los procedimientos y los límites del Psico-Expresionismo. Acompaña a Ecce Homo y puede leerse por separado.',
   fuEdition: 'Edición digital · {lang} · ARTFORO Editions, 2026', fuRequest: 'Solicitar la edición digital', fuCredits: 'Créditos de la edición', fuWords: 'En palabras del autor', fuPro: 'Incluido en Pro',
   fuEditions: 'Ediciones', waFund: 'Hola, quiero la edición digital de {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · todas las ediciones',
-  fuUploadHelp: 'Elija el archivo Word de una edición; se reconoce su idioma. Se esperan 28 secciones: nota, introducción, 19 capítulos y siete secciones finales.',
-  fuFound: 'Encontradas {s} secciones y {p} párrafos.', fuWarn: 'Atención: se esperaban 28 secciones.', fuBad: 'Este archivo no parece Fundamentos del Psico-Expresionismo.',
+  fuUploadHelp: 'Elija el archivo Word de una edición; se reconoce su idioma, y sus secciones se comprueban con el índice de esa edición.',
+  fuFound: 'Encontradas {s} secciones y {p} párrafos.', fuWarn: 'Atención: faltan secciones del índice de esta edición.', fuBad: 'Este archivo no parece Fundamentos del Psico-Expresionismo.',
 });
 Object.assign(I18N.en, {
   fuEyebrow: 'New book by Oscar Abreu', fuAlso: 'Also by Oscar Abreu',
   fuLead: 'Oscar Abreu examines the principles, visual vocabulary, procedures and limits of Psycho-Expressionism. A companion to Ecce Homo that can be read on its own.',
   fuEdition: 'Digital edition · {lang} · ARTFORO Editions, 2026', fuRequest: 'Request the digital edition', fuCredits: 'Edition credits', fuWords: 'In the author’s words', fuPro: 'Included in Pro',
   fuEditions: 'Editions', waFund: 'Hello, I would like the digital edition of {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · all editions',
-  fuUploadHelp: 'Choose the Word file of an edition; its language is recognised. 28 sections are expected: note, introduction, 19 chapters and seven closing sections.',
-  fuFound: 'Found {s} sections and {p} paragraphs.', fuWarn: 'Note: 28 sections were expected.', fuBad: 'This file does not look like Fundamentos del Psico-Expresionismo.',
+  fuUploadHelp: 'Choose the Word file of an edition; its language is recognised, and its sections are checked against that edition’s contents.',
+  fuFound: 'Found {s} sections and {p} paragraphs.', fuWarn: 'Note: some sections of this edition’s contents are missing.', fuBad: 'This file does not look like Fundamentos del Psico-Expresionismo.',
 });
 Object.assign(I18N.fr, {
   fuEyebrow: 'Nouveau livre d’Oscar Abreu', fuAlso: 'Du même auteur',
   fuLead: 'Oscar Abreu examine les principes, le vocabulaire visuel, les procédés et les limites du Psycho-Expressionnisme. Un compagnon d’Ecce Homo qui peut se lire séparément.',
   fuEdition: 'Édition numérique · {lang} · ARTFORO Editions, 2026', fuRequest: 'Demander l’édition numérique', fuCredits: 'Crédits de l’édition', fuWords: 'Selon l’auteur', fuPro: 'Inclus dans Pro',
   fuEditions: 'Éditions', waFund: 'Bonjour, je souhaite l’édition numérique de {title} ({lang}).', fuUpload: 'Fundamentos del Psico-Expresionismo · toutes les éditions',
-  fuUploadHelp: 'Choisissez le fichier Word d’une édition ; sa langue est reconnue. 28 sections sont attendues : note, introduction, 19 chapitres et sept sections finales.',
-  fuFound: '{s} sections et {p} paragraphes trouvés.', fuWarn: 'Attention : 28 sections étaient attendues.', fuBad: 'Ce fichier ne ressemble pas à Fundamentos del Psico-Expresionismo.',
+  fuUploadHelp: 'Choisissez le fichier Word d’une édition ; sa langue est reconnue, et ses sections sont comparées à la table des matières de cette édition.',
+  fuFound: '{s} sections et {p} paragraphes trouvés.', fuWarn: 'Attention : il manque des sections de la table des matières de cette édition.', fuBad: 'Ce fichier ne ressemble pas à Fundamentos del Psico-Expresionismo.',
 });
 
 const fuEd = l => FUND_EDITIONS[l] || FUND_EDITIONS.es;
@@ -166,14 +166,14 @@ let fuParsed = null, fuMsg = '';
   pageBook = () => {
     const status = l => { const f = (adData.fund || []).find(x => x.lang === l);
       return `<li><strong>${L(LANG_NAMES[l])}</strong> · ${!f ? `<span class="muted">${t('bkMissing')}</span>`
-        : f.sections === FUND_EDITIONS[l].toc.length ? `<span class="remind-on">${t('bkStatus', { date: adStamp(f.at), s: f.sections })}</span>` : `<span class="bk-short">${t('fuWarn')}</span>`}${f && f.file ? `<br><span class="muted">${esc(f.file)}</span>` : ''}</li>`; };
+        : f.sections >= FUND_EDITIONS[l].toc.length ? `<span class="remind-on">${t('bkStatus', { date: adStamp(f.at), s: f.sections })}</span>` : `<span class="bk-short">${t('fuWarn')}</span>`}${f && f.file ? `<br><span class="muted">${esc(f.file)}</span>` : ''}</li>`; };
     const block = `<section class="section"><p class="eyebrow">Oscar Abreu</p><h2 class="h3">${t('fuUpload')}</h2>
       <p class="muted">${t('fuUploadHelp')}</p>
       <ul class="bk-status">${FUND_LANGS.map(status).join('')}</ul>
       <form class="bk-form" data-form="fund" novalidate>
         <div class="field"><label for="fu-file">${t('bkFile')}</label><input id="fu-file" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></div>
         ${fuParsed ? `<p>${esc(t('fuFound', { s: fuParsed.sections.length, p: fuParsed.paragraphs }))}</p>
-          ${fuParsed.sections.length !== 28 ? `<p class="status">${t('fuWarn')}</p>` : ''}
+          ${fuParsed.sections.length < (FUND_EDITIONS[fuParsed.lang] || FUND_EDITIONS.es).toc.length ? `<p class="status">${t('fuWarn')}</p>` : ''}
           <div class="field"><label for="fu-lang">${t('bkLang')}</label><select id="fu-lang">${FUND_LANGS.map(l => `<option value="${l}"${l === fuParsed.lang ? ' selected' : ''}>${L(LANG_NAMES[l])}</option>`).join('')}</select></div>
           <div class="btn-row"><button class="btn primary" type="submit">${t('bkUpload')}</button></div>` : ''}
         <p class="status" id="fu-status" role="status" aria-live="polite"${fuMsg ? '' : ' hidden'}>${esc(fuMsg)}</p>

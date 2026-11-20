@@ -72,7 +72,16 @@ const bkProButton = (cls = 'btn primary') => `<a class="${cls}" href="#/pro">${t
 
 // The edition of Fundamentos in the app's language, else the English one; its paragraphs by position.
 const dirEdLang = () => FUND_EDITIONS[lang] ? lang : 'en';
-const dirQuote = (sec, ...idx) => { const e = FUND_EDITIONS[dirEdLang()]; return idx.map(i => e.sample[sec][i][1]).join(' '); };
+// The quotes point at paragraphs of the free sample, the same in every edition that follows the Spanish paragraph
+// by paragraph. The Spanish collector's edition rewrote its sample: there the same passages sit elsewhere, and one
+// is now the last sentence of a longer paragraph ([section, paragraphs, -1]).
+const DIR_QUOTE_COLLECTOR = { 's2:0': ['s2', [0]], 's2:17': ['s2', [14]], 's1:13,14': ['s1', [11], -1], 's1:1': ['s1', [1]], 's2:11': ['s2', [9]], 's2:15,16': ['s2', [13]] };
+const dirQuote = (sec, ...idx) => {
+  const e = FUND_EDITIONS[dirEdLang()], m = e.edition === 'collector' && DIR_QUOTE_COLLECTOR[`${sec}:${idx.join(',')}`];
+  if (!m) return idx.map(i => e.sample[sec][i][1]).join(' ');
+  const text = m[1].map(i => e.sample[m[0]][i][1]).join(' ');
+  return m[2] === -1 ? text.split(/(?<=[.!?])\s+/).at(-1) : text;
+};
 const dirCite = () => { const l = dirEdLang(); return `— Oscar Abreu · <cite lang="${l}">${esc(FUND_EDITIONS[l].title)}</cite>${l !== lang ? ` · ${t('englishEdition')}` : ''}`; };
 const dirBlockquote = (sec, ...idx) => `<figure class="dir-quote"><blockquote lang="${dirEdLang()}" dir="ltr">“${esc(dirQuote(sec, ...idx))}”</blockquote><figcaption>${dirCite()}</figcaption></figure>`;
 const dirYears = years => `<ul class="dir-facts">${years.map(y => TIMELINE.find(e => String(e.y) === String(y))).filter(Boolean)
