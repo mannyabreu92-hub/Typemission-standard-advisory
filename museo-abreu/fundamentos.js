@@ -106,6 +106,24 @@ function pageFund(l) {
   </div>`;
 }
 
+
+// A painting by Oscar Abreu opens each section of the reader: a band of the work (a detail, so said in its caption),
+// in turn, so two sections in a row never share a painting. Titles and facts as the artist publishes them; the
+// head on the cover has no title given here, so its caption is the artist's name.
+const FU_PAPER = { es: 'Técnica mixta sobre papel', en: 'Mixed media on paper', fr: 'Technique mixte sur papier', de: 'Mischtechnik auf Papier', it: 'Tecnica mista su carta', ar: 'تقنية مختلطة على ورق', ru: 'Смешанная техника на бумаге' };
+const FU_WORKS = {
+  crystal: { title: 'Crystal Identity', year: 2019, tech: FU_PAPER, size: '24 × 24 in', img: 'crystal-identity' },
+  lost: { title: 'The Lost Name', year: 2019, tech: FU_PAPER, size: '24 × 24 in', img: 'the-lost-name' },
+  signature: { title: 'The Signature of Memory', year: 2019, tech: FU_PAPER, size: '24 × 24 in', img: 'the-signature-of-memory' },
+  blurred: { title: 'Blurred Portrait', year: 2019, tech: FU_PAPER, size: '24 × 24 in', img: 'blurred-portrait' },
+  head: { img: 'head' },
+};
+const FU_ART = [['head', 'a'], ['signature', 'a'], ['crystal', 'a'], ['lost', 'a'], ['blurred', 'a'], ['head', 'b'], ['crystal', 'b'], ['signature', 'b'], ['lost', 'b'], ['blurred', 'b']];
+function fuArtHTML(n) {
+  const [k, band] = FU_ART[n % FU_ART.length], w = FU_WORKS[k];
+  const cap = ['Oscar Abreu', w.title ? `<i>${esc(w.title)}</i>, ${w.year}` : '', w.tech ? esc(L(w.tech)) : '', w.size || '', t('fuDetail')].filter(Boolean).join(' · ');
+  return `<figure class="fu-art"><img src="img/fundamentos/${w.img}-${band}.jpg" alt="${esc(w.title ? `Oscar Abreu, ${w.title} (${t('fuDetail')})` : `Oscar Abreu (${t('fuDetail')})`)}" width="1069" height="470"><figcaption>${cap}</figcaption></figure>`;
+}
 function pageFundReader(l, nStr) {
   const e = fuEd(l), n = Math.min(Math.max(0, parseInt(nStr, 10) || 0), e.toc.length - 1), s = e.toc[n];
   let body;
@@ -124,6 +142,7 @@ function pageFundReader(l, nStr) {
         <button class="btn small" data-action="font" data-d="0.1" aria-label="${t('fontSize')} +">A+</button>
       </div>
     </div>
+    ${fuArtHTML(n)}
     <article class="reader-text" lang="${l}" dir="ltr" style="font-size:${reading.fontSize}rem">
       ${s.part ? `<p class="eyebrow">${esc(s.part)}</p>` : ''}<h1 class="ch-title">${esc(s.title)}</h1>${body}</article>
     <nav class="reader-nav">

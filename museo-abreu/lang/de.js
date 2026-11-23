@@ -1482,3 +1482,4 @@ TR.de = {
 // Open week of Fundamentos (fundamentos.js).
 Object.assign(I18N.de, {"fuReadAll": "Das ganze Buch lesen", "fuOpenNote": "Das ganze Buch, für alle kostenlos bis {date}."});
 Object.assign(I18N.de, {"prOpen": "Auf dem Bildschirm präsentieren"});
+Object.assign(I18N.de, {"fuDetail": "Detail"});

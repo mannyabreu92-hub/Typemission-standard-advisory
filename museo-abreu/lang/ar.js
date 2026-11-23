@@ -1495,3 +1495,4 @@ TR.ar = {
 // Open week of Fundamentos (fundamentos.js).
 Object.assign(I18N.ar, {"fuReadAll": "اقرأ الكتاب كاملًا", "fuOpenNote": "الكتاب كاملًا، مجانًا للجميع حتى {date}."});
 Object.assign(I18N.ar, {"prOpen": "اعرض على الشاشة"});
+Object.assign(I18N.ar, {"fuDetail": "تفصيل"});
