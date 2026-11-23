@@ -8,6 +8,18 @@
 const crypto = require('crypto');
 const { readJSON, readerToken } = require('./_lib');
 
+// An edition uploaded with its contents page read as a first section (a collector's-edition file read by an
+// older version of the dashboard) has every section one place later: s0 is the contents, the note is s1. Such an
+// upload is recognised by its s0 (a long list of short lines) and read one place on, until it is uploaded again.
+const shifted = {};
+async function fundKey(lang, ch) {
+  if (!(lang in shifted)) {
+    const s0 = await readJSON(`fund/${lang}/s0.json`), bl = (s0 && s0.blocks) || [];
+    shifted[lang] = bl.length >= 25 && bl.every(x => x[0] === 'p' && String(x[1]).length < 90);
+  }
+  return shifted[lang] ? 's' + (Number(ch.slice(1)) + 1) : ch;
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'private, no-store');
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET only' });
@@ -16,7 +28,7 @@ module.exports = async (req, res) => {
   // Open week (fundamentos.js FUND_OPEN_UNTIL): Fundamentos can be read by anyone until the end of 30 November 2026.
   if (fu && Date.now() < Date.parse('2026-12-01T04:00:00Z') && !(e && t)) {
     if (!/^[a-z]{2}$/.test(String(lang)) || !/^s\d{1,2}$/.test(String(ch))) return res.status(400).json({ error: 'request' });
-    const sec = await readJSON(`fund/${lang}/${ch}.json`);
+    const sec = await readJSON(`fund/${lang}/${await fundKey(lang, ch)}.json`);
     if (!sec) return res.status(404).json({ error: 'not-uploaded' });
     return res.status(200).json({ blocks: sec.blocks });
   }
@@ -29,11 +41,11 @@ module.exports = async (req, res) => {
   if (!owns) return res.status(403).json({ error: 'not-owned' });
   if (ch === 'all') {
     const keys = fu ? Array.from({ length: 40 }, (_, i) => 's' + i) : ['intro', ...Array.from({ length: 70 }, (_, i) => 'ch' + (i + 1)), 'ack', 'chrono'];
-    const all = await Promise.all(keys.map(k => readJSON(`${dir}/${lang}/${k}.json`)));
+    const all = await Promise.all(keys.map(async k => readJSON(`${dir}/${lang}/${fu ? await fundKey(lang, k) : k}.json`)));
     if (!all.some(Boolean)) return res.status(404).json({ error: 'not-uploaded' });
     return res.status(200).json({ sections: Object.fromEntries(keys.map((k, i) => [k, all[i] && all[i].blocks]).filter(([, b]) => b)) });
   }
-  const sec = await readJSON(`${dir}/${lang}/${ch}.json`);
+  const sec = await readJSON(`${dir}/${lang}/${fu ? await fundKey(lang, ch) : ch}.json`);
   if (!sec) return res.status(404).json({ error: 'not-uploaded' });
   res.status(200).json({ blocks: sec.blocks });
 };
