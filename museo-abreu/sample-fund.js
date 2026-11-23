@@ -12,6 +12,7 @@ const FUND_EDITIONS = {
     // The collector's edition (1000 numbered copies signed by the author): its own chapter 10, 'Tejer el cerebro', and
     // 'Lecturas críticas'. The other editions follow the earlier Spanish text until their new translations arrive.
     edition: 'collector',
+    collector: "Esta edición de coleccionista de Fundamentos del Psico-Expresionismo consta de 1000 ejemplares numerados y firmados por el autor.",
     toc: [
       {"key":"s0","title":"Nota a esta edición","part":""},
       {"key":"s1","title":"Introducción","part":""},

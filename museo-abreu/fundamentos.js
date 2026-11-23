@@ -96,6 +96,7 @@ function pageFund(l) {
           ${fuOpen() ? '' : fuBuyButton(l)}
         </div>
         <p class="muted" style="margin-top:.6rem">${t('fuPro')} · <a href="#/pro">Pro</a></p>
+        <p style="margin-top:.4rem"><a class="lot-go" href="#/presentacion/${l}">${t('prOpen')} <span class="arr" aria-hidden="true">→</span></a></p>
       </div>
     </section>
     ${note ? `<section class="section"><h2 class="h3">${t('fuWords')}</h2><figure class="quote"><blockquote lang="${l}">${l === 'ja' ? `「${esc(note[1])}」` : `“${esc(note[1])}”`}</blockquote>

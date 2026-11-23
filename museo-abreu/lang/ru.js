@@ -1364,3 +1364,4 @@ TR.ru = {
 };
 // Open week of Fundamentos (fundamentos.js).
 Object.assign(I18N.ru, {"fuReadAll": "Читать всю книгу", "fuOpenNote": "Вся книга — бесплатно для всех до {date}."});
+Object.assign(I18N.ru, {"prOpen": "Показать на экране"});
