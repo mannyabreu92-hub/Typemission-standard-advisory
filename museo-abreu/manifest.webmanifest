@@ -1,0 +1,17 @@
+{
+  "name": "Museo Abreu · Art Experiences",
+  "short_name": "Museo Abreu",
+  "description": "Descubre a Oscar Abreu, reserva tu VIP Tour y lee El arte salvó mi vida.",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f1e9",
+  "theme_color": "#16120f",
+  "lang": "es",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
