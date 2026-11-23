@@ -4,7 +4,7 @@
 // The editions are uploaded by the museum from the dashboard (admin.js "book-put") and kept privately
 // as book/<lang>/<section>.json; the token comes from api/purchases.js when the app unlocks a purchase.
 // b=fu: Fundamentos del Psico-Expresionismo in any of its editions (fundamentos.js), sections s0…s39 in
-// fund/<lang>/, for owners of "fund-<lang>" or Pro.
+// fund/<lang>/, for owners of "fund-<lang>" or Pro (and for anyone during the open week).
 const crypto = require('crypto');
 const { readJSON, readerToken } = require('./_lib');
 
@@ -13,6 +13,13 @@ module.exports = async (req, res) => {
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET only' });
   const { lang, ch, e, t, b } = req.query || {};
   const fu = b === 'fu', dir = fu ? 'fund' : 'book';
+  // Open week (fundamentos.js FUND_OPEN_UNTIL): Fundamentos can be read by anyone until the end of 30 November 2026.
+  if (fu && Date.now() < Date.parse('2026-12-01T04:00:00Z') && !(e && t)) {
+    if (!/^[a-z]{2}$/.test(String(lang)) || !/^s\d{1,2}$/.test(String(ch))) return res.status(400).json({ error: 'request' });
+    const sec = await readJSON(`fund/${lang}/${ch}.json`);
+    if (!sec) return res.status(404).json({ error: 'not-uploaded' });
+    return res.status(200).json({ blocks: sec.blocks });
+  }
   if (!/^[a-z]{2}$/.test(String(lang)) || !(fu ? /^(s\d{1,2}|all)$/ : /^(intro|ch\d{1,2}|ack|chrono|all)$/).test(String(ch)) || !/^[0-9a-f]{64}$/.test(String(e)) || !/^[0-9a-f]{40}$/.test(String(t)))
     return res.status(400).json({ error: 'request' });
   const ok = await readerToken(e);

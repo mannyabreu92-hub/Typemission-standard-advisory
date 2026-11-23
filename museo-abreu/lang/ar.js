@@ -1492,3 +1492,5 @@ TR.ar = {
   "Japanese": "اليابانية",
   "Japanese edition": "الطبعة اليابانية",
 };
+// Open week of Fundamentos (fundamentos.js).
+Object.assign(I18N.ar, {"fuReadAll": "اقرأ الكتاب كاملًا", "fuOpenNote": "الكتاب كاملًا، مجانًا للجميع حتى {date}."});

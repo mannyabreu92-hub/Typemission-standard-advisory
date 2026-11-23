@@ -1690,3 +1690,4 @@ html[data-theme="dark"] .au-swatch span { box-shadow: inset 0 0 0 1px rgba(236, 
 .ev-book .lot-go { justify-self: start; }
 .ev-poster { margin: 1.8rem 0 0; max-width: 520px; }
 .ev-poster img { width: 100%; height: auto; display: block; box-shadow: 0 14px 34px rgba(22, 18, 15, .22); }
+.fu-open { margin: 0 0 .8rem; padding: .6rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); font: italic 500 1.1rem/1.4 var(--serif); color: var(--gold-ink); }

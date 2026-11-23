@@ -1362,3 +1362,5 @@ TR.ru = {
   "Japanese": "Японский",
   "Japanese edition": "Японское издание",
 };
+// Open week of Fundamentos (fundamentos.js).
+Object.assign(I18N.ru, {"fuReadAll": "Читать всю книгу", "fuOpenNote": "Вся книга — бесплатно для всех до {date}."});

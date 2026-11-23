@@ -77,7 +77,7 @@ function evBookHTML() {
   const l = typeof fuDefault === 'function' ? fuDefault() : 'es', e = FUND_EDITIONS[l];
   return `<a class="ev-book" href="#/fundamentos/${l}"><span class="ev-book-cover">${typeof fuCover === 'function' ? fuCover(l) : ''}</span>
     <span><span class="eyebrow">${t('evBookLaunch')}</span><span class="ev-book-title" lang="${l}">${esc(e.title)}</span>
-      <span class="ev-book-sub" lang="${l}">${esc(e.subtitle)}</span><span class="lot-go">${t('readSample')} <span class="arr" aria-hidden="true">→</span></span></span></a>`;
+      <span class="ev-book-sub" lang="${l}">${esc(e.subtitle)}</span><span class="lot-go">${typeof fuOpen === 'function' && fuOpen() ? t('fuReadAll') : t('readSample')} <span class="arr" aria-hidden="true">→</span></span>${typeof fuOpen === 'function' && fuOpen() ? `<span class="ev-book-sub">${t('fuOpenNote', { date: fuOpenDate() })}</span>` : ''}</span></a>`;
 }
 function pageEvent(id) {
   const ev = ANNUAL_EVENTS.find(e => e.id === id);

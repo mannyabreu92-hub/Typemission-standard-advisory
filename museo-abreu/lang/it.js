@@ -1480,3 +1480,5 @@ TR.it = {
   "Japanese": "Giapponese",
   "Japanese edition": "Edizione giapponese",
 };
+// Open week of Fundamentos (fundamentos.js).
+Object.assign(I18N.it, {"fuReadAll": "Leggi il libro completo", "fuOpenNote": "Il libro completo, gratis per tutti fino al {date}."});

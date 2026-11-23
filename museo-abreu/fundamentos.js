@@ -43,7 +43,12 @@ function fuDefault() {
   return d && !LANGS.includes(d) ? d : FUND_EDITIONS[lang] ? lang : d || 'en';
 }
 const fuOwns = l => fx.get('books2', []).includes('fund-' + l) || (typeof isPro === 'function' && isPro());
-const fuCanRead = (l, n) => n < FUND_FREE || fuOwns(l);
+// Open week: from the book's presentation at the UASD (23 November 2026) the whole book, every edition, can be read
+// by anyone until the end of 30 November in Punta Cana (api/book.js keeps the same date).
+const FUND_OPEN_UNTIL = '2026-12-01T04:00:00Z';
+const fuOpen = () => Date.now() < Date.parse(FUND_OPEN_UNTIL);
+const fuOpenDate = () => fmtDate('2026-11-30', { day: 'numeric', month: 'long' });
+const fuCanRead = (l, n) => n < FUND_FREE || fuOpen() || fuOwns(l);
 // The cover's two title lines from the edition's title ("FUNDAMENTOS" / "DEL PSICO-EXPRESIONISMO"), the second
 // set smaller when it is long. A title without spaces (Japanese, Chinese) is one line, in that language's book
 // typeface, upright (neither has italics).
@@ -70,7 +75,7 @@ EXTRA_ACTIONS.fuBuy = el => checkout({ title: fuEd(el.dataset.l).title, sub: 'Os
 function pageFund(l) {
   const e = fuEd(l), note = e.sample.s0.find(b => b[0] === 'p' && /Ecce Homo/.test(b[1]));   // the paragraph that places it beside Ecce Homo
   const item = (s, i) => fuCanRead(l, i)
-    ? `<li><a href="#/fundamentos/${l}/${i}"><span>${esc(s.title)}</span><span class="muted">${i < FUND_FREE ? t('free') : ''}</span></a></li>`
+    ? `<li><a href="#/fundamentos/${l}/${i}"><span>${esc(s.title)}</span><span class="muted">${i < FUND_FREE || (fuOpen() && !fuOwns(l)) ? t('free') : ''}</span></a></li>`
     : `<li><span><span>${esc(s.title)}</span><span>🔒</span></span></li>`;
   let part = '';
   const toc = e.toc.map((s, i) => { const head = s.part && s.part !== part ? `<li class="fu-part" aria-hidden="true">${esc(s.part)}</li>` : ''; part = s.part; return head + item(s, i); }).join('');
@@ -85,9 +90,10 @@ function pageFund(l) {
         <p class="muted" style="margin:.3rem 0 1rem">Oscar Abreu · ${t('fuEdition', { lang: L(LANG_NAMES[l]) })}</p>
         <nav class="tabs fu-eds" aria-label="${t('fuEditions')}">${FUND_LANGS.map(x => `<a class="tab" href="#/fundamentos/${x}"${x === l ? ' aria-current="page"' : ''}>${L(LANG_NAMES[x])}</a>`).join('')}</nav>
         <p class="lead" style="margin-top:1rem">${t('fuLead')}</p>
+        ${fuOpen() && !fuOwns(l) ? `<p class="fu-open">${t('fuOpenNote', { date: fuOpenDate() })}</p>` : ''}
         <div class="btn-row">
-          <a class="btn ${fuOwns(l) ? 'primary' : ''}" href="#/fundamentos/${l}/${start}">${fuOwns(l) ? t('read') : t('readSample')}</a>
-          ${fuBuyButton(l)}
+          <a class="btn ${fuOwns(l) || fuOpen() ? 'primary' : ''}" href="#/fundamentos/${l}/${start}">${fuOwns(l) ? t('read') : fuOpen() ? t('fuReadAll') : t('readSample')}</a>
+          ${fuOpen() ? '' : fuBuyButton(l)}
         </div>
         <p class="muted" style="margin-top:.6rem">${t('fuPro')} · <a href="#/pro">Pro</a></p>
       </div>
@@ -131,10 +137,10 @@ async function fuLoad(l, n) {
   const box = document.getElementById('fu-text'); if (!box) return;
   const key = 's' + n, id = l + ':' + key, show = blocks => { fuCache[id] = blocks; if (box.isConnected) box.innerHTML = fbBlocks(blocks); };
   if (fuCache[id]) return show(fuCache[id]);
-  const rd = fbReader();
-  if (!rd) return (box.innerHTML = fbMsg(t('fbNeedUnlock'), true));
+  const rd = fbReader(), open = fuOpen() && !fuOwns(l);
+  if (!rd && !open) return (box.innerHTML = fbMsg(t('fbNeedUnlock'), true));
   try {
-    const r = await fetch(`/api/book?b=fu&lang=${l}&ch=${key}&e=${rd.e}&t=${rd.t}`, { cache: 'no-store' });
+    const r = await fetch(rd && !open ? `/api/book?b=fu&lang=${l}&ch=${key}&e=${rd.e}&t=${rd.t}` : `/api/book?b=fu&lang=${l}&ch=${key}`, { cache: 'no-store' });
     const d = await r.json().catch(() => ({}));
     if (r.ok) return show(d.blocks);
     if (r.status === 403) return (box.innerHTML = fbMsg(d.error === 'not-owned' ? t('fbNotOwned') : t('fbNeedUnlock'), true));
